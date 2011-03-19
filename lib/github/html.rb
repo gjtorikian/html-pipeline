@@ -7,6 +7,7 @@ module GitHub
     require 'github/html/camouflage'
     require 'github/html/sanitization'
     require 'github/html/@mentions'
+    require 'github/html/repository_mentions'
   end
 end
 
