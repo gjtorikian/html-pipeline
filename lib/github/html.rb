@@ -1,13 +1,12 @@
 require 'nokogiri'
 
 module GitHub
-  # Nokogiri HTML filters for user content provided in comments, issue bodies,
-  # etc.
   module HTML
-    require 'github/html/camouflage'
-    require 'github/html/sanitization'
-    require 'github/html/@mentions'
-    require 'github/html/repository_mentions'
+    require 'github/html/filter'
+    require 'github/html/camo_filter'
+    require 'github/html/sanitization_filter'
+    require 'github/html/@mention_filter'
+    require 'github/html/repository_mention_filter'
   end
 end
 
