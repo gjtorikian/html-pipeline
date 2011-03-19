@@ -30,28 +30,24 @@ module GitHub::HTML
     # user/project#num =>
     #   <a href='/user/project/issues/num'>user/project#num</a>
     def replace_global_issue_mentions(text)
-      base_url = self.base_url.chomp('/')
       text.gsub(/(^|\s|[(\[{])([\w-]+\/[.\w-]+)#(\d+)\b/) do |match|
         leader, repo, issue = $1, $2, $3
-        url  = [base_url, repo, 'issues', issue].join('/')
         text = "#{repo}##{issue}"
-        "#{leader}<a href='#{url}'>#{text}</a>"
+        "#{leader}<a href='#{issue_url(repo, issue)}'>#{text}</a>"
       end
     end
 
-    # user/project#num & user#num =>
+    # user/project#num =>
     #   <a href='/user/project/issues/num'>user/project#num</a>
+    # user#num =>
+    #   <a href='/user/project/issues/num'>user#num</a>
+    #
+    # TODO consider axing the user#num syntax or validate that 1.) the user has a
+    # fork and, 2.) the issue exists there.
     def replace_repo_issue_mentions(text)
       text.gsub(/(^|\s|[(\[{])([\w-]+\/?[.\w-]*)#(\d+)\b/) do |match|
         leader, repo, issue = $1, $2, $3
-        repo_url =
-          if repo.include?('/')
-            [base_url.chomp('/'), repo].join('/')
-          else
-            # user#num - assume same repo name but different user
-            [base_url.chomp('/'), repo, repository.name].join('/')
-          end
-        url  = [repo_url, 'issues', issue].join('/')
+        url  = [repo_url(repo), 'issues', issue].join('/')
         text = "#{repo}##{issue}"
         "#{leader}<a href='#{url}'>#{text}</a>"
       end
@@ -62,10 +58,23 @@ module GitHub::HTML
     def replace_bare_issue_mentions(text)
       text = text.gsub(/(^|\s|[(\[{])#(\d+)\b/) do |match|
         leader, issue = $1, $2.to_i
-        url  = [repository.permalink, 'issues', issue].join('/')
+        url  = issue_url(repository.name_with_owner, issue)
         text = "##{issue}"
-        "#{leader}<a href='#{url}' class='internal'>#{text}</a>"
+        "#{leader}<a href='#{url}'>#{text}</a>"
       end
+    end
+
+    def repo_url(repo)
+      if repo.include?('/')
+        [base_url.chomp('/'), repo].join('/')
+      else
+        # user#num - assume same repo name but different user
+        [base_url.chomp('/'), repo, repository.name].join('/')
+      end
+    end
+
+    def issue_url(repo, issue)
+      [base_url.chomp('/'), repo, 'issues', issue].join('/')
     end
   end
 end

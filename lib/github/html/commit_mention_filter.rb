@@ -32,12 +32,10 @@ module GitHub::HTML
     # user/repo@SHA =>
     #   <a href='/user/repo/commit/SHA'>user/repo@SHA</a>
     def replace_global_commit_mentions(text)
-      base_url = self.base_url.chomp('/')
       text.gsub(/(^|\s|[({\[])([\w-]+\/[\w.-]+)@([0-9a-f]{7,40})\b/) do |match|
         leader, repo, sha = $1, $2, $3
-        url   = [base_url, repo, 'commit', sha].join('/')
         text  = "#{repo}@#{sha[0, 7]}"
-        "#{leader}<a href='#{url}'>#{text}</a>"
+        "#{leader}<a href='#{commit_url(repo, sha)}'>#{text}</a>"
       end
     end
 
@@ -48,16 +46,7 @@ module GitHub::HTML
     def replace_repo_commit_mentions(text)
       text.gsub(/(^|[\s({\[])([\w-]+\/?[\w.-]*)?@([0-9a-f]{7,40})\b/) do |match|
         leader, repo, sha = $1, $2, $3
-        repo_url =
-          if repo.nil? || repo.empty?
-            repository.permalink
-          elsif repo.include?('/')
-            [base_url.chomp('/'), repo].join('/')
-          else
-            # user#num - assume same repo name but different user
-            [base_url.chomp('/'), repo, repository.name].join('/')
-          end
-        url  = [repo_url, 'commit', sha].join('/')
+        url  = [repo_url(repo), 'commit', sha].join('/')
         text = "#{repo}@#{sha[0, 7]}"
         "#{leader}<a href='#{url}'>#{text}</a>"
       end
@@ -68,9 +57,24 @@ module GitHub::HTML
     def replace_bare_commit_mentions(text)
       text.gsub(/(^|[({@\s\[])([0-9a-f]{40})\b/) do |match|
         leader, sha = $1, $2
-        url = [repository.permalink, 'commit', sha].join('/')
+        url = [repo_url, 'commit', sha].join('/')
         "#{leader}<a href='#{url}'>#{sha[0, 7]}</a>"
       end
+    end
+
+    def repo_url(repo=nil)
+      if repo.nil? || repo.empty?
+        [base_url.chomp('/'), repository.name_with_owner].join('/')
+      elsif repo.include?('/')
+        [base_url.chomp('/'), repo].join('/')
+      else
+        # user#num - assume same repo name but different user
+        [base_url.chomp('/'), repo, repository.name].join('/')
+      end
+    end
+
+    def commit_url(repo, commit_id)
+      [base_url.chomp('/'), repo, 'commit', commit_id].join('/')
     end
   end
 end
