@@ -1,6 +1,11 @@
 require 'nokogiri'
 
 module GitHub
+  # GitHub HTML processing filters and utilities. This module includes a small
+  # framework for defining DOM based content filters and applying them to user
+  # provided content.
+  #
+  # See GitHub::HTML::Filter for information on building filters.
   module HTML
     require 'github/html/filter'
     require 'github/html/camo_filter'
@@ -11,6 +16,8 @@ module GitHub
   end
 end
 
+# XXX
+#
 # Work around an issue with Nokogiri::XML::Node#swap and #replace not
 # working on text nodes when the replacement is a document fragment. See
 # #407 in the Nokogiri issue tracker for more info:

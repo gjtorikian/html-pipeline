@@ -6,6 +6,12 @@ module GitHub::HTML
   # All images provided in user content should be run through this
   # filter so that http image sources do not cause mixed-content warnings
   # in browser clients.
+  #
+  # Context options:
+  #   :asset_proxy - Base URL for constructed asset proxy URLs.
+  #   :asset_proxy_secret_key - The shared secret used to encode URLs.
+  #
+  # This filter does not write additional information to the context.
   class CamoFilter < Filter
     # Hijacks images in the markup provided, replacing them with URLs that
     # go through the github asset proxy.
@@ -25,12 +31,16 @@ module GitHub::HTML
     # Private: calculate the HMAC digest for a image source URL.
     def asset_url_hash(url)
       digest = OpenSSL::Digest::Digest.new('sha1')
-      OpenSSL::HMAC.hexdigest(digest, GitHub::AssetProxySecretKey, url)
+      OpenSSL::HMAC.hexdigest(digest, asset_proxy_secret_key, url)
     end
 
     # Private: the hostname to use for generated asset proxied URLs.
     def asset_proxy_host
       context[:asset_proxy] || GitHub::AssetProxyHostName
+    end
+
+    def asset_proxy_secret_key
+      context[:asset_proxy_secret_key] || GitHub::AssetProxySecretKey
     end
 
     # Private: helper to hexencode a string. Each byte ends up encoded into
