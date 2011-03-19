@@ -61,7 +61,7 @@ module GitHub::HTML
       :elements => %w(b i strong em a pre code img ins del sup sub p ol ul li))
 
     # Sanitize markup using the Sanitize library.
-    def perform
+    def call
       Sanitize.clean_node!(doc, whitelist)
     end
 

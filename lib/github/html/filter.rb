@@ -9,7 +9,7 @@ module GitHub::HTML
     attr_reader :doc
     attr_reader :context
 
-    def perform
+    def call
       raise NotImplementedError
     end
 
@@ -34,7 +34,7 @@ module GitHub::HTML
     # Returns the modified Nokogiri::HTML::DocumentFragment
     def self.call(doc, context={})
       filter = new(doc, context)
-      filter.perform
+      filter.call
       filter.doc
     end
   end
