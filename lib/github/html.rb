@@ -6,7 +6,8 @@ module GitHub
     require 'github/html/camo_filter'
     require 'github/html/sanitization_filter'
     require 'github/html/@mention_filter'
-    require 'github/html/repository_mention_filter'
+    require 'github/html/issue_mention_filter'
+    require 'github/html/commit_mention_filter'
   end
 end
 
