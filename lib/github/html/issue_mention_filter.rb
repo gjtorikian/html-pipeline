@@ -9,7 +9,7 @@ module GitHub::HTML
   #   user#num
   #   user/project#num
   class IssueMentionFilter < Filter
-    def perform
+    def call
       if repository
         apply_filter :replace_repo_issue_mentions
         apply_filter :replace_bare_issue_mentions

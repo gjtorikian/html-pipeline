@@ -5,7 +5,7 @@ module GitHub::HTML
   class MentionFilter < Filter
     include GitHub::Mentionable
 
-    def perform
+    def call
       doc.search('text()').each do |node|
         next if !node.content.include?('@')
         next if node.ancestors('pre, code, a').any?

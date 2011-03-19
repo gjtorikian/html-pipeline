@@ -10,7 +10,7 @@ module GitHub::HTML
   #   user@SHA
   #   user/project@SHA
   class CommitMentionFilter < Filter
-    def perform
+    def call
       if repository
         apply_filter :replace_repo_commit_mentions
         apply_filter :replace_bare_commit_mentions

@@ -9,7 +9,7 @@ module GitHub::HTML
   class CamoFilter < Filter
     # Hijacks images in the markup provided, replacing them with URLs that
     # go through the github asset proxy.
-    def perform
+    def call
       doc.search("img").each do |element|
         src = element['src'].strip
         next if src !~ /^http:/
