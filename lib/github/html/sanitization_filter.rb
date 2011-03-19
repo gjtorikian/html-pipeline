@@ -8,6 +8,13 @@ module GitHub::HTML
   # See the Sanitize docs for more information on the underlying library:
   #
   # https://github.com/rgrove/sanitize/#readme
+  #
+  # Context options:
+  #   :whitelist - The sanitizer whitelist configuration to use. This can be one
+  #                of the options constants defined in this class or a custom
+  #                sanitize options hash.
+  #
+  # This filter does not write additional information to the context.
   class SanitizationFilter < Filter
     # The main sanitization whitelist. Only these elements and attributes are
     # allowed through by default.

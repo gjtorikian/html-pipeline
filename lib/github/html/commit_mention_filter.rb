@@ -1,14 +1,20 @@
 module GitHub::HTML
-  # Sugar for linking to commit SHA's in full user/repo references. The
-  # following syntaxes are supported where SHA is a 7-40 char hex String.
+  # Sugar for linking to commit SHA's. The following syntaxes are
+  # supported where SHA is a 7-40 char hex String.
   #
-  # When no repository is provided in the context:
-  #   user/project@SHA
-  #
-  # When repository is provided in the context:
+  # When :repository is provided in the context:
   #   SHA (7-40 char)
   #   user@SHA
   #   user/project@SHA
+  #
+  # When no :repository is provided in the context:
+  #   user/project@SHA
+  #
+  # Context options:
+  #   :base_url   - Used to construct commit URLs.
+  #   :repository - Used to determine current context for bare SHA1 references.
+  #
+  # This filter does not write additional information to the context.
   class CommitMentionFilter < Filter
     def call
       if repository

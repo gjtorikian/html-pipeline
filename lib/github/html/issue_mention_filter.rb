@@ -1,13 +1,19 @@
 module GitHub::HTML
-  # Sugar for linking to issues in full user/repo references.
+  # Sugar for linking to issues.
   #
-  # When no repository is provided in the context:
-  #   user/project#num
-  #
-  # When repository is provided in the context:
+  # When :repository is provided in the context:
   #   #num
   #   user#num
   #   user/project#num
+  #
+  # When no :repository is provided in the context:
+  #   user/project#num
+  #
+  # Context options:
+  #   :base_url   - Used to construct commit URLs.
+  #   :repository - Used to determine current context for bare SHA1 references.
+  #
+  # This filter does not write additional information to the context.
   class IssueMentionFilter < Filter
     def call
       if repository
