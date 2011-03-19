@@ -1,16 +1,14 @@
 require 'sanitize'
 
 module GitHub::HTML
-  # HTML sanization routines and whitelists. This module defines what HTML is
-  # allowed in user provided content and fixes up issues with unbalanced tags
-  # and whatnot.
+  # HTML filter with sanization routines and whitelists. This module defines
+  # what HTML is allowed in user provided content and fixes up issues with
+  # unbalanced tags and whatnot.
   #
   # See the Sanitize docs for more information on the underlying library:
   #
   # https://github.com/rgrove/sanitize/#readme
-  #
-  module Sanitization
-
+  class SanitizationFilter < Filter
     # The main sanitization whitelist. Only these elements and attributes are
     # allowed through by default.
     WHITELIST = {
@@ -63,18 +61,14 @@ module GitHub::HTML
       :elements => %w(b i strong em a pre code img ins del sup sub p ol ul li))
 
     # Sanitize markup using the Sanitize library.
-    #
-    # text    - String with HTML markup or a Nokogiri document/fragment.
-    # options - Hash of options passed to the sanitizer.
-    #
-    # Returns Nokogiri document fragment with the sanitized markup.
-    def sanitize(doc, options = WHITELIST)
-      raise ArgumentError, "doc cannot be nil" if doc.nil?
-      doc = Nokogiri::HTML::DocumentFragment.parse(doc) if doc.is_a?(String)
-      Sanitize.clean_node!(doc, options)
+    def perform
+      Sanitize.clean_node!(doc, whitelist)
     end
 
-    # module methods
-    extend self
+    # The whitelist to use when sanitizing. This can be passed in the context
+    # hash to the filter but defaults to WHITELIST constant value above.
+    def whitelist
+      context[:whitelist] || WHITELIST
+    end
   end
 end
