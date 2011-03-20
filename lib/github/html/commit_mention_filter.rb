@@ -27,11 +27,12 @@ module GitHub::HTML
 
     def apply_filter(method_name)
       doc.search('text()').each do |node|
-        text = node.content
-        next unless text.include?('@') || text =~ /[0-9a-f]{40}\b/
+        content = node.to_html
+        next unless content.include?('@') || content =~ /[0-9a-f]{40}\b/
         next if node.ancestors('pre, code, a').any?
-        html = send(method_name, node.content)
-        node.replace(html) if html != node.content
+        html = send(method_name, content)
+        next if html == content
+        node.replace(html)
       end
     end
 

@@ -14,10 +14,12 @@ module GitHub::HTML
 
     def call
       doc.search('text()').each do |node|
-        next if !node.content.include?('@')
+        content = node.to_html
+        next if !content.include?('@')
         next if node.ancestors('pre, code, a').any?
-        html = mention_link_filter(node.content, base_url)
-        node.replace(html) if html != node.content
+        html = mention_link_filter(content, base_url)
+        next if html == content
+        node.replace(html)
       end
     end
   end

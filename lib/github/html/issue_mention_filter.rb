@@ -26,10 +26,12 @@ module GitHub::HTML
 
     def apply_filter(method_name)
       doc.search('text()').each do |node|
-        next if !node.content.include?('#')
+        content = node.to_html
+        next if !content.include?('#')
         next if node.ancestors('pre, code, a').any?
-        html = send(method_name, node.content)
-        node.replace(html) if html != node.content
+        html = send(method_name, content)
+        next if html == content
+        node.replace(html)
       end
     end
 
