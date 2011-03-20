@@ -61,7 +61,7 @@ module GitHub::HTML
     # returned unmodified.
     def parse_html(html)
       if html.is_a?(String)
-        Nokogiri::HTML::DocumentFragment.parse(html) 
+        DocumentFragment.parse(html)
       else
         html
       end
