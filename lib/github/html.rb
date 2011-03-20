@@ -14,6 +14,7 @@ module GitHub
     require 'github/html/filter'
     require 'github/html/markdown_filter'
     require 'github/html/textile_filter'
+    require 'github/html/email_reply_filter'
     require 'github/html/camo_filter'
     require 'github/html/sanitization_filter'
     require 'github/html/@mention_filter'
@@ -48,10 +49,18 @@ module GitHub
       end
     end
 
+    # Pipeline providing sanitization and image hijacking but no mention
+    # related features.
+    SimplePipeline = Pipeline.new [
+      SanitizationFilter,
+      CamoFilter
+    ]
+
     # Pipeline used for most types of user provided content like comments
     # and issue bodies. Performs sanitization, image hijacking, and various
     # mention links.
-    CommentPipeline = Pipeline.new [
+    GFMPipeline = Pipeline.new [
+      MarkdownFilter,
       SanitizationFilter,
       CamoFilter,
       MentionFilter,
@@ -59,12 +68,9 @@ module GitHub
       CommitMentionFilter
     ]
 
-    # Same as CommentPipeline but takes a raw Markdown text string as input
-    # instead of already processed HTML.
-    GFMPipeline = Pipeline.new [
-      MarkdownFilter,
-      SanitizationFilter,
-      CamoFilter,
+    # Pipeline used for email replies.
+    EmailPipeline = Pipeline.new [
+      EmailReplyFilter,
       MentionFilter,
       IssueMentionFilter,
       CommitMentionFilter
@@ -77,12 +83,6 @@ module GitHub
       SanitizationFilter
     ], :whitelist => SanitizationFilter::LIMITED
 
-    # Pipeline providing sanitization and image hijacking but no mention
-    # related features.
-    SimplePipeline = Pipeline.new [
-      SanitizationFilter,
-      CamoFilter
-    ]
     extend self
   end
 end
