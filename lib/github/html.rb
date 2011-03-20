@@ -12,6 +12,7 @@ module GitHub
 
     # Filter implementations
     require 'github/html/filter'
+    require 'github/html/markdown_filter'
     require 'github/html/camo_filter'
     require 'github/html/sanitization_filter'
     require 'github/html/@mention_filter'
@@ -50,6 +51,17 @@ module GitHub
     # and issue bodies. Performs sanitization, image hijacking, and various
     # mention links.
     CommentPipeline = Pipeline.new [
+      SanitizationFilter,
+      CamoFilter,
+      MentionFilter,
+      IssueMentionFilter,
+      CommitMentionFilter
+    ]
+
+    # Same as CommentPipeline but takes a raw Markdown text string as input
+    # instead of already processed HTML.
+    GFMPipeline = Pipeline.new [
+      MarkdownFilter,
       SanitizationFilter,
       CamoFilter,
       MentionFilter,
