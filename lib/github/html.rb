@@ -13,6 +13,7 @@ module GitHub
     # Filter implementations
     require 'github/html/filter'
     require 'github/html/markdown_filter'
+    require 'github/html/textile_filter'
     require 'github/html/camo_filter'
     require 'github/html/sanitization_filter'
     require 'github/html/@mention_filter'
@@ -68,6 +69,13 @@ module GitHub
       IssueMentionFilter,
       CommitMentionFilter
     ]
+
+    # Pipeline used for really old comments and maybe other textile content
+    # I guess.
+    TextilePipeline = Pipeline.new [
+      TextileFilter,
+      SanitizationFilter
+    ], :whitelist => SanitizationFilter::LIMITED
 
     # Pipeline providing sanitization and image hijacking but no mention
     # related features.
