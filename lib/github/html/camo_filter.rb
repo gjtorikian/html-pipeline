@@ -17,6 +17,7 @@ module GitHub::HTML
     # go through the github asset proxy.
     def call
       doc.search("img").each do |element|
+        next if element['src'].nil?
         src = element['src'].strip
         next if src !~ /^http:/
         next if context[:disable_asset_proxy]
