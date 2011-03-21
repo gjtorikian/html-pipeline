@@ -63,7 +63,8 @@ module GitHub::HTML
       'cool' => 'e214',
       'bomb' => 'e311',
       'key' => 'e03f',
-      'bear' => 'e051'
+      'bear' => 'e051',
+      'beer' => 'e047'
     }
 
     # Build a regexp that matches all valid :emoji: names.
@@ -110,7 +111,7 @@ module GitHub::HTML
 
       Dir.chdir(dir) do
         FileUtils.mkdir_p 'out'
-        ret = system("rake emoji ICONS=#{Emoji.values.sort.join(',')} DEST=out")
+        ret = system("rake emoji ICONS=#{Emoji.values.compact.sort.uniq.join(',')} DEST=out")
 
         unless ret
           raise 'Unable to generate emoji. Did you `brew install ghostscript`?'
