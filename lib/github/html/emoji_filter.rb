@@ -92,9 +92,9 @@ module GitHub::HTML
       text.gsub EmojiPattern do |match|
         name = $1
         if emoji = Emoji[name]
-          "<span class='emoji emoji_#{Emoji[name]}'>&nbsp;</span>"
+          "<span title=':#{name}:' class='emoji emoji_#{Emoji[name]}'>&nbsp;</span>"
         else
-          "<img src='/images/icons/emoji/#{name}.png' height='20' width='20' align='absmiddle' />"
+          "<img title=':#{name}:' src='/images/icons/emoji/#{name}.png' height='20' width='20' align='absmiddle' />"
         end
       end
     end
