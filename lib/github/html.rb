@@ -20,6 +20,7 @@ module GitHub
     require 'github/html/@mention_filter'
     require 'github/html/issue_mention_filter'
     require 'github/html/commit_mention_filter'
+    require 'github/html/emoji_filter'
 
     # Contruct a pipeline for running multiple HTML filters.
     #
@@ -65,7 +66,8 @@ module GitHub
       CamoFilter,
       MentionFilter,
       IssueMentionFilter,
-      CommitMentionFilter
+      CommitMentionFilter,
+      EmojiFilter
     ]
 
     # Pipeline used for email replies.
