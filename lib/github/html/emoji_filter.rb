@@ -76,6 +76,7 @@ module GitHub::HTML
     def call
       text_nodes.each do |node|
         content = node.to_html
+        next if !content.include?(':')
         html = emoji_image_filter(content)
         next if html == content
         node.replace(html)
