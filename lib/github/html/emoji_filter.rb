@@ -65,6 +65,7 @@ module GitHub::HTML
       'key' => 'e03f',
       'bear' => 'e051',
       'beer' => 'e047',
+      'thumbsup' => 'e00e',
 
       # Custom emoji
       'octocat' => nil
