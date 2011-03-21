@@ -89,44 +89,25 @@ module GitHub
   end
 end
 
-# XXX Nokogiri text node replacement monkey patches. These should be proper
-# fixed and sent upstream to https://github.com/tenderlove/nokogiri
+# XXX
+#
+# Work around an issue with Nokogiri::XML::Node#swap and #replace not
+# working on text nodes when the replacement is a document fragment. See
+# #407 in the Nokogiri issue tracker for more info:
+#
+# https://github.com/tenderlove/nokogiri/issues/407
+#
+# This monkey patch should be removed when a new version of Nokogiri
+# is available.
 class Nokogiri::XML::Text < Nokogiri::XML::CharacterData
   def replace(replacement)
-    replacement = replace_correct_whitespace_stripping(replacement)
-    replace_text_node_fix(replacement)
+    temp = add_next_sibling("<span></span>")
+    remove
+    temp.first.replace(replacement)
   end
 
   def swap(replacement)
     replace(replacement)
     self
-  end
-
-  # Work around an issue with Nokogiri's fragment parsing stripping whitespace
-  # when text not surrounded by markup is given. e.g., the last text node
-  # resulting from "<em>like</em> this " is " this" instead of " this ".
-  #
-  # This is fixed on the tenderlove/nokogiri master branch.
-  def replace_correct_whitespace_stripping(replacement)
-    if replacement.respond_to?(:to_str)
-      def replacement.strip
-        new = dup
-        new.sub!(/>\s+$/, '>')
-        new.sub!(/^\s+</, '<')
-        new
-      end
-    end
-    replacement
-  end
-
-  # Work around an issue with Nokogiri::XML::Node#swap and #replace not
-  # working on text nodes when the replacement is a document fragment. See
-  # #407 in the Nokogiri issue tracker for more info:
-  #
-  # https://github.com/tenderlove/nokogiri/issues/407
-  def replace_text_node_fix(replacement)
-    temp = add_next_sibling("<span></span>")
-    remove
-    temp.first.replace(replacement)
   end
 end
