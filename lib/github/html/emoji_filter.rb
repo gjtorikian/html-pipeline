@@ -64,7 +64,10 @@ module GitHub::HTML
       'bomb' => 'e311',
       'key' => 'e03f',
       'bear' => 'e051',
-      'beer' => 'e047'
+      'beer' => 'e047',
+
+      # Custom emoji
+      'octocat' => nil
     }
 
     # Build a regexp that matches all valid :emoji: names.
@@ -89,7 +92,11 @@ module GitHub::HTML
     def emoji_image_filter(text)
       text.gsub EmojiPattern do |match|
         name = $1
-        "<span class='emoji emoji_#{Emoji[name]}'>&nbsp;</span>"
+        if emoji = Emoji[name]
+          "<span class='emoji emoji_#{Emoji[name]}'>&nbsp;</span>"
+        else
+          "<img src='/images/icons/emoji/#{name}.png' height='20' width='20' align='absmiddle' />"
+        end
       end
     end
 
