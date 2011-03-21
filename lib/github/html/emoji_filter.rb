@@ -62,7 +62,8 @@ module GitHub::HTML
       'art' => 'e502',
       'cool' => 'e214',
       'bomb' => 'e311',
-      'key' => 'e03f'
+      'key' => 'e03f',
+      'bear' => 'e051'
     }
 
     # Build a regexp that matches all valid :emoji: names.
