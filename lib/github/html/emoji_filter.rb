@@ -77,8 +77,7 @@ module GitHub::HTML
     def call
       text_nodes.each do |node|
         content = node.to_html
-        next if !content.include?(':')
-        html = emoji_image_filter(content)
+        html = self.class.emoji_image_filter(content)
         next if html == content
         node.replace(html)
       end
@@ -90,14 +89,12 @@ module GitHub::HTML
     # text - String text to replace :emoji: in.
     #
     # Returns a String with :emoji: replaced with images.
-    def emoji_image_filter(text)
+    def self.emoji_image_filter(text)
+      return text unless text.include?(':')
+
       text.gsub EmojiPattern do |match|
         name = $1
-        if emoji = Emoji[name]
-          "<span title=':#{name}:' class='emoji emoji_#{Emoji[name]}'>&nbsp;</span>"
-        else
-          "<img title=':#{name}:' src='/images/icons/emoji/#{name}.png' height='20' width='20' align='absmiddle' />"
-        end
+        "<img title=':#{name}:' src='#{GitHub::AssetHost}/images/icons/emoji/#{name}.png' height='20' width='20' align='absmiddle' />"
       end
     end
 
@@ -110,25 +107,20 @@ module GitHub::HTML
     # ghostscript and other dependencies manually.
     #
     # Returns nothing.
-    def self.regenerate_assets(dir = '/tmp/emoji-css-builder')
+    def self.regenerate_assets(dir = '~/Dropbox/GitHub/stock/Emoji/')
       require 'fileutils'
+      dir = File.expand_path(dir)
 
       if !File.exists?(dir)
-        system("cd #{File.dirname dir} && git clone git://github.com/technoweenie/emoji-css-builder")
+        raise 'Could not find emoji source'
       end
 
-      Dir.chdir(dir) do
-        FileUtils.mkdir_p 'out'
-        ret = system("rake emoji ICONS=#{Emoji.values.compact.sort.uniq.join(',')} DEST=out")
+      Emoji.each do |name, code|
+        next unless code
+        file = File.join(dir, "kb-emoji-U+#{code.upcase}@2x.png")
 
-        unless ret
-          raise 'Unable to generate emoji. Did you `brew install ghostscript`?'
-        end
-
-        FileUtils.cp "out/emoji-iphone.gif", RAILS_ROOT+"/public/images/icons/emoji.gif"
-        css = File.read('out/emoji-iphone.css')
-        css.sub!('url("emoji-iphone.gif")', 'url("/images/icons/emoji.gif")')
-        File.open(RAILS_ROOT+"/public/stylesheets/common/emoji.css", 'w'){ |f| f.write(css) }
+        raise "Unknown emoji: #{name}" unless File.exists?(file)
+        FileUtils.cp file, RAILS_ROOT+"/public/images/icons/emoji/#{name}.png"
       end
     end
   end
