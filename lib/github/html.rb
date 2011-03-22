@@ -88,3 +88,24 @@ module GitHub
     extend self
   end
 end
+
+# XXX nokogiri monkey patches
+class Nokogiri::XML::Text < Nokogiri::XML::CharacterData
+  # Work around an issue with utf-8 encoded data being erroneously converted to
+  # ... some other shit when replacing text nodes. See 'utf-8 output 2' in
+  # user_content_test.rb for details.
+  def replace_with_encoding_fix(replacement)
+    if replacement.respond_to?(:to_str)
+      replacement = document.fragment(replacement)
+    end
+    replace_without_encoding_fix(replacement)
+  end
+
+  alias_method :replace_without_encoding_fix, :replace
+  alias_method :replace, :replace_with_encoding_fix
+
+  def swap(replacement)
+    replace(replacement)
+    self
+  end
+end
