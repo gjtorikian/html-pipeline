@@ -96,7 +96,7 @@ class Nokogiri::XML::Text < Nokogiri::XML::CharacterData
   # user_content_test.rb for details.
   def replace_with_encoding_fix(replacement)
     if replacement.respond_to?(:to_str)
-      replacement = document.fragment(replacement)
+      replacement = document.fragment("<div>#{replacement}</div>").children.first.children
     end
     replace_without_encoding_fix(replacement)
   end
