@@ -67,15 +67,6 @@ module GitHub::HTML
       end
     end
 
-    # Find all text nodes that are not inside <pre>, <code> or <a>.
-    #
-    # Returns an Array of Nokogiri::XML::Text objects.
-    def text_nodes
-      doc.search('text()').map do |node|
-        node unless node.ancestors('pre, code, a').any?
-      end.compact
-    end
-
     # Perform a filter on doc with the given context.
     #
     # Returns the modified Nokogiri::HTML::DocumentFragment
