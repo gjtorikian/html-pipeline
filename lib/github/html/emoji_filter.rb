@@ -78,7 +78,7 @@ module GitHub::HTML
       doc.search('text()').each do |node|
         content = node.to_html
         next if !content.include?(':')
-        next if node.ancestors('pre, code, a').any?
+        next if node.ancestors('pre, code').any?
         html = self.class.emoji_image_filter(content)
         next if html == content
         node.replace(html)
