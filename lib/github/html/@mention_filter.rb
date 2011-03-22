@@ -46,7 +46,6 @@ module GitHub::HTML
         login = $1
         user = User.cached_by_login($1)
         next match if user.nil?
-        next match if !mentionable?(user)
 
         mentioned_users << user
         url = File.join(base_url, user.login)
@@ -55,19 +54,6 @@ module GitHub::HTML
           "@#{user.login}" +
           "</a>"
         match.sub("@#{login}", link)
-      end
-    end
-
-    # Determine if a user is mentionable in the current context.
-    #
-    #   user - The User object to check
-    #
-    # Returns true when the user may be mentioned
-    def mentionable?(user)
-      if repository
-        repository.pullable_by?(user)
-      else
-        true
       end
     end
   end
