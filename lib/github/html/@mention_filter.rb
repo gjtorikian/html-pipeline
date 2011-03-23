@@ -44,6 +44,7 @@ module GitHub::HTML
     def mention_link_filter(text, base_url='/')
       text.gsub MentionPattern do |match|
         login = $1
+        next match if login == 'mention'
         user = User.cached_by_login($1)
         next match if user.nil?
 
