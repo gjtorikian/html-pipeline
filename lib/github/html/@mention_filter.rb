@@ -44,18 +44,29 @@ module GitHub::HTML
     def mention_link_filter(text, base_url='/')
       text.gsub MentionPattern do |match|
         login = $1
-        next match if login == 'mention'
-        user = User.cached_by_login($1)
-        next match if user.nil?
-
-        mentioned_users << user
-        url = File.join(base_url, user.login)
-        link =
-          "<a href='#{url}' class='user-mention'>" +
-          "@#{user.login}" +
-          "</a>"
+        if login == 'mention' || login == 'mentioned'
+          link = link_to_mention_info(login)
+        elsif user = User.cached_by_login(login)
+          mentioned_users << user
+          link = link_to_mentioned_user(user)
+        else
+          next match
+        end
         match.sub("@#{login}", link)
       end
+    end
+
+    def link_to_mention_info(text)
+      "<a href='https://github.com/blog/821-mention-somebody-they-re-notified' class='user-mention'>" +
+      "@#{text}" +
+      "</a>"
+    end
+
+    def link_to_mentioned_user(user)
+      url = File.join(base_url, user.login)
+      "<a href='#{url}' class='user-mention'>" +
+      "@#{user.login}" +
+      "</a>"
     end
   end
 end
