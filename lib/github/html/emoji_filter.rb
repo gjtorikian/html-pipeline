@@ -5,7 +5,7 @@ module GitHub::HTML
     #
     # To add emoji:
     #   - add entries from http://emoji.rubyforge.org/#emoji_table
-    #   - run GitHub::HTML::EmojiFilter.generate_assets
+    #   - run GitHub::HTML::EmojiFilter.regenerate_assets
     Emoji = {
       # Campfire emoji
       'sunny' => 'e04a',
