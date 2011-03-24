@@ -57,7 +57,7 @@ module GitHub::HTML
     end
 
     def link_to_mention_info(text)
-      "<a href='https://github.com/blog/821-mention-somebody-they-re-notified' class='user-mention'>" +
+      "<a href='https://github.com/blog/821' class='user-mention'>" +
       "@#{text}" +
       "</a>"
     end
