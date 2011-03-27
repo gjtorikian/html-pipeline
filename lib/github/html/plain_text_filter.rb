@@ -1,7 +1,7 @@
 module GitHub::HTML
   module PlainTextFilter
-    def self.call(body)
-      Pipeline.call(body)
+    def self.call(body, context={})
+      Pipeline.call(body, context)
     end
 
     class Filter < ::GitHub::HTML::Filter
