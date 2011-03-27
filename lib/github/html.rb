@@ -50,6 +50,8 @@ module GitHub
       end
     end
 
+    require 'github/html/plain_text_filter'
+
     # Pipeline providing sanitization and image hijacking but no mention
     # related features.
     SimplePipeline = Pipeline.new [
