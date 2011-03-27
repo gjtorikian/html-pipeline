@@ -12,6 +12,7 @@ module GitHub
 
     # Filter implementations
     require 'github/html/filter'
+    require 'github/html/autolink_filter'
     require 'github/html/markdown_filter'
     require 'github/html/textile_filter'
     require 'github/html/email_reply_filter'
@@ -77,7 +78,8 @@ module GitHub
       EmailReplyFilter,
       MentionFilter,
       IssueMentionFilter,
-      CommitMentionFilter
+      CommitMentionFilter,
+      AutolinkFilter
     ]
 
     # Pipeline used for really old comments and maybe other textile content
