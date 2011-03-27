@@ -17,7 +17,9 @@ module GitHub::HTML
           node.replace(Nokogiri::XML::Text.new(label, doc))
         end
 
-        doc.add_child(Nokogiri::XML::Text.new("\n\n", doc))
+        if links.any?
+          doc.add_child(Nokogiri::XML::Text.new("\n\n", doc))
+        end
 
         links.each_with_index do |link, i|
           text = "[#{i + 1}]: #{link}\n"
