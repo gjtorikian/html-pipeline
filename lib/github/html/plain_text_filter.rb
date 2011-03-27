@@ -9,7 +9,7 @@ module GitHub::HTML
         links = []
 
         doc.search("a").each do |node|
-          links << node["href"]
+          links << File.join(GitHub::SSLHost, node["href"])
 
           index = links.size
           label = "#{node.text} [#{index}]"
