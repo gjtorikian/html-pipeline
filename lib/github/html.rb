@@ -79,7 +79,7 @@ module GitHub
       IssueMentionFixFilter,
       EmojiFilter,
       AutolinkFilter,
-      lambda { |doc, _| doc.search("p").first.children }
+      lambda { |doc, _| doc.children.first.children }
     ]
 
     # Pipeline used for email replies.
