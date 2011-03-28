@@ -74,6 +74,13 @@ module GitHub
       EmojiFilter
     ]
 
+    CommitMessagePipeline = Pipeline.new [
+      CommitMentionFilter,
+      IssueMentionFixFilter,
+      EmojiFilter,
+      AutolinkFilter
+    ]
+
     # Pipeline used for email replies.
     EmailPipeline = Pipeline.new [
       EmailReplyFilter,
