@@ -78,6 +78,7 @@ module GitHub
       lambda { |doc, _| "<p>#{doc}</p>" },
       MentionFilter,
       CommitMentionFilter,
+      IssueMentionFilter,
       IssueMentionFixFilter,
       EmojiFilter,
       AutolinkFilter,
