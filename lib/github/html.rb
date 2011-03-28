@@ -83,6 +83,12 @@ module GitHub
       lambda { |doc, _| doc.children.first.children }
     ]
 
+    ShortCommitMessagePipeline = Pipeline.new [
+      lambda { |doc, _| "<p>#{doc}</p>" },
+      EmojiFilter,
+      lambda { |doc, _| doc.children.first.children }
+    ]
+
     # Pipeline used for email replies.
     EmailPipeline = Pipeline.new [
       EmailReplyFilter,
