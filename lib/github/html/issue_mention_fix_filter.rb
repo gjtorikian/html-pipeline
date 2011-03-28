@@ -10,7 +10,6 @@ module GitHub
         doc.search('text()').each do |node|
           content = node.to_html
 
-          next if !content.include?('#')
           next if !WORDS.any? { |w| content.include?(w) }
           next if node.ancestors('pre, code, a').any?
 
