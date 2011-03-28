@@ -50,7 +50,7 @@ module GitHub
 
       def repository
         @context[:repository] ||
-          raise(Error, "context must incude the repository")
+          raise(Error, "context must include the repository")
       end
     end
   end
