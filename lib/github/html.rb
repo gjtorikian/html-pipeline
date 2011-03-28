@@ -76,6 +76,7 @@ module GitHub
 
     CommitMessagePipeline = Pipeline.new [
       lambda { |doc, _| "<p>#{doc}</p>" },
+      MentionFilter,
       CommitMentionFilter,
       IssueMentionFixFilter,
       EmojiFilter,
