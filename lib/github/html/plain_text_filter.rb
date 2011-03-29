@@ -8,6 +8,12 @@ module GitHub::HTML
       def call
         links = []
 
+        doc.children.first.children.each do |node|
+          if !%w[text a].include?(node.name)
+            node.replace Nokogiri::XML::Text.new(node.to_s, doc)
+          end
+        end
+
         doc.search("a").each do |node|
           links << File.join(GitHub::SSLHost, node["href"])
 
