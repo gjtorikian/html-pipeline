@@ -9,7 +9,7 @@ module GitHub
 
           next if node.ancestors('pre, code, a').any?
 
-          html = IssueReference.auto_link(repository, text, base_url)
+          html = IssueReference.auto_link(repository, content, base_url)
 
           next if html == content
 
