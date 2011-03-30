@@ -35,7 +35,7 @@ module GitHub::HTML
     end
 
     Pipeline = ::GitHub::HTML::Pipeline.new [
-      lambda { |doc, _| "<p>#{doc}</p>" },
+      lambda { |doc, _| "<p>#{EscapeUtils.escape_html(doc)}</p>" },
       ::GitHub::HTML::IssueMentionFilter,
       ::GitHub::HTML::CommitMentionFilter,
       Filter,
