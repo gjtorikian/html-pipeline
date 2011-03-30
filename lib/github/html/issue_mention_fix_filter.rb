@@ -7,7 +7,6 @@ module GitHub
         doc.search('text()').each do |node|
           content = node.to_html
 
-          next if !WORDS.any? { |w| content.include?(w) }
           next if node.ancestors('pre, code, a').any?
 
           html = IssueReference.auto_link(repository, text, base_url)
