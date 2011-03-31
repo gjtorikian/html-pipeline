@@ -73,6 +73,8 @@ module GitHub
       EmojiFilter
     ]
 
+    # Pipeline used for commit messages. This one is kind of weird because
+    # commit messages are treated as preformatted plain text.
     CommitMessagePipeline = Pipeline.new [
       PlainTextInputFilter,
       MentionFilter,
