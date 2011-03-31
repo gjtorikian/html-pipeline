@@ -13,17 +13,17 @@ module GitHub
     # Filter implementations
     require 'github/html/filter'
     require 'github/html/autolink_filter'
-    require 'github/html/markdown_filter'
-    require 'github/html/textile_filter'
-    require 'github/html/email_reply_filter'
     require 'github/html/camo_filter'
-    require 'github/html/sanitization_filter'
-    require 'github/html/@mention_filter'
+    require 'github/html/commit_mention_filter'
+    require 'github/html/email_reply_filter'
+    require 'github/html/emoji_filter'
     require 'github/html/issue_mention_filter'
     require 'github/html/issue_mention_fix_filter'
-    require 'github/html/commit_mention_filter'
-    require 'github/html/emoji_filter'
+    require 'github/html/markdown_filter'
+    require 'github/html/@mention_filter'
     require 'github/html/plain_text_input_filter'
+    require 'github/html/sanitization_filter'
+    require 'github/html/textile_filter'
 
     # Contruct a pipeline for running multiple HTML filters.
     #
