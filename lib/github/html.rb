@@ -74,20 +74,18 @@ module GitHub
     ]
 
     CommitMessagePipeline = Pipeline.new [
-      lambda { |doc, _| "<p>#{doc}</p>" },
+      PlainTextInputFilter,
       MentionFilter,
       CommitMentionFilter,
       IssueMentionFilter,
       IssueMentionFixFilter,
       EmojiFilter,
-      AutolinkFilter,
-      lambda { |doc, _| doc.children.first.children }
+      AutolinkFilter
     ]
 
     ShortCommitMessagePipeline = Pipeline.new [
-      lambda { |doc, _| "<p>#{doc}</p>" },
-      EmojiFilter,
-      lambda { |doc, _| doc.children.first.children }
+      PlainTextInputFilter,
+      EmojiFilter
     ]
 
     # Pipeline used for email replies.
