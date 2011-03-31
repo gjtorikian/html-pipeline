@@ -23,6 +23,7 @@ module GitHub
     require 'github/html/issue_mention_fix_filter'
     require 'github/html/commit_mention_filter'
     require 'github/html/emoji_filter'
+    require 'github/html/plain_text_input_filter'
 
     # Contruct a pipeline for running multiple HTML filters.
     #
