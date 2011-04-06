@@ -22,6 +22,7 @@ module GitHub::HTML
       :elements => %w(
         h1 h2 h3 h4 h5 h6 h7 h8 br b i strong em a pre code img tt
         ins del sup sub p ol ul table th tr td blockquote dl dt dd
+        kbd q samp var
       ),
       :attributes => {
         'a'   => ['href'],
