@@ -19,9 +19,14 @@ module GitHub::HTML
       doc.search("img").each do |element|
         next if element['src'].nil?
         src = element['src'].strip
-        next if src !~ /^http:/
+        src = src.sub(%r!^http://github.com!, 'https://github.com')
         next if context[:disable_asset_proxy]
-        element['src'] = asset_proxy_url(src)
+
+        if src =~ /^http:/
+          element['src'] = asset_proxy_url(src)
+        else
+          element['src'] = src
+        end
       end
     end
 
