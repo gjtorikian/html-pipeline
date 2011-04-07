@@ -18,7 +18,6 @@ module GitHub
     require 'github/html/email_reply_filter'
     require 'github/html/emoji_filter'
     require 'github/html/issue_mention_filter'
-    require 'github/html/issue_mention_fix_filter'
     require 'github/html/markdown_filter'
     require 'github/html/@mention_filter'
     require 'github/html/plain_text_input_filter'
@@ -80,7 +79,6 @@ module GitHub
       MentionFilter,
       CommitMentionFilter,
       IssueMentionFilter,
-      IssueMentionFixFilter,
       EmojiFilter,
       AutolinkFilter
     ]
