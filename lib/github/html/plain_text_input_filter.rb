@@ -4,7 +4,7 @@ module GitHub::HTML
   class PlainTextInputFilter < Filter
     def initialize(text, context={})
       raise TypeError, "text cannot be HTML" if text.is_a?(DocumentFragment)
-      @text = "<div>#{EscapeUtils.escape_html(text)}</div>"
+      @text = "<div>#{EscapeUtils.escape_html(text.to_s)}</div>"
       super(@text, context)
     end
 
