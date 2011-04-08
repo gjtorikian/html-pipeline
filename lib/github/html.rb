@@ -83,11 +83,6 @@ module GitHub
       AutolinkFilter
     ]
 
-    ShortCommitMessagePipeline = Pipeline.new [
-      PlainTextInputFilter,
-      EmojiFilter
-    ]
-
     # Pipeline used for email replies.
     EmailPipeline = Pipeline.new [
       EmailReplyFilter,
