@@ -30,7 +30,7 @@ module GitHub::HTML
     def apply_filter(method_name)
       doc.search('text()').each do |node|
         content = node.to_html
-        next if content !~ /(#|gh-)/                 # perf
+        next if content !~ /(#|gh-)/i                # perf
         next if node.ancestors('pre, code, a').any?  # <- slow
         html = send(method_name, content)
         next if html == content
