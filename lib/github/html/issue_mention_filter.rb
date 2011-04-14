@@ -75,7 +75,7 @@ module GitHub::HTML
     def replace_bare_issue_mentions(text)
       text.gsub(/(^|close[sd]? |fixe[sd] | |\W)(gh-|#)(\d+)\b/i) do |match|
         word, pound, number = $1, $2, $3.to_i
-        if reference = issue_reference(word, number, repository)
+        if reference = issue_reference(word, number)
           issue = reference.issue
           "#{word}<a href='#{issue.url}'>#{pound}#{number}</a>"
         else
@@ -101,9 +101,23 @@ module GitHub::HTML
     #
     # Returns an IssueReference when the mention is valid, or nil when the
     # issue could not be found.
-    def issue_reference(word, number, repo=repository)
-      repo = find_repository(repo)
-      if repo && issue = repo.issues.find_by_number(number)
+    def issue_reference(word, number, repo=nil)
+      repository = find_repository(repo)
+      return if repository.nil?
+
+      # first try to find the issue in the current or explicitly
+      # referenced repository
+      issue = repository.issues.find_by_number(number)
+
+      # if the issue wasn't found, try searching in the root fork but only when
+      # not explicit repository reference was given (i.e., "foo/bar#33" won't
+      # search in the root fork).
+      if issue.nil? && repo.blank? && (repository = repository.source)
+        issue = repository.issues.find_by_number(number)
+      end
+
+      # create the IssueReference and add to our list of all issue mentions
+      if issue
         reference = IssueReference.new(issue, word.to_s)
         issue_mentions << reference
         reference
@@ -120,9 +134,9 @@ module GitHub::HTML
     # located.
     def find_repository(repo)
       case repo
-      when Repository, nil
+      when Repository
         repo
-      when /^\s*$/
+      when /^\s*$/, nil
         repository
       when /\//
         Repository.cached_by_name_with_owner(repo)
