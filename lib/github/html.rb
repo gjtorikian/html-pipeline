@@ -22,6 +22,7 @@ module GitHub
     require 'github/html/@mention_filter'
     require 'github/html/plain_text_input_filter'
     require 'github/html/sanitization_filter'
+    require 'github/html/syntax_highlight_filter'
     require 'github/html/textile_filter'
 
     # Contruct a pipeline for running multiple HTML filters.
@@ -65,6 +66,7 @@ module GitHub
     GFMPipeline = Pipeline.new [
       MarkdownFilter,
       SanitizationFilter,
+      SyntaxHighlightFilter,
       CamoFilter,
       MentionFilter,
       IssueMentionFilter,
