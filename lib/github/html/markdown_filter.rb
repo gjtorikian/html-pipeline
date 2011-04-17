@@ -23,43 +23,9 @@ module GitHub::HTML
     def call
       flags = (context[:autolink] == false) ? [] : [:autolink]
       flags << :fenced_code
-      flags << :hard_wrap unless context[:gfm] == false
-      html = GitHub::Markdown.new(markdown_text, *flags).to_html
+      flags << :hard_wrap if context[:gfm] != false
+      html = GitHub::Markdown.new(@text, *flags).to_html
       @doc = parse_html(html)
-    end
-
-    # Markdown input text. This includes GFM line-end processing when enabled.
-    #
-    # Returns the Markdown text as a String
-    def markdown_text
-      if context[:gfm] != false
-        fix_markdown_quirks(@text) unless GitHub::Markdown.to_s =~ /redcarpet/i
-        @text
-      else
-        @text
-      end
-    end
-
-    # TODO move to GitHub::HTML::ManualWrapFilter or something like that.
-    def fix_markdown_quirks(text)
-      # Extract pre blocks
-      extractions = []
-      text.gsub!(%r{^<pre>.*?</pre>}m) do |match|
-        extractions << match
-        "{gfm-extraction-#{extractions.size}}"
-      end
-
-      # in very clear cases, let newlines become <br /> tags
-      text.gsub!(/^[\w\<][^\n]*\n+/) do |x|
-        x =~ /\n{2}/ ? x : (x.strip!; x << "  \n")
-      end
-
-      # Insert pre block extractions
-      text.gsub!(/\{gfm-extraction-(\d+)\}/) do
-        "\n\n" + extractions.shift
-      end
-
-      text
     end
   end
 end
