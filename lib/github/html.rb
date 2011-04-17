@@ -57,7 +57,8 @@ module GitHub
     # related features.
     SimplePipeline = Pipeline.new [
       SanitizationFilter,
-      CamoFilter
+      CamoFilter,
+      SyntaxHighlightFilter
     ]
 
     # Pipeline used for most types of user provided content like comments
