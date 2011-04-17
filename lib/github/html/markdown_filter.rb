@@ -23,6 +23,7 @@ module GitHub::HTML
     def call
       flags = (context[:autolink] == false) ? [] : [:autolink]
       flags << :fenced_code
+      flags << :hard_wrap unless context[:gfm] == false
       html = GitHub::Markdown.new(markdown_text, *flags).to_html
       @doc = parse_html(html)
     end
@@ -32,7 +33,8 @@ module GitHub::HTML
     # Returns the Markdown text as a String
     def markdown_text
       if context[:gfm] != false
-        fix_markdown_quirks(@text)
+        fix_markdown_quirks(@text) unless GitHub::Markdown.to_s =~ /redcarpet/i
+        @text
       else
         @text
       end
