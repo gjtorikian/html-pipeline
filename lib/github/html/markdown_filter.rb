@@ -22,7 +22,7 @@ module GitHub::HTML
     # and convert into a DocumentFragment.
     def call
       flags = (context[:autolink] == false) ? [] : [:autolink]
-      flags << :fenced_code << :tables << :strikethrough
+      flags << :fenced_code << :tables << :strikethrough << :lax_htmlblock
       flags << :hard_wrap if context[:gfm] != false
       html = GitHub::Markdown.new(@text, *flags).to_html
       @doc = parse_html(html)
