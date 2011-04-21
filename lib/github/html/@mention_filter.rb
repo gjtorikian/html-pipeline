@@ -46,7 +46,7 @@ module GitHub::HTML
         login = $1
         if login == 'mention' || login == 'mentioned'
           link = link_to_mention_info(login)
-        elsif user = User.cached_by_login(login)
+        elsif user = User.find_by_login(login)
           mentioned_users << user
           link = link_to_mentioned_user(user)
         else

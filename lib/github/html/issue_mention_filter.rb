@@ -139,9 +139,9 @@ module GitHub::HTML
       when /^\s*$/, nil
         repository
       when /\//
-        Repository.cached_by_name_with_owner(repo)
+        Repository.find_by_name_with_owner(repo)
       else
-        if repository && user = User.cached_by_login(repo)
+        if repository && user = User.find_by_login(repo)
           repository.network_repositories.find_by_owner_id(user.id)
         end
       end
