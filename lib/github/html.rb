@@ -17,6 +17,7 @@ module GitHub
     require 'github/html/commit_mention_filter'
     require 'github/html/email_reply_filter'
     require 'github/html/emoji_filter'
+    require 'github/html/https_filter'
     require 'github/html/issue_mention_filter'
     require 'github/html/markdown_filter'
     require 'github/html/@mention_filter'
@@ -69,6 +70,7 @@ module GitHub
       SanitizationFilter,
       SyntaxHighlightFilter,
       CamoFilter,
+      HttpsFilter,
       MentionFilter,
       IssueMentionFilter,
       CommitMentionFilter,
