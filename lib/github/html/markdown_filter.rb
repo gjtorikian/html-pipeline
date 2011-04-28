@@ -21,8 +21,8 @@ module GitHub::HTML
     # Convert Markdown to HTML using the best available implementation
     # and convert into a DocumentFragment.
     def call
-      flags = (context[:autolink] == false) ? [] : [:autolink]
-      flags << :fenced_code << :tables << :strikethrough << :lax_htmlblock << :gh_blockcode
+      flags = [:fenced_code, :tables, :strikethrough, :lax_htmlblock, :gh_blockcode, :strict]
+      flags << :autolink if context[:autolink] != false
       flags << :hard_wrap if context[:gfm] != false
       html = GitHub::Markdown.new(@text, *flags).to_html
       @doc = parse_html(html)
