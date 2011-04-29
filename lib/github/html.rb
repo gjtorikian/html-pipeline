@@ -109,7 +109,7 @@ module GitHub
 end
 
 # XXX nokogiri monkey patches
-class Nokogiri::XML::Text < Nokogiri::XML::CharacterData
+class Nokogiri::XML::Node
   # Work around an issue with utf-8 encoded data being erroneously converted to
   # ... some other shit when replacing text nodes. See 'utf-8 output 2' in
   # user_content_test.rb for details.
