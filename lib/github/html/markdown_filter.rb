@@ -25,7 +25,7 @@ module GitHub::HTML
         :fenced_code, :tables,
         :strikethrough, :lax_htmlblock,
         :gh_blockcode, :no_intraemphasis,
-        :spaced_header
+        :space_header
       ]
       flags << :autolink if context[:autolink] != false
       flags << :hard_wrap if context[:gfm] != false
