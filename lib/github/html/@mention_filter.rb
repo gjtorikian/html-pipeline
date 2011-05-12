@@ -53,7 +53,7 @@ module GitHub::HTML
     def mention_link_filter(text, base_url='/')
       text.gsub MentionPattern do |match|
         login = $1
-        if login == 'mention' || login == 'mentioned'
+        if login =~ /^mention(s|ed|)$/
           link = link_to_mention_info(login)
         elsif user = User.find_by_login(login)
           mentioned_users << user
