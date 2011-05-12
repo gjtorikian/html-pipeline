@@ -11,7 +11,16 @@ module GitHub::HTML
   #   :mentioned_users - An array of User objects that were mentioned.
   #
   class MentionFilter < Filter
-    MentionPattern = /(?:^|\W)@([a-z0-9][a-z0-9-]*)(?=\W|$)/i
+    MentionPattern = /
+      (?:^|\W)                   # beginning of string or non-word char
+      @([a-z0-9][a-z0-9-]*)      # @username
+      (?=
+        \.[ \t]|                 # dot followed by space
+        \.$|                     # dot at end of line
+        [^0-9a-zA-Z_.]|          # non-word character except dot
+        $                        # end of line
+      )
+    /ix
 
     def call
       mentioned_users.clear
