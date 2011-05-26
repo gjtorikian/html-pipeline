@@ -67,6 +67,7 @@ module GitHub::HTML
       'beer' => 'e047',
       'thumbsup' => 'e00e',
       'thumbsdown' => 'e421',
+      'cloud' => 'e049',
 
       # Custom emoji
       'octocat' => nil
