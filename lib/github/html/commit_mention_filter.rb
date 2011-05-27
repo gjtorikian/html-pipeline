@@ -28,7 +28,7 @@ module GitHub::HTML
     def apply_filter(method_name)
       doc.search('text()').each do |node|
         content = node.to_html
-        next unless content.include?('@') || content =~ /[0-9a-f]{40}\b/
+        next unless content.include?('@') || content =~ /[0-9a-f]{7,40}\b/
         next if node.ancestors('pre, code, a').any?
         html = send(method_name, content)
         next if html == content
@@ -60,12 +60,17 @@ module GitHub::HTML
     end
 
     # SHA =>
-    #   <a href='/user/repo/commit/SHA'>user/repo@SHA</a>
+    #   <a href='/user/repo/commit/SHA'>SHA</a>
     def replace_bare_commit_mentions(text)
-      text.gsub(/(^|[({@\s\[])([0-9a-f]{40})\b/) do |match|
+      text.gsub(/(^|[({@\s\[])([0-9a-f]{7,40})\b/) do |match|
         leader, sha = $1, $2
         url = [repo_url, 'commit', sha].join('/')
-        "#{leader}<a href='#{url}'>#{sha[0, 7]}</a>"
+
+        if repository.walker.ref_to_sha(sha)
+          "#{leader}<a href='#{url}'>#{sha[0, 7]}</a>"
+        else
+          match
+        end
       end
     end
 
