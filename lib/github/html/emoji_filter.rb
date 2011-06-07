@@ -68,6 +68,21 @@ module GitHub::HTML
       'thumbsup' => 'e00e',
       'thumbsdown' => 'e421',
       'cloud' => 'e049',
+      'rainbow' => 'e44c',
+      'rose' => 'e032',
+      'sunflower' => 'e305',
+      'apple' => 'e345',
+      'lips' => 'e41c',
+      'nail_care' => 'e31d',
+      'couple' => 'e428',
+      'princess' => 'e51c',
+      'dog' => 'e052',
+      'cat' => 'e04f',
+      'horse' => 'e01a',
+      'dolphin' => 'e520',
+      'koala' => 'e527',
+      'kiss' => 'e003',
+      'broken_heart' => 'e023',
 
       # Custom emoji
       'octocat' => nil
