@@ -8,7 +8,6 @@ module GitHub::HTML
     def call
       doc.search('text()').each do |node|
         content = node.to_html
-        next if !content.include?('http')
         next if node.ancestors('pre, code, a').any?
         html = auto_link(content, :link => :urls)
         next if html == content
