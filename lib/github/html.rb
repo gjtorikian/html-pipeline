@@ -101,18 +101,9 @@ module GitHub
       end
     end
 
-    class TruncatorFilter < Filter
-      def call
-        return doc unless len = context.delete(:len)
-        return doc if     len.zero?
-        HTMLTruncator.new(doc, len).document
-      end
-    end
-
     ShortCommitMessagePipeline = Pipeline.new [
       CommitMessagePipeline,
-      TextLinkFilter,
-      TruncatorFilter
+      TextLinkFilter
     ]
 
     # Pipeline used for email replies.
