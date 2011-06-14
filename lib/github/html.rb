@@ -104,7 +104,7 @@ module GitHub
     class TruncatorFilter < Filter
       def call
         return doc unless len = context.delete(:len)
-        HTMLTruncator.new(doc, len).document.child.inner_html
+        HTMLTruncator.new(doc, len).document
       end
     end
 
