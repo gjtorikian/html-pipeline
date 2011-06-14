@@ -88,6 +88,40 @@ module GitHub
       AutolinkFilter
     ]
 
+    class TextLinkFilter < Filter
+      def call
+        unless url = context.delete(:url)
+          return doc
+        end
+
+        doc.child.children.each do |node|
+          unless node.text?
+            next
+          end
+
+          node.replace("<a href=\"#{url}\">#{node.to_s}</a>")
+        end
+
+        doc
+      end
+    end
+
+    class TruncatorFilter < Filter
+      def call
+        unless len = context.delete(:len)
+          return doc
+        end
+
+        HTMLTruncator.new(doc, len).document.child.inner_html
+      end
+    end
+
+    ShortCommitMessagePipeline = Pipeline.new [
+      CommitMessagePipeline,
+      TextLinkFilter,
+      TruncatorFilter
+    ]
+
     # Pipeline used for email replies.
     EmailPipeline = Pipeline.new [
       EmailReplyFilter,
