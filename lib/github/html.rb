@@ -90,15 +90,10 @@ module GitHub
 
     class TextLinkFilter < Filter
       def call
-        unless url = context.delete(:url)
-          return doc
-        end
+        return doc unless url = context.delete(:url)
 
         doc.child.children.each do |node|
-          unless node.text?
-            next
-          end
-
+          next unless node.text?
           node.replace("<a href=\"#{url}\">#{node.to_s}</a>")
         end
 
@@ -108,10 +103,7 @@ module GitHub
 
     class TruncatorFilter < Filter
       def call
-        unless len = context.delete(:len)
-          return doc
-        end
-
+        return doc unless len = context.delete(:len)
         HTMLTruncator.new(doc, len).document.child.inner_html
       end
     end
