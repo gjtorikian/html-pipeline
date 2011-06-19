@@ -41,7 +41,7 @@ module GitHub::HTML
     def replace_global_commit_mentions(text)
       text.gsub(/(^|\s|[({\[])([\w-]+\/[\w.-]+)@([0-9a-f]{7,40})\b/) do |match|
         leader, repo, sha = $1, $2, $3
-        text  = "#{repo}@#{sha[0, 7]}"
+        text  = "#{repo}@<tt>#{sha[0, 7]}</tt>"
         "#{leader}<a href='#{commit_url(repo, sha)}'>#{text}</a>"
       end
     end
@@ -54,7 +54,7 @@ module GitHub::HTML
       text.gsub(/(^|[\s({\[])([\w-]+\/?[\w.-]*)?@([0-9a-f]{7,40})\b/) do |match|
         leader, repo, sha = $1, $2, $3
         url  = [repo_url(repo), 'commit', sha].join('/')
-        text = "#{repo}@#{sha[0, 7]}"
+        text = "#{repo}@<tt>#{sha[0, 7]}</tt>"
         "#{leader}<a href='#{url}'>#{text}</a>"
       end
     end
@@ -67,7 +67,7 @@ module GitHub::HTML
         url = [repo_url, 'commit', sha].join('/')
 
         if repository.walker.ref_to_sha(sha)
-          "#{leader}<a href='#{url}'>#{sha[0, 7]}</a>"
+          "#{leader}<a href='#{url}'><tt>#{sha[0, 7]}</tt></a>"
         else
           match
         end
