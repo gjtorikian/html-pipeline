@@ -46,7 +46,8 @@ module GitHub::HTML
         if reference = issue_reference(nil, issue, repo)
           text = "#{repo}##{issue}"
           url  = reference.issue.url
-          "#{leader}<a href='#{url}'>#{text}</a>"
+          title = reference.title
+          "#{leader}<a href='#{url}' title='#{title}'>#{text}</a>"
         else
           match
         end
@@ -63,7 +64,8 @@ module GitHub::HTML
         if reference = issue_reference(nil, issue, repo)
           text = "#{repo}##{issue}"
           url  = reference.issue.url
-          "#{leader}<a href='#{url}'>#{text}</a>"
+          title = reference.title
+          "#{leader}<a href='#{url}' title='#{title}'>#{text}</a>"
         else
           match
         end
@@ -77,7 +79,8 @@ module GitHub::HTML
         word, pound, number = $1, $2, $3.to_i
         if reference = issue_reference(word, number)
           issue = reference.issue
-          "#{word}<a href='#{issue.url}'>#{pound}#{number}</a>"
+          title = reference.title
+          "#{word}<a href='#{issue.url}' title='#{title}'>#{pound}#{number}</a>"
         else
           match
         end
@@ -150,6 +153,10 @@ module GitHub::HTML
 
   # Object added to the context hash to record issue references.
   class IssueReference < Struct.new(:issue, :type)
+    def title
+      @title ||= Rack::Utils.escape_html(issue.title)
+    end
+
     def close?
       type.to_s =~ /(close|fix)/i
     end
