@@ -112,6 +112,7 @@ module GitHub
       MentionFilter,
       IssueMentionFilter,
       CommitMentionFilter,
+      EmojiFilter,
       AutolinkFilter
     ]
 
