@@ -16,6 +16,8 @@ module GitHub::HTML
   #
   # This filter does not write additional information to the context.
   class SanitizationFilter < Filter
+    LISTS     = Set.new(%w(ul ol).freeze)
+    LIST_ITEM = 'li'.freeze
     # The main sanitization whitelist. Only these elements and attributes are
     # allowed through by default.
     WHITELIST = {
@@ -55,8 +57,8 @@ module GitHub::HTML
         # containing markup.
         lambda { |env|
           name, node = env[:node_name], env[:node]
-          if name == 'li' && node.ancestors.any?{ |n| %w[ul ol].include?(n.name) }
-            {:whitelist => true}
+          if name == LIST_ITEM && node.ancestors.any?{ |n| LISTS.include?(n.name) }
+            {:node_whitelist => [node]}
           end
         }
       ]
