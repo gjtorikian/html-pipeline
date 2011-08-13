@@ -75,7 +75,7 @@ module GitHub::HTML
     # #num =>
     #   <a href='/user/project/issues/num'>#num</a>
     def replace_bare_issue_mentions(text)
-      text.gsub(/(^|close[sd]? |fixe[sd]? |fix | |\W)(gh-|#)(\d+)\b/i) do |match|
+      text.gsub(/(^|close[sd]? |fixe[sd]? |resolve[sd]? |fix | |\W)(gh-|#)(\d+)\b/i) do |match|
         word, pound, number = $1, $2, $3.to_i
         if reference = issue_reference(word, number)
           issue = reference.issue
@@ -158,7 +158,7 @@ module GitHub::HTML
     end
 
     def close?
-      type.to_s =~ /(close|fix)/i
+      type.to_s =~ /(close|fix|resolve)/i
     end
   end
 end
