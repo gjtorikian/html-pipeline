@@ -8,7 +8,7 @@ module GitHub::HTML
       doc.search('pre').each do |node|
         next unless lang = node['lang']
         text = node.inner_text
-        html = Pygments.highlight(text, :lexer => lang)
+        html = GitHub::Colorize.highlight(text, :lexer => lang)
         node.replace(html)
       end
     end
