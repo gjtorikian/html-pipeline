@@ -1,4 +1,4 @@
-require 'github/albino'
+require 'github/linguist'
 
 module GitHub::HTML
   # HTML Filter that syntax highlights code blocks wrapped
@@ -8,7 +8,7 @@ module GitHub::HTML
       doc.search('pre').each do |node|
         next unless lang = node['lang']
         text = node.inner_text
-        html = GitHub::Colorize.highlight(text, :lexer => lang)
+        html = Pygments::Lexer[lang].highlight(text)
         node.replace(html)
       end
     end
