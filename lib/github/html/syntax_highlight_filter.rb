@@ -6,6 +6,7 @@ module GitHub::HTML
   class SyntaxHighlightFilter < Filter
     def call
       doc.search('pre').each do |node|
+        next unless node['lang']
         next unless lexer = Pygments::Lexer[node['lang']]
         text = node.inner_text
         html = lexer.highlight(text)
