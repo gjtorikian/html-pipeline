@@ -47,7 +47,7 @@ module GitHub::HTML
           text = "#{repo}##{issue}"
           url  = reference.issue.url
           title = reference.title
-          "#{leader}<a href='#{url}' title='#{title}'>#{text}</a>"
+          "#{leader}<a href='#{url}' class='issue-link' title='#{title}'>#{text}</a>"
         else
           match
         end
@@ -65,7 +65,7 @@ module GitHub::HTML
           text = "#{repo}##{issue}"
           url  = reference.issue.url
           title = reference.title
-          "#{leader}<a href='#{url}' title='#{title}'>#{text}</a>"
+          "#{leader}<a href='#{url}' class='issue-link' title='#{title}'>#{text}</a>"
         else
           match
         end
@@ -80,7 +80,7 @@ module GitHub::HTML
         if reference = issue_reference(word, number)
           issue = reference.issue
           title = reference.title
-          "#{word}<a href='#{issue.url}' title='#{title}'>#{pound}#{number}</a>"
+          "#{word}<a href='#{issue.url}' class='issue-link' title='#{title}'>#{pound}#{number}</a>"
         else
           match
         end
