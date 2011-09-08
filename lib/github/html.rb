@@ -106,6 +106,10 @@ module GitHub
       TextLinkFilter
     ]
 
+    LongCommitMessagePipeline = Pipeline.new [
+      PlainTextInputFilter
+    ]
+
     # Pipeline used for email replies.
     EmailPipeline = Pipeline.new [
       EmailReplyFilter,
