@@ -6,14 +6,9 @@ module GitHub::HTML
     include ActionView::Helpers::TextHelper
 
     def call
-      doc.search('text()').each do |node|
-        content = node.to_html
-        next if node.ancestors('pre, code, a').any?
-        html = auto_link(content, :link => :urls)
-        next if html == content
-        node.replace(html)
-      end
-      doc
+      html = doc.to_html
+      html = auto_link(html, :link => :urls)
+      parse_html(html)
     end
   end
 end
