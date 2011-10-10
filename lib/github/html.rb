@@ -88,22 +88,9 @@ module GitHub
       AutolinkFilter
     ]
 
-    class TextLinkFilter < Filter
-      def call
-        return doc unless url = context.delete(:url)
-
-        doc.child.children.each do |node|
-          next unless node.text?
-          node.replace("<a class=\"message\" href=\"#{url}\">#{node.to_s}</a>")
-        end
-
-        doc
-      end
-    end
-
     ShortCommitMessagePipeline = Pipeline.new [
       CommitMessagePipeline,
-      TextLinkFilter
+      CommitMessageLinkFilter
     ]
 
     LongCommitMessagePipeline = Pipeline.new [
