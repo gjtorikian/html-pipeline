@@ -94,7 +94,7 @@ module GitHub
 
         doc.child.children.each do |node|
           next unless node.text?
-          node.replace("<a href=\"#{url}\">#{node.to_s}</a>")
+          node.replace("<a class=\"message\" href=\"#{url}\">#{node.to_s}</a>")
         end
 
         doc
