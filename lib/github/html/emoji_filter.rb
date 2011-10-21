@@ -85,7 +85,8 @@ module GitHub::HTML
       'broken_heart' => 'e023',
 
       # Custom emoji
-      'octocat' => nil
+      'octocat' => nil,
+      'metal' => nil
     }
 
     # Build a regexp that matches all valid :emoji: names.
