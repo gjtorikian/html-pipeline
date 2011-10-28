@@ -86,7 +86,8 @@ module GitHub::HTML
 
       # Custom emoji
       'octocat' => nil,
-      'metal' => nil
+      'metal' => nil,
+      'shipit' => nil
     }
 
     # Build a regexp that matches all valid :emoji: names.
