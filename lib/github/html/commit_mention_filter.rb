@@ -66,11 +66,36 @@ module GitHub::HTML
         leader, sha = $1, $2
         url = [repo_url, 'commit', sha].join('/')
 
-        if repository.walker.ref_to_sha(sha)
-          "#{leader}<a href='#{url}' class='commit-link'><tt>#{sha[0, 7]}</tt></a>"
+        if reference = commit_reference(sha)
+          "#{leader}<a href='#{url}' class='commit-link'><tt>#{reference.short_sha}</tt></a>"
         else
           match
         end
+      end
+    end
+
+    class CommitReference
+      def initialize(repository, commit)
+        @repository = repository
+        @commit     = commit
+      end
+
+      def short_sha
+        @commit.sha[0, 7]
+      end
+    end
+
+    def commit_mentions
+      context[:commits] ||= []
+    end
+
+    def commit_reference(sha)
+      sha = repository.walker.ref_to_sha(sha)
+
+      if commit = repository.commit(sha)
+        reference = CommitReference.new(repository, commit)
+        commit_mentions << reference
+        reference
       end
     end
 
