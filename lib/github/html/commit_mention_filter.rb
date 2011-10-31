@@ -80,6 +80,8 @@ module GitHub::HTML
         @commit     = commit
       end
 
+      attr_reader :repository, :commit
+
       def short_sha
         @commit.sha[0, 7]
       end
