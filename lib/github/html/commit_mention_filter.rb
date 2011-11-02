@@ -74,6 +74,35 @@ module GitHub::HTML
       end
     end
 
+    # List of commits referenced.
+    #
+    # Returns an Array of CommitReference objects.
+    def commit_mentions
+      context[:commits] ||= []
+    end
+
+    # Create a CommitReference object that store a referenced commit and
+    # repository it belongs to and appends it to the list of mentioned commits
+    # stored in the context at commit_mentions.
+    #
+    # sha - the String SHA1 of the referenced commit.
+    #
+    # Returns a CommitReference object. If the SHA1 doesn't exists on the
+    #   repository, the reference's commit attribute returns a FakeCommit
+    #   instead of a real Grit::Commit.
+    def commit_reference(sha)
+      sha = repository.walker.ref_to_sha(sha)
+
+      if commit = repository.commit(sha)
+        reference = CommitReference.new(repository, commit)
+        commit_mentions << reference
+        reference
+      else
+        CommitReference.new(repository, FakeCommit.new(sha))
+      end
+    end
+
+    FakeCommit = Struct.new(:sha)
     class CommitReference
       def initialize(repository, commit)
         @repository = repository
@@ -84,23 +113,6 @@ module GitHub::HTML
 
       def short_sha
         @commit.sha[0, 7]
-      end
-    end
-    FakeCommit = Struct.new(:sha)
-
-    def commit_mentions
-      context[:commits] ||= []
-    end
-
-    def commit_reference(sha)
-      sha = repository.walker.ref_to_sha(sha)
-
-      if commit = repository.commit(sha)
-        reference = CommitReference.new(repository, commit)
-        commit_mentions << reference
-        reference
-      else
-        CommitReference.new(repository, FakeCommit.new(sha))
       end
     end
 
