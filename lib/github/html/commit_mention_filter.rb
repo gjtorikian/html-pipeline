@@ -86,6 +86,7 @@ module GitHub::HTML
         @commit.sha[0, 7]
       end
     end
+    FakeCommit = Struct.new(:sha)
 
     def commit_mentions
       context[:commits] ||= []
@@ -98,6 +99,8 @@ module GitHub::HTML
         reference = CommitReference.new(repository, commit)
         commit_mentions << reference
         reference
+      else
+        CommitReference.new(repository, FakeCommit.new(sha))
       end
     end
 
