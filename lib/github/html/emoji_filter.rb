@@ -87,7 +87,8 @@ module GitHub::HTML
       # Custom emoji
       'octocat' => nil,
       'metal' => nil,
-      'shipit' => nil
+      'shipit' => nil,
+      'squirrel' => nil
     }
 
     # Build a regexp that matches all valid :emoji: names.
@@ -115,7 +116,7 @@ module GitHub::HTML
 
       text.gsub EmojiPattern do |match|
         name = $1
-        "<img class='emoji' title=':#{name}:' alt=':#{name}:' src='#{GitHub.asset_host_url}/images/icons/emoji/v2/#{name}.png' height='20' width='20' align='absmiddle' />"
+        "<img class='emoji' title=':#{name}:' alt=':#{name}:' src='#{GitHub.asset_host_url}/images/icons/emoji/v3/#{name}.png' height='20' width='20' align='absmiddle' />"
       end
     end
 
