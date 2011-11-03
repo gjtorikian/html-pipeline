@@ -95,11 +95,7 @@ module GitHub::HTML
 
       if commit = repository.commit(sha)
         reference = CommitReference.new(repository, commit)
-
-        if !commit_mentions.include?(reference)
-          commit_mentions << reference
-        end
-
+        commit_mentions << reference
         reference
       elsif sha
         CommitReference.new(repository, FakeCommit.new(sha))
@@ -114,11 +110,6 @@ module GitHub::HTML
       end
 
       attr_reader :repository, :commit
-
-      def ==(other)
-        other.commit.sha == @commit.sha &&
-          other.repository.id == @repository.id
-      end
 
       def short_sha
         @commit.sha[0, 7]
