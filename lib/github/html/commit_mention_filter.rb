@@ -97,7 +97,7 @@ module GitHub::HTML
         reference = CommitReference.new(repository, commit)
         commit_mentions << reference
         reference
-      else
+      elsif sha
         CommitReference.new(repository, FakeCommit.new(sha))
       end
     end
