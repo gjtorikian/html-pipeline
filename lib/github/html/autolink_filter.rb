@@ -6,7 +6,7 @@ module GitHub::HTML
     include ActionView::Helpers::TextHelper
 
     def call
-      return doc if context[:autolink] != false
+      return doc if context[:autolink] == false
       html = doc.to_html
       html = auto_link(html, :link => :urls)
       @doc = parse_html(html)
