@@ -27,7 +27,6 @@ module GitHub::HTML
         :gh_blockcode, :no_intraemphasis,
         :space_header
       ]
-      flags << :autolink if context[:autolink] != false
       flags << :hard_wrap if context[:gfm] != false
       html = GitHub::Markdown.new(@text, *flags).to_html
       @doc = parse_html(html)

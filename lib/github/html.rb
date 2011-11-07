@@ -70,6 +70,7 @@ module GitHub
       MarkdownFilter,
       SanitizationFilter,
       SyntaxHighlightFilter,
+      AutolinkFilter,
       CamoFilter,
       HttpsFilter,
       MentionFilter,
