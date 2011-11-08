@@ -96,5 +96,15 @@ module GitHub::HTML
       html = call(input, context)
       GitHub::HTML::parse(html)
     end
+
+    # Like call but guarantees that a string of HTML markup is returned.
+    def self.to_html(input, context={})
+      output = call(input, context)
+      if output.respond_to?(:to_html)
+        output.to_html
+      else
+        output.to_s
+      end
+    end
   end
 end
