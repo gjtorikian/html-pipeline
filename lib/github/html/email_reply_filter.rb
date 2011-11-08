@@ -9,18 +9,13 @@ module GitHub::HTML
   class EmailReplyFilter < Filter
     include EscapeUtils
 
+    # The plain text input.
+    attr_reader :text
+
     def initialize(text, context={})
       raise TypeError, "text cannot be HTML" if text.is_a?(DocumentFragment)
       @text = text.to_s
-      @context = context
-      @doc = nil
-    end
-
-    # Convert Markdown to HTML using the best available implementation
-    # and convert into a DocumentFragment.
-    def call
-      html = format_email_reply(@text)
-      @doc = parse_html(html)
+      super nil, context
     end
 
     EMAIL_HIDDEN_HEADER    = %(<span class="email-hidden-toggle"><a href="#">Show quoted text</a></span><div class="email-hidden-reply">).freeze
@@ -41,7 +36,7 @@ module GitHub::HTML
     # markdown step.
     #
     # Returns the email comment HTML as a String
-    def format_email_reply(text)
+    def call
       found_hidden = nil
       paragraphs = EmailReplyParser.read(text.dup).fragments.map do |fragment|
         pieces = [escape_html(fragment.to_s.strip)]

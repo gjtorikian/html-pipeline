@@ -23,6 +23,7 @@ module GitHub::HTML
       else
         apply_filter :replace_global_commit_mentions
       end
+      doc
     end
 
     def apply_filter(method_name)
