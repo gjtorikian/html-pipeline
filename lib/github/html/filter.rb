@@ -79,11 +79,7 @@ module GitHub::HTML
     # provided, it is parsed and returned; otherwise, the DocumentFragment is
     # returned unmodified.
     def parse_html(html)
-      if html.is_a?(String)
-        DocumentFragment.parse(html)
-      else
-        html
-      end
+      GitHub::HTML.parse(html)
     end
 
     # Perform a filter on doc with the given context.
@@ -92,6 +88,13 @@ module GitHub::HTML
     # markup.
     def self.call(doc, context={})
       new(doc, context).call
+    end
+
+    # Like call but guarantees that a DocumentFragment is returned, even when
+    # the last filter returns a String.
+    def self.to_document(input, context={})
+      html = call(input, contact)
+      GitHub::HTML::parse(html)
     end
   end
 end
