@@ -27,7 +27,9 @@ module GitHub::HTML
         :space_header
       ]
       flags << :hard_wrap if context[:gfm] != false
-      GitHub::Markdown.new(@text, *flags).to_html
+      html = GitHub::Markdown.new(@text, *flags).to_html
+      html.rstrip!
+      html
     end
   end
 end
