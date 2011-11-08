@@ -65,6 +65,24 @@ module GitHub
         @context.each { |k, v| context[k] = v if !context.key?(k) }
         @filters.inject(html) { |doc, filter| filter.call(doc, context) }
       end
+
+      # Like call but guarantee the value returned is a DocumentFragment.
+      # Pipelines may return a DocumentFragment or a String. Callers that need a
+      # DocumentFragment should use this method.
+      def to_document(input, context={})
+        output = call(input, context)
+        GitHub::HTML.parse(output)
+      end
+
+      # Like call but guarantee the value returned is a string of HTML markup.
+      def to_html(input, context={})
+        output = call(input, context)
+        if output.respond_to?(:to_html)
+          output.to_html
+        else
+          output.to_s
+        end
+      end
     end
 
     # Pipeline providing sanitization and image hijacking but no mention
