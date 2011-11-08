@@ -10,6 +10,17 @@ module GitHub
     # Our DOM implementation.
     DocumentFragment = Nokogiri::HTML::DocumentFragment
 
+    # Parse a String into a DocumentFragment object. When a DocumentFragment is
+    # provided, return it verbatim.
+    def self.parse(document_or_html)
+      document_or_html ||= ''
+      if document_or_html.is_a?(String)
+        DocumentFragment.parse(document_or_html)
+      else
+        document_or_html
+      end
+    end
+
     # Filter implementations
     require 'github/html/filter'
     require 'github/html/autolink_filter'
