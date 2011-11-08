@@ -30,8 +30,8 @@ module GitHub
     # Contruct a pipeline for running multiple HTML filters.
     #
     # filters - Array of Filter objects. Each must respond to call(doc, context)
-    #           and return the modified DocumentFragment. Filters are performed
-    #           in the order provided.
+    #           and return the modified DocumentFragment or a String containing
+    #           HTML markup. Filters are performed in the order provided.
     # context - The default context hash. Values specified here may be
     #           overridden by individual pipeline runs.
     class Pipeline
@@ -48,7 +48,8 @@ module GitHub
       #           in place by filters to make extracted information available
       #           to the caller.
       #
-      # Returns a DocumentFragment.
+      # Returns a DocumentFragment or String containing HTML markup based on the
+      # output of the last filter in the pipeline.
       def call(html, context={})
         @context.each { |k, v| context[k] = v if !context.key?(k) }
         @filters.inject(html) { |doc, filter| filter.call(doc, context) }

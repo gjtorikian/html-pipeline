@@ -1,10 +1,12 @@
 module GitHub::HTML
   # Base class for user content HTML filters. Each filter takes an
   # HTML string or Nokogiri::HTML::DocumentFragment, performs
-  # modifications, or extracts information and makes it available in
-  # the context hash.
+  # modifications and/or writes information to the context hash. Filters must
+  # return a DocumentFragment (typically the same instance provided to the call
+  # method) or a String with HTML markup.
   #
   # Example filter that replaces all images with trollface:
+  #
   #   class FuuuFilter < GitHub::HTML::Filter
   #     def call
   #       doc.search('img').each do |img|
@@ -25,16 +27,33 @@ module GitHub::HTML
   # docs for more info.
   class Filter
     def initialize(doc, context={})
-      @doc = parse_html(doc)
+      if doc.is_a?(String)
+        @html = doc
+        @doc = nil
+      else
+        @doc = doc
+        @html = nil
+      end
       @context = context
     end
-
-    # The Nokogiri::HTML::DocumentFragment to be manipulated.
-    attr_reader :doc
 
     # A simple Hash used to pass extra information into filters and also to
     # allow filters to make extracted information available to the caller.
     attr_reader :context
+
+    # The Nokogiri::HTML::DocumentFragment to be manipulated. If the filter was
+    # provided a String, parse into a DocumentFragment the first time this
+    # method is called.
+    def doc
+      @doc ||= parse_html(html)
+    end
+
+    # The String representation of the document. If a DocumentFragment was
+    # provided to the Filter, it is serialized into a String when this method is
+    # called.
+    def html
+      @html || doc.to_html
+    end
 
     # The main filter entry point. The doc attribute is guaranteed to be a
     # Nokogiri::HTML::DocumentFragment when invoked. Subclasses should modify
@@ -69,11 +88,10 @@ module GitHub::HTML
 
     # Perform a filter on doc with the given context.
     #
-    # Returns the modified Nokogiri::HTML::DocumentFragment
+    # Returns a GitHub::HTML::DocumentFragment or a String containing HTML
+    # markup.
     def self.call(doc, context={})
-      filter = new(doc, context)
-      filter.call
-      filter.doc
+      new(doc, context).call
     end
   end
 end
