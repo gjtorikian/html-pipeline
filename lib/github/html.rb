@@ -71,13 +71,13 @@ module GitHub
       MarkdownFilter,
       SanitizationFilter,
       SyntaxHighlightFilter,
-      AutolinkFilter,
       CamoFilter,
       HttpsFilter,
       MentionFilter,
       IssueMentionFilter,
       CommitMentionFilter,
-      EmojiFilter
+      EmojiFilter,
+      AutolinkFilter
     ]
 
     # Pipeline used for commit messages. This one is kind of weird because
