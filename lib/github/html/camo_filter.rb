@@ -28,6 +28,7 @@ module GitHub::HTML
           element['src'] = src
         end
       end
+      doc
     end
 
     # The camouflaged URL for a given image URL.

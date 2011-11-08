@@ -14,8 +14,7 @@ module GitHub::HTML
     def initialize(text, context={})
       raise TypeError, "text cannot be HTML" if text.is_a?(DocumentFragment)
       @text = text.to_s.gsub("\r", '')
-      @context = context
-      @doc = nil
+      super nil, context
     end
 
     # Convert Markdown to HTML using the best available implementation
@@ -28,8 +27,7 @@ module GitHub::HTML
         :space_header
       ]
       flags << :hard_wrap if context[:gfm] != false
-      html = GitHub::Markdown.new(@text, *flags).to_html
-      @doc = parse_html(html)
+      GitHub::Markdown.new(@text, *flags).to_html
     end
   end
 end

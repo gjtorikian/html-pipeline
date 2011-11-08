@@ -14,14 +14,12 @@ module GitHub::HTML
     def initialize(text, context={})
       raise TypeError, "text cannot be HTML" if text.is_a?(DocumentFragment)
       @text = text.to_s
-      @context = context
-      @doc = nil
+      super nil, context
     end
 
     # Convert Textile to HTML and convert into a DocumentFragment.
     def call
-      html = RedCloth.new(@text).to_html
-      @doc = parse_html(html)
+      RedCloth.new(@text).to_html
     end
   end
 end

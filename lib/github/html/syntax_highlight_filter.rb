@@ -12,6 +12,7 @@ module GitHub::HTML
         html = lexer.highlight(text)
         node.replace(html)
       end
+      doc
     end
   end
 end
