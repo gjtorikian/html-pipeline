@@ -93,7 +93,7 @@ module GitHub::HTML
     # Like call but guarantees that a DocumentFragment is returned, even when
     # the last filter returns a String.
     def self.to_document(input, context={})
-      html = call(input, contact)
+      html = call(input, context)
       GitHub::HTML::parse(html)
     end
   end
