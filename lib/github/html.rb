@@ -26,7 +26,6 @@ module GitHub
     require 'github/html/autolink_filter'
     require 'github/html/camo_filter'
     require 'github/html/commit_mention_filter'
-    require 'github/html/commit_message_link_filter'
     require 'github/html/email_reply_filter'
     require 'github/html/emoji_filter'
     require 'github/html/https_filter'
