@@ -120,14 +120,9 @@ module GitHub
       AutolinkFilter
     ]
 
-    ShortCommitMessagePipeline = Pipeline.new [
-      CommitMessagePipeline,
-      CommitMessageLinkFilter
-    ]
-
-    LongCommitMessagePipeline = Pipeline.new [
-      PlainTextInputFilter
-    ]
+    # Pipeline used for very large commit messages that take too long to
+    # generate with a fully featured pipeline.
+    LongCommitMessagePipeline = Pipeline.new [PlainTextInputFilter]
 
     # Pipeline used for email replies.
     EmailPipeline = Pipeline.new [
