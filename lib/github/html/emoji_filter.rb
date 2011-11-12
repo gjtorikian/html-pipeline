@@ -83,6 +83,7 @@ module GitHub::HTML
       'koala' => 'e527',
       'kiss' => 'e003',
       'broken_heart' => 'e023',
+      'poop' => 'e05a',
 
       # Custom emoji
       'octocat' => nil,
