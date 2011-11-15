@@ -117,7 +117,7 @@ module GitHub::HTML
 
       text.gsub EmojiPattern do |match|
         name = $1
-        "<img class='emoji' title=':#{name}:' alt=':#{name}:' src='#{GitHub.asset_host_url}/images/icons/emoji/v4/#{name}.png' height='20' width='20' align='absmiddle' />"
+        "<img class='emoji' title=':#{name}:' alt=':#{name}:' src='#{GitHub.asset_host_url}/images/icons/emoji/#{name}.png?v4' height='20' width='20' align='absmiddle' />"
       end
     end
 
