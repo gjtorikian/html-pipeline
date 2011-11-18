@@ -18,6 +18,7 @@ module GitHub::HTML
   class SanitizationFilter < Filter
     LISTS     = Set.new(%w(ul ol).freeze)
     LIST_ITEM = 'li'.freeze
+
     # The main sanitization whitelist. Only these elements and attributes are
     # allowed through by default.
     WHITELIST = {
@@ -69,6 +70,9 @@ module GitHub::HTML
     # set of allowed elements.
     LIMITED = WHITELIST.merge(
       :elements => %w(b i strong em a pre code img ins del sup sub p ol ul li))
+
+    # Strip all HTML tags from the document.
+    FULL = { :elements => [] }
 
     # Sanitize markup using the Sanitize library.
     def call
