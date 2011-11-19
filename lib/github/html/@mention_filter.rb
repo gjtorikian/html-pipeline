@@ -68,7 +68,7 @@ module GitHub::HTML
     def link_to_mention_info(text)
       "<a href='https://github.com/blog/821' class='user-mention'>" +
       "@#{text}" +
-      "</a>"
+      "</a>".html_safe
     end
 
     def link_to_mentioned_user(user)
