@@ -7,7 +7,6 @@ module GitHub::HTML
   #
   # Context options:
   #   :gfm      => false    Disable GFM line-end processing
-  #   :autolink => false    Disable autolinking URLs
   #
   # This filter does not write any additional information to the context hash.
   class MarkdownFilter < Filter
@@ -20,14 +19,12 @@ module GitHub::HTML
     # Convert Markdown to HTML using the best available implementation
     # and convert into a DocumentFragment.
     def call
-      flags = [
-        :fenced_code, :tables,
-        :strikethrough, :lax_htmlblock,
-        :gh_blockcode, :no_intraemphasis,
-        :space_header
-      ]
-      flags << :hard_wrap if context[:gfm] != false
-      html = GitHub::Markdown.new(@text, *flags).to_html
+      html = if context[:gfm] != false
+        GitHub::Markdown.render_gfm(@text)
+      else
+        GitHub::Markdown.render(@text)
+      end
+
       html.rstrip!
       html
     end
