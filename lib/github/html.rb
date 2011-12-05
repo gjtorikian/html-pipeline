@@ -99,7 +99,6 @@ module GitHub
     GFMPipeline = Pipeline.new [
       MarkdownFilter,
       SanitizationFilter,
-      SyntaxHighlightFilter,
       CamoFilter,
       HttpsFilter,
       MentionFilter,
