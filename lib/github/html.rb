@@ -29,6 +29,7 @@ module GitHub
     require 'github/html/email_reply_filter'
     require 'github/html/emoji_filter'
     require 'github/html/https_filter'
+    require 'github/html/image_max_width_filter'
     require 'github/html/issue_mention_filter'
     require 'github/html/markdown_filter'
     require 'github/html/@mention_filter'
@@ -131,6 +132,11 @@ module GitHub
       CommitMentionFilter,
       EmojiFilter,
       AutolinkFilter
+    ]
+
+    # Used to post-process user content for HTML email clients.
+    HtmlEmailPipeline = Pipeline.new [
+      ImageMaxWidthFilter
     ]
 
     # Pipeline used for really old comments and maybe other textile content
