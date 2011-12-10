@@ -89,7 +89,19 @@ module GitHub::HTML
       'octocat' => nil,
       'metal' => nil,
       'shipit' => nil,
-      'squirrel' => nil
+      'squirrel' => nil,
+
+      # Doom emoji
+      'feelsgood' => nil,
+      'finnadie' => nil,
+      'goberserk' => nil,
+      'godmode' => nil,
+      'hurtrealbad' => nil,
+      'rage1' => nil,
+      'rage2' => nil,
+      'rage3' => nil,
+      'rage4' => nil,
+      'suspect' => nil
     }
 
     # Build a regexp that matches all valid :emoji: names.
