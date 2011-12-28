@@ -82,6 +82,13 @@ module GitHub::HTML
       context[:commits] ||= []
     end
 
+    # Number of SHA1 look a likes that were seen. Used to enforce the limit.
+    #
+    # Returns number as a Fixnum.
+    def commit_mentions_count
+      context[:commits_count] ||= 0
+    end
+
     # Create a CommitReference object that store a referenced commit and
     # repository it belongs to and appends it to the list of mentioned commits
     # stored in the context at commit_mentions. There is a 10 mentions limit,
@@ -93,9 +100,10 @@ module GitHub::HTML
     #   repository, the reference's commit attribute returns a FakeCommit
     #   instead of a real Grit::Commit.
     def commit_reference(sha)
-      if commit_mentions.size >= 10
+      if commit_mentions_count >= 10
         return
       end
+      context[:commits_count] += 1
 
       sha = repository.walker.ref_to_sha(sha)
 
