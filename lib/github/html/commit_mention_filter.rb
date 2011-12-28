@@ -84,7 +84,8 @@ module GitHub::HTML
 
     # Create a CommitReference object that store a referenced commit and
     # repository it belongs to and appends it to the list of mentioned commits
-    # stored in the context at commit_mentions.
+    # stored in the context at commit_mentions. There is a 10 mentions limit,
+    # after which they are ignored.
     #
     # sha - the String SHA1 of the referenced commit.
     #
@@ -92,6 +93,10 @@ module GitHub::HTML
     #   repository, the reference's commit attribute returns a FakeCommit
     #   instead of a real Grit::Commit.
     def commit_reference(sha)
+      if commit_mentions.size >= 10
+        return
+      end
+
       sha = repository.walker.ref_to_sha(sha)
 
       if commit = repository.commit(sha)
