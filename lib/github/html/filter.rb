@@ -26,6 +26,8 @@ module GitHub::HTML
   # Each filter may define additional options and output values. See the class
   # docs for more info.
   class Filter
+    class InvalidDocumentException < StandardError; end
+
     def initialize(doc, context={})
       if doc.is_a?(String)
         @html = doc
@@ -34,6 +36,7 @@ module GitHub::HTML
         @doc = doc
         @html = nil
       end
+      raise InvalidDocumentException if @doc.nil? && @html.nil?
       @context = context
     end
 
