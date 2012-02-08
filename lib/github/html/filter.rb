@@ -36,7 +36,6 @@ module GitHub::HTML
         @doc = doc
         @html = nil
       end
-      raise InvalidDocumentException if @doc.nil? && @html.nil?
       @context = context
     end
 
@@ -55,6 +54,7 @@ module GitHub::HTML
     # provided to the Filter, it is serialized into a String when this method is
     # called.
     def html
+      raise InvalidDocumentException if @html.nil? && @doc.nil?
       @html || doc.to_html
     end
 
