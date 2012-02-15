@@ -28,8 +28,9 @@ module GitHub::HTML
         kbd q samp var hr
       ),
       :attributes => {
-        'a'   => ['href'],
+        'a' => ['href'],
         'img' => ['src'],
+        'div' => ['itemscope', 'itemtype'],
         :all  => ['abbr', 'accept', 'accept-charset',
                   'accesskey', 'action', 'align', 'alt', 'axis',
                   'border', 'cellpadding', 'cellspacing', 'char',
@@ -46,7 +47,7 @@ module GitHub::HTML
                   'selected', 'shape', 'size', 'span',
                   'start', 'summary', 'tabindex', 'target',
                   'title', 'type', 'usemap', 'valign', 'value',
-                  'vspace', 'width']
+                  'vspace', 'width', 'itemprop']
       },
       :protocols => {
         'a'   => {'href' => ['http', 'https', 'mailto', :relative]},
