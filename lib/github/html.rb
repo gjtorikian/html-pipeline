@@ -118,6 +118,19 @@ module GitHub
       AutolinkFilter
     ]
 
+    MarkdownPipeline = Pipeline.new [
+      MarkdownFilter,
+      SanitizationFilter,
+      SyntaxHighlightFilter,
+      CamoFilter,
+      HttpsFilter,
+      MentionFilter,
+      IssueMentionFilter,
+      CommitMentionFilter,
+      EmojiFilter,
+      AutolinkFilter
+    ], :base_url => GitHub.url, :gfm => false
+
     # Pipeline used for commit messages. This one is kind of weird because
     # commit messages are treated as preformatted plain text.
     CommitMessagePipeline = Pipeline.new [
