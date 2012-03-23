@@ -90,7 +90,8 @@ module GitHub
     SimplePipeline = Pipeline.new [
       SanitizationFilter,
       CamoFilter,
-      SyntaxHighlightFilter
+      SyntaxHighlightFilter,
+      EmojiFilter
     ]
 
     # Pipeline used for most types of user provided content like comments
