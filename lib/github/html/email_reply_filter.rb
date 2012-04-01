@@ -41,7 +41,7 @@ module GitHub::HTML
       paragraphs = EmailReplyParser.read(text.dup).fragments.map do |fragment|
         pieces = [escape_html(fragment.to_s.strip).gsub(/^\s*(>|&gt;)/, '')]
         if fragment.quoted?
-          if !fragment.hidden? && false
+          if !fragment.hidden?
             header, quoted = pieces[0].split("\n", 2)
             pieces = ["<!-- #{header} -->\n#{quoted}"]
           end
