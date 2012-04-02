@@ -20,7 +20,9 @@ module GitHub::HTML
     # and convert into a DocumentFragment.
     def call
       mode = (context[:gfm] != false) ? :gfm : :markdown
-      GitHub::Markdown.to_html(@text, mode).rstrip!
+      html = GitHub::Markdown.to_html(@text, mode)
+      html.rstrip!
+      html
     end
   end
 end
