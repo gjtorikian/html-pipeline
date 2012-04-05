@@ -91,7 +91,8 @@ module GitHub
       SanitizationFilter,
       CamoFilter,
       SyntaxHighlightFilter,
-      EmojiFilter
+      EmojiFilter,
+      AutolinkFilter
     ]
 
     # Pipeline used for most types of user provided content like comments
