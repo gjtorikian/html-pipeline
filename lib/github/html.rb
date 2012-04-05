@@ -132,7 +132,7 @@ module GitHub
       MentionFilter,
       EmojiFilter,
       AutolinkFilter
-    ], :gfm => false
+    ], :base_url => GitHub.url, :gfm => false
 
     # Pipeline used for commit messages. This one is kind of weird because
     # commit messages are treated as preformatted plain text.
