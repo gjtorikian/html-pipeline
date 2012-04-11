@@ -27,9 +27,9 @@ module GitHub::HTML
       doc.search('text()').each do |node|
         content = node.to_html
         next if !content.include?('@')
-        next if node.ancestors('pre, code, a, .user-mention').any?
         html = mention_link_filter(content, base_url)
         next if html == content
+        next if node.ancestors('pre, code, a, .user-mention').any?
         node.replace(html)
       end
       mentioned_users.uniq!
