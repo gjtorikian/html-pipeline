@@ -92,7 +92,8 @@ module GitHub
       CamoFilter,
       SyntaxHighlightFilter,
       EmojiFilter,
-      AutolinkFilter
+      AutolinkFilter  # Perform an autolinking pass, for those GitHub::Markup
+                      # languages that don't have built-in autolinking
     ]
 
     # Pipeline used for most types of user provided content like comments
@@ -107,8 +108,7 @@ module GitHub
       MentionFilter,
       IssueMentionFilter,
       CommitMentionFilter,
-      EmojiFilter,
-      AutolinkFilter
+      EmojiFilter
     ]
 
     MarkdownPipeline = Pipeline.new [
@@ -120,8 +120,7 @@ module GitHub
       MentionFilter,
       IssueMentionFilter,
       CommitMentionFilter,
-      EmojiFilter,
-      AutolinkFilter
+      EmojiFilter
     ], :base_url => GitHub.url, :gfm => false
 
     # Pipeline used to Render the Markdown content in pages2
@@ -131,8 +130,7 @@ module GitHub
       SanitizationFilter,
       SyntaxHighlightFilter,
       MentionFilter,
-      EmojiFilter,
-      AutolinkFilter
+      EmojiFilter
     ], :base_url => GitHub.url, :gfm => false
 
     # Pipeline used for commit messages. This one is kind of weird because
