@@ -90,6 +90,7 @@ module GitHub
     SimplePipeline = Pipeline.new [
       SanitizationFilter,
       CamoFilter,
+      ImageMaxWidthFilter,
       SyntaxHighlightFilter,
       EmojiFilter,
       AutolinkFilter  # Perform an autolinking pass, for those GitHub::Markup
@@ -104,6 +105,7 @@ module GitHub
       SanitizationFilter,
       SyntaxHighlightFilter,
       CamoFilter,
+      ImageMaxWidthFilter,
       HttpsFilter,
       MentionFilter,
       IssueMentionFilter,
@@ -116,6 +118,7 @@ module GitHub
       SanitizationFilter,
       SyntaxHighlightFilter,
       CamoFilter,
+      ImageMaxWidthFilter,
       HttpsFilter,
       MentionFilter,
       IssueMentionFilter,
