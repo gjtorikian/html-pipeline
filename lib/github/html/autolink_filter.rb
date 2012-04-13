@@ -5,7 +5,7 @@ module GitHub::HTML
   class AutolinkFilter < Filter
     def call
       return html if context[:autolink] == false
-      Rinku.auto_link(html, :urls, nil, %w[a script kbd])
+      Rinku.auto_link(html, :urls, nil, %w[a script kbd pre code])
     end
   end
 end
