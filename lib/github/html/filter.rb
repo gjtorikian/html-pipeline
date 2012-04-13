@@ -85,6 +85,21 @@ module GitHub::HTML
       GitHub::HTML.parse(html)
     end
 
+    # Helper method for filter subclasses used to determine if any of a node's
+    # ancestors have one of the tag names specified.
+    #
+    # node - The Node object to check.
+    # tags - An array of tag name strings to check. These should be downcase.
+    #
+    # Returns true when the node has a matching ancestor.
+    def has_ancestor?(node, tags)
+      while node = node.parent
+        if tags.include?(node.name.downcase)
+          break true
+        end
+      end
+    end
+
     # Perform a filter on doc with the given context.
     #
     # Returns a GitHub::HTML::DocumentFragment or a String containing HTML
