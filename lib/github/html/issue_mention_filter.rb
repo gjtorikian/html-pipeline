@@ -32,7 +32,7 @@ module GitHub::HTML
       doc.search('text()').each do |node|
         content = node.to_html
         next if content !~ /(#|gh-)/i                # perf
-        next if node.ancestors('pre, code, a').any?  # <- slow
+        next if has_ancestor?(node, %w(pre code a))  # <-- slow
         html = send(method_name, content)
         next if html == content
         node.replace(html)

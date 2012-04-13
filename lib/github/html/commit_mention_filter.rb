@@ -30,7 +30,7 @@ module GitHub::HTML
       doc.search('text()').each do |node|
         content = node.to_html
         next unless content.include?('@') || content =~ /[0-9a-f]{7,40}\b/
-        next if node.ancestors('pre, code, a').any?
+        next if has_ancestor?(node, %w(pre code a))
         html = send(method_name, content)
         next if html == content
         node.replace(html)
