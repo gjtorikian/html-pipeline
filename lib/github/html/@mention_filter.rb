@@ -27,7 +27,7 @@ module GitHub::HTML
       doc.search('text()').each do |node|
         content = node.to_html
         next if !content.include?('@')
-        next if (node.css_path.split & %w(pre code a)).any?
+        next if has_ancestor?(node, %w(pre code a))
         html = mention_link_filter(content, base_url)
         next if html == content
         node.replace(html)
