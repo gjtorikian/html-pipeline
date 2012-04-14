@@ -37,6 +37,7 @@ module GitHub
     require 'github/html/sanitization_filter'
     require 'github/html/syntax_highlight_filter'
     require 'github/html/textile_filter'
+    require 'github/html/toc_filter'
 
     # Contruct a pipeline for running multiple HTML filters.
     #
@@ -89,6 +90,7 @@ module GitHub
     # related features.
     SimplePipeline = Pipeline.new [
       SanitizationFilter,
+      TableOfContentsFilter, # add 'name' anchors to all headers
       CamoFilter,
       ImageMaxWidthFilter,
       SyntaxHighlightFilter,
