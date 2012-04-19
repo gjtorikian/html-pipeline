@@ -12,6 +12,7 @@ module GitHub::HTML
         name = node.text.downcase
         name.gsub!(/[^\w\- ]/, '') # remove punctuation
         name.gsub!(' ', '-') # replace spaces with dash
+        name = EscapeUtils.escape_uri(name) # escape extended UTF-8 chars
 
         uniq = (headers[name] > 0) ? "-#{headers[name]}" : ''
         headers[name] += 1
