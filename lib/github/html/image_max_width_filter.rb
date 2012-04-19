@@ -27,10 +27,9 @@ module GitHub::HTML
     end
 
     def link_image(element)
-      parent = element.parent
       link = doc.document.create_element('a', :href => element['src'], :target => '_blank')
-      link.add_child element.remove
-      parent.add_child link
+      link.add_child(element.dup)
+      element.replace(link)
     end
   end
 end
