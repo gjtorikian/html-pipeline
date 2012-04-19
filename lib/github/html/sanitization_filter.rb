@@ -50,7 +50,7 @@ module GitHub::HTML
                   'vspace', 'width', 'itemprop']
       },
       :protocols => {
-        'a'   => {'href' => ['http', 'https', 'mailto', :relative]},
+        'a'   => {'href' => ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac']},
         'img' => {'src'  => ['http', 'https', :relative]}
       },
       :transformers => [
