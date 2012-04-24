@@ -33,6 +33,7 @@ module GitHub
     require 'github/html/issue_mention_filter'
     require 'github/html/markdown_filter'
     require 'github/html/@mention_filter'
+    require 'github/html/team_mention_filter'
     require 'github/html/plain_text_input_filter'
     require 'github/html/sanitization_filter'
     require 'github/html/syntax_highlight_filter'
