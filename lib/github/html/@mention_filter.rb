@@ -34,11 +34,11 @@ module GitHub::HTML
 
     MentionPattern = /
       (?:^|\W)                   # beginning of string or non-word char
-      @([a-z0-9][a-z0-9-^\/]*)   # @username (without a trailing slash)
+      @([a-z0-9][a-z0-9-]*)   # @username (without a trailing slash)
       (?=
         \.[ \t]|                 # dot followed by space
         \.$|                     # dot at end of line
-        [^0-9a-zA-Z_.]|          # non-word character except dot
+        [^0-9a-zA-Z_.\/]|        # non-word character except dot 
         $                        # end of line
       )
     /ix
