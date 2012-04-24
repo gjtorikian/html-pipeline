@@ -1,6 +1,6 @@
 module GitHub::HTML
-  # HTML filter that replaces @user mentions with links. Mentions within <pre>,
-  # <code>, and <a> elements are ignored. Mentions that reference users that do
+  # HTML filter that replaces @enterprise/team mentions with TODO. Mentions within <pre>,
+  # <code>, and <a> elements are ignored. Mentions that reference orgs or teams that do
   # not exist are ignored.
   #
   # Context options:
@@ -8,7 +8,7 @@ module GitHub::HTML
   #               mention.
   #
   # The following keys are written to the context hash:
-  #   :mentioned_teams - An array of User objects that were mentioned.
+  #   :mentioned_teams - An array of Team objects that were mentioned.
   #
   class TeamMentionFilter < Filter
     # Public: Find team @mentions in text.  See
