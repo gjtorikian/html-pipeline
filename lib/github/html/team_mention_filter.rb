@@ -12,20 +12,19 @@ module GitHub::HTML
   #
   class TeamMentionFilter < Filter
     # Public: Find team @mentions in text.  See
-    # MentionFilter#mention_link_filter.
+    # MentionFilter#mention_team_filter.
     #
-    #   MentionFilter.mentioned_logins_in(text) do |match, login, is_mentioned|
-    #     "<a href=...>#{login}</a>"
+    #   MentionFilter.mentioned_teams_in(text) do |match, org, team|
+    #     "<a href=...>#{org}/#{team}</a>"
     #   end
     #
     # text - String text to search.
     #
-    # Yields the String match, the String login name, and a Boolean determining
-    # if the match = "@mention[ed]".  The yield's return replaces the match in
-    # the original text.
+    # Yields the String match, the String org name, and the string team name.
+    # The yield's return replaces the match in the original text.
     #
     # Returns a String replaced with the return of the block.
-    def self.mentioned_logins_in(text)
+    def self.mentioned_teams_in(text)
       text.gsub MentionPattern do |match|
         org = $1
         team = $2
@@ -54,7 +53,7 @@ module GitHub::HTML
         content = node.to_html
         next if !content.include?('@')
         next if has_ancestor?(node, %w(pre code a))
-        html = mention_link_filter(content, base_url)
+        html = mention_team_filter(content, base_url)
         next if html == content
         node.replace(html)
       end
@@ -75,8 +74,8 @@ module GitHub::HTML
     #
     # Returns a string with @mentions replaced with #TODO. All links have a
     # 'team-mention' class name attached for styling.
-    def mention_link_filter(text, base_url='/')
-      self.class.mentioned_logins_in(text) do |match, org_name, team_name|
+    def mention_team_filter(text, base_url='/')
+      self.class.mentioned_teams_in(text) do |match, org_name, team_name|
         link = if org = Organization.find_by_login(org_name)
           if team = org.teams.find_by_name(team_name)
             mentioned_teams << team
@@ -88,6 +87,7 @@ module GitHub::HTML
       end
     end
 
+    # Replace with a span for styling (for now)
     def mentioned_team_html(team)
       %|<span class='team-mention'>@#{team.organization.login}/#{team.name}</span>|
     end
