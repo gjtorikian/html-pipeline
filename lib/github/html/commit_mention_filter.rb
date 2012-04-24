@@ -17,7 +17,7 @@ module GitHub::HTML
   # This filter does not write additional information to the context.
   class CommitMentionFilter < Filter
     def call
-      if repository
+      if repository && repository.pullable_by?(current_user)
         apply_filter :replace_repo_commit_mentions
         apply_filter :replace_bare_commit_mentions
       else

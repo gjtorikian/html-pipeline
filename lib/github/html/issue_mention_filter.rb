@@ -107,7 +107,7 @@ module GitHub::HTML
     # issue could not be found.
     def issue_reference(word, number, repo=nil)
       repository = find_repository(repo)
-      return if repository.nil?
+      return if repository.nil? || !repository.pullable_by?(current_user)
 
       # first try to find the issue in the current or explicitly
       # referenced repository
