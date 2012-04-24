@@ -80,7 +80,7 @@ module GitHub::HTML
         link = if org = Organization.find_by_login(org_name)
           if team = org.teams.find_by_name(team_name)
             mentioned_teams << team
-            link_to_mentioned_user(team)
+            mentioned_team_html(team)
           end
         end
 
@@ -88,7 +88,7 @@ module GitHub::HTML
       end
     end
 
-    def link_to_mentioned_user(team)
+    def mentioned_team_html(team)
       %|<span class='team-mention'>@#{team.organization.login}/#{team.name}</span>|
     end
   end
