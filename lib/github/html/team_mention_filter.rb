@@ -76,20 +76,20 @@ module GitHub::HTML
     # 'team-mention' class name attached for styling.
     def mention_team_filter(text, base_url='/')
       self.class.mentioned_teams_in(text) do |match, org_name, team_name|
-        link = if org = Organization.find_by_login(org_name)
-          if team = org.teams.find_by_name(team_name)
+        html = if org = Organization.find_by_login(org_name)
+          if team = org.teams.find_by_slug(team_name)
             mentioned_teams << team
             mentioned_team_html(team)
           end
         end
 
-        link ? match.sub(match, link) : match
+        html ? match.sub(match.strip, html) : match
       end
     end
 
     # Replace with a span for styling (for now)
     def mentioned_team_html(team)
-      %|<span class='team-mention'>@#{team.organization.login}/#{team.name}</span>|
+      %|<span class='team-mention'>@#{team.organization.login}/#{team.slug}</span>|
     end
   end
 end
