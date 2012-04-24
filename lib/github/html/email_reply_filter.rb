@@ -18,7 +18,7 @@ module GitHub::HTML
       super nil, context
     end
 
-    EMAIL_HIDDEN_HEADER    = %(<span class="email-hidden-toggle"><a href="#">&hellip;</a></span><div class="email-hidden-reply style="display:none">).freeze
+    EMAIL_HIDDEN_HEADER    = %(<span class="email-hidden-toggle"><a href="#">&hellip;</a></span><div class="email-hidden-reply" style="display:none">).freeze
     EMAIL_QUOTED_HEADER    = %(<div class="email-quoted-reply">).freeze
     EMAIL_SIGNATURE_HEADER = %(<div class="email-signature-reply">).freeze
     EMAIL_FRAGMENT_HEADER  = %(<div class="email-fragment">).freeze
