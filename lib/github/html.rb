@@ -111,6 +111,7 @@ module GitHub
       ImageMaxWidthFilter,
       HttpsFilter,
       MentionFilter,
+      TeamMentionFilter,
       IssueMentionFilter,
       CommitMentionFilter,
       EmojiFilter
@@ -124,6 +125,7 @@ module GitHub
       ImageMaxWidthFilter,
       HttpsFilter,
       MentionFilter,
+      TeamMentionFilter,
       IssueMentionFilter,
       CommitMentionFilter,
       EmojiFilter
@@ -136,6 +138,7 @@ module GitHub
       SanitizationFilter,
       SyntaxHighlightFilter,
       MentionFilter,
+      TeamMentionFilter,
       EmojiFilter
     ], :base_url => GitHub.url, :gfm => false
 
@@ -144,6 +147,7 @@ module GitHub
     CommitMessagePipeline = Pipeline.new [
       PlainTextInputFilter,
       MentionFilter,
+      TeamMentionFilter,
       CommitMentionFilter,
       IssueMentionFilter,
       EmojiFilter,
@@ -158,6 +162,7 @@ module GitHub
     EmailPipeline = Pipeline.new [
       EmailReplyFilter,
       MentionFilter,
+      TeamMentionFilter,
       IssueMentionFilter,
       CommitMentionFilter,
       EmojiFilter,
