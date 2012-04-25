@@ -11,8 +11,8 @@ module GitHub::HTML
   #   :mentioned_teams - An array of Team objects that were mentioned.
   #
   class TeamMentionFilter < Filter
-    # Public: Find team @mentions in text.  See
-    # MentionFilter#mention_team_filter.
+    # Public: Find team mentions in text -- team mentions follow the syntax
+    # @org-name/team-slug. See MentionFilter#mention_team_filter.
     #
     #   MentionFilter.mentioned_teams_in(text) do |match, org, team|
     #     "<a href=...>#{org}/#{team}</a>"
