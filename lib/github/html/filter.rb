@@ -72,12 +72,6 @@ module GitHub::HTML
       context[:repository]
     end
 
-    # The authenticated user providec in the context hash, or nil when no
-    # :current_user was specified.
-    def current_user
-      context[:current_user]
-    end
-
     # The site's base URL provided in the context hash, or '/' when no
     # base URL was specified.
     def base_url
