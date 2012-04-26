@@ -16,8 +16,7 @@ module GitHub::HTML
 
         uniq = (headers[name] > 0) ? "-#{headers[name]}" : ''
         headers[name] += 1
-        node.before %Q{<a name="#{name}#{uniq}" class="anchor" href="##{name}#{uniq}"></a>}
-        node.parent = node.previous_sibling
+        node << %Q{<a name="#{name}#{uniq}" class="anchor" href="##{name}#{uniq}"></a>}
       end
       doc
     end
