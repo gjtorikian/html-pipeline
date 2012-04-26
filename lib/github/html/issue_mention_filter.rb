@@ -19,7 +19,7 @@ module GitHub::HTML
   #                 was prefixed with (close[sd]|fixe[sd]).
   class IssueMentionFilter < Filter
     def call
-      if repository
+      if can_access_repo?(repository)
         apply_filter :replace_repo_issue_mentions
         apply_filter :replace_bare_issue_mentions
       else
@@ -107,7 +107,7 @@ module GitHub::HTML
     # issue could not be found.
     def issue_reference(word, number, repo=nil)
       repository = find_repository(repo)
-      return if repository.nil?
+      return unless can_access_repo?(repository)
 
       # first try to find the issue in the current or explicitly
       # referenced repository

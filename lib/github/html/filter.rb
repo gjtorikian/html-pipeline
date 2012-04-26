@@ -68,8 +68,29 @@ module GitHub::HTML
 
     # The Repository object provided in the context hash, or nil when no
     # :repository was specified.
+    #
+    # It's assumed that the repository context has already been checked
+    # for permissions
     def repository
       context[:repository]
+    end
+
+    # The User object provided in the context hash, or nil when no user
+    # was specified
+    def current_user
+      context[:current_user]
+    end
+
+    # Return whether the filter can access a given repo while
+    # applying a filter
+    #
+    # A repo can only be accessed if its pullable by the user who
+    # submitted the content of this filter, or if it's the same as
+    # the repository context in which the filter runs
+    def can_access_repo?(repo)
+      return false if repo.nil?
+      return true if repo == repository
+      repo.pullable_by?(current_user)
     end
 
     # The site's base URL provided in the context hash, or '/' when no

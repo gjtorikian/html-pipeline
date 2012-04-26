@@ -17,7 +17,7 @@ module GitHub::HTML
   # This filter does not write additional information to the context.
   class CommitMentionFilter < Filter
     def call
-      if repository
+      if can_access_repo?(repository)
         apply_filter :replace_repo_commit_mentions
         apply_filter :replace_bare_commit_mentions
       else
