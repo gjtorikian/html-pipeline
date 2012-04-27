@@ -67,12 +67,12 @@ module GitHub::HTML
       context[:mentioned_teams] ||= []
     end
 
-    # Replace team @mentions in text with...something
+    # Replace team @mentions in text with a span showing what users are in the team.
     #
     # text      - String text to replace @mention team names in.
     # base_url  - The base URL used to construct user profile URLs.
     #
-    # Returns a string with @mentions replaced with #TODO. All links have a
+    # Returns a string with the replacements made. All links have a
     # 'team-mention' class name attached for styling.
     def mention_team_filter(text, base_url='/')
       self.class.mentioned_teams_in(text) do |match, org_name, team_name|
