@@ -89,7 +89,8 @@ module GitHub::HTML
 
     # Replace with a span for styling (for now)
     def mentioned_team_html(team)
-      %|<span class='team-mention'>@#{team.organization.login}/#{team.slug}</span>|
+      tooltip = "#{team.users.to_sentence} are in this team"
+      html = %|<span class='team-mention tooltipped downwards' title="#{tooltip}">@#{team.organization.login}/#{team.slug}</span>|
     end
   end
 end
