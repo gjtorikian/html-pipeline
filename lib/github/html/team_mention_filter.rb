@@ -76,14 +76,14 @@ module GitHub::HTML
     # 'team-mention' class name attached for styling.
     def mention_team_filter(text, base_url='/')
       self.class.mentioned_teams_in(text) do |match, org_name, team_name|
-        html = if org = Organization.find_by_login(org_name)
-          if team = org.teams.find_by_slug(team_name)
-            mentioned_teams << team
-            mentioned_team_html(team)
-          end
+        team = Team.find_by_org_name_and_slug(org_name, team_name)
+        if team
+          mentioned_teams << team
+          html = mentioned_team_html(team)
+          match.sub(match.strip, html)
+        else
+          match
         end
-
-        html ? match.sub(match.strip, html) : match
       end
     end
 
