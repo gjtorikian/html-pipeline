@@ -45,8 +45,6 @@ module GitHub::HTML
       )
     /ix
 
-    MentionedLoginPattern = /^mention(s|ed|)$/
-
     def call
       mentioned_teams.clear
       doc.search('text()').each do |node|
