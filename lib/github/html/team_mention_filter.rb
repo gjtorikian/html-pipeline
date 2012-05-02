@@ -46,6 +46,7 @@ module GitHub::HTML
     /ix
 
     def call
+      return doc unless current_user && current_user.team_mentions_enabled?
       mentioned_teams.clear
       doc.search('text()').each do |node|
         content = node.to_html
