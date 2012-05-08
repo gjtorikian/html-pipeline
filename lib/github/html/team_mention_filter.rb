@@ -12,9 +12,9 @@ module GitHub::HTML
   #
   class TeamMentionFilter < Filter
     # Public: Find team mentions in text -- team mentions follow the syntax
-    # @org-name/team-slug. See MentionFilter#mention_team_filter.
+    # @org-name/team-slug. See TeamMentionFilter#mention_team_filter.
     #
-    #   MentionFilter.mentioned_teams_in(text) do |match, org, team|
+    #   TeamMentionFilter.mentioned_teams_in(text) do |match, org, team|
     #     "<a href=...>#{org}/#{team}</a>"
     #   end
     #
