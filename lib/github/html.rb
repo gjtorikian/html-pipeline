@@ -21,6 +21,7 @@ module GitHub
       end
     end
 
+    require 'github/html/body_content'
     # Filter implementations
     require 'github/html/filter'
     require 'github/html/autolink_filter'
