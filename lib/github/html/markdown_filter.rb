@@ -10,7 +10,7 @@ module GitHub::HTML
   #
   # This filter does not write any additional information to the context hash.
   class MarkdownFilter < TextFilter
-    def initialize(text, context={}, result={})
+    def initialize(text, context = nil, result = nil)
       super text, context, result
       @text.gsub! "\r", ''
     end
