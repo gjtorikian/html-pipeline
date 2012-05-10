@@ -78,13 +78,14 @@ module GitHub
       # Pipelines may return a DocumentFragment or a String. Callers that need a
       # DocumentFragment should use this method.
       def to_document(input, context={})
-        output = call(input, context)
-        GitHub::HTML.parse(output)
+        result = call(input, context)
+        GitHub::HTML.parse(result[:output])
       end
 
       # Like call but guarantee the value returned is a string of HTML markup.
       def to_html(input, context={})
-        output = call(input, context)
+        result = call(input, context)
+        output = result[:output]
         if output.respond_to?(:to_html)
           output.to_html
         else
