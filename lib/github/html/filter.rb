@@ -28,7 +28,7 @@ module GitHub::HTML
   class Filter
     class InvalidDocumentException < StandardError; end
 
-    def initialize(doc, context={})
+    def initialize(doc, context={}, result={})
       if doc.is_a?(String)
         @html = doc
         @doc = nil
@@ -37,11 +37,17 @@ module GitHub::HTML
         @html = nil
       end
       @context = context
+      @result = result
     end
 
     # A simple Hash used to pass extra information into filters and also to
     # allow filters to make extracted information available to the caller.
     attr_reader :context
+
+    # A Hash used to allow filters to pass back information
+    # to callers of the various Pipelines.  This can be used for mentioned_users,
+    # for example
+    attr_reader :result
 
     # The Nokogiri::HTML::DocumentFragment to be manipulated. If the filter was
     # provided a String, parse into a DocumentFragment the first time this
@@ -125,8 +131,8 @@ module GitHub::HTML
     #
     # Returns a GitHub::HTML::DocumentFragment or a String containing HTML
     # markup.
-    def self.call(doc, context={})
-      new(doc, context).call
+    def self.call(doc, context={}, result={})
+      new(doc, context, result).call
     end
 
     # Like call but guarantees that a DocumentFragment is returned, even when
