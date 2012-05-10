@@ -10,13 +10,7 @@ module GitHub::HTML
   #
   # NOTE This filter is provided for really old comments only. It probably
   # shouldn't be used for anything new.
-  class TextileFilter < Filter
-    def initialize(text, context={}, result={})
-      raise TypeError, "text cannot be HTML" if text.is_a?(DocumentFragment)
-      @text = text.to_s
-      super nil, context, result
-    end
-
+  class TextileFilter < TextFilter
     # Convert Textile to HTML and convert into a DocumentFragment.
     def call
       RedCloth.new(@text).to_html
