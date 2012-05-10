@@ -91,7 +91,7 @@ module GitHub::HTML
     # Array of IssueReference objects written to the context hash so that
     # callers can find referenced issues.
     def issue_mentions
-      context[:issues] ||= []
+      result[:issues] ||= []
     end
 
     # Create an IssueReference for the given issue number and save it in the

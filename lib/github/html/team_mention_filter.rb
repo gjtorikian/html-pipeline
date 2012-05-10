@@ -63,7 +63,7 @@ module GitHub::HTML
     # List of Team objects that were mentioned in the document. This is
     # available in the context hash as :mentioned_teams.
     def mentioned_teams
-      context[:mentioned_teams] ||= []
+      result[:mentioned_teams] ||= []
     end
 
     # Replace team @mentions in text with a span showing what users are in the team.
