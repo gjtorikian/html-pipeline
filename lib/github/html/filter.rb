@@ -1,7 +1,7 @@
 module GitHub::HTML
   # Base class for user content HTML filters. Each filter takes an
   # HTML string or Nokogiri::HTML::DocumentFragment, performs
-  # modifications and/or writes information to the context hash. Filters must
+  # modifications and/or writes information to the result hash. Filters must
   # return a DocumentFragment (typically the same instance provided to the call
   # method) or a String with HTML markup.
   #
@@ -15,9 +15,9 @@ module GitHub::HTML
   #     end
   #   end
   #
-  # The context hash serves dual purposes: it is used to pass options to filters
-  # and also to allow filters to make extracted information available to the
-  # caller. The hash may be modified in place.
+  # The context Hash passes options to filters and should not be changed in
+  # place.  A Result Hash allows filters to make extracted information
+  # available to the caller and is mutable.
   #
   # Common context options:
   #   :base_url   - The site's base URL
