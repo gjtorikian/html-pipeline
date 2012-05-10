@@ -52,9 +52,10 @@ module GitHub
       Result = Struct.new(:output, :mentioned_users, :mentioned_teams, :mentioned_issues,
                          :commits, :commits_count, :issues)
 
-      def initialize(filters, context={})
+      def initialize(filters, context = nil, result_class = nil)
         @filters = filters.flatten
-        @context = context
+        @context = context || {}
+        @result_class = result_class || Result
       end
 
       # Apply all filters in the pipeline to the given HTML.
@@ -69,8 +70,13 @@ module GitHub
       # Returns the result Hash after being filtered by this Pipeline.  Contains an
       # :output key with the DocumentFragment or String HTML markup based on the
       # output of the last filter in the pipeline.
-      def call(html, context={}, result=Result.new)
-        @context.each { |k, v| context[k] = v if !context.key?(k) }
+      def call(html, context = nil, result = nil)
+        if content
+          @context.each { |k, v| context[k] = v if !context.key?(k) }
+        else
+          content = @content.dup
+        end
+        result ||= @result_class.new
         result[:output] = @filters.inject(html) { |doc, filter| filter.call(doc, context, result) }
         result
       end
@@ -78,13 +84,13 @@ module GitHub
       # Like call but guarantee the value returned is a DocumentFragment.
       # Pipelines may return a DocumentFragment or a String. Callers that need a
       # DocumentFragment should use this method.
-      def to_document(input, context={})
+      def to_document(input, context = nil)
         result = call(input, context)
         GitHub::HTML.parse(result[:output])
       end
 
       # Like call but guarantee the value returned is a string of HTML markup.
-      def to_html(input, context={})
+      def to_html(input, context = nil)
         result = call(input, context)
         output = result[:output]
         if output.respond_to?(:to_html)

@@ -105,7 +105,7 @@ module GitHub::HTML
     #
     # Returns an IssueReference when the mention is valid, or nil when the
     # issue could not be found.
-    def issue_reference(word, number, repo=nil)
+    def issue_reference(word, number, repo = nil)
       repository = find_repository(repo)
       return unless can_access_repo?(repository)
 

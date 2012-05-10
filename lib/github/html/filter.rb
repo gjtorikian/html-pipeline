@@ -28,7 +28,7 @@ module GitHub::HTML
   class Filter
     class InvalidDocumentException < StandardError; end
 
-    def initialize(doc, context={}, result={})
+    def initialize(doc, context = nil, result = nil)
       if doc.is_a?(String)
         @html = doc
         @doc = nil
@@ -36,17 +36,18 @@ module GitHub::HTML
         @doc = doc
         @html = nil
       end
-      @context = context
-      @result = result
+      @context = context || {}
+      @result = result || {}
     end
 
-    # A simple Hash used to pass extra information into filters and also to
-    # allow filters to make extracted information available to the caller.
+    # Public: Returns a simple Hash used to pass extra information into filters
+    # and also to allow filters to make extracted information available to the
+    # caller.
     attr_reader :context
 
-    # A Hash used to allow filters to pass back information
-    # to callers of the various Pipelines.  This can be used for mentioned_users,
-    # for example
+    # Public: Returns a Hash used to allow filters to pass back information
+    # to callers of the various Pipelines.  This can be used for
+    # #mentioned_users, for example.
     attr_reader :result
 
     # The Nokogiri::HTML::DocumentFragment to be manipulated. If the filter was
@@ -131,19 +132,19 @@ module GitHub::HTML
     #
     # Returns a GitHub::HTML::DocumentFragment or a String containing HTML
     # markup.
-    def self.call(doc, context={}, result={})
+    def self.call(doc, context = nil, result = nil))
       new(doc, context, result).call
     end
 
     # Like call but guarantees that a DocumentFragment is returned, even when
     # the last filter returns a String.
-    def self.to_document(input, context={})
+    def self.to_document(input, context = nil)
       html = call(input, context)
       GitHub::HTML::parse(html)
     end
 
     # Like call but guarantees that a string of HTML markup is returned.
-    def self.to_html(input, context={})
+    def self.to_html(input, context = nil)
       output = call(input, context)
       if output.respond_to?(:to_html)
         output.to_html
@@ -156,7 +157,7 @@ module GitHub::HTML
   class TextFilter < Filter
     attr_reader :text
 
-    def initialize(text, context={}, result={})
+    def initialize(text, context = nil, result = nil)
       raise TypeError, "text cannot be HTML" if text.is_a?(DocumentFragment)
       @text = text.to_s
       super nil, context, result
