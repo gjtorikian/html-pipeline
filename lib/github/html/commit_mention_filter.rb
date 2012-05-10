@@ -13,8 +13,6 @@ module GitHub::HTML
   # Context options:
   #   :base_url   - Used to construct commit URLs.
   #   :repository - Used to determine current context for bare SHA1 references.
-  #
-  # This filter does not write additional information to the context.
   class CommitMentionFilter < Filter
     def call
       if can_access_repo?(repository)
@@ -79,14 +77,14 @@ module GitHub::HTML
     #
     # Returns an Array of CommitReference objects.
     def commit_mentions
-      context[:commits] ||= []
+      result[:commits] ||= []
     end
 
     # Number of SHA1 look a likes that were seen. Used to enforce the limit.
     #
     # Returns number as a Fixnum.
     def commit_mentions_count
-      context[:commits_count] ||= 0
+      result[:commits_count] ||= 0
     end
 
     # Create a CommitReference object that store a referenced commit and
@@ -103,7 +101,7 @@ module GitHub::HTML
       if commit_mentions_count >= 10
         return
       end
-      context[:commits_count] += 1
+      result[:commits_count] += 1
 
       sha = repository.walker.ref_to_sha(sha)
 

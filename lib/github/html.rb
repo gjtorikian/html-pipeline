@@ -49,7 +49,8 @@ module GitHub
     # context - The default context hash. Values specified here may be
     #           overridden by individual pipeline runs.
     class Pipeline
-      Result = Struct.new(:output, :mentioned_users, :mentioned_teams, :mentioned_issues)
+      Result = Struct.new(:output, :mentioned_users, :mentioned_teams, :mentioned_issues,
+                         :commits, :commits_count)
 
       def initialize(filters, context={})
         @filters = filters.flatten
