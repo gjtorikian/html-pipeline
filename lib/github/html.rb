@@ -50,7 +50,7 @@ module GitHub
     #           overridden by individual pipeline runs.
     class Pipeline
       Result = Struct.new(:output, :mentioned_users, :mentioned_teams, :mentioned_issues,
-                         :commits, :commits_count)
+                         :commits, :commits_count, :issues)
 
       def initialize(filters, context={})
         @filters = filters.flatten
