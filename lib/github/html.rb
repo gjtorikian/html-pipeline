@@ -56,11 +56,15 @@ module GitHub
 
     # Contruct a pipeline for running multiple HTML filters.
     #
-    # filters - Array of Filter objects. Each must respond to call(doc, context)
-    #           and return the modified DocumentFragment or a String containing
-    #           HTML markup. Filters are performed in the order provided.
-    # context - The default context hash. Values specified here may be
-    #           overridden by individual pipeline runs.
+    # filters      - Array of Filter objects. Each must respond to call(doc,
+    #                context) and return the modified DocumentFragment or a
+    #                String containing HTML markup. Filters are performed in the
+    #                order provided.
+    # context      - The default context hash. Values specified here may be
+    #                overridden by individual pipeline runs.
+    # result_class - The default Class of the result object for individual
+    #                calls.  Default: Hash.  Protip:  Pass in a Struct to get
+    #                some semblence of type safety.
     class Pipeline
       def initialize(filters, context = nil, result_class = nil)
         @filters = filters.flatten
