@@ -9,11 +9,10 @@ module GitHub::HTML
   #   :gfm      => false    Disable GFM line-end processing
   #
   # This filter does not write any additional information to the context hash.
-  class MarkdownFilter < Filter
+  class MarkdownFilter < TextFilter
     def initialize(text, context={}, result={})
-      raise TypeError, "text cannot be HTML" if text.is_a?(DocumentFragment)
-      @text = text.to_s.gsub("\r", '')
-      super nil, context, result
+      super text, context, result
+      @text.gsub! "\r", ''
     end
 
     # Convert Markdown to HTML using the best available implementation

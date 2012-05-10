@@ -152,4 +152,14 @@ module GitHub::HTML
       end
     end
   end
+
+  class TextFilter < Filter
+    attr_reader :text
+
+    def initialize(text, context={}, result={})
+      raise TypeError, "text cannot be HTML" if text.is_a?(DocumentFragment)
+      @text = text.to_s
+      super nil, context, result
+    end
+  end
 end

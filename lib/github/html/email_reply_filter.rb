@@ -6,17 +6,11 @@ module GitHub::HTML
   #   None
   #
   # This filter does not write any additional information to the context hash.
-  class EmailReplyFilter < Filter
+  class EmailReplyFilter < TextFilter
     include EscapeUtils
 
     # The plain text input.
     attr_reader :text
-
-    def initialize(text, context={}, result={})
-      raise TypeError, "text cannot be HTML" if text.is_a?(DocumentFragment)
-      @text = text.to_s
-      super nil, context, result
-    end
 
     EMAIL_HIDDEN_HEADER    = %(<span class="email-hidden-toggle"><a href="#">&hellip;</a></span><div class="email-hidden-reply" style="display:none">).freeze
     EMAIL_QUOTED_HEADER    = %(<div class="email-quoted-reply">).freeze
