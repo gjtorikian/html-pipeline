@@ -132,7 +132,7 @@ module GitHub::HTML
     #
     # Returns a GitHub::HTML::DocumentFragment or a String containing HTML
     # markup.
-    def self.call(doc, context = nil, result = nil))
+    def self.call(doc, context = nil, result = nil)
       new(doc, context, result).call
     end
 
