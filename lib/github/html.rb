@@ -49,6 +49,8 @@ module GitHub
     # context - The default context hash. Values specified here may be
     #           overridden by individual pipeline runs.
     class Pipeline
+      Result = Struct.new(:output, :mentioned_users, :mentioned_teams, :mentioned_issues)
+
       def initialize(filters, context={})
         @filters = filters.flatten
         @context = context
@@ -58,15 +60,18 @@ module GitHub
       #
       # html    - A String containing HTML or a DocumentFragment object.
       # context - The context hash passed to each filter. See the Filter docs
-      #           for more info on possible values. This object may be modified
-      #           in place by filters to make extracted information available
-      #           to the caller.
+      #           for more info on possible values. This object may not be modified
+      #           in place by filters.
+      # result  - The result Hash passed to each filter for modification.  This
+      #           is where Filters store extracted information from the content.
       #
-      # Returns a DocumentFragment or String containing HTML markup based on the
+      # Returns the result Hash after being filtered by this Pipeline.  Contains an
+      # :output key with the DocumentFragment or String HTML markup based on the
       # output of the last filter in the pipeline.
-      def call(html, context={})
+      def call(html, context={}, result=Result.new)
         @context.each { |k, v| context[k] = v if !context.key?(k) }
-        @filters.inject(html) { |doc, filter| filter.call(doc, context) }
+        result[:output] = @filters.inject(html) { |doc, filter| filter.call(doc, context, result) }
+        result
       end
 
       # Like call but guarantee the value returned is a DocumentFragment.

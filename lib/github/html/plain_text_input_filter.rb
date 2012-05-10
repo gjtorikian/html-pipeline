@@ -2,10 +2,10 @@ module GitHub::HTML
   # Simple filter for plain text input. HTML escapes the text input and wraps it
   # in a div.
   class PlainTextInputFilter < Filter
-    def initialize(text, context={})
+    def initialize(text, context={}, result={})
       raise TypeError, "text cannot be HTML" if text.is_a?(DocumentFragment)
       @text = text
-      super nil, context
+      super nil, context, result
     end
 
     def call

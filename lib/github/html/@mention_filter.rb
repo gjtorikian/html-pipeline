@@ -7,7 +7,7 @@ module GitHub::HTML
   #   :base_url - Used to construct links to user profile pages for each
   #               mention.
   #
-  # The following keys are written to the context hash:
+  # The following keys are written to the result hash:
   #   :mentioned_users - An array of User objects that were mentioned.
   #
   class MentionFilter < Filter
@@ -60,9 +60,9 @@ module GitHub::HTML
     end
 
     # List of User objects that were mentioned in the document. This is
-    # available in the context hash as :mentioned_users.
+    # available in the result hash as :mentioned_users.
     def mentioned_users
-      context[:mentioned_users] ||= []
+      result[:mentioned_users] ||= []
     end
 
     # Replace user @mentions in text with links to the mentioned user's

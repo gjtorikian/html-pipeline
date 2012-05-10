@@ -10,10 +10,10 @@ module GitHub::HTML
   #
   # This filter does not write any additional information to the context hash.
   class MarkdownFilter < Filter
-    def initialize(text, context={})
+    def initialize(text, context={}, result={})
       raise TypeError, "text cannot be HTML" if text.is_a?(DocumentFragment)
       @text = text.to_s.gsub("\r", '')
-      super nil, context
+      super nil, context, result
     end
 
     # Convert Markdown to HTML using the best available implementation
