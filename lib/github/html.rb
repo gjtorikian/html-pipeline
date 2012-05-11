@@ -92,8 +92,9 @@ module GitHub
         if context
           @context.each { |k, v| context[k] = v if !context.key?(k) }
         else
-          context = @context.dup.freeze
+          context = @context.dup
         end
+        context.freeze
         result ||= @result_class.new
         result[:output] = @filters.inject(html) { |doc, filter| filter.call(doc, context, result) }
         result
