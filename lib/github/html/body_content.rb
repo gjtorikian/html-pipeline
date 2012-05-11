@@ -11,7 +11,7 @@ module GitHub::HTML
     # pipeline - A GitHub::HTML::Pipeline object with one or more Filters.
     def initialize(body, context, pipeline)
       @body = body
-      @context = context.freeze
+      @context = context
       @pipeline = pipeline
     end
 

@@ -80,7 +80,7 @@ module GitHub
       #
       # html    - A String containing HTML or a DocumentFragment object.
       # context - The context hash passed to each filter. See the Filter docs
-      #           for more info on possible values. This object may not be modified
+      #           for more info on possible values. This object should not be modified
       #           in place by filters.
       # result  - The result Hash passed to each filter for modification.  This
       #           is where Filters store extracted information from the content.
@@ -92,7 +92,7 @@ module GitHub
         if context
           @context.each { |k, v| context[k] = v if !context.key?(k) }
         else
-          context = @context.dup
+          context = @context.dup.freeze
         end
         result ||= @result_class.new
         result[:output] = @filters.inject(html) { |doc, filter| filter.call(doc, context, result) }
