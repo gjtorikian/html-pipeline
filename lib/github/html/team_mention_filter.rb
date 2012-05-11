@@ -4,8 +4,7 @@ module GitHub::HTML
   # not exist are ignored.
   #
   # Context options:
-  #   :base_url - Used to construct links to user profile pages for each
-  #               mention.
+  #   N/A
   #
   # The following keys are written to the Result:
   #   :mentioned_teams - An array of Team objects that were mentioned.
@@ -52,7 +51,7 @@ module GitHub::HTML
         content = node.to_html
         next if !content.include?('@')
         next if has_ancestor?(node, %w(pre code a))
-        html = mention_team_filter(content, base_url)
+        html = mention_team_filter(content)
         next if html == content
         node.replace(html)
       end
@@ -69,11 +68,10 @@ module GitHub::HTML
     # Replace team @mentions in text with a span showing what users are in the team.
     #
     # text      - String text to replace @mention team names in.
-    # base_url  - The base URL used to construct user profile URLs.
     #
     # Returns a string with the replacements made. All links have a
     # 'team-mention' class name attached for styling.
-    def mention_team_filter(text, base_url='/')
+    def mention_team_filter(text)
       self.class.mentioned_teams_in(text) do |match, org_name, team_name|
         team = Team.find_by_org_name_and_slug(org_name, team_name)
         if team
