@@ -7,7 +7,7 @@ module GitHub::HTML
   #   :base_url - Used to construct links to user profile pages for each
   #               mention.
   #
-  # The following keys are written to the context hash:
+  # The following keys are written to the Result:
   #   :mentioned_teams - An array of Team objects that were mentioned.
   #
   class TeamMentionFilter < Filter
@@ -20,7 +20,7 @@ module GitHub::HTML
     #
     # text - String text to search.
     #
-    # Yields the String match, the String org name, and the string team name.
+    # Yields the String match, the String org name, and the String team name.
     # The yield's return replaces the match in the original text.
     #
     # Returns a String replaced with the return of the block.
