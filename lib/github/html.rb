@@ -12,17 +12,18 @@ module GitHub
     # A Struct for results passed back from the Pipelines
     # This allows us to have some explicit-ness around the types of things that 
     # pipelines add to the repsonse.
+    #
+    # Members of the Result:
+    #   output - the DocumentFragment or String result of the Pipeline
+    #   mentioned_users - see GitHub::HTML::MentionFilter
+    #   mentioned_teams - see GitHub::HTML::TeamMentionFilter
+    #   commits - see GitHub::HTML::CommitMentionFilter
+    #   commits_count - see GitHub::HTML::CommitMentionFilter
+    #   issues - see GitHub::HTML::IssueMentionFilter
     Result = Struct.new(:output,
-      # GitHub::HTML::MentionFilter
       :mentioned_users,
-
-      # GitHub::HTML::TeamMentionFilter
       :mentioned_teams,
-
-      # GitHub::HTML::CommitMentionFilter
       :commits, :commits_count,
-
-      # GitHub::HTML::IssueMentionFilter
       :issues
     )
 
