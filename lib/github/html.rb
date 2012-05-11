@@ -9,6 +9,9 @@ module GitHub
   module HTML
     # Our DOM implementation.
     DocumentFragment = Nokogiri::HTML::DocumentFragment
+    # A Struct for results passed back from the Pipelines
+    # This allows us to have some explicit-ness around the types of things that 
+    # pipelines add to the repsonse.
     Result = Struct.new(:output,
       # GitHub::HTML::MentionFilter
       :mentioned_users,
