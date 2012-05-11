@@ -21,12 +21,18 @@ module GitHub
     #   commits - see GitHub::HTML::CommitMentionFilter
     #   commits_count - see GitHub::HTML::CommitMentionFilter
     #   issues - see GitHub::HTML::IssueMentionFilter
-    Result = Struct.new(:output,
-      :mentioned_users,
-      :mentioned_teams,
-      :commits, :commits_count,
-      :issues
-    )
+    class Result < Struct.new(:output,
+        :mentioned_users,
+        :mentioned_teams,
+        :commits, :commits_count,
+        :issues
+      )
+
+      def to_s
+        output.to_s
+      end
+
+    end
 
     # Parse a String into a DocumentFragment object. When a DocumentFragment is
     # provided, return it verbatim.
