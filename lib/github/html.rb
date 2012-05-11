@@ -9,6 +9,7 @@ module GitHub
   module HTML
     # Our DOM implementation.
     DocumentFragment = Nokogiri::HTML::DocumentFragment
+
     # A Struct for results passed back from the Pipelines
     # This allows us to have some explicit-ness around the types of things that 
     # pipelines add to the repsonse.
@@ -39,6 +40,7 @@ module GitHub
     end
 
     require 'github/html/body_content'
+
     # Filter implementations
     require 'github/html/filter'
     require 'github/html/autolink_filter'
@@ -64,7 +66,7 @@ module GitHub
     #                context) and return the modified DocumentFragment or a
     #                String containing HTML markup. Filters are performed in the
     #                order provided.
-    # context      - The default context hash. Values specified here may be
+    # context      - The default context hash. Values specified here MUST NOT be
     #                overridden by individual pipeline runs.
     # result_class - The default Class of the result object for individual
     #                calls.  Default: Hash.  Protip:  Pass in a Struct to get
@@ -80,8 +82,8 @@ module GitHub
       #
       # html    - A String containing HTML or a DocumentFragment object.
       # context - The context hash passed to each filter. See the Filter docs
-      #           for more info on possible values. This object should not be modified
-      #           in place by filters.
+      #           for more info on possible values. This object MUST NOT be modified
+      #           in place by filters.  Use the Result for passing state back.
       # result  - The result Hash passed to each filter for modification.  This
       #           is where Filters store extracted information from the content.
       #
