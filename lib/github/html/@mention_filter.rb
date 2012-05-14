@@ -28,10 +28,11 @@ module GitHub::HTML
     def self.mentioned_logins_in(text)
       text.gsub MentionPattern do |match|
         login = $1
-        yield match, login, login =~ MentionedLoginPattern
+        yield match, login, MentionedLogins.include?(login.downcase)
       end
     end
 
+    # Pattern used to extract @mentions from text.
     MentionPattern = /
       (?:^|\W)                   # beginning of string or non-word char
       @([a-z0-9][a-z0-9-]*)      # @username (without a trailing slash)
@@ -43,7 +44,14 @@ module GitHub::HTML
       )
     /ix
 
-    MentionedLoginPattern = /^mention(s|ed|ing|)$/
+    # List of username logins that, when mentioned, link to the blog post
+    # about @mentions instead of triggering a real mention.
+    MentionLogins = %w(
+      mention
+      mentions
+      mentioned
+      mentioning
+    )
 
     def call
       mentioned_users.clear
