@@ -28,7 +28,7 @@ module GitHub::HTML
     def self.mentioned_logins_in(text)
       text.gsub MentionPattern do |match|
         login = $1
-        yield match, login, MentionedLogins.include?(login.downcase)
+        yield match, login, MentionLogins.include?(login.downcase)
       end
     end
 
