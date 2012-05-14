@@ -43,7 +43,7 @@ module GitHub::HTML
       )
     /ix
 
-    MentionedLoginPattern = /^mention(s|ed|)$/
+    MentionedLoginPattern = /^mention(s|ed|ing|)$/
 
     def call
       mentioned_users.clear
