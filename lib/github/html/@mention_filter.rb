@@ -75,12 +75,13 @@ module GitHub::HTML
     # 'user-mention' class name attached for styling.
     def mention_link_filter(text, base_url='/')
       self.class.mentioned_logins_in(text) do |match, login, is_mentioned|
-        link = if is_mentioned
-          link_to_mention_info(login)
-        elsif user = User.find_by_login(login)
-          mentioned_users << user
-          link_to_mentioned_user(user)
-        end
+        link =
+          if is_mentioned
+            link_to_mention_info(login)
+          elsif user = User.find_by_login(login)
+            mentioned_users << user
+            link_to_mentioned_user(user)
+          end
 
         link ? match.sub("@#{login}", link) : match
       end
