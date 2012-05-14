@@ -39,7 +39,7 @@ module GitHub::HTML
       (?=
         \.[ \t]|                 # dot followed by space
         \.$|                     # dot at end of line
-        [^0-9a-zA-Z_.\/]|        # non-word character except dot 
+        [^0-9a-zA-Z_.\/]|        # non-word character except dot
         $                        # end of line
       )
     /ix
