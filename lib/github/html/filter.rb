@@ -29,8 +29,8 @@ module GitHub::HTML
     class InvalidDocumentException < StandardError; end
 
     def initialize(doc, context = nil, result = nil)
-      if doc.kind_of?(String)
-        @html = doc.to_str
+      if doc.is_a?(String)
+        @html = doc
         @doc = nil
       else
         @doc = doc
@@ -159,7 +159,7 @@ module GitHub::HTML
 
     def initialize(text, context = nil, result = nil)
       raise TypeError, "text cannot be HTML" if text.is_a?(DocumentFragment)
-      @text = text.to_str
+      @text = text.to_s
       super nil, context, result
     end
   end
