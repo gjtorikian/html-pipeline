@@ -159,7 +159,7 @@ module GitHub::HTML
 
     def initialize(text, context = nil, result = nil)
       raise TypeError, "text cannot be HTML" if text.is_a?(DocumentFragment)
-      @text = text.to_str
+      @text = text.try(:to_str)
       super nil, context, result
     end
   end
