@@ -95,7 +95,7 @@ module GitHub::HTML
     end
 
     # Create an IssueReference for the given issue number and save it in the
-    # contect hash's :issue_mentions value.
+    # result hash's :issue_mentions value.
     #
     # word   - The leading text before the issue number. Used to mark the
     #          IssueReference as closed or not.
