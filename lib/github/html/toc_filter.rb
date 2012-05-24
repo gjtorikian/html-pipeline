@@ -17,7 +17,7 @@ module GitHub::HTML
         uniq = (headers[name] > 0) ? "-#{headers[name]}" : ''
         headers[name] += 1
         if header_content = node.children.first
-          header_content.add_previous_sibling(%Q{<a name="#{name}#{uniq}" class="anchor" href="##{name}#{uniq}"><span class="mini-icon-link"></span></a>})
+          header_content.add_previous_sibling(%Q{<a name="#{name}#{uniq}" class="anchor" href="##{name}#{uniq}"><span class="mini-icon mini-icon-link"></span></a>})
         end
       end
       doc
