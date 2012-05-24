@@ -13,7 +13,7 @@ module GitHub::HTML
   #   :base_url   - Used to construct commit URLs.
   #   :repository - Used to determine current context for bare SHA1 references.
   #
-  # This filter writes information to the context hash:
+  # This filter writes information to the result hash:
   #   :issues     - An array of IssueReference objects for each issue mentioned.
   #                 You can use IssueReference#close? to determine if the reference
   #                 was prefixed with (close[sd]|fixe[sd]).
@@ -88,7 +88,7 @@ module GitHub::HTML
       end
     end
 
-    # Array of IssueReference objects written to the context hash so that
+    # Array of IssueReference objects written to the result hash so that
     # callers can find referenced issues.
     def issue_mentions
       result[:issues] ||= []
@@ -152,7 +152,7 @@ module GitHub::HTML
     end
   end
 
-  # Object added to the context hash to record issue references.
+  # Object added to the result hash to record issue references.
   class IssueReference < Struct.new(:issue, :type)
     def title
       @title ||= Rack::Utils.escape_html(issue.title)
