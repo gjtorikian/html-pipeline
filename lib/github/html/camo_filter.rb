@@ -22,7 +22,7 @@ module GitHub::HTML
         src = src.sub(%r!^http://github.com!, 'https://github.com')
         next if context[:disable_asset_proxy]
 
-        if src =~ /^http:/
+        if src =~ /^http:/ || src =~ /^https:\/\/img.skitch.com\//
           element['src'] = asset_proxy_url(src)
         else
           element['src'] = src
