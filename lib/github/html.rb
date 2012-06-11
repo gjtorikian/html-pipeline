@@ -150,7 +150,6 @@ module GitHub
     MarkdownPipeline = Pipeline.new [
       MarkdownFilter,
       SanitizationFilter,
-      SyntaxHighlightFilter,
       CamoFilter,
       ImageMaxWidthFilter,
       HttpsFilter,
@@ -158,7 +157,8 @@ module GitHub
       TeamMentionFilter,
       IssueMentionFilter,
       CommitMentionFilter,
-      EmojiFilter
+      EmojiFilter,
+      SyntaxHighlightFilter
     ], {:gfm => true}, Result
 
     # Same as MarkdownPipeline, but without GFM.  Used for Pull Requests
@@ -171,10 +171,10 @@ module GitHub
     PagesPipeline = Pipeline.new [
       MarkdownFilter,
       SanitizationFilter,
-      SyntaxHighlightFilter,
       MentionFilter,
       TeamMentionFilter,
-      EmojiFilter
+      EmojiFilter,
+      SyntaxHighlightFilter
     ], {:base_url => GitHub.url, :gfm => false}, Result
 
     # Pipeline used for commit messages. This one is kind of weird because
