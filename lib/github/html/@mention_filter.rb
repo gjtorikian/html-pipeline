@@ -54,12 +54,15 @@ module GitHub::HTML
       mentioning
     )
 
+    # Don't look for mentions in text nodes that are children of these elements
+    IGNORE_PARENTS = %w(pre code a).to_set
+
     def call
       mentioned_users.clear
       doc.search('text()').each do |node|
         content = node.to_html
         next if !content.include?('@')
-        next if has_ancestor?(node, %w(pre code a))
+        next if has_ancestor?(node, IGNORE_PARENTS)
         html = mention_link_filter(content, base_url)
         next if html == content
         node.replace(html)

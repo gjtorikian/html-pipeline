@@ -44,13 +44,16 @@ module GitHub::HTML
       )
     /ix
 
+    # Don't look for mentions in text nodes that are children of these elements
+    IGNORE_PARENTS = %w(pre code a).to_set
+
     def call
       return doc unless current_user && current_user.team_mentions_enabled?
       mentioned_teams.clear
       doc.search('text()').each do |node|
         content = node.to_html
         next if !content.include?('@')
-        next if has_ancestor?(node, %w(pre code a))
+        next if has_ancestor?(node, IGNORE_PARENTS)
         html = mention_team_filter(content)
         next if html == content
         node.replace(html)
