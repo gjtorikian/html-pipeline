@@ -9,10 +9,19 @@ module GitHub::HTML
         next unless lang = node['lang']
         next unless lexer = Pygments::Lexer[lang]
         text = node.inner_text
-        html = lexer.highlight(text)
+
+        html = highlight_with_timeout_handling(lexer, text)
+        next if html.nil?
+
         node.replace(html)
       end
       doc
+    end
+
+    def highlight_with_timeout_handling(lexer, text)
+      lexer.highlight(text)
+    rescue Timeout::Error => boom
+      nil
     end
   end
 end
