@@ -1,3 +1,5 @@
+require 'set'
+
 module GitHub::HTML
   # HTML filter that replaces @user mentions with links. Mentions within <pre>,
   # <code>, and <a> elements are ignored. Mentions that reference users that do
