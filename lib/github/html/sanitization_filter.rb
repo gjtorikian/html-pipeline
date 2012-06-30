@@ -19,12 +19,19 @@ module GitHub::HTML
     LISTS     = Set.new(%w(ul ol).freeze)
     LIST_ITEM = 'li'.freeze
 
+    # List of table child elements. These must be contained by a <table> element
+    # or they are not allowed through. Otherwise they can be used to break out
+    # of places we're using tables to contain formatted user content (like pull
+    # request review comments).
+    TABLE_ITEMS = Set.new(%w(tr td th).freeze)
+    TABLE       = '<table>'.freeze
+
     # The main sanitization whitelist. Only these elements and attributes are
     # allowed through by default.
     WHITELIST = {
       :elements => %w(
         h1 h2 h3 h4 h5 h6 h7 h8 br b i strong em a pre code img tt
-        ins del sup sub p ol ul table th tr td blockquote dl dt dd
+        ins del sup sub p ol ul table blockquote dl dt dd
         kbd q samp var hr ruby rt rp
       ),
       :attributes => {
@@ -61,6 +68,15 @@ module GitHub::HTML
           name, node = env[:node_name], env[:node]
           if name == LIST_ITEM && node.ancestors.any?{ |n| LISTS.include?(n.name) }
             {:node_whitelist => [node]}
+          end
+        },
+
+        # Whitelist only table child elements that are descended from a <table>.
+        # Table child elements that are not contained by a <table> are removed.
+        lambda { |env|
+          name, node = env[:node_name], env[:node]
+          if TABLE_ITEMS.include?(name) && node.ancestors.any? { |n| n.name == TABLE }
+            { :node_whitelist => [node] }
           end
         }
       ]
