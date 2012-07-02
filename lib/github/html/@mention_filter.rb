@@ -40,8 +40,8 @@ module GitHub::HTML
       @((?>[a-z0-9][a-z0-9-]*))  # @username
       (?!\/)                     # without a trailing slash
       (?=
-        \.[ \t]|                 # dot followed by space
-        \.$|                     # dot at end of line
+        \.+[ \t]|                # dots followed by space
+        \.+$|                    # dots at end of line
         [^0-9a-zA-Z_.]|          # non-word character except dot
         $                        # end of line
       )
