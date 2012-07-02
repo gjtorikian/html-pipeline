@@ -24,7 +24,7 @@ module GitHub::HTML
     # of places we're using tables to contain formatted user content (like pull
     # request review comments).
     TABLE_ITEMS = Set.new(%w(tr td th).freeze)
-    TABLE       = '<table>'.freeze
+    TABLE       = 'table'.freeze
 
     # The main sanitization whitelist. Only these elements and attributes are
     # allowed through by default.
