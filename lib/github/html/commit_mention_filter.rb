@@ -62,7 +62,7 @@ module GitHub::HTML
     # SHA =>
     #   <a href='/user/repo/commit/SHA'>SHA</a>
     def replace_bare_commit_mentions(text)
-      text.gsub(/(^|[({@\s\[])([0-9a-f]{7,40})\b/) do |match|
+      text.gsub(/(^|\.{2,3}|[({@\s\[])([0-9a-f]{7,40})\b/) do |match|
         leader, sha = $1, $2
         url = [repo_url, 'commit', sha].join('/')
 
