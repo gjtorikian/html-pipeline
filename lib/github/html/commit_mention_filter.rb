@@ -79,8 +79,13 @@ module GitHub::HTML
     def replace_bare_range_mentions(text)
       text.gsub(/(^|[({@\s\[])([0-9a-f]{7,40}\.{2,3}[0-9a-f]{7,40})\b/) do |match|
         leader, range = $1, $2
-        url = [repo_url, 'compare', range].join('/')
 
+        shas = range.split(/(\.{2,3})/)
+        oper = shas.slice!(1,1).first
+        refs = shas.collect { |sha|  commit_reference(sha) }
+        range = refs.collect(&:short_sha).join(oper)
+
+        url = [repo_url, 'compare', range].join('/')
         "#{leader}<a href='#{url}' class='commit-link'><tt>#{range}</tt></a>"
       end
     end
