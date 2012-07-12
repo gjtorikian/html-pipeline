@@ -16,6 +16,7 @@ module GitHub::HTML
   class CommitMentionFilter < Filter
     def call
       if can_access_repo?(repository)
+        apply_filter :replace_bare_range_mentions
         apply_filter :replace_repo_commit_mentions
         apply_filter :replace_bare_commit_mentions
       else
@@ -61,7 +62,7 @@ module GitHub::HTML
     # SHA =>
     #   <a href='/user/repo/commit/SHA'>SHA</a>
     def replace_bare_commit_mentions(text)
-      text.gsub(/(^|\.{2,3}|[({@\s\[])([0-9a-f]{7,40})\b/) do |match|
+      text.gsub(/(^|[({@\s\[])([0-9a-f]{7,40})\b/) do |match|
         leader, sha = $1, $2
         url = [repo_url, 'commit', sha].join('/')
 
@@ -70,6 +71,17 @@ module GitHub::HTML
         else
           match
         end
+      end
+    end
+
+    # SHA...SHA =>
+    #   <a href='/user/repo/compare/RANGE'>RANGE</a>
+    def replace_bare_range_mentions(text)
+      text.gsub(/(^|[({@\s\[])([0-9a-f]{7,40}\.{2,3}[0-9a-f]{7,40})\b/) do |match|
+        leader, range = $1, $2
+        url = [repo_url, 'compare', range].join('/')
+
+        "#{leader}<a href='#{url}' class='commit-link'><tt>#{range}</tt></a>"
       end
     end
 
