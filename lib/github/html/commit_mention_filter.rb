@@ -39,10 +39,10 @@ module GitHub::HTML
     # user/repo@SHA =>
     #   <a href='/user/repo/commit/SHA'>user/repo@SHA</a>
     def replace_global_commit_mentions(text)
-      text.gsub(/(^|\s|[({\[])([\w-]+\/[\w.-]+)@([0-9a-f]{7,40})\b/) do |match|
-        leader, repo, sha = $1, $2, $3
+      text.gsub(/\b([\w-]+\/[\w.-]+)@([0-9a-f]{7,40})\b/) do |match|
+        repo, sha = $1, $2
         text  = "#{repo}@<tt>#{sha[0, 7]}</tt>"
-        "#{leader}<a href='#{commit_url(repo, sha)}' class='commit-link'>#{text}</a>"
+        "<a href='#{commit_url(repo, sha)}' class='commit-link'>#{text}</a>"
       end
     end
 
@@ -51,23 +51,23 @@ module GitHub::HTML
     # user@SHA =>
     #   <a href='/user/repo/commit/SHA'>user@SHA</a>
     def replace_repo_commit_mentions(text)
-      text.gsub(/(^|[\s({\[])([\w-]+\/?[\w.-]*)?@([0-9a-f]{7,40})\b/) do |match|
-        leader, repo, sha = $1, $2, $3
+      text.gsub(/\b([\w-]+\/?[\w.-]*)?@([0-9a-f]{7,40})\b/) do |match|
+        repo, sha = $1, $2
         url  = [repo_url(repo), 'commit', sha].join('/')
         text = "#{repo}@<tt>#{sha[0, 7]}</tt>"
-        "#{leader}<a href='#{url}' class='commit-link'>#{text}</a>"
+        "<a href='#{url}' class='commit-link'>#{text}</a>"
       end
     end
 
     # SHA =>
     #   <a href='/user/repo/commit/SHA'>SHA</a>
     def replace_bare_commit_mentions(text)
-      text.gsub(/(^|[({@\s\[.])([0-9a-f]{7,40})\b/) do |match|
-        leader, sha = $1, $2
+      text.gsub(/\b([0-9a-f]{7,40})\b/) do |match|
+        sha = $1
         url = [repo_url, 'commit', sha].join('/')
 
         if reference = commit_reference(sha)
-          "#{leader}<a href='#{url}' class='commit-link'><tt>#{reference.short_sha}</tt></a>"
+          "<a href='#{url}' class='commit-link'><tt>#{reference.short_sha}</tt></a>"
         else
           match
         end
@@ -77,8 +77,8 @@ module GitHub::HTML
     # SHA...SHA =>
     #   <a href='/user/repo/compare/RANGE'>RANGE</a>
     def replace_bare_range_mentions(text)
-      text.gsub(/(^|[({@\s\[])([0-9a-f]{7,40}\.\.\.[0-9a-f]{7,40})\b/) do |match|
-        leader, range = $1, $2
+      text.gsub(/\b([0-9a-f]{7,40}\.\.\.[0-9a-f]{7,40})\b/) do |match|
+        range = $1
         url = [repo_url, 'compare', range].join('/')
 
         shas = range.split(/(\.\.\.)/)
@@ -87,7 +87,7 @@ module GitHub::HTML
 
         if refs.all?
           range = refs.collect(&:short_sha).join(oper)
-          "#{leader}<a href='#{url}' class='commit-link'><tt>#{range}</tt></a>"
+          "<a href='#{url}' class='commit-link'><tt>#{range}</tt></a>"
         else
           match
         end
