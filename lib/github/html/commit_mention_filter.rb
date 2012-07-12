@@ -83,10 +83,14 @@ module GitHub::HTML
         shas = range.split(/(\.{2,3})/)
         oper = shas.slice!(1,1).first
         refs = shas.collect { |sha|  commit_reference(sha) }
-        range = refs.collect(&:short_sha).join(oper)
 
-        url = [repo_url, 'compare', range].join('/')
-        "#{leader}<a href='#{url}' class='commit-link'><tt>#{range}</tt></a>"
+        if refs.all?
+          range = refs.collect(&:short_sha).join(oper)
+          url = [repo_url, 'compare', range].join('/')
+          "#{leader}<a href='#{url}' class='commit-link'><tt>#{range}</tt></a>"
+        else
+          match
+        end
       end
     end
 
