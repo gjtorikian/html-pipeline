@@ -48,7 +48,7 @@ module GitHub::HTML
     IGNORE_PARENTS = %w(pre code a).to_set
 
     def call
-      return doc unless current_user && current_user.team_mentions_enabled?
+      return doc unless current_user
       mentioned_teams.clear
       doc.search('text()').each do |node|
         content = node.to_html
