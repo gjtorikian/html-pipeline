@@ -76,8 +76,7 @@ module GitHub::HTML
     # 'team-mention' class name attached for styling.
     def mention_team_filter(text)
       self.class.mentioned_teams_in(text) do |match, org_name, team_name|
-        team = Team.find_by_org_name_and_slug(org_name, team_name)
-        if team
+        if team = find_team(org_name, team_name)
           mentioned_teams << team
           html = mentioned_team_html(team)
           match.sub(match.strip, html)
@@ -85,6 +84,13 @@ module GitHub::HTML
           match
         end
       end
+    end
+
+    # Internal: find the team, properly scoped for security
+    def find_team(org_name, team_name)
+      return nil unless repository
+      teams = current_user.teams_for(repository.organization)
+      teams.find_by_org_name_and_slug(org_name, team_name) if teams.any?
     end
 
     # Replace with a span for the tooltip
