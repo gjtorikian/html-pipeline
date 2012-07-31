@@ -90,8 +90,7 @@ module GitHub::HTML
     def find_team(org_name, team_name)
       return nil unless repository
       teams = current_user.teams_for(repository.organization)
-      p "teams", teams
-      teams.find_by_org_name_and_slug(org_name, team_name) if teams.any?
+      teams.detect { |t| t.organization.login == org_name && t.name == team_name } if teams.any?
     end
 
     # Replace with a span for the tooltip
