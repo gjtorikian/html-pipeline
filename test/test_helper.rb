@@ -1,3 +1,3 @@
 require 'bundler/setup'
-require 'github-html'
+require 'github/html'
 require 'test/unit'
