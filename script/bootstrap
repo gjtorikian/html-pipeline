@@ -1,0 +1,7 @@
+#!/bin/sh
+
+echo "==> Installing Bundler pre-release..."
+gem install bundler --pre
+
+echo "==> Installing gems..."
+bundle install --binstubs --path vendor/gems --standalone
