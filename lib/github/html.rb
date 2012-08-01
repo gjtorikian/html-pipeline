@@ -29,6 +29,7 @@ module GitHub
     autoload :SyntaxHighlightFilter, 'github/html/syntax_highlight_filter'
     autoload :TextileFilter,         'github/html/textile_filter'
     autoload :TableOfContentsFilter, 'github/html/toc_filter'
+    autoload :TextFilter,            'github/html/text_filter'
 
     # Our DOM implementation.
     DocumentFragment = Nokogiri::HTML::DocumentFragment
