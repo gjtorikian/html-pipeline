@@ -2,8 +2,8 @@
 require File.expand_path('../lib/github/html/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["Jerry Cheung"]
-  gem.email         = ["jch@whatcodecraves.com"]
+  gem.authors       = ["Ryan Tomayko"]
+  gem.email         = ["ryan@github.com"]
   gem.description   = %q{GitHub HTML processing filters and utilities}
   gem.summary       = %q{Helpers for processing content through a chain of filters}
   gem.homepage      = "https://github.com/github/github-html"

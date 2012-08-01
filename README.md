@@ -44,3 +44,14 @@ rake test
 * syntax highlighter filter requires other github specific things
 * autolink_filter depends on Github.enterprise?
 * test whether nokogiri monkey patch is still necessary
+
+## Contributors
+
+* [Aman Gupta](aman@tmm1.net)
+* [Jake Boxer](jake@github.com)
+* [Joshua Peek](josh@joshpeek.com)
+* [Kyle Neath](kneath@gmail.com)
+* [Rob Sanheim](rsanheim@gmail.com)
+* [Simon Rozet](simon@rozet.name)
+* [Vicent Martí](tanoku@gmail.com)
+* [Risk :danger: Olson](technoweenie@gmail.com)
