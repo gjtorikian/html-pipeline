@@ -1,3 +1,5 @@
+require 'escape_utils'
+
 module GitHub::HTML
   # HTML Filter that converts email reply text into an HTML DocumentFragment.
   # It must be used as the first filter in a pipeline.
