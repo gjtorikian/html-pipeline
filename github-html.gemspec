@@ -4,9 +4,9 @@ require File.expand_path('../lib/github/html/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Jerry Cheung"]
   gem.email         = ["jch@whatcodecraves.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.description   = %q{GitHub HTML processing filters and utilities}
+  gem.summary       = %q{Helpers for processing content through a chain of filters}
+  gem.homepage      = "https://github.com/github/github-html"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
@@ -21,5 +21,4 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'github-linguist', '~> 2.1'
   gem.add_dependency 'rinku',           '~> 1.7'
   gem.add_dependency 'escape_utils',    '~> 0.2'
-  gem.add_dependency 'activesupport'
 end
