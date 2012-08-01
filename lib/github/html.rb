@@ -1,4 +1,4 @@
-require 'nokogiri'
+require "nokogiri"
 
 module GitHub
   # GitHub HTML processing filters and utilities. This module includes a small
@@ -7,32 +7,31 @@ module GitHub
   #
   # See GitHub::HTML::Filter for information on building filters.
   module HTML
+    extend self
+
+    autoload :Version,               'github/html/version'
+    autoload :Pipeline,              'github/html/pipeline'
+    autoload :Filter,                'github/html/filter'
+    autoload :BodyContent,           'github/html/body_content'
+    autoload :AutolinkFilter,        'github/html/autolink_filter'
+    autoload :CamoFilter,            'github/html/camo_filter'
+    autoload :CommitMentionFilter,   'github/html/commit_mention_filter'
+    autoload :EmailReplyFilter,      'github/html/email_reply_filter'
+    autoload :EmojiFilter,           'github/html/emoji_filter'
+    autoload :HttpsFilter,           'github/html/https_filter'
+    autoload :ImageMaxWidthFilter,   'github/html/image_max_width_filter'
+    autoload :IssueMentionFilter,    'github/html/issue_mention_filter'
+    autoload :MarkdownFilter,        'github/html/markdown_filter'
+    autoload :MentionFilter,         'github/html/@mention_filter'
+    autoload :TeamMentionFilter,     'github/html/team_mention_filter'
+    autoload :PlainTextInputFilter,  'github/html/plain_text_input_filter'
+    autoload :SanitizationFilter,    'github/html/sanitization_filter'
+    autoload :SyntaxHighlightFilter, 'github/html/syntax_highlight_filter'
+    autoload :TextileFilter,         'github/html/textile_filter'
+    autoload :TableOfContentsFilter, 'github/html/toc_filter'
+
     # Our DOM implementation.
     DocumentFragment = Nokogiri::HTML::DocumentFragment
-
-    # A Struct for results passed back from the Pipelines
-    # This allows us to have some explicit-ness around the types of things that 
-    # pipelines add to the repsonse.
-    #
-    # Members of the Result:
-    #   output - the DocumentFragment or String result of the Pipeline
-    #   mentioned_users - see GitHub::HTML::MentionFilter
-    #   mentioned_teams - see GitHub::HTML::TeamMentionFilter
-    #   commits - see GitHub::HTML::CommitMentionFilter
-    #   commits_count - see GitHub::HTML::CommitMentionFilter
-    #   issues - see GitHub::HTML::IssueMentionFilter
-    class Result < Struct.new(:output,
-        :mentioned_users,
-        :mentioned_teams,
-        :commits, :commits_count,
-        :issues
-      )
-
-      def to_s
-        output.to_s
-      end
-
-    end
 
     # Parse a String into a DocumentFragment object. When a DocumentFragment is
     # provided, return it verbatim.
@@ -44,179 +43,6 @@ module GitHub
         document_or_html
       end
     end
-
-    require 'github/html/body_content'
-
-    # Filter implementations
-    require 'github/html/filter'
-    require 'github/html/autolink_filter'
-    require 'github/html/camo_filter'
-    require 'github/html/commit_mention_filter'
-    require 'github/html/email_reply_filter'
-    require 'github/html/emoji_filter'
-    require 'github/html/https_filter'
-    require 'github/html/image_max_width_filter'
-    require 'github/html/issue_mention_filter'
-    require 'github/html/markdown_filter'
-    require 'github/html/@mention_filter'
-    require 'github/html/team_mention_filter'
-    require 'github/html/plain_text_input_filter'
-    require 'github/html/sanitization_filter'
-    require 'github/html/syntax_highlight_filter'
-    require 'github/html/textile_filter'
-    require 'github/html/toc_filter'
-
-    # Contruct a pipeline for running multiple HTML filters.
-    #
-    # filters      - Array of Filter objects. Each must respond to call(doc,
-    #                context) and return the modified DocumentFragment or a
-    #                String containing HTML markup. Filters are performed in the
-    #                order provided.
-    # context      - The default context hash. Values specified here MUST NOT be
-    #                overridden by individual pipeline runs.
-    # result_class - The default Class of the result object for individual
-    #                calls.  Default: Hash.  Protip:  Pass in a Struct to get
-    #                some semblence of type safety.
-    class Pipeline
-      # Public: Returns an Array of Filter objects for this Pipeline.
-      attr_reader :filters
-
-      def initialize(filters, context = nil, result_class = nil)
-        @filters = filters.flatten.freeze
-        @context = context || {}
-        @result_class = result_class || Hash
-      end
-
-      # Apply all filters in the pipeline to the given HTML.
-      #
-      # html    - A String containing HTML or a DocumentFragment object.
-      # context - The context hash passed to each filter. See the Filter docs
-      #           for more info on possible values. This object MUST NOT be modified
-      #           in place by filters.  Use the Result for passing state back.
-      # result  - The result Hash passed to each filter for modification.  This
-      #           is where Filters store extracted information from the content.
-      #
-      # Returns the result Hash after being filtered by this Pipeline.  Contains an
-      # :output key with the DocumentFragment or String HTML markup based on the
-      # output of the last filter in the pipeline.
-      def call(html, context = nil, result = nil)
-        if context
-          @context.each { |k, v| context[k] = v if !context.key?(k) }
-        else
-          context = @context.dup
-        end
-        context.freeze
-        result ||= @result_class.new
-        result[:output] = @filters.inject(html) { |doc, filter| filter.call(doc, context, result) }
-        result
-      end
-
-      # Like call but guarantee the value returned is a DocumentFragment.
-      # Pipelines may return a DocumentFragment or a String. Callers that need a
-      # DocumentFragment should use this method.
-      def to_document(input, context = nil, result = nil)
-        result = call(input, context, result)
-        GitHub::HTML.parse(result[:output])
-      end
-
-      # Like call but guarantee the value returned is a string of HTML markup.
-      def to_html(input, context = nil, result = nil)
-        result = call(input, context, result = nil)
-        output = result[:output]
-        if output.respond_to?(:to_html)
-          output.to_html
-        else
-          output.to_s
-        end
-      end
-    end
-
-    # Pipeline providing sanitization and image hijacking but no mention
-    # related features.
-    SimplePipeline = Pipeline.new [
-      SanitizationFilter,
-      TableOfContentsFilter, # add 'name' anchors to all headers
-      CamoFilter,
-      ImageMaxWidthFilter,
-      SyntaxHighlightFilter,
-      EmojiFilter,
-      AutolinkFilter  # Perform an autolinking pass, for those GitHub::Markup
-                      # languages that don't have built-in autolinking
-    ], nil, Result
-
-    # Pipeline used for most types of user provided content like comments
-    # and issue bodies. Performs sanitization, image hijacking, and various
-    # mention links.
-    MarkdownPipeline = Pipeline.new [
-      MarkdownFilter,
-      SanitizationFilter,
-      CamoFilter,
-      ImageMaxWidthFilter,
-      HttpsFilter,
-      MentionFilter,
-      TeamMentionFilter,
-      IssueMentionFilter,
-      CommitMentionFilter,
-      EmojiFilter,
-      SyntaxHighlightFilter
-    ], {:gfm => true}, Result
-
-    # Same as MarkdownPipeline, but without GFM.  Used for Pull Requests
-    # created from Commits.
-    NonGFMMarkdownPipeline = Pipeline.new(MarkdownPipeline.filters,
-      {:gfm => false}, Result)
-
-    # Pipeline used to Render the Markdown content in pages2
-    # autogenerated websites
-    PagesPipeline = Pipeline.new [
-      MarkdownFilter,
-      SanitizationFilter,
-      MentionFilter,
-      TeamMentionFilter,
-      EmojiFilter,
-      SyntaxHighlightFilter
-    ], {:base_url => GitHub.url, :gfm => false}, Result
-
-    # Pipeline used for commit messages. This one is kind of weird because
-    # commit messages are treated as preformatted plain text.
-    CommitMessagePipeline = Pipeline.new [
-      PlainTextInputFilter,
-      MentionFilter,
-      TeamMentionFilter,
-      CommitMentionFilter,
-      IssueMentionFilter,
-      EmojiFilter,
-      AutolinkFilter
-    ], nil, Result
-
-    # Pipeline used for very large commit messages that take too long to
-    # generate with a fully featured pipeline.
-    LongCommitMessagePipeline = Pipeline.new [PlainTextInputFilter]
-
-    # Pipeline used for email replies.
-    EmailPipeline = Pipeline.new [
-      EmailReplyFilter,
-      MentionFilter,
-      TeamMentionFilter,
-      IssueMentionFilter,
-      CommitMentionFilter,
-      EmojiFilter,
-      AutolinkFilter
-    ], nil, Result
-
-    # Used to post-process user content for HTML email clients.
-    HtmlEmailPipeline = Pipeline.new [
-      ImageMaxWidthFilter
-    ], nil, Result
-
-    # Pipeline used for really old comments and maybe other textile content
-    # I guess.
-    TextilePipeline = Pipeline.new [
-      TextileFilter,
-      SanitizationFilter
-    ], {:whitelist => SanitizationFilter::LIMITED}, Result
-
-    extend self
   end
 end
 
