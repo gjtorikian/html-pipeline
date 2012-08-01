@@ -22,6 +22,13 @@ Or install it yourself as:
 
 TODO: Write usage instructions here
 
+## Development Setup
+
+```
+script/bootstrap
+rake test
+```
+
 ## Contributing
 
 1. Fork it
