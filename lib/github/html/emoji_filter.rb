@@ -4,7 +4,7 @@ module GitHub::HTML
   # HTML filter that replaces :emoji: with images.
   #
   # Context:
-  #   :base_url - base url to link to emoji sprite
+  #   :asset_root - base url to link to emoji sprite
   class EmojiFilter < Filter
     # Build a regexp that matches all valid :emoji: names.
     EmojiPattern = /:(#{Emoji.names.map { |name| Regexp.escape(name) }.join('|')}):/
@@ -31,7 +31,7 @@ module GitHub::HTML
 
       text.gsub EmojiPattern do |match|
         name = $1
-        "<img class='emoji' title=':#{name}:' alt=':#{name}:' src='#{base_url}/images/icons/emoji/#{name}.png?v5' height='20' width='20' align='absmiddle' />"
+        "<img class='emoji' title=':#{name}:' alt=':#{name}:' src='#{File.join(context[:asset_root], "emoji", "#{name}.png")}' height='20' width='20' align='absmiddle' />"
       end
     end
   end
