@@ -121,7 +121,7 @@ module GitHub
 
       # Like call but guarantee the value returned is a string of HTML markup.
       def to_html(input, context = nil, result = nil)
-        result = call(input, context, result)
+        result = call(input, context, result = nil)
         output = result[:output]
         if output.respond_to?(:to_html)
           output.to_html
@@ -202,12 +202,12 @@ module GitHub
       CommitMentionFilter,
       EmojiFilter,
       AutolinkFilter
-    ]
+    ], nil, Result
 
     # Used to post-process user content for HTML email clients.
     HtmlEmailPipeline = Pipeline.new [
       ImageMaxWidthFilter
-    ]
+    ], nil, Result
 
     # Pipeline used for really old comments and maybe other textile content
     # I guess.
