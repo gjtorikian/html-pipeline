@@ -8,7 +8,9 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{Helpers for processing content through a chain of filters}
   gem.homepage      = "https://github.com/github/github-html"
 
-  gem.files         = `git ls-files`.split($\)
+  gem.files         = %w(README.md Rakefile LICENSE)
+  gem.files        += Dir.glob("lib/**/*")
+  gem.files        += Dir.glob("script/**/*")
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "github-html"
