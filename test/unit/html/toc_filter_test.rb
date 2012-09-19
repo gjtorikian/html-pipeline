@@ -1,14 +1,14 @@
-require File.expand_path('../../../test_helper', __FILE__)
+require "test_helper"
 
-context "GitHub::HTML::TableOfContentsFilter" do
+class GitHub::HTML::TableOfContentsFilterTest < Test::Unit::TestCase
   TocFilter = GitHub::HTML::TableOfContentsFilter
 
-  test "anchors are added properly" do
+  def test_anchors_are_added_properly
     orig = %(<h1>Ice cube</h1><p>Will swarm on any motherfucker in a blue uniform</p>)
     assert_includes '<a name=', TocFilter.call(orig).to_s
   end
 
-  test "anchors have sane names" do
+  def test_anchors_have_sane_names
     orig = %(<h1>Dr Dre</h1><h1>Ice Cube</h1><h1>Eazy-E</h1><h1>MC Ren</h1>)
     result = TocFilter.call(orig).to_s
 
@@ -18,7 +18,7 @@ context "GitHub::HTML::TableOfContentsFilter" do
     assert_includes '"mc-ren"', result
   end
 
-  test "dupe headers have unique trailing identifiers" do
+  def test_dupe_headers_have_unique_trailing_identifiers
     orig = %(<h1>Straight Outta Compton</h1>
              <h2>Dopeman</h2>
              <h3>Express Yourself</h3>
@@ -30,7 +30,7 @@ context "GitHub::HTML::TableOfContentsFilter" do
     assert_includes '"dopeman-1"', result
   end
 
-  test "all header tags are found when adding anchors" do
+  def test_all_header_tags_are_found_when_adding_anchors
     orig = %(<h1>"Funky President" by James Brown</h1>
              <h2>"It's My Thing" by Marva Whitney</h2>
              <h3>"Boogie Back" by Roy Ayers</h3>

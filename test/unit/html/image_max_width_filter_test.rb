@@ -1,11 +1,11 @@
-require File.expand_path('../../../test_helper', __FILE__)
+require "test_helper"
 
-context "GitHub::HTML::ImageMaxWidthFilter" do
+class GitHub::HTML::ImageMaxWidthFilterTest < Test::Unit::TestCase
   def filter(html)
     GitHub::HTML::ImageMaxWidthFilter.call(html)
   end
 
-  test "rewrites image style tags" do
+  def test_rewrites_image_style_tags
     body = "<p>Screenshot: <img src='screenshot.png'></p>"
     doc  = Nokogiri::HTML::DocumentFragment.parse(body)
 
@@ -14,7 +14,7 @@ context "GitHub::HTML::ImageMaxWidthFilter" do
       res.to_html
   end
 
-  test "leaves existing image style tags alone" do
+  def test_leaves_existing_image_style_tags_alone
     body = "<p><img src='screenshot.png' style='width:100px;'></p>"
     doc  = Nokogiri::HTML::DocumentFragment.parse(body)
 
@@ -23,7 +23,7 @@ context "GitHub::HTML::ImageMaxWidthFilter" do
       res.to_html
   end
 
-  test "links to image" do
+  def test_links_to_image
     body = "<p>Screenshot: <img src='screenshot.png'></p>"
     doc  = Nokogiri::HTML::DocumentFragment.parse(body)
 
@@ -32,7 +32,7 @@ context "GitHub::HTML::ImageMaxWidthFilter" do
       res.to_html
   end
 
-  test "doesnt link to image when already linked" do
+  def test_doesnt_link_to_image_when_already_linked
     body = "<p>Screenshot: <a href='blah.png'><img src='screenshot.png'></a></p>"
     doc  = Nokogiri::HTML::DocumentFragment.parse(body)
 
@@ -41,7 +41,7 @@ context "GitHub::HTML::ImageMaxWidthFilter" do
       res.to_html
   end
 
-  test "doesn't screw up inlined images" do
+  def test_doesnt_screw_up_inlined_images
     body = "<p>Screenshot <img src='screenshot.png'>, yes, this is a <b>screenshot</b> indeed.</p>"
     doc  = Nokogiri::HTML::DocumentFragment.parse(body)
 

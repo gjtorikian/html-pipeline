@@ -1,20 +1,20 @@
-require File.expand_path('../../../test_helper', __FILE__)
+require "test_helper"
 
-context "GitHub::HTML::PlainTextInputFilter" do
+class GitHub::HTML::PlainTextInputFilterTest < Test::Unit::TestCase
   PlainTextInputFilter = GitHub::HTML::PlainTextInputFilter
 
-  test "fails when given a DocumentFragment" do
+  def test_fails_when_given_a_documentfragment
     body = "<p>heyo</p>"
     doc  = Nokogiri::HTML::DocumentFragment.parse(body)
     assert_raise(TypeError) { PlainTextInputFilter.call(doc, {}) }
   end
 
-  test "wraps input in a <div> element" do
+  def test_wraps_input_in_a_div_element
     doc = PlainTextInputFilter.call("howdy pahtner", {})
     assert_equal "<div>howdy pahtner</div>", doc.to_s
   end
 
-  test "HTML escapes plain text input" do
+  def test_html_escapes_plain_text_input
     doc = PlainTextInputFilter.call("See: <http://example.org>", {})
     assert_equal "<div>See: &lt;http://example.org&gt;</div>",
       doc.to_s
