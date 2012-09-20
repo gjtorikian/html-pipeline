@@ -46,11 +46,11 @@ module GitHub::HTML
 
     # Private: the hostname to use for generated asset proxied URLs.
     def asset_proxy_host
-      context[:asset_proxy] || GitHub.image_proxy_url
+      context[:asset_proxy] or raise "Missing context :asset_proxy"
     end
 
     def asset_proxy_secret_key
-      context[:asset_proxy_secret_key] || GitHub.image_proxy_key
+      context[:asset_proxy_secret_key] or raise "Missing context :asset_proxy_secret_key"
     end
 
     # Private: helper to hexencode a string. Each byte ends up encoded into
