@@ -1,7 +1,7 @@
 require "test_helper"
 
-class GitHub::HTML::PlainTextInputFilterTest < Test::Unit::TestCase
-  PlainTextInputFilter = GitHub::HTML::PlainTextInputFilter
+class HTML::Pipeline::PlainTextInputFilterTest < Test::Unit::TestCase
+  PlainTextInputFilter = HTML::Pipeline::PlainTextInputFilter
 
   def test_fails_when_given_a_documentfragment
     body = "<p>heyo</p>"

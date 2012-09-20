@@ -1,6 +1,6 @@
 require 'openssl'
 
-module GitHub::HTML
+module HTML::Pipeline
   # HTML Filter for replacing http image URLs with camo versions. See:
   #
   # https://github.com/github/camo

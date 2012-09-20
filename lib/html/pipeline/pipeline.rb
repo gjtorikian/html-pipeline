@@ -1,4 +1,4 @@
-module GitHub::HTML
+module HTML::Pipeline
   # Contruct a pipeline for running multiple HTML filters.
   #
   # filters      - Array of Filter objects. Each must respond to call(doc,
@@ -49,7 +49,7 @@ module GitHub::HTML
     # DocumentFragment should use this method.
     def to_document(input, context = nil, result = nil)
       result = call(input, context, result)
-      GitHub::HTML.parse(result[:output])
+      HTML::Pipeline.parse(result[:output])
     end
 
     # Like call but guarantee the value returned is a string of HTML markup.

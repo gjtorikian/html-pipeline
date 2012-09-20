@@ -1,7 +1,7 @@
 require "test_helper"
 
-class GitHub::HTML::SanitizationFilterTest < Test::Unit::TestCase
-  SanitizationFilter = GitHub::HTML::SanitizationFilter
+class HTML::Pipeline::SanitizationFilterTest < Test::Unit::TestCase
+  SanitizationFilter = HTML::Pipeline::SanitizationFilter
 
   def test_removing_script_tags
     orig = %(<p><img src="http://github.com/img.png" /><script></script></p>)

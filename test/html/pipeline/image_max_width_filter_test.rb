@@ -1,8 +1,8 @@
 require "test_helper"
 
-class GitHub::HTML::ImageMaxWidthFilterTest < Test::Unit::TestCase
+class HTML::Pipeline::ImageMaxWidthFilterTest < Test::Unit::TestCase
   def filter(html)
-    GitHub::HTML::ImageMaxWidthFilter.call(html)
+    HTML::Pipeline::ImageMaxWidthFilter.call(html)
   end
 
   def test_rewrites_image_style_tags

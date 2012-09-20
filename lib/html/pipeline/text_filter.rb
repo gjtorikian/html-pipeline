@@ -1,4 +1,4 @@
-module GitHub::HTML
+module HTML::Pipeline
   class TextFilter < Filter
     attr_reader :text
 

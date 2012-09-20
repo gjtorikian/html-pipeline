@@ -1,6 +1,6 @@
 require 'github/linguist'
 
-module GitHub::HTML
+module HTML::Pipeline
   # HTML Filter that syntax highlights code blocks wrapped
   # in <pre lang="...">.
   class SyntaxHighlightFilter < Filter

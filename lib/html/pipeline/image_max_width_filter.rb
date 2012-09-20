@@ -1,4 +1,4 @@
-module GitHub::HTML
+module HTML::Pipeline
   # This filter rewrites image tags with a max-width inline style and also wraps
   # the image in an <a> tag that causes the full size image to be opened in a
   # new tab.

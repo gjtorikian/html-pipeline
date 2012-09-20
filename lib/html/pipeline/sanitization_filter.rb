@@ -1,6 +1,6 @@
 require 'sanitize'
 
-module GitHub::HTML
+module HTML::Pipeline
   # HTML filter with sanization routines and whitelists. This module defines
   # what HTML is allowed in user provided content and fixes up issues with
   # unbalanced tags and whatnot.

@@ -1,8 +1,8 @@
 require "test_helper"
 
-AutolinkFilter = GitHub::HTML::AutolinkFilter
+AutolinkFilter = HTML::Pipeline::AutolinkFilter
 
-class GitHub::HTML::AutolinkFilterTest < Test::Unit::TestCase
+class HTML::Pipeline::AutolinkFilterTest < Test::Unit::TestCase
   def test_uses_rinku_for_autolinking
     # just try to parse a complicated piece of HTML
     # that Rails auto_link cannot handle

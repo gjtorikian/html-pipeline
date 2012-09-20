@@ -1,7 +1,7 @@
 require "test_helper"
 
-class GitHub::HTML::CamoFilterTest < Test::Unit::TestCase
-  CamoFilter = GitHub::HTML::CamoFilter
+class HTML::Pipeline::CamoFilterTest < Test::Unit::TestCase
+  CamoFilter = HTML::Pipeline::CamoFilter
 
   def setup
     @asset_proxy_url        = 'https//assets.example.org'

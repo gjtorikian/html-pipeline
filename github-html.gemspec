@@ -1,21 +1,21 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/github/html/version', __FILE__)
+require File.expand_path('../lib/html/pipeline/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Ryan Tomayko"]
   gem.email         = ["ryan@github.com"]
   gem.description   = %q{GitHub HTML processing filters and utilities}
   gem.summary       = %q{Helpers for processing content through a chain of filters}
-  gem.homepage      = "https://github.com/github/github-html"
+  gem.homepage      = "https://github.com/github/html-pipeline"
 
   gem.files         = %w(README.md Rakefile LICENSE)
   gem.files        += Dir.glob("lib/**/*")
   gem.files        += Dir.glob("script/**/*")
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.name          = "github-html"
+  gem.name          = "html-pipeline"
   gem.require_paths = ["lib"]
-  gem.version       = GitHub::HTML::VERSION
+  gem.version       = HTML::Pipeline::VERSION
 
   gem.add_dependency 'nokogiri',        '~> 1.4'
   gem.add_dependency 'github-markdown', '~> 0.5'

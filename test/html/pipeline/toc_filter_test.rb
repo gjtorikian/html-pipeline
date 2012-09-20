@@ -1,7 +1,7 @@
 require "test_helper"
 
-class GitHub::HTML::TableOfContentsFilterTest < Test::Unit::TestCase
-  TocFilter = GitHub::HTML::TableOfContentsFilter
+class HTML::Pipeline::TableOfContentsFilterTest < Test::Unit::TestCase
+  TocFilter = HTML::Pipeline::TableOfContentsFilter
 
   def test_anchors_are_added_properly
     orig = %(<h1>Ice cube</h1><p>Will swarm on any motherfucker in a blue uniform</p>)

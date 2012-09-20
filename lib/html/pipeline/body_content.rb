@@ -1,4 +1,4 @@
-module GitHub::HTML
+module HTML::Pipeline
   # Public: Runs a String of content through an HTML processing pipeline,
   # providing easy access to a generated DocumentFragment.
   class BodyContent
@@ -8,7 +8,7 @@ module GitHub::HTML
     #
     # body     - A String body.
     # context  - A Hash of context options for the filters.
-    # pipeline - A GitHub::HTML::Pipeline object with one or more Filters.
+    # pipeline - A HTML::Pipeline::Pipeline object with one or more Filters.
     def initialize(body, context, pipeline)
       @body = body
       @context = context
@@ -34,7 +34,7 @@ module GitHub::HTML
     #
     # Returns a DocumentFragment.
     def document
-      @document ||= GitHub::HTML.parse output
+      @document ||= HTML::Pipeline.parse output
     end
   end
 end

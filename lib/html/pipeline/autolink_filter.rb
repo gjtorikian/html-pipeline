@@ -1,6 +1,6 @@
 require 'rinku'
 
-module GitHub::HTML
+module HTML::Pipeline
   # HTML Filter for auto_linking urls in HTML.
   #
   # Context options:

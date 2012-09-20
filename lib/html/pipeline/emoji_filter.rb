@@ -1,6 +1,6 @@
 require 'emoji'
 
-module GitHub::HTML
+module HTML::Pipeline
   # HTML filter that replaces :emoji: with images.
   #
   # Context:

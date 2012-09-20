@@ -1,4 +1,4 @@
-module GitHub::HTML
+module HTML::Pipeline
   # HTML Filter for replacing http github urls with https versions.
   class HttpsFilter < Filter
     def call

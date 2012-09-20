@@ -1,4 +1,4 @@
-module GitHub::HTML
+module HTML::Pipeline
   # Base class for user content HTML filters. Each filter takes an
   # HTML string or Nokogiri::HTML::DocumentFragment, performs
   # modifications and/or writes information to the result hash. Filters must
@@ -7,7 +7,7 @@ module GitHub::HTML
   #
   # Example filter that replaces all images with trollface:
   #
-  #   class FuuuFilter < GitHub::HTML::Filter
+  #   class FuuuFilter < HTML::Pipeline::Filter
   #     def call
   #       doc.search('img').each do |img|
   #         img['src'] = "http://paradoxdgn.com/junk/avatars/trollface.jpg"
@@ -110,7 +110,7 @@ module GitHub::HTML
     # provided, it is parsed and returned; otherwise, the DocumentFragment is
     # returned unmodified.
     def parse_html(html)
-      GitHub::HTML.parse(html)
+      HTML::Pipeline.parse(html)
     end
 
     # Helper method for filter subclasses used to determine if any of a node's
@@ -130,7 +130,7 @@ module GitHub::HTML
 
     # Perform a filter on doc with the given context.
     #
-    # Returns a GitHub::HTML::DocumentFragment or a String containing HTML
+    # Returns a HTML::Pipeline::DocumentFragment or a String containing HTML
     # markup.
     def self.call(doc, context = nil, result = nil)
       new(doc, context, result).call
@@ -140,7 +140,7 @@ module GitHub::HTML
     # the last filter returns a String.
     def self.to_document(input, context = nil)
       html = call(input, context)
-      GitHub::HTML::parse(html)
+      HTML::Pipeline::parse(html)
     end
 
     # Like call but guarantees that a string of HTML markup is returned.

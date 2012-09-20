@@ -1,4 +1,4 @@
-# GitHub::HTML
+# HTML::Pipeline
 
 GitHub HTML processing filters and utilities. This module includes a small
 framework for defining DOM based content filters and applying them to user
@@ -8,7 +8,7 @@ provided content.
 
 Add this line to your application's Gemfile:
 
-    gem 'github-html'
+    gem 'html-pipeline'
 
 And then execute:
 
@@ -16,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install github-html
+    $ gem install html-pipeline
 
 ## Usage
 

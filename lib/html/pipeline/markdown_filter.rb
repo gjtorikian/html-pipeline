@@ -1,6 +1,6 @@
 require 'github/markdown'
 
-module GitHub::HTML
+module HTML::Pipeline
   # HTML Filter that converts Markdown text into HTML and converts into a
   # DocumentFragment. This is different from most filters in that it can take a
   # non-HTML as input. It must be used as the first filter in a pipeline.

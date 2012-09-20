@@ -1,8 +1,8 @@
 require "test_helper"
 
-MarkdownFilter = GitHub::HTML::MarkdownFilter
+MarkdownFilter = HTML::Pipeline::MarkdownFilter
 
-class GitHub::HTML::MarkdownFilterTest < Test::Unit::TestCase
+class HTML::Pipeline::MarkdownFilterTest < Test::Unit::TestCase
   def setup
     @haiku =
       "Pointing at the moon\n" +
@@ -20,31 +20,31 @@ class GitHub::HTML::MarkdownFilterTest < Test::Unit::TestCase
 
   def test_fails_when_given_a_documentfragment
     body = "<p>heyo</p>"
-    doc  = GitHub::HTML.parse(body)
+    doc  = HTML::Pipeline.parse(body)
     assert_raise(TypeError) { MarkdownFilter.call(doc, {}) }
   end
 
   def test_gfm_enabled_by_default
     doc = MarkdownFilter.to_document(@haiku, {})
-    assert doc.kind_of?(GitHub::HTML::DocumentFragment)
+    assert doc.kind_of?(HTML::Pipeline::DocumentFragment)
     assert_equal 2, doc.search('br').size
   end
 
   def test_disabling_gfm
     doc = MarkdownFilter.to_document(@haiku, :gfm => false)
-    assert doc.kind_of?(GitHub::HTML::DocumentFragment)
+    assert doc.kind_of?(HTML::Pipeline::DocumentFragment)
     assert_equal 0, doc.search('br').size
   end
 
   def test_fenced_code_blocks
     doc = MarkdownFilter.to_document(@code)
-    assert doc.kind_of?(GitHub::HTML::DocumentFragment)
+    assert doc.kind_of?(HTML::Pipeline::DocumentFragment)
     assert_equal 1, doc.search('pre').size
   end
 
   def test_fenced_code_blocks_with_language
     doc = MarkdownFilter.to_document(@code.sub("```", "``` ruby"))
-    assert doc.kind_of?(GitHub::HTML::DocumentFragment)
+    assert doc.kind_of?(HTML::Pipeline::DocumentFragment)
     assert_equal 1, doc.search('pre').size
     assert_equal 'ruby', doc.search('pre').first['lang']
   end
