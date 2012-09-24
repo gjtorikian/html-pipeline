@@ -1,6 +1,6 @@
 require 'set'
 
-module GitHub::HTML
+module HTML::Pipeline
   # HTML filter that replaces @user mentions with links. Mentions within <pre>,
   # <code>, and <a> elements are ignored. Mentions that reference users that do
   # not exist are ignored.

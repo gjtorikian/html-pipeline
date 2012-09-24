@@ -1,7 +1,7 @@
-require File.expand_path('../../../test_helper', __FILE__)
+require "test_helper"
 
-context "GitHub::HTML::MentionFilter" do
-  fixtures do
+class HTML::Pipeline::MentionFilterTest < Test::Unit::TestCase
+  def setup
     @defunkt  = User.make :login => 'defunkt'
     @mojombo  = User.make :login => 'mojombo'
     @kneath   = User.make :login => 'kneath'
@@ -12,10 +12,10 @@ context "GitHub::HTML::MentionFilter" do
   end
 
   def filter(html, base_url='/')
-    GitHub::HTML::MentionFilter.call(html, :base_url => base_url)
+    HTML::Pipeline::MentionFilter.call(html, :base_url => base_url)
   end
 
-  test "filtering a DocumentFragment" do
+  def test_filtering_a_documentfragment
     body = "<p>@kneath: check it out.</p>"
     doc  = Nokogiri::HTML::DocumentFragment.parse(body)
 
@@ -27,7 +27,7 @@ context "GitHub::HTML::MentionFilter" do
       res.to_html
   end
 
-  test "filtering plain text" do
+  def test_filtering_plain_text
     body = "<p>@kneath: check it out.</p>"
     res  = filter(body, '/')
 
@@ -36,28 +36,28 @@ context "GitHub::HTML::MentionFilter" do
       res.to_html
   end
 
-  test "not replacing mentions in pre tags" do
+  def test_not_replacing_mentions_in_pre_tags
     body = "<pre>@kneath: okay</pre>"
     assert_equal body, filter(body).to_html
   end
 
-  test "not replacing mentions in code tags" do
+  def test_not_replacing_mentions_in_code_tags
     body = "<p><code>@kneath:</code> okay</p>"
     assert_equal body, filter(body).to_html
   end
 
-  test "not replacing mentions in links" do
+  def test_not_replacing_mentions_in_links
     body = "<p><a>@kneath</a> okay</p>"
     assert_equal body, filter(body).to_html
   end
 
-  test "entity encoding and whatnot" do
+  def test_entity_encoding_and_whatnot
     body = "<p>@&#x6b;neath what's up</p>"
     link = "<a href=\"/kneath\" class=\"user-mention\">@kneath</a>"
     assert_equal "<p>#{link} what's up</p>", filter(body, '/').to_html
   end
 
-  test "HTML injection" do
+  def test_html_injection
     body = "<p>@kneath &lt;script>alert(0)&lt;/script></p>"
     link = "<a href=\"/kneath\" class=\"user-mention\">@kneath</a>"
     assert_equal "<p>#{link} &lt;script&gt;alert(0)&lt;/script&gt;</p>",
@@ -65,9 +65,9 @@ context "GitHub::HTML::MentionFilter" do
   end
 
   MarkdownPipeline =
-    GitHub::HTML::Pipeline.new [
-      GitHub::HTML::MarkdownFilter,
-      GitHub::HTML::MentionFilter
+    HTML::Pipeline::Pipeline.new [
+      HTML::Pipeline::MarkdownFilter,
+      HTML::Pipeline::MentionFilter
     ]
 
   def mentioned_usernames
@@ -76,77 +76,77 @@ context "GitHub::HTML::MentionFilter" do
     result[:mentioned_users].map { |user| user.to_s }
   end
 
-  test "matches usernames in body" do
+  def test_matches_usernames_in_body
     User.make :login => 'test'
     @body = "@test how are you?"
     assert_equal %w[test], mentioned_usernames
   end
 
-  test "matches usernames with dashes" do
+  def test_matches_usernames_with_dashes
     User.make :login => 'some-user'
     @body = "hi @some-user"
     assert_equal %w[some-user], mentioned_usernames
   end
 
-  test "matches usernames followed by a single dot" do
+  def test_matches_usernames_followed_by_a_single_dot
     User.make :login => 'some-user'
     @body = "okay @some-user."
     assert_equal %w[some-user], mentioned_usernames
   end
 
-  test "matches usernames followed by multiple dots" do
+  def test_matches_usernames_followed_by_multiple_dots
     User.make :login => 'some-user'
     @body = "okay @some-user..."
     assert_equal %w[some-user], mentioned_usernames
   end
 
-  test "does not match email addresses" do
+  def test_does_not_match_email_addresses
     @body = "aman@tmm1.net"
     assert_equal [], mentioned_usernames
   end
 
-  test "does not match domain name looking things" do
+  def test_does_not_match_domain_name_looking_things
     @body = "we need a @github.com email"
     assert_equal [], mentioned_usernames
   end
 
-  test "does not match organization/team mentions" do
+  def test_does_not_match_organization_team_mentions
     User.make :login => 'github'
     @body = "we need to @github/enterprise know"
     assert_equal [], mentioned_usernames
   end
 
-  test "matches colon suffixed names" do
+  def test_matches_colon_suffixed_names
     @body = "@tmm1: what do you think?"
     assert_equal %w[tmm1], mentioned_usernames
   end
 
-  test "matches list of names" do
+  def test_matches_list_of_names
     @body = "@defunkt @atmos @kneath"
     assert_equal %w[defunkt atmos kneath], mentioned_usernames
   end
 
-  test "matches list of names with commas" do
+  def test_matches_list_of_names_with_commas
     @body = "/cc @defunkt, @atmos, @kneath"
     assert_equal %w[defunkt atmos kneath], mentioned_usernames
   end
 
-  test "matches inside brackets" do
+  def test_matches_inside_brackets
     @body = "(@mislav) and [@rtomayko]"
     assert_equal %w[mislav rtomayko], mentioned_usernames
   end
 
-  test "ignores invalid users" do
+  def test_ignores_invalid_users
     @body = "@defunkt @mojombo and @somedude"
     assert_equal ['defunkt', 'mojombo'], mentioned_usernames
   end
 
-  test "returns distinct set" do
+  def test_returns_distinct_set
     @body = "/cc @defunkt, @atmos, @kneath, @defunkt, @defunkt"
     assert_equal %w[defunkt atmos kneath], mentioned_usernames
   end
 
-  test "does not match inline code block with multiple code blocks" do
+  def test_does_not_match_inline_code_block_with_multiple_code_blocks
     @body = "something\n\n`/cc @defunkt @atmos @kneath` `/cc @atmos/atmos`"
     assert_equal %w[], mentioned_usernames
   end
