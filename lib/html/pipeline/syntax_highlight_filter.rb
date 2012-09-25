@@ -1,4 +1,4 @@
-require 'github/linguist'
+require 'linguist'
 
 module HTML::Pipeline
   # HTML Filter that syntax highlights code blocks wrapped
