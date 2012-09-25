@@ -1,16 +1,6 @@
 require "test_helper"
 
 class HTML::Pipeline::MentionFilterTest < Test::Unit::TestCase
-  def setup
-    @defunkt  = User.make :login => 'defunkt'
-    @mojombo  = User.make :login => 'mojombo'
-    @kneath   = User.make :login => 'kneath'
-    @tmm1     = User.make :login => 'tmm1'
-    @atmos    = User.make :login => 'atmos'
-    @mislav   = User.make :login => 'mislav'
-    @rtomayko = User.make :login => 'rtomayko'
-  end
-
   def filter(html, base_url='/')
     HTML::Pipeline::MentionFilter.call(html, :base_url => base_url)
   end
@@ -77,25 +67,21 @@ class HTML::Pipeline::MentionFilterTest < Test::Unit::TestCase
   end
 
   def test_matches_usernames_in_body
-    User.make :login => 'test'
     @body = "@test how are you?"
     assert_equal %w[test], mentioned_usernames
   end
 
   def test_matches_usernames_with_dashes
-    User.make :login => 'some-user'
     @body = "hi @some-user"
     assert_equal %w[some-user], mentioned_usernames
   end
 
   def test_matches_usernames_followed_by_a_single_dot
-    User.make :login => 'some-user'
     @body = "okay @some-user."
     assert_equal %w[some-user], mentioned_usernames
   end
 
   def test_matches_usernames_followed_by_multiple_dots
-    User.make :login => 'some-user'
     @body = "okay @some-user..."
     assert_equal %w[some-user], mentioned_usernames
   end
@@ -111,7 +97,6 @@ class HTML::Pipeline::MentionFilterTest < Test::Unit::TestCase
   end
 
   def test_does_not_match_organization_team_mentions
-    User.make :login => 'github'
     @body = "we need to @github/enterprise know"
     assert_equal [], mentioned_usernames
   end
@@ -136,9 +121,9 @@ class HTML::Pipeline::MentionFilterTest < Test::Unit::TestCase
     assert_equal %w[mislav rtomayko], mentioned_usernames
   end
 
-  def test_ignores_invalid_users
+  def test_doesnt_ignore_invalid_users
     @body = "@defunkt @mojombo and @somedude"
-    assert_equal ['defunkt', 'mojombo'], mentioned_usernames
+    assert_equal ['defunkt', 'mojombo', 'somedude'], mentioned_usernames
   end
 
   def test_returns_distinct_set

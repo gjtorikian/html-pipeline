@@ -92,9 +92,9 @@ module HTML::Pipeline
         link =
           if is_mentioned
             link_to_mention_info(login)
-          elsif user = User.find_by_login(login)
-            mentioned_users << user
-            link_to_mentioned_user(user)
+          else
+            mentioned_users << login
+            link_to_mentioned_user(login)
           end
 
         link ? match.sub("@#{login}", link) : match
@@ -107,10 +107,10 @@ module HTML::Pipeline
       "</a>".html_safe
     end
 
-    def link_to_mentioned_user(user)
-      url = File.join(base_url, user.login)
+    def link_to_mentioned_user(login)
+      url = File.join(base_url, login)
       "<a href='#{url}' class='user-mention'>" +
-      "@#{user.login}" +
+      "@#{login}" +
       "</a>"
     end
   end
