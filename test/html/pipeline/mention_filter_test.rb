@@ -1,8 +1,8 @@
 require "test_helper"
 
 class HTML::Pipeline::MentionFilterTest < Test::Unit::TestCase
-  def filter(html, base_url='/')
-    HTML::Pipeline::MentionFilter.call(html, :base_url => base_url)
+  def filter(html, base_url='/', info_url=nil)
+    HTML::Pipeline::MentionFilter.call(html, :base_url => base_url, :info_url => info_url)
   end
 
   def test_filtering_a_documentfragment
@@ -52,6 +52,19 @@ class HTML::Pipeline::MentionFilterTest < Test::Unit::TestCase
     link = "<a href=\"/kneath\" class=\"user-mention\">@kneath</a>"
     assert_equal "<p>#{link} &lt;script&gt;alert(0)&lt;/script&gt;</p>",
       filter(body, '/').to_html
+  end
+
+  def test_links_to_nothing_when_no_info_url_given
+    body = "<p>How do I @mention someone?</p>"
+    assert_equal "<p>How do I @mention someone?</p>",
+      filter(body, '/').to_html
+  end
+
+  def test_links_to_more_info_when_info_url_given
+    body = "<p>How do I @mention someone?</p>"
+    link = "<a href=\"https://github.com/blog/821\" class=\"user-mention\">@mention</a>"
+    assert_equal "<p>How do I #{link} someone?</p>",
+      filter(body, '/', 'https://github.com/blog/821').to_html
   end
 
   MarkdownPipeline =

@@ -8,6 +8,8 @@ module HTML::Pipeline
   # Context options:
   #   :base_url - Used to construct links to user profile pages for each
   #               mention.
+  #   :info_url - Used to link to "more info" when someone mentions @mention
+  #               or @mentioned.
   #
   # The following keys are written to the result hash:
   #   :mentioned_users - An array of User objects that were mentioned.
@@ -65,12 +67,18 @@ module HTML::Pipeline
         content = node.to_html
         next if !content.include?('@')
         next if has_ancestor?(node, IGNORE_PARENTS)
-        html = mention_link_filter(content, base_url)
+        html = mention_link_filter(content, base_url, info_url)
         next if html == content
         node.replace(html)
       end
       mentioned_users.uniq!
       doc
+    end
+
+    # The URL to provide when someone @mentions a "mention" name, such as
+    # @mention or @mentioned, that will give them more info on mentions.
+    def info_url
+      context[:info_url] || nil
     end
 
     # List of User objects that were mentioned in the document. This is
@@ -84,14 +92,16 @@ module HTML::Pipeline
     #
     # text      - String text to replace @mention usernames in.
     # base_url  - The base URL used to construct user profile URLs.
+    # info_url  - The "more info" URL used to link to more info on @mentions.
+    #             If nil we don't link @mention or @mentioned.
     #
     # Returns a string with @mentions replaced with links. All links have a
     # 'user-mention' class name attached for styling.
-    def mention_link_filter(text, base_url='/')
+    def mention_link_filter(text, base_url='/', info_url=nil)
       self.class.mentioned_logins_in(text) do |match, login, is_mentioned|
         link =
           if is_mentioned
-            link_to_mention_info(login)
+            link_to_mention_info(login, info_url)
           else
             mentioned_users << login
             link_to_mentioned_user(login)
@@ -101,10 +111,11 @@ module HTML::Pipeline
       end
     end
 
-    def link_to_mention_info(text)
-      "<a href='https://github.com/blog/821' class='user-mention'>" +
+    def link_to_mention_info(text, info_url=nil)
+      return "@#{text}" if info_url.nil?
+      "<a href='#{info_url}' class='user-mention'>" +
       "@#{text}" +
-      "</a>".html_safe
+      "</a>"
     end
 
     def link_to_mentioned_user(login)
