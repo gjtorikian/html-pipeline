@@ -1,5 +1,3 @@
-require 'escape_utils'
-
 module HTML::Pipeline
   # HTML filter that adds a 'name' attribute to all headers
   # in a document, so they can be accessed from a table of contents

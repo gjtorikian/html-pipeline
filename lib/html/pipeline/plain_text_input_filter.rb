@@ -1,5 +1,3 @@
-require 'escape_utils'
-
 module HTML::Pipeline
   # Simple filter for plain text input. HTML escapes the text input and wraps it
   # in a div.
