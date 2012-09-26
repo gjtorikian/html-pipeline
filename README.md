@@ -20,7 +20,57 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+This library provides a handful of HTML filters which can be used to convert
+user content HTML into something amazing.
+
+Each filter takes an HTML string of Nokogiri::HTML::DocumentFragment then
+performs modifications and/or writes information to the result hash.
+
+For example, turning Markdown source into Markdown HTML. Or `:smile:` into
+something like <img src='/emoji/smile.png'>.
+
+Filters can be combined into a pipeline which causes each filter to hand
+its output to the next filter's input, or to return a result.
+
+Let's convert Markdown source to Markdown HTML;
+
+````ruby
+puts HTML::Pipeline::MarkdownFilter.call("Hi **world**!")
+````
+
+Prints:
+
+````
+<p>Hi <strong>world</strong>!</p>
+````
+
+Even better, let's make a pipeline that supports Markdown and syntax
+highlighting:
+
+````ruby
+MarkdownPipeline = HTML::Pipeline::Pipeline.new [
+  HTML::Pipeline::MarkdownFilter,
+  HTML::Pipeline::SyntaxHighlightFilter
+]
+result = MarkdownPipeline.call <<code
+This is *great*:
+````ruby
+puts :hi
+````
+code
+puts result[:output].to_s
+````
+
+Prints:
+
+````
+<p>This is <em>great</em>:</p>
+
+<div class="highlight">
+<pre><span class="nb">puts</span> <span class="ss">:hi</span>
+</pre>
+</div>
+````
 
 ## Development Setup
 
