@@ -50,7 +50,7 @@ highlighting:
     result = MarkdownPipeline.call <<code
     This is *great*:
     ````ruby
-    some_ruby_code(:first)
+    some_code(:first)
     ````
     code
     puts result[:output].to_s
@@ -60,7 +60,7 @@ Prints:
     <p>This is <em>great</em>:</p>
 
     <div class="highlight">
-    <pre><span class="nb">puts</span> <span class="ss">:hi</span>
+    <pre><span class="n">some_code</span><span class="p">(</span><span class="ss">:first</span><span class="p">)</span>
     </pre>
     </div>
 
