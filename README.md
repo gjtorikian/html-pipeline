@@ -50,7 +50,7 @@ highlighting:
     result = MarkdownPipeline.call <<code
     This is *great*:
     ````ruby
-    puts :hi
+    some_ruby_code(:first)
     ````
     code
     puts result[:output].to_s
