@@ -41,7 +41,6 @@ rake test
 ## TODO
 
 * emoji gem is private, can't add to gemspec. specify manually for now
-* syntax highlighter filter requires other github specific things
 * autolink_filter depends on Github.enterprise?
 * test whether nokogiri monkey patch is still necessary
 
