@@ -31,8 +31,16 @@ module HTML::Pipeline
 
       text.gsub EmojiPattern do |match|
         name = $1
-        "<img class='emoji' title=':#{name}:' alt=':#{name}:' src='#{File.join(context[:asset_root], "emoji", "#{name}.png")}' height='20' width='20' align='absmiddle' />"
+        "<img class='emoji' title=':#{name}:' alt=':#{name}:' src='#{File.join(asset_root, "emoji", "#{name}.png")}' height='20' width='20' align='absmiddle' />"
       end
+    end
+
+    # The base url to link emoji sprites
+    #
+    # Raises ArgumentError if context option has not been provided.
+    # Returns the context's asset_root.
+    def asset_root
+      context[:asset_root] or raise ArgumentError, "Missing context :asset_root"
     end
   end
 end
