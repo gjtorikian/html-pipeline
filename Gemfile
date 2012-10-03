@@ -6,5 +6,4 @@ gemspec
 group :development, :test do
   gem 'bundler'
   gem 'rake'
-  gem 'emoji', :git => 'git@github.com:github/emoji.git'
 end

@@ -17,6 +17,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = HTML::Pipeline::VERSION
 
+  gem.add_dependency 'gemoji',          '~> 1.1.1'
   gem.add_dependency 'nokogiri',        '~> 1.4'
   gem.add_dependency 'github-markdown', '~> 0.5'
   gem.add_dependency 'sanitize',        '~> 2.0'
