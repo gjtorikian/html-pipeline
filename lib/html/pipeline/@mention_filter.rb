@@ -11,9 +11,6 @@ module HTML::Pipeline
   #   :info_url - Used to link to "more info" when someone mentions @mention
   #               or @mentioned.
   #
-  # The following keys are written to the result hash:
-  #   :mentioned_users - An array of User objects that were mentioned.
-  #
   class MentionFilter < Filter
     # Public: Find user @mentions in text.  See
     # MentionFilter#mention_link_filter.
@@ -62,7 +59,6 @@ module HTML::Pipeline
     IGNORE_PARENTS = %w(pre code a).to_set
 
     def call
-      mentioned_users.clear
       doc.search('text()').each do |node|
         content = node.to_html
         next if !content.include?('@')
@@ -71,7 +67,6 @@ module HTML::Pipeline
         next if html == content
         node.replace(html)
       end
-      mentioned_users.uniq!
       doc
     end
 
@@ -79,12 +74,6 @@ module HTML::Pipeline
     # @mention or @mentioned, that will give them more info on mentions.
     def info_url
       context[:info_url] || nil
-    end
-
-    # List of User objects that were mentioned in the document. This is
-    # available in the result hash as :mentioned_users.
-    def mentioned_users
-      result[:mentioned_users] ||= []
     end
 
     # Replace user @mentions in text with links to the mentioned user's
@@ -103,7 +92,6 @@ module HTML::Pipeline
           if is_mentioned
             link_to_mention_info(login, info_url)
           else
-            mentioned_users << login
             link_to_mentioned_user(login)
           end
 

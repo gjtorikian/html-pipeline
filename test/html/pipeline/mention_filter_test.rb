@@ -76,7 +76,9 @@ class HTML::Pipeline::MentionFilterTest < Test::Unit::TestCase
   def mentioned_usernames
     result = {}
     MarkdownPipeline.call(@body, {}, result)
-    result[:mentioned_users].map { |user| user.to_s }
+    html = result[:output].to_html
+    users = html.scan(/user-mention">@(.+?)</)
+    users ? users.flatten.uniq : []
   end
 
   def test_matches_usernames_in_body
