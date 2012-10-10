@@ -11,7 +11,7 @@ module HTML
   module Pipeline
     extend self
 
-    autoload :Version,               'html/pipeline/version'
+    autoload :VERSION,               'html/pipeline/version'
     autoload :Pipeline,              'html/pipeline/pipeline'
     autoload :Filter,                'html/pipeline/filter'
     autoload :BodyContent,           'html/pipeline/body_content'
