@@ -1,15 +1,18 @@
 module HTML::Pipeline
-  # Contruct a pipeline for running multiple HTML filters.
+  # Contruct a Pipeline for running multiple HTML filters.  A pipeline is created once
+  # with one to many filters, and is then can be `call`ed many times over the course
+  # of its lifetime with input.
   #
-  # filters      - Array of Filter objects. Each must respond to call(doc,
-  #                context) and return the modified DocumentFragment or a
-  #                String containing HTML markup. Filters are performed in the
-  #                order provided.
+  # filters         - Array of Filter objects. Each must respond to call(doc,
+  #                   context) and return the modified DocumentFragment or a
+  #                   String containing HTML markup. Filters are performed in the
+  #                   order provided.
   # default_context - The default context hash. Values specified here will be merged
-  #                over any values sent in by individual pipeline runs.
-  # result_class - The default Class of the result object for individual
-  #                calls.  Default: Hash.  Protip:  Pass in a Struct to get
-  #                some semblence of type safety.
+  #                   over any values sent in by individual pipeline runs.  Can NOT be
+  #                   nil.  Default: empty Hash.
+  # result_class    - The default Class of the result object for individual
+  #                   calls.  Default: Hash.  Protip:  Pass in a Struct to get
+  #                   some semblence of type safety.
   class Pipeline
     # Public: Returns an Array of Filter objects for this Pipeline.
     attr_reader :filters
