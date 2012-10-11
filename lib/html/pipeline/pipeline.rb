@@ -33,7 +33,8 @@ module HTML::Pipeline
     # :output key with the DocumentFragment or String HTML markup based on the
     # output of the last filter in the pipeline.
     def call(html, context = {}, result = nil)
-      context = context.merge(@default_context).freeze
+      context = context.merge(@default_context)
+      context = context.freeze
       result ||= @result_class.new
       result[:output] = @filters.inject(html) { |doc, filter| filter.call(doc, context, result) }
       result
