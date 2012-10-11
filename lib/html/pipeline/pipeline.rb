@@ -15,6 +15,7 @@ module HTML::Pipeline
     attr_reader :filters
 
     def initialize(filters, default_context = {}, result_class = nil)
+      raise ArgumentError, "default_context cannot be nil" if default_context.nil?
       @filters = filters.flatten.freeze
       @default_context = default_context.freeze
       @result_class = result_class || Hash
