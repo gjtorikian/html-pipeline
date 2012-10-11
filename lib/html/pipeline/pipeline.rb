@@ -5,8 +5,8 @@ module HTML::Pipeline
   #                context) and return the modified DocumentFragment or a
   #                String containing HTML markup. Filters are performed in the
   #                order provided.
-  # context      - The default context hash. Values specified here MUST NOT be
-  #                overridden by individual pipeline runs.
+  # default_context - The default context hash. Values specified here will be merged
+  #                over any values sent in by individual pipeline runs.
   # result_class - The default Class of the result object for individual
   #                calls.  Default: Hash.  Protip:  Pass in a Struct to get
   #                some semblence of type safety.
@@ -14,9 +14,9 @@ module HTML::Pipeline
     # Public: Returns an Array of Filter objects for this Pipeline.
     attr_reader :filters
 
-    def initialize(filters, context = nil, result_class = nil)
+    def initialize(filters, default_context = {}, result_class = nil)
       @filters = filters.flatten.freeze
-      @context = context || {}
+      @default_context = default_context.freeze
       @result_class = result_class || Hash
     end
 
@@ -32,13 +32,8 @@ module HTML::Pipeline
     # Returns the result Hash after being filtered by this Pipeline.  Contains an
     # :output key with the DocumentFragment or String HTML markup based on the
     # output of the last filter in the pipeline.
-    def call(html, context = nil, result = nil)
-      if context
-        @context.each { |k, v| context[k] = v if !context.key?(k) }
-      else
-        context = @context.dup
-      end
-      context.freeze
+    def call(html, context = {}, result = nil)
+      context = context.merge(@default_context).freeze
       result ||= @result_class.new
       result[:output] = @filters.inject(html) { |doc, filter| filter.call(doc, context, result) }
       result
@@ -47,13 +42,13 @@ module HTML::Pipeline
     # Like call but guarantee the value returned is a DocumentFragment.
     # Pipelines may return a DocumentFragment or a String. Callers that need a
     # DocumentFragment should use this method.
-    def to_document(input, context = nil, result = nil)
+    def to_document(input, context = {}, result = nil)
       result = call(input, context, result)
       HTML::Pipeline.parse(result[:output])
     end
 
     # Like call but guarantee the value returned is a string of HTML markup.
-    def to_html(input, context = nil, result = nil)
+    def to_html(input, context = {}, result = nil)
       result = call(input, context, result = nil)
       output = result[:output]
       if output.respond_to?(:to_html)
