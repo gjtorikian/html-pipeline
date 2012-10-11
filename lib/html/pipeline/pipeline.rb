@@ -8,7 +8,7 @@ module HTML::Pipeline
   #                   String containing HTML markup. Filters are performed in the
   #                   order provided.
   # default_context - The default context hash. Values specified here will be merged
-  #                   over any values sent in by individual pipeline runs.  Can NOT be
+  #                   into values from the each individual pipeline run.  Can NOT be
   #                   nil.  Default: empty Hash.
   # result_class    - The default Class of the result object for individual
   #                   calls.  Default: Hash.  Protip:  Pass in a Struct to get
@@ -37,7 +37,7 @@ module HTML::Pipeline
     # :output key with the DocumentFragment or String HTML markup based on the
     # output of the last filter in the pipeline.
     def call(html, context = {}, result = nil)
-      context = context.merge(@default_context)
+      context = @default_context.merge(context)
       context = context.freeze
       result ||= @result_class.new
       result[:output] = @filters.inject(html) { |doc, filter| filter.call(doc, context, result) }
