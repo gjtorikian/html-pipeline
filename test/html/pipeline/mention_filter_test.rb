@@ -150,4 +150,9 @@ class HTML::Pipeline::MentionFilterTest < Test::Unit::TestCase
     @body = "something\n\n`/cc @defunkt @atmos @kneath` `/cc @atmos/atmos`"
     assert_equal %w[], mentioned_usernames
   end
+
+  def test_mention_at_end_of_parenthetical_sentence
+    @body = "(We're talking 'bout @ymendel.)"
+    assert_equal %w[ymendel], mentioned_usernames
+  end
 end
