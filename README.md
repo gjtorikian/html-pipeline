@@ -58,12 +58,12 @@ MarkdownPipeline = HTML::Pipeline::Pipeline.new [
   HTML::Pipeline::MarkdownFilter,
   HTML::Pipeline::SyntaxHighlightFilter
 ]
-result = MarkdownPipeline.call <<code
+result = MarkdownPipeline.call <<CODE
 This is *great*:
-```ruby
-some_code(:first)
-```
-code
+
+    some_code(:first)
+
+CODE
 puts result[:output].to_s
 ```
 
