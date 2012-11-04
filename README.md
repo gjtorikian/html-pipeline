@@ -26,45 +26,35 @@ $ gem install html-pipeline
 
 ## Usage
 
-This library provides a handful of HTML filters which can be used to convert
-user content HTML into something amazing.
+This library provides a handful of chainable HTML filters to transform user
+content into markup. A filter takes an HTML string or
+`Nokogiri::HTML::DocumentFragment`, optionally manipulates it, and then
+outputs the result.
 
-Each filter takes an HTML string of Nokogiri::HTML::DocumentFragment then
-performs modifications and/or writes information to the result hash.
-
-For example, turning Markdown source into Markdown HTML. Or `:smile:` into
-something like `<img src='/emoji/smile.png'>`.
-
-Filters can be combined into a pipeline which causes each filter to hand
-its output to the next filter's input, or to return a result.
-
-Let's convert Markdown source to Markdown HTML:
+For example, to transform Markdown source into Markdown HTML:
 
 ```ruby
-puts HTML::Pipeline::MarkdownFilter.call("Hi **world**!")
+filter = HTML::Pipeline::MarkdownFilter.new
+filter.call("Hi **world**!")
 ```
 
-Prints:
-
-```html
-<p>Hi <strong>world</strong>!</p>
-```
-
-Even better, let's make a pipeline that supports Markdown and syntax
-highlighting:
+Filters can be combined into a pipeline which causes each filter to hand its
+output to the next filter's input. So if you wanted to have content be
+filtered through Markdown and be syntax highlighted, you can create the
+following pipeline:
 
 ```ruby
-MarkdownPipeline = HTML::Pipeline::Pipeline.new [
+pipeline = HTML::Pipeline::Pipeline.new [
   HTML::Pipeline::MarkdownFilter,
   HTML::Pipeline::SyntaxHighlightFilter
 ]
-result = MarkdownPipeline.call <<CODE
+result = pipeline.call <<CODE
 This is *great*:
 
     some_code(:first)
 
 CODE
-puts result[:output].to_s
+result[:output].to_s
 ```
 
 Prints:
@@ -76,6 +66,16 @@ Prints:
 <pre><span class="n">some_code</span><span class="p">(</span><span class="ss">:first</span><span class="p">)</span>
 </pre>
 </div>
+```
+
+Some filters take an optional **context** and/or **result** hash. These are
+used to pass around arguments and metadata between filters in a pipeline. For
+example, if you want don't want to use GitHub formatted Markdown, you can
+pass an option in the context hash:
+
+```ruby
+filter = HTML::Pipeline::MarkdownFilter.new(:gfm => false)
+filter.call("Hi **world**!")
 ```
 
 ## Development Setup
@@ -96,7 +96,7 @@ rake test
 
 ## TODO
 
-* emoji gem is private, can't add to gemspec. specify manually for now
+* test whether emoji filter works on heroku
 * test whether nokogiri monkey patch is still necessary
 
 ## Contributors
