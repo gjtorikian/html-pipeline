@@ -8,15 +8,21 @@ provided content.
 
 Add this line to your application's Gemfile:
 
-    gem 'html-pipeline'
+```ruby
+gem 'html-pipeline'
+```
 
 And then execute:
 
-    $ bundle
+```sh
+$ bundle
+```
 
 Or install it yourself as:
 
-    $ gem install html-pipeline
+```sh
+$ gem install html-pipeline
+```
 
 ## Usage
 
@@ -27,46 +33,54 @@ Each filter takes an HTML string of Nokogiri::HTML::DocumentFragment then
 performs modifications and/or writes information to the result hash.
 
 For example, turning Markdown source into Markdown HTML. Or `:smile:` into
-something like <img src='/emoji/smile.png'>.
+something like `<img src='/emoji/smile.png'>`.
 
 Filters can be combined into a pipeline which causes each filter to hand
 its output to the next filter's input, or to return a result.
 
-Let's convert Markdown source to Markdown HTML;
+Let's convert Markdown source to Markdown HTML:
 
-    puts HTML::Pipeline::MarkdownFilter.call("Hi **world**!")
+```ruby
+puts HTML::Pipeline::MarkdownFilter.call("Hi **world**!")
+```
 
 Prints:
 
-    <p>Hi <strong>world</strong>!</p>
+```html
+<p>Hi <strong>world</strong>!</p>
+```
 
 Even better, let's make a pipeline that supports Markdown and syntax
 highlighting:
 
-    MarkdownPipeline = HTML::Pipeline::Pipeline.new [
-      HTML::Pipeline::MarkdownFilter,
-      HTML::Pipeline::SyntaxHighlightFilter
-    ]
-    result = MarkdownPipeline.call <<code
-    This is *great*:
-    ````ruby
-    some_code(:first)
-    ````
-    code
-    puts result[:output].to_s
+```ruby
+MarkdownPipeline = HTML::Pipeline::Pipeline.new [
+  HTML::Pipeline::MarkdownFilter,
+  HTML::Pipeline::SyntaxHighlightFilter
+]
+result = MarkdownPipeline.call <<code
+This is *great*:
+```ruby
+some_code(:first)
+```
+code
+puts result[:output].to_s
+```
 
 Prints:
 
-    <p>This is <em>great</em>:</p>
+```html
+<p>This is <em>great</em>:</p>
 
-    <div class="highlight">
-    <pre><span class="n">some_code</span><span class="p">(</span><span class="ss">:first</span><span class="p">)</span>
-    </pre>
-    </div>
+<div class="highlight">
+<pre><span class="n">some_code</span><span class="p">(</span><span class="ss">:first</span><span class="p">)</span>
+</pre>
+</div>
+```
 
 ## Development Setup
 
-```
+```sh
 script/bootstrap
 rake test
 ```
@@ -83,7 +97,6 @@ rake test
 ## TODO
 
 * emoji gem is private, can't add to gemspec. specify manually for now
-* autolink_filter depends on Github.enterprise?
 * test whether nokogiri monkey patch is still necessary
 
 ## Contributors
