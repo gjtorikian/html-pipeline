@@ -34,6 +34,8 @@ outputs the result.
 For example, to transform Markdown source into Markdown HTML:
 
 ```ruby
+require 'html/pipeline'
+
 filter = HTML::Pipeline::MarkdownFilter.new
 filter.call("Hi **world**!")
 ```
