@@ -2,20 +2,17 @@
 require File.expand_path('../lib/html/pipeline/version', __FILE__)
 
 Gem::Specification.new do |gem|
+  gem.name          = "html-pipeline"
+  gem.version       = HTML::Pipeline::VERSION
   gem.authors       = ["Ryan Tomayko", "Jerry Cheung"]
   gem.email         = ["ryan@github.com", "jerry@github.com"]
   gem.description   = %q{GitHub HTML processing filters and utilities}
   gem.summary       = %q{Helpers for processing content through a chain of filters}
   gem.homepage      = "https://github.com/jch/html-pipeline"
 
-  gem.files         = %w(README.md Rakefile LICENSE)
-  gem.files        += Dir.glob("lib/**/*")
-  gem.files        += Dir.glob("script/**/*")
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
-  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.name          = "html-pipeline"
+  gem.files         = `git ls-files`.split $/
+  gem.test_files    = gem.files.grep(%r{^test})
   gem.require_paths = ["lib"]
-  gem.version       = HTML::Pipeline::VERSION
 
   gem.add_dependency 'gemoji',          '~> 1.1.1'
   gem.add_dependency 'nokogiri',        '~> 1.4'
