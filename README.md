@@ -78,6 +78,21 @@ filter = HTML::Pipeline::MarkdownFilter.new(:gfm => false)
 filter.call("Hi **world**!")
 ```
 
+## Filters
+
+* `MentionFilter` - replace `@user` mentions with links
+* `AutoLinkFilter` - auto_linking urls in HTML
+* `CamoFilter` - replace http image urls with [camo-fied](https://github.com/github/camo) https versions
+* `EmailReplyFilter` - util filter for working with emails
+* `EmojiFilter` - everyone loves [emoji](http://www.emoji-cheat-sheet.com/)!
+* `ImageMaxWidthFilter` - link to full size image for large images
+* `MarkdownFilter` - convert markdown to html
+* `PlainTextInputFilter` - html escape text and wrap the result in a div
+* `SanitizationFilter` - whitelist santize user markup
+* `SyntaxHighlightFilter` - code syntax highlighter with [linguist](https://github.com/github/linguist)
+* `TextileFilter` - convert textile to html
+* `TableOfContentsFilter` - anchor headings with name attributes
+
 ## Development Setup
 
 ```sh
