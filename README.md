@@ -118,11 +118,11 @@ rake test
 
 ## Contributors
 
-* [Aman Gupta](aman@tmm1.net)
-* [Jake Boxer](jake@github.com)
-* [Joshua Peek](josh@joshpeek.com)
-* [Kyle Neath](kneath@gmail.com)
-* [Rob Sanheim](rsanheim@gmail.com)
-* [Simon Rozet](simon@rozet.name)
-* [Vicent Martí](tanoku@gmail.com)
-* [Risk :danger: Olson](technoweenie@gmail.com)
+* [Aman Gupta](mailto:aman@tmm1.net)
+* [Jake Boxer](mailto:jake@github.com)
+* [Joshua Peek](mailto:josh@joshpeek.com)
+* [Kyle Neath](mailto:kneath@gmail.com)
+* [Rob Sanheim](mailto:rsanheim@gmail.com)
+* [Simon Rozet](mailto:simon@rozet.name)
+* [Vicent Martí](mailto:tanoku@gmail.com)
+* [Risk :danger: Olson](mailto:technoweenie@gmail.com)

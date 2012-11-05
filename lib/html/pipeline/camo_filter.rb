@@ -3,7 +3,7 @@ require 'openssl'
 module HTML::Pipeline
   # HTML Filter for replacing http image URLs with camo versions. See:
   #
-  # https://github.com/github/camo
+  # https://github.com/atmos/camo
   #
   # All images provided in user content should be run through this
   # filter so that http image sources do not cause mixed-content warnings
