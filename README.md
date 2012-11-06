@@ -98,7 +98,7 @@ filter.call("Hi **world**!")
 ## Development Setup
 
 ```sh
-script/bootstrap
+bundle
 rake test
 ```
 
