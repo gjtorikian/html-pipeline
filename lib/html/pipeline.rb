@@ -35,13 +35,18 @@ module HTML
 
     # Parse a String into a DocumentFragment object. When a DocumentFragment is
     # provided, return it verbatim.
-    def self.parse(document_or_html)
+    def parse(document_or_html)
       document_or_html ||= ''
       if document_or_html.is_a?(String)
         DocumentFragment.parse(document_or_html)
       else
         document_or_html
       end
+    end
+
+    # Helper method for building a HTML::Pipeline::Pipeline
+    def build(filters, default_context = {}, result_class = nil)
+      Pipeline.new(filters, default_context, result_class)
     end
   end
 end
