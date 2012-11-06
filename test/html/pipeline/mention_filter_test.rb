@@ -68,7 +68,7 @@ class HTML::Pipeline::MentionFilterTest < Test::Unit::TestCase
   end
 
   MarkdownPipeline =
-    HTML::Pipeline::Pipeline.new [
+    HTML::Pipeline.new [
       HTML::Pipeline::MarkdownFilter,
       HTML::Pipeline::MentionFilter
     ]
