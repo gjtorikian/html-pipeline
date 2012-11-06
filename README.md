@@ -36,8 +36,8 @@ For example, to transform Markdown source into Markdown HTML:
 ```ruby
 require 'html/pipeline'
 
-filter = HTML::Pipeline::MarkdownFilter.new
-filter.call("Hi **world**!")
+filter = HTML::Pipeline::MarkdownFilter.new("Hi **world**!")
+filter.call
 ```
 
 Filters can be combined into a pipeline which causes each filter to hand its
@@ -76,8 +76,8 @@ example, if you want don't want to use GitHub formatted Markdown, you can
 pass an option in the context hash:
 
 ```ruby
-filter = HTML::Pipeline::MarkdownFilter.new(:gfm => false)
-filter.call("Hi **world**!")
+filter = HTML::Pipeline::MarkdownFilter.new("Hi **world**!", :gfm => false)
+filter.call
 ```
 
 ## Filters
