@@ -46,7 +46,7 @@ filtered through Markdown and be syntax highlighted, you can create the
 following pipeline:
 
 ```ruby
-pipeline = HTML::Pipeline::Pipeline.new [
+pipeline = HTML::Pipeline.new [
   HTML::Pipeline::MarkdownFilter,
   HTML::Pipeline::SyntaxHighlightFilter
 ]
