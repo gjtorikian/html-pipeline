@@ -9,7 +9,7 @@ module HTML
   #
   # See HTML::Pipeline::Filter for information on building filters.
   #
-  # Contruct a Pipeline for running multiple HTML filters.  A pipeline is created once
+  # Construct a Pipeline for running multiple HTML filters.  A pipeline is created once
   # with one to many filters, and is then can be `call`ed many times over the course
   # of its lifetime with input.
   #
@@ -22,7 +22,7 @@ module HTML
   #                   nil.  Default: empty Hash.
   # result_class    - The default Class of the result object for individual
   #                   calls.  Default: Hash.  Protip:  Pass in a Struct to get
-  #                   some semblence of type safety.
+  #                   some semblance of type safety.
   class Pipeline
     autoload :VERSION,               'html/pipeline/version'
     autoload :Pipeline,              'html/pipeline/pipeline'

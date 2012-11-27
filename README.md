@@ -91,7 +91,7 @@ filter.call
 * `ImageMaxWidthFilter` - link to full size image for large images
 * `MarkdownFilter` - convert markdown to html
 * `PlainTextInputFilter` - html escape text and wrap the result in a div
-* `SanitizationFilter` - whitelist santize user markup
+* `SanitizationFilter` - whitelist sanitize user markup
 * `SyntaxHighlightFilter` - code syntax highlighter with [linguist](https://github.com/github/linguist)
 * `TextileFilter` - convert textile to html
 * `TableOfContentsFilter` - anchor headings with name attributes
