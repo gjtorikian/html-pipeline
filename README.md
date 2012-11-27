@@ -185,4 +185,4 @@ rake test
 * [Vicent Martí](mailto:tanoku@gmail.com)
 * [Risk :danger: Olson](mailto:technoweenie@gmail.com)
 
-Project is a member of the [OSS Manifesto](http://ossmanifesto.com/).
+Project is a member of the [OSS Manifesto](http://ossmanifesto.org/).
