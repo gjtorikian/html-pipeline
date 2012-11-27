@@ -13,7 +13,7 @@ module HTML
           # would happen but we can reconsider it in the future.
           next if element['style']
 
-          # Bail out if src doesn't look like a valid http url. trying avoid weird
+          # Bail out if src doesn't look like a valid http url. trying to avoid weird
           # js injection via javascript: urls.
           next if element['src'].to_s.strip =~ /\Ajavascript/i
 
