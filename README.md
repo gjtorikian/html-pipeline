@@ -87,6 +87,7 @@ filter.call
 * `CamoFilter` - replace http image urls with [camo-fied](https://github.com/atmos/camo) https versions
 * `EmailReplyFilter` - util filter for working with emails
 * `EmojiFilter` - everyone loves [emoji](http://www.emoji-cheat-sheet.com/)!
+* `HttpsFilter` - HTML Filter for replacing http github urls with https versions.
 * `ImageMaxWidthFilter` - link to full size image for large images
 * `MarkdownFilter` - convert markdown to html
 * `PlainTextInputFilter` - html escape text and wrap the result in a div
@@ -150,7 +151,9 @@ EmojiPipeline = Pipeline.new [
 ], context, {}
 ```
 
-## Development Setup
+## Development
+
+To see what has changed in recent versions, see the [CHANGELOG](https://github.com/jch/html-pipeline/blob/master/CHANGELOG.md).
 
 ```sh
 bundle
@@ -159,11 +162,11 @@ rake test
 
 ## Contributing
 
-1. Fork it
+1. [Fork it](https://help.github.com/articles/fork-a-repo)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+5. Create new [Pull Request](https://help.github.com/articles/using-pull-requests)
 
 
 ## TODO
@@ -181,3 +184,5 @@ rake test
 * [Simon Rozet](mailto:simon@rozet.name)
 * [Vicent Martí](mailto:tanoku@gmail.com)
 * [Risk :danger: Olson](mailto:technoweenie@gmail.com)
+
+Project is a member of the [OSS Manifesto](http://ossmanifesto.com/).
