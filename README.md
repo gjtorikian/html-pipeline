@@ -95,6 +95,61 @@ filter.call
 * `TextileFilter` - convert textile to html
 * `TableOfContentsFilter` - anchor headings with name attributes
 
+## Examples
+
+We define different pipelines for different parts of our app. Here are a few
+paraphrased snippets to get you started:
+
+```ruby
+# The context hash is how you pass options between different filters.
+# See individual filter source for explanation of options.
+context = {
+  :asset_root => "http://your-domain.com/where/your/images/live/icons",
+  :base_url   => "http://your-domain.com"
+}
+
+# Pipeline providing sanitization and image hijacking but no mention
+# related features.
+SimplePipeline = Pipeline.new [
+  SanitizationFilter,
+  TableOfContentsFilter, # add 'name' anchors to all headers
+  CamoFilter,
+  ImageMaxWidthFilter,
+  SyntaxHighlightFilter,
+  EmojiFilter,
+  AutolinkFilter
+], context, {}
+
+# Pipeline used for user provided content on the web
+MarkdownPipeline = Pipeline.new [
+  MarkdownFilter,
+  SanitizationFilter,
+  CamoFilter,
+  ImageMaxWidthFilter,
+  HttpsFilter,
+  MentionFilter,
+  EmojiFilter,
+  SyntaxHighlightFilter
+], context.merge(:gfm => true), {}  # enable github formatted markdown
+
+
+# Define a pipeline based on another pipeline's filters
+NonGFMMarkdownPipeline = Pipeline.new(MarkdownPipeline.filters,
+  context.merge(:gfm => false), {})
+
+# Pipelines aren't limited to the web. You can use them for email
+# processing also.
+HtmlEmailPipeline = Pipeline.new [
+  ImageMaxWidthFilter
+], {}, {}
+
+# Just emoji.
+EmojiPipeline = Pipeline.new [
+  HTMLInputFilter,
+  EmojiFilter
+], context, {}
+```
+
 ## Development Setup
 
 ```sh
