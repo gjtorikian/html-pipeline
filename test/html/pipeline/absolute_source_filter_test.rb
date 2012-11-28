@@ -32,4 +32,25 @@ class HTML::Pipeline::AbsoluteSourceFilterTest < Test::Unit::TestCase
     assert_no_match /@image_subpage_url/, result
   end
 
+  def test_fails_when_context_is_missing
+    assert_raise RuntimeError do
+      AbsoluteSourceFilter.call("<img src=\"img.png\">", {})
+    end
+    assert_raise RuntimeError do
+      AbsoluteSourceFilter.call("<img src=\"/img.png\">", {})
+    end
+  end
+  
+  def test_tells_you_where_context_is_required
+    exception = assert_raise(RuntimeError) { 
+      AbsoluteSourceFilter.call("<img src=\"img.png\">", {}) 
+    }
+    assert_match 'HTML::Pipeline::AbsoluteSourceFilter', exception.message
+
+    exception = assert_raise(RuntimeError) { 
+      AbsoluteSourceFilter.call("<img src=\"/img.png\">", {}) 
+    }
+    assert_match 'HTML::Pipeline::AbsoluteSourceFilter', exception.message
+  end
+
 end

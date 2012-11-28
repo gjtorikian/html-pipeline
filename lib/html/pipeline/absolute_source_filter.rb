@@ -35,12 +35,12 @@ module HTML
       
       # Private: the base url you want to use
       def image_base_url
-        context[:image_base_url] or raise "Missing context :image_base_url"
+        context[:image_base_url] or raise "Missing context :image_base_url for #{self.class.name}"
       end
 
       # Private: the relative url you want to use
       def image_subpage_url
-        context[:image_subpage_url] or raise "Missing context :image_subpage_url"
+        context[:image_subpage_url] or raise "Missing context :image_subpage_url for #{self.class.name}"
       end
     
     end
