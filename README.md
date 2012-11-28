@@ -152,9 +152,10 @@ EmojiPipeline = Pipeline.new [
 ```
 
 ## Extending
-If you need a custom filter, you can write your own. All that is needed is a
-class that inherits from `HTML::Pipeline::Filter` and has a `call` method. For
-example this filter adds a base url to images that are root relative:
+To write a custom filter, you need a class with a `call` method that inherits
+from `HTML::Pipeline::Filter`.
+
+For example this filter adds a base url to images that are root relative:
 
 ```ruby
 require 'uri'
