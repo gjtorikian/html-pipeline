@@ -178,7 +178,7 @@ end
 Now this filter can be used in a pipeline:
 
 ```ruby
-Pipeline.new [ ImageSourceFilter ], { :base_url => 'http://somehost.com' }
+Pipeline.new [ RootRelativeFilter ], { :base_url => 'http://somehost.com' }
 ```
 
 ## Development
