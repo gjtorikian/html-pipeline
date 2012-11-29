@@ -39,7 +39,10 @@ module HTML
         end
         @context = context || {}
         @result = result || {}
-        validate!
+        
+        # Filter validation for context. Sub classes need to implement this 
+        # method to get validated
+        validate if self.respond_to? :validate
       end
       
       # Public: Returns a simple Hash used to pass extra information into filters
@@ -155,37 +158,22 @@ module HTML
         end
       end
       
-      # Validation helper so filters can declare what context they 
-      # require
-      def self.validates_context_presence(*required_context)
-        ValidateContext.instance[self.to_s] = [*required_context]
-      end
-      
-      # Wrapper to run validations. This will just call other validation
-      # methods that do the actual work
-      def validate!
-        validate_context_presence
-      end
-      
-      # Validator for contexts. This will iterate through all filters in
-      # the pipeline and check if any have declared required contexts
-      # using validates_context_presence.
+      # Validator for required context. This will check that anything passed in 
+      # contexts exists in @contexts
       # 
       # If any errors are found an ArgumentError will be raised with a
       # message listing all the missing contexts and the filters that
       # require them.
-      def validate_context_presence
-        class_name = self.class.name
-        validation_errors = []
-        if ValidateContext.instance.required_context.has_key?(class_name)
-          ValidateContext.instance.required_context[class_name].each do |context|
-            if @context[context].nil?
-              validation_errors << "Missing context :#{context.to_s} for #{class_name}."
-            end
+      def context_needs(*contexts)
+        contexts = contexts.map { |context| context.to_sym }
+        errors = []
+        contexts.each do |context|
+          unless @context.include? context
+            errors << "Missing context :#{context.to_s} for #{self.class.name}."
           end
         end
-        if validation_errors.any?
-          raise ArgumentError, validation_errors.join(' ')
+        if errors.any?
+          raise ArgumentError, errors.join(' ')
         end
       end
     end

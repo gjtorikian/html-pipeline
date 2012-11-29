@@ -25,7 +25,6 @@ module HTML
   #                   some semblance of type safety.
   class Pipeline
     autoload :VERSION,               'html/pipeline/version'
-    autoload :ValidateContext,       'html/pipeline/validate_context'
     autoload :Pipeline,              'html/pipeline/pipeline'
     autoload :Filter,                'html/pipeline/filter'
     autoload :BodyContent,           'html/pipeline/body_content'

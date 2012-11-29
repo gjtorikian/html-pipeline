@@ -17,8 +17,6 @@ module HTML
     # This filter does not write additional information to the context.
     class CamoFilter < Filter
       
-      validates_context_presence :asset_proxy, :asset_proxy_secret_key
-      
       # Hijacks images in the markup provided, replacing them with URLs that
       # go through the github asset proxy.
       def call
@@ -35,6 +33,12 @@ module HTML
           end
         end
         doc
+      end
+      
+      # Implementation of validate hook.
+      # Errors should raise exceptions or use an existing validator.
+      def validate
+        context_needs :asset_proxy, :asset_proxy_secret_key
       end
 
       # The camouflaged URL for a given image URL.

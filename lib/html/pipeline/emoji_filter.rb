@@ -9,8 +9,6 @@ module HTML
     class EmojiFilter < Filter
       # Build a regexp that matches all valid :emoji: names.
       EmojiPattern = /:(#{Emoji.names.map { |name| Regexp.escape(name) }.join('|')}):/
-      
-      validates_context_presence :asset_root
 
       def call
         doc.search('text()').each do |node|
@@ -22,6 +20,12 @@ module HTML
           node.replace(html)
         end
         doc
+      end
+      
+      # Implementation of validate hook.
+      # Errors should raise exceptions or use an existing validator.
+      def validate
+        context_needs :asset_root
       end
 
       # Replace :emoji: with corresponding images.
