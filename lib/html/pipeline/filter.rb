@@ -158,13 +158,7 @@ module HTML
       # Validation helper so filters can declare what context they 
       # require
       def self.validates_context_presence(*required_context)
-        @@required_context ||= {}
-        @@required_context[calling_class(caller)] = [*required_context]
-      end
-      
-      # Returns any required context or an empty hash
-      def required_context
-        @@required_context || {}
+        ValidateContext.instance[self.to_s] = [*required_context]
       end
       
       # Wrapper to run validations. This will just call other validation
@@ -183,8 +177,8 @@ module HTML
       def validate_context_presence
         class_name = self.class.name
         validation_errors = []
-        if required_context.has_key?(class_name)
-          required_context[class_name].each do |context|
+        if ValidateContext.instance.required_context.has_key?(class_name)
+          ValidateContext.instance.required_context[class_name].each do |context|
             if @context[context].nil?
               validation_errors << "Missing context :#{context.to_s} for #{class_name}."
             end
@@ -193,23 +187,6 @@ module HTML
         if validation_errors.any?
           raise ArgumentError, validation_errors.join(' ')
         end
-      end
-      
-      # Get the full class name from the result of Kernel::caller.
-      # This should look something like HTML::Pipeline::CamoFilter
-      # This is helpful for context validation where the classname
-      # needs to be looked up.
-      def self.calling_class(stack)
-        class_name = []
-        stack.each do |level|
-          part = level.match /<(class|module):([^>]+)/
-          if level.include?('<top (required)>')
-            break
-          elsif part
-            class_name << part[2]
-          end
-        end
-        class_name.reverse.join('::')
       end
     end
   end
