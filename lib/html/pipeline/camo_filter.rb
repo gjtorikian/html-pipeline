@@ -11,8 +11,8 @@ module HTML
     # in browser clients.
     #
     # Context options:
-    #   :asset_proxy - Base URL for constructed asset proxy URLs.
-    #   :asset_proxy_secret_key - The shared secret used to encode URLs.
+    #   :asset_proxy (required) - Base URL for constructed asset proxy URLs.
+    #   :asset_proxy_secret_key (required) - The shared secret used to encode URLs.
     #
     # This filter does not write additional information to the context.
     class CamoFilter < Filter
@@ -50,11 +50,11 @@ module HTML
 
       # Private: the hostname to use for generated asset proxied URLs.
       def asset_proxy_host
-        context[:asset_proxy] or raise "Missing context :asset_proxy"
+        context[:asset_proxy]
       end
 
       def asset_proxy_secret_key
-        context[:asset_proxy_secret_key] or raise "Missing context :asset_proxy_secret_key"
+        context[:asset_proxy_secret_key]
       end
 
       # Private: helper to hexencode a string. Each byte ends up encoded into

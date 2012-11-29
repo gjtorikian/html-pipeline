@@ -70,15 +70,18 @@ Prints:
 </div>
 ```
 
-Some filters take an optional **context** and/or **result** hash. These are
-used to pass around arguments and metadata between filters in a pipeline. For
-example, if you want don't want to use GitHub formatted Markdown, you can
-pass an option in the context hash:
+Some filters take an optional or required **context** and/or **result**
+hash. These are used to pass around arguments and metadata between
+filters in a pipeline. For example, if you want don't want to use
+GitHub formatted Markdown, you can pass an option in the context hash:
 
 ```ruby
 filter = HTML::Pipeline::MarkdownFilter.new("Hi **world**!", :gfm => false)
 filter.call
 ```
+
+Required contexts are necessary for several filters and an ArgumentError will
+be thrown if the context is missing.
 
 ## Filters
 
