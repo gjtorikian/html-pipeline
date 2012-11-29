@@ -40,8 +40,8 @@ module HTML
         @context = context || {}
         @result = result || {}
         
-        # Filter validation for context. Sub classes need to implement this 
-        # method to get validated
+        # Filter validation. Sub classes need to implement this method to get 
+        # validated
         validate if self.respond_to? :validate
       end
       

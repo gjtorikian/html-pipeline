@@ -16,7 +16,6 @@ module HTML
     #
     # This filter does not write additional information to the context.
     class CamoFilter < Filter
-      
       # Hijacks images in the markup provided, replacing them with URLs that
       # go through the github asset proxy.
       def call
