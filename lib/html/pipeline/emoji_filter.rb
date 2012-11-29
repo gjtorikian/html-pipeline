@@ -10,7 +10,7 @@ module HTML
       # Build a regexp that matches all valid :emoji: names.
       EmojiPattern = /:(#{Emoji.names.map { |name| Regexp.escape(name) }.join('|')}):/
       
-      validates_context_presence self, :asset_root
+      validates_context_presence :asset_root
 
       def call
         doc.search('text()').each do |node|

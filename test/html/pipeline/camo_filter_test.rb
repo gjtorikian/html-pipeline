@@ -36,4 +36,12 @@ class HTML::Pipeline::CamoFilterTest < Test::Unit::TestCase
       CamoFilter.call(orig, @options).to_s
     end
   end
+    
+  def test_required_context_validation
+    exception = assert_raise(ArgumentError) { 
+      CamoFilter.call("", {}) 
+    }
+    assert_match /:asset_proxy[^_]/, exception.message
+    assert_match /:asset_proxy_secret_key/, exception.message
+  end
 end
