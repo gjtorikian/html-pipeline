@@ -1,3 +1,5 @@
+require 'pp'
+
 module HTML
   class Pipeline
     # Base class for user content HTML filters. Each filter takes an
@@ -39,6 +41,26 @@ module HTML
         end
         @context = context || {}
         @result = result || {}
+        validate!
+      end
+      
+      def validate!
+        validate_context_presence
+      end
+      
+      def required_context
+        @@required_context || {}
+      end
+      
+      def validate_context_presence
+        class_name = self.class.name
+        if required_context.has_key?(class_name)
+          required_context[class_name].each do |context|
+            if @context[context].nil?
+              raise "Missing context :#{context.to_s} for #{class_name}"
+            end
+          end
+        end
       end
 
       # Public: Returns a simple Hash used to pass extra information into filters
@@ -153,6 +175,13 @@ module HTML
           output.to_s
         end
       end
+      
+      # Validate required context
+      def self.validates_context_presence(klass, *required_context)
+        @@required_context ||= {}
+        @@required_context[klass.name] = [*required_context]
+      end
+      
     end
   end
 end

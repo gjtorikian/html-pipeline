@@ -16,6 +16,9 @@ module HTML
     #
     # This filter does not write additional information to the context.
     class CamoFilter < Filter
+      
+      validates_context_presence self, :asset_proxy, :asset_proxy_secret_key
+      
       # Hijacks images in the markup provided, replacing them with URLs that
       # go through the github asset proxy.
       def call
