@@ -4,7 +4,7 @@ require File.expand_path('../lib/html/pipeline/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.name          = "html-pipeline"
   gem.version       = HTML::Pipeline::VERSION
-  gem.license       = 'MIT'
+  gem.license       = "MIT"
   gem.authors       = ["Ryan Tomayko", "Jerry Cheung"]
   gem.email         = ["ryan@github.com", "jerry@github.com"]
   gem.description   = %q{GitHub HTML processing filters and utilities}
