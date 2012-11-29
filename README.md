@@ -80,7 +80,7 @@ filter = HTML::Pipeline::MarkdownFilter.new("Hi **world**!", :gfm => false)
 filter.call
 ```
 
-Required contexts are necessary for several filters and an ArgumentError will
+Required contexts are necessary for several filters and an `ArgumentError` will
 be thrown if the context is missing.
 
 ## Filters
