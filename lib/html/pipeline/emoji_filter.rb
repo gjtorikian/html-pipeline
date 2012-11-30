@@ -5,7 +5,7 @@ module HTML
     # HTML filter that replaces :emoji: with images.
     #
     # Context:
-    #   :asset_root - base url to link to emoji sprite
+    #   :asset_root (required) - base url to link to emoji sprite
     class EmojiFilter < Filter
       # Build a regexp that matches all valid :emoji: names.
       EmojiPattern = /:(#{Emoji.names.map { |name| Regexp.escape(name) }.join('|')}):/
@@ -20,6 +20,12 @@ module HTML
           node.replace(html)
         end
         doc
+      end
+      
+      # Implementation of validate hook.
+      # Errors should raise exceptions or use an existing validator.
+      def validate
+        needs :asset_root
       end
 
       # Replace :emoji: with corresponding images.
@@ -41,7 +47,7 @@ module HTML
       # Raises ArgumentError if context option has not been provided.
       # Returns the context's asset_root.
       def asset_root
-        context[:asset_root] or raise ArgumentError, "Missing context :asset_root"
+        context[:asset_root]
       end
     end
   end
