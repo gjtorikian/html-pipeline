@@ -39,10 +39,7 @@ module HTML
         end
         @context = context || {}
         @result = result || {}
-        
-        # Filter validation. Sub classes need to implement this method to get 
-        # validated
-        validate if self.respond_to? :validate
+        validate
       end
       
       # Public: Returns a simple Hash used to pass extra information into filters
@@ -76,6 +73,10 @@ module HTML
       # hash.
       def call
         raise NotImplementedError
+      end
+      
+      # Make sure the context has everything we need. Noop: Subclasses can override.
+      def validate
       end
 
       # The Repository object provided in the context hash, or nil when no
@@ -164,16 +165,12 @@ module HTML
       # If any errors are found an ArgumentError will be raised with a
       # message listing all the missing contexts and the filters that
       # require them.
-      def context_needs(*contexts)
-        contexts = contexts.map { |context| context.to_sym }
-        errors = []
-        contexts.each do |context|
-          unless @context.include? context
-            errors << "Missing context :#{context.to_s} for #{self.class.name}."
-          end
-        end
-        if errors.any?
-          raise ArgumentError, errors.join(' ')
+      def needs(*keys)
+        missing = keys.reject { |key| context.include? key }
+
+        if missing.any?
+          raise ArgumentError,
+            "Missing context keys for #{self.class.name}: #{missing.map(&:inspect).join ', '}"
         end
       end
     end

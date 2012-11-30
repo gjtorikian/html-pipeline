@@ -37,7 +37,7 @@ module HTML
       # Implementation of validate hook.
       # Errors should raise exceptions or use an existing validator.
       def validate
-        context_needs :asset_proxy, :asset_proxy_secret_key
+        needs :asset_proxy, :asset_proxy_secret_key
       end
 
       # The camouflaged URL for a given image URL.

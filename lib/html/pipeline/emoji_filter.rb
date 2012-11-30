@@ -25,7 +25,7 @@ module HTML
       # Implementation of validate hook.
       # Errors should raise exceptions or use an existing validator.
       def validate
-        context_needs :asset_root
+        needs :asset_root
       end
 
       # Replace :emoji: with corresponding images.
