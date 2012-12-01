@@ -39,8 +39,9 @@ module HTML
         end
         @context = context || {}
         @result = result || {}
+        validate
       end
-
+      
       # Public: Returns a simple Hash used to pass extra information into filters
       # and also to allow filters to make extracted information available to the
       # caller.
@@ -72,6 +73,10 @@ module HTML
       # hash.
       def call
         raise NotImplementedError
+      end
+      
+      # Make sure the context has everything we need. Noop: Subclasses can override.
+      def validate
       end
 
       # The Repository object provided in the context hash, or nil when no
@@ -151,6 +156,21 @@ module HTML
           output.to_html
         else
           output.to_s
+        end
+      end
+      
+      # Validator for required context. This will check that anything passed in 
+      # contexts exists in @contexts
+      # 
+      # If any errors are found an ArgumentError will be raised with a
+      # message listing all the missing contexts and the filters that
+      # require them.
+      def needs(*keys)
+        missing = keys.reject { |key| context.include? key }
+
+        if missing.any?
+          raise ArgumentError,
+            "Missing context keys for #{self.class.name}: #{missing.map(&:inspect).join ', '}"
         end
       end
     end
