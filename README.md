@@ -152,6 +152,37 @@ EmojiPipeline = Pipeline.new [
 ], context, {}
 ```
 
+## Extending
+To write a custom filter, you need a class with a `call` method that inherits
+from `HTML::Pipeline::Filter`.
+
+For example this filter adds a base url to images that are root relative:
+
+```ruby
+require 'uri'
+
+class RootRelativeFilter < HTML::Pipeline::Filter
+
+  def call
+    doc.search("img").each do |img| 
+      next if img['src'].nil?
+      src = img['src'].strip
+      if src.start_with? '/'
+        img["src"] = URI.join(context[:base_url], src).to_s
+      end
+    end
+    doc
+  end
+
+end
+```
+
+Now this filter can be used in a pipeline:
+
+```ruby
+Pipeline.new [ RootRelativeFilter ], { :base_url => 'http://somehost.com' }
+```
+
 ## Development
 
 To see what has changed in recent versions, see the [CHANGELOG](https://github.com/jch/html-pipeline/blob/master/CHANGELOG.md).
