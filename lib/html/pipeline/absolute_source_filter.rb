@@ -12,8 +12,8 @@ module HTML
       # i.e. scraped webpages and some RSS feeds.
       #
       # Context options:
-      #   :image_base_url - Base URL for image host for root relative src.
-      #   :image_subpage_url - For relative src.
+      #   :image_base_url (required) - Base URL for image host for root relative src.
+      #   :image_subpage_url (required) - For relative src.
       #
       # This filter does not write additional information to the context.
       # This filter would need to be run before CamoFilter.
@@ -33,14 +33,19 @@ module HTML
         doc
       end
       
+      # Implementation of validate hook.
+      def validate
+        needs :image_base_url, :image_subpage_url
+      end
+      
       # Private: the base url you want to use
       def image_base_url
-        context[:image_base_url] or raise "Missing context :image_base_url for #{self.class.name}"
+        context[:image_base_url]
       end
 
       # Private: the relative url you want to use
       def image_subpage_url
-        context[:image_subpage_url] or raise "Missing context :image_subpage_url for #{self.class.name}"
+        context[:image_subpage_url]
       end
     
     end
