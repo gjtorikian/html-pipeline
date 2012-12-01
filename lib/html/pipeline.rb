@@ -10,7 +10,7 @@ module HTML
   # See HTML::Pipeline::Filter for information on building filters.
   #
   # Construct a Pipeline for running multiple HTML filters.  A pipeline is created once
-  # with one to many filters, and is then can be `call`ed many times over the course
+  # with one to many filters, and it then can be `call`ed many times over the course
   # of its lifetime with input.
   #
   # filters         - Array of Filter objects. Each must respond to call(doc,
