@@ -53,7 +53,9 @@ pipeline = HTML::Pipeline.new [
 result = pipeline.call <<CODE
 This is *great*:
 
-    some_code(:first)
+``` ruby
+some_code(:first)
+```
 
 CODE
 result[:output].to_s
