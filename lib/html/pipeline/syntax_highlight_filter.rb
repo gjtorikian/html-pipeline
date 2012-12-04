@@ -1,4 +1,4 @@
-require 'linguist'
+require 'pygments'
 
 module HTML
   class Pipeline
