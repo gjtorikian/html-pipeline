@@ -45,21 +45,23 @@ output to the next filter's input. So if you wanted to have content be
 filtered through Markdown and be syntax highlighted, you can create the
 following pipeline:
 
-```ruby
+<pre lang=rb>
 pipeline = HTML::Pipeline.new [
   HTML::Pipeline::MarkdownFilter,
   HTML::Pipeline::SyntaxHighlightFilter
 ]
-result = pipeline.call <<CODE
+
+result = pipeline.call &lt;&lt;-MDOWN
 This is *great*:
 
-``` ruby
+```ruby
 some_code(:first)
 ```
 
-CODE
-result[:output].to_s
-```
+MDOWN
+
+puts result[:output].to_s
+</pre>
 
 Prints:
 
