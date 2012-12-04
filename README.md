@@ -52,11 +52,15 @@ pipeline = HTML::Pipeline.new [
 ]
 
 result = pipeline.call &lt;&lt;-MDOWN
-This is *great*:
+Language defined *explicitly*:
 
 ```ruby
-some_code(:first)
+5.times { puts "Odelay!" }
 ```
+
+Language *auto-detected* from code:
+
+    5.times { puts "Odelay!" }
 
 MDOWN
 
@@ -66,12 +70,15 @@ puts result[:output].to_s
 Prints:
 
 ```html
-<p>This is <em>great</em>:</p>
+<p>Language defined <em>explicitly</em>:</p>
 
-<div class="highlight">
-<pre><span class="n">some_code</span><span class="p">(</span><span class="ss">:first</span><span class="p">)</span>
-</pre>
-</div>
+<div class="highlight"><pre><span class="mi">5</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="nb">print</span> <span class="s2">"Odelay!"</span> <span class="p">}</span>
+</pre></div>
+
+<p>Language <em>auto-detected</em> from code:</p>
+
+<div class="highlight"><pre><span class="mi">5</span><span class="o">.</span><span class="nb">times</span> <span class="p">{</span> <span class="k">print</span> <span class="s">"Odelay!"</span> <span class="p">}</span>
+</pre></div>
 ```
 
 Some filters take an optional **context** and/or **result** hash. These are
