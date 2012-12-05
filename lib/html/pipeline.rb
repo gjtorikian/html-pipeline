@@ -27,6 +27,7 @@ module HTML
     autoload :VERSION,               'html/pipeline/version'
     autoload :Pipeline,              'html/pipeline/pipeline'
     autoload :Filter,                'html/pipeline/filter'
+    autoload :AbsoluteSourceFilter,  'html/pipeline/absolute_source_filter'
     autoload :BodyContent,           'html/pipeline/body_content'
     autoload :AutolinkFilter,        'html/pipeline/autolink_filter'
     autoload :CamoFilter,            'html/pipeline/camo_filter'
