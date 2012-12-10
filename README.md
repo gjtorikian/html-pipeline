@@ -45,31 +45,40 @@ output to the next filter's input. So if you wanted to have content be
 filtered through Markdown and be syntax highlighted, you can create the
 following pipeline:
 
-```ruby
+<pre lang=rb>
 pipeline = HTML::Pipeline.new [
   HTML::Pipeline::MarkdownFilter,
   HTML::Pipeline::SyntaxHighlightFilter
 ]
-result = pipeline.call <<CODE
-This is *great*:
 
-``` ruby
-some_code(:first)
+result = pipeline.call &lt;&lt;-MDOWN
+Language defined *explicitly*:
+
+```ruby
+5.times { puts "Odelay!" }
 ```
 
-CODE
-result[:output].to_s
-```
+Language *auto-detected* from code:
+
+    5.times { puts "Odelay!" }
+
+MDOWN
+
+puts result[:output].to_s
+</pre>
 
 Prints:
 
 ```html
-<p>This is <em>great</em>:</p>
+<p>Language defined <em>explicitly</em>:</p>
 
-<div class="highlight">
-<pre><span class="n">some_code</span><span class="p">(</span><span class="ss">:first</span><span class="p">)</span>
-</pre>
-</div>
+<div class="highlight"><pre><span class="mi">5</span><span class="o">.</span><span class="n">times</span> <span class="p">{</span> <span class="nb">print</span> <span class="s2">"Odelay!"</span> <span class="p">}</span>
+</pre></div>
+
+<p>Language <em>auto-detected</em> from code:</p>
+
+<div class="highlight"><pre><span class="mi">5</span><span class="o">.</span><span class="nb">times</span> <span class="p">{</span> <span class="k">print</span> <span class="s">"Odelay!"</span> <span class="p">}</span>
+</pre></div>
 ```
 
 Some filters take an optional **context** and/or **result** hash. These are
