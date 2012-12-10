@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 0.0.5 (unreleased)
+## 0.0.5
 
   * fix li xss vulnerability in sanitization filter: vmg #31
   * gemspec cleanup: nbibler #23, jbarnette #24
