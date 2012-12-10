@@ -33,7 +33,7 @@ module HTML
         :elements => %w(
           h1 h2 h3 h4 h5 h6 h7 h8 br b i strong em a pre code img tt
           div ins del sup sub p ol ul table blockquote dl dt dd
-          kbd q samp var hr ruby rt rp
+          kbd q samp var hr ruby rt rp li tr td th
         ),
         :attributes => {
           'a' => ['href'],
@@ -62,22 +62,20 @@ module HTML
           'img' => {'src'  => ['http', 'https', :relative]}
         },
         :transformers => [
-          # whitelist only <li> elements that are descended from a <ul> or <ol>.
-          # top-level <li> elements are removed because they can break out of
+          # Top-level <li> elements are removed because they can break out of
           # containing markup.
           lambda { |env|
             name, node = env[:node_name], env[:node]
-            if name == LIST_ITEM && node.ancestors.any?{ |n| LISTS.include?(n.name) }
-              {:node_whitelist => [node]}
+            if name == LIST_ITEM && !node.ancestors.any?{ |n| LISTS.include?(n.name) }
+              node.replace(node.children)
             end
           },
 
-          # Whitelist only table child elements that are descended from a <table>.
           # Table child elements that are not contained by a <table> are removed.
           lambda { |env|
             name, node = env[:node_name], env[:node]
-            if TABLE_ITEMS.include?(name) && node.ancestors.any? { |n| n.name == TABLE }
-              { :node_whitelist => [node] }
+            if TABLE_ITEMS.include?(name) && !node.ancestors.any? { |n| n.name == TABLE }
+              node.replace(node.children)
             end
           }
         ]

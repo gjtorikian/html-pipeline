@@ -32,7 +32,7 @@ class HTML::Pipeline::SanitizationFilterTest < Test::Unit::TestCase
   def test_sanitizes_li_elements_not_contained_in_ul_or_ol
     stuff = "a\n<li>b</li>\nc"
     html  = SanitizationFilter.call(stuff).to_s
-    assert_equal "a\n b \nc", html
+    assert_equal "a\nb\nc", html
   end
 
   def test_does_not_sanitize_li_elements_contained_in_ul_or_ol
