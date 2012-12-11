@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.0.6
+
+  * don't mutate markdown strings: jakedouglas #32
+
 ## 0.0.5
 
   * fix li xss vulnerability in sanitization filter: vmg #31
