@@ -50,7 +50,7 @@ pipeline = HTML::Pipeline.new [
   HTML::Pipeline::MarkdownFilter,
   HTML::Pipeline::SyntaxHighlightFilter
 ]
-result = pipeline.call <<CODE
+result = pipeline.call <<-CODE
 This is *great*:
 
 ``` ruby
@@ -121,7 +121,7 @@ SimplePipeline = Pipeline.new [
   SyntaxHighlightFilter,
   EmojiFilter,
   AutolinkFilter
-], context, {}
+], context
 
 # Pipeline used for user provided content on the web
 MarkdownPipeline = Pipeline.new [
@@ -133,24 +133,24 @@ MarkdownPipeline = Pipeline.new [
   MentionFilter,
   EmojiFilter,
   SyntaxHighlightFilter
-], context.merge(:gfm => true), {}  # enable github formatted markdown
+], context.merge(:gfm => true) # enable github formatted markdown
 
 
 # Define a pipeline based on another pipeline's filters
 NonGFMMarkdownPipeline = Pipeline.new(MarkdownPipeline.filters,
-  context.merge(:gfm => false), {})
+  context.merge(:gfm => false))
 
 # Pipelines aren't limited to the web. You can use them for email
 # processing also.
 HtmlEmailPipeline = Pipeline.new [
   ImageMaxWidthFilter
-], {}, {}
+], {}
 
 # Just emoji.
 EmojiPipeline = Pipeline.new [
   HTMLInputFilter,
   EmojiFilter
-], context, {}
+], context
 ```
 
 ## Extending
