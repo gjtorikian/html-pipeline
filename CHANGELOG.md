@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 0.0.7 (upcoming)
+## 0.0.7
 
   * optionally require github-linguist chrislloyd #33
 
