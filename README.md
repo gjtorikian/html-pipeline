@@ -94,9 +94,21 @@ filter.call
 * `MarkdownFilter` - convert markdown to html
 * `PlainTextInputFilter` - html escape text and wrap the result in a div
 * `SanitizationFilter` - whitelist sanitize user markup
-* `SyntaxHighlightFilter` - code syntax highlighter with [linguist](https://github.com/github/linguist)
+* `SyntaxHighlightFilter` - [code syntax highlighter](#syntax-highlighting)
 * `TextileFilter` - convert textile to html
 * `TableOfContentsFilter` - anchor headings with name attributes
+
+## Syntax highlighting
+
+`SyntaxHighlightFilter` uses [github-linguist](https://github.com/github/linguist)
+to detect and highlight languages. It isn't included as a dependency by default
+because it's a large dependency and
+[a hassle to build on heroku](https://github.com/jch/html-pipeline/issues/33).
+To use the filter, add the following to your Gemfile:
+
+```ruby
+gem 'github-linguist'
+```
 
 ## Examples
 
