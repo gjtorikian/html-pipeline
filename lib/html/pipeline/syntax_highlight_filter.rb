@@ -1,4 +1,9 @@
-require 'linguist'
+begin
+  require 'linguist'
+rescue LoadError
+  $stderr.puts "You need to install linguist before using the SyntaxHighlightFilter. See README.md for details"
+  exit 1
+end
 
 module HTML
   class Pipeline

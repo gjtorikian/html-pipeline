@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.0.7
+
+  * optionally require github-linguist chrislloyd #33
+
 ## 0.0.6
 
   * don't mutate markdown strings: jakedouglas #32
