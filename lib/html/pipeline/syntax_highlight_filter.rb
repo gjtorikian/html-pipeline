@@ -1,8 +1,7 @@
 begin
   require 'linguist'
 rescue LoadError
-  $stderr.puts "You need to install linguist before using the SyntaxHighlightFilter. See README.md for details"
-  exit 1
+  raise LoadError, "You need to install linguist before using the SyntaxHighlightFilter. See README.md for details"
 end
 
 module HTML
