@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.0.8
+
+  * raise LoadError instead of printing to stderr if linguist is missing. gjtorikian #36
+
 ## 0.0.7
 
   * optionally require github-linguist chrislloyd #33
