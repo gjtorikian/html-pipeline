@@ -43,7 +43,7 @@ module HTML
                     'accesskey', 'action', 'align', 'alt', 'axis',
                     'border', 'cellpadding', 'cellspacing', 'char',
                     'charoff', 'charset', 'checked', 'cite',
-                    'clear', 'cols', 'colspan', 'color',
+                    'class', 'clear', 'cols', 'colspan', 'color',
                     'compact', 'coords', 'datetime', 'dir',
                     'disabled', 'enctype', 'for', 'frame',
                     'headers', 'height', 'hreflang',
