@@ -58,7 +58,7 @@ module HTML
                     'vspace', 'width', 'itemprop']
         },
         :protocols => {
-          'a'   => {'href' => ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac']},
+          'a'   => {'href' => ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac', 'irc']},
           'img' => {'src'  => ['http', 'https', :relative]}
         },
         :transformers => [
