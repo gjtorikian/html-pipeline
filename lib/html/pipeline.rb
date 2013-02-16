@@ -108,23 +108,25 @@ module HTML
   end
 end
 
-# XXX nokogiri monkey patches
-class Nokogiri::XML::Node
-  # Work around an issue with utf-8 encoded data being erroneously converted to
-  # ... some other shit when replacing text nodes. See 'utf-8 output 2' in
-  # user_content_test.rb for details.
-  def replace_with_encoding_fix(replacement)
-    if replacement.respond_to?(:to_str)
-      replacement = document.fragment("<div>#{replacement}</div>").children.first.children
+# XXX nokogiri monkey patches for 1.8
+if not ''.respond_to?(:force_encoding)
+  class Nokogiri::XML::Node
+    # Work around an issue with utf-8 encoded data being erroneously converted to
+    # ... some other shit when replacing text nodes. See 'utf-8 output 2' in
+    # user_content_test.rb for details.
+    def replace_with_encoding_fix(replacement)
+      if replacement.respond_to?(:to_str)
+        replacement = document.fragment("<div>#{replacement}</div>").children.first.children
+      end
+      replace_without_encoding_fix(replacement)
     end
-    replace_without_encoding_fix(replacement)
-  end
 
-  alias_method :replace_without_encoding_fix, :replace
-  alias_method :replace, :replace_with_encoding_fix
+    alias_method :replace_without_encoding_fix, :replace
+    alias_method :replace, :replace_with_encoding_fix
 
-  def swap(replacement)
-    replace(replacement)
-    self
+    def swap(replacement)
+      replace(replacement)
+      self
+    end
   end
 end
