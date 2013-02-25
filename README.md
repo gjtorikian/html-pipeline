@@ -85,7 +85,8 @@ filter.call
 ## Filters
 
 * `MentionFilter` - replace `@user` mentions with links
-* `AutolinkFilter` - auto_linking urls in HTML
+* `AbsoluteSourceFilter` - replace relative image urls with fully qualified versions
+* `AutoLinkFilter` - auto_linking urls in HTML
 * `CamoFilter` - replace http image urls with [camo-fied](https://github.com/atmos/camo) https versions
 * `EmailReplyFilter` - util filter for working with emails
 * `EmojiFilter` - everyone loves [emoji](http://www.emoji-cheat-sheet.com/)!
