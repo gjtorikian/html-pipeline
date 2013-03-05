@@ -60,6 +60,8 @@ module HTML
       IGNORE_PARENTS = %w(pre code a).to_set
 
       def call
+        result[:mentioned_usernames] ||= []
+
         doc.search('text()').each do |node|
           content = node.to_html
           next if !content.include?('@')
@@ -108,6 +110,7 @@ module HTML
       end
 
       def link_to_mentioned_user(login)
+        result[:mentioned_usernames] |= [login]
         url = File.join(base_url, login)
         "<a href='#{url}' class='user-mention'>" +
         "@#{login}" +
