@@ -61,6 +61,10 @@ module HTML
     # Public: Returns an Array of Filter objects for this Pipeline.
     attr_reader :filters
 
+    # Public: Instrumentation service for the pipeline.
+    # Set an ActiveSupport::Notifications compatible object to enable.
+    attr_accessor :instrumentation_service
+
     def initialize(filters, default_context = {}, result_class = nil)
       raise ArgumentError, "default_context cannot be nil" if default_context.nil?
       @filters = filters.flatten.freeze
@@ -86,20 +90,32 @@ module HTML
       result ||= @result_class.new
       result[:output] =
         @filters.inject(html) do |doc, filter|
-          instrument "call_filter.html_pipeline", :filter => filter.name do
-            filter.call(doc, context, result)
-          end
+          perform_filter(filter, doc, context, result)
         end
       result
     end
 
-    def instrument(event, payload = nil, &block)
+    # Internal: Applies a specific filter to the supplied doc.
+    #
+    # The filter is instrumented.
+    #
+    # Returns the result of the filter.
+    def perform_filter(filter, doc, context, result)
+      instrument "call_filter.html_pipeline", :filter => filter.name do
+        filter.call(doc, context, result)
+      end
+    end
+
+    # Internal: if the `instrumentation_service` object is set, instruments the
+    # block, otherwise the block is ran without instrumentation.
+    #
+    # Returns the result of the provided block.
+    def instrument(event, payload = nil)
       return yield unless instrumentation_service
       instrumentation_service.instrument event, payload do
         yield
       end
     end
-    attr_accessor :instrumentation_service
 
     # Like call but guarantee the value returned is a DocumentFragment.
     # Pipelines may return a DocumentFragment or a String. Callers that need a
