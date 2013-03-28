@@ -84,9 +84,22 @@ module HTML
       context = @default_context.merge(context)
       context = context.freeze
       result ||= @result_class.new
-      result[:output] = @filters.inject(html) { |doc, filter| filter.call(doc, context, result) }
+      result[:output] =
+        @filters.inject(html) do |doc, filter|
+          instrument "call_filter.html_pipeline", :filter => filter.name do
+            filter.call(doc, context, result)
+          end
+        end
       result
     end
+
+    def instrument(event, payload = nil, &block)
+      return yield unless instrumentation_service
+      instrumentation_service.instrument event, payload do
+        yield
+      end
+    end
+    attr_accessor :instrumentation_service
 
     # Like call but guarantee the value returned is a DocumentFragment.
     # Pipelines may return a DocumentFragment or a String. Callers that need a
