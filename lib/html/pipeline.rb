@@ -65,11 +65,17 @@ module HTML
     # Set an ActiveSupport::Notifications compatible object to enable.
     attr_accessor :instrumentation_service
 
+    class << self
+      # Public: Default instrumentation service for new pipeline objects.
+      attr_accessor :default_instrumentation_service
+    end
+
     def initialize(filters, default_context = {}, result_class = nil)
       raise ArgumentError, "default_context cannot be nil" if default_context.nil?
       @filters = filters.flatten.freeze
       @default_context = default_context.freeze
       @result_class = result_class || Hash
+      @instrumentation_service = self.class.default_instrumentation_service
     end
 
     # Apply all filters in the pipeline to the given HTML.

@@ -25,6 +25,15 @@ class HTML::PipelineTest < Test::Unit::TestCase
     assert_equal TestFilter.name, payload[:filter]
   end
 
+  def test_default_instrumentation_service
+    service = 'default'
+    Pipeline.default_instrumentation_service = service
+    pipeline = Pipeline.new [], @context, @result_class
+    assert_equal service, pipeline.instrumentation_service
+  ensure
+    Pipeline.default_instrumentation_service = nil
+  end
+
   def filter(input)
     @pipeline.call(input)
   end
