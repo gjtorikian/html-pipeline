@@ -53,9 +53,7 @@ pipeline = HTML::Pipeline.new [
 result = pipeline.call <<-CODE
 This is *great*:
 
-``` ruby
-some_code(:first)
-```
+    some_code(:first)
 
 CODE
 result[:output].to_s
@@ -178,7 +176,7 @@ require 'uri'
 class RootRelativeFilter < HTML::Pipeline::Filter
 
   def call
-    doc.search("img").each do |img| 
+    doc.search("img").each do |img|
       next if img['src'].nil?
       src = img['src'].strip
       if src.start_with? '/'
@@ -195,6 +193,44 @@ Now this filter can be used in a pipeline:
 
 ```ruby
 Pipeline.new [ RootRelativeFilter ], { :base_url => 'http://somehost.com' }
+```
+
+## Instrumenting
+
+To instrument each filter and a full pipeline call, set an
+[ActiveSupport::Notifications](http://api.rubyonrails.org/classes/ActiveSupport/Notifications.html)
+service object on a pipeline object. New pipeline objects will default to the
+`HTML::Pipeline.default_instrumentation_service` object.
+
+``` ruby
+# the AS::Notifications-compatible service object
+service = ActiveSupport::Notifications
+
+# instrument a specific pipeline
+pipeline = HTML::Pipeline.new [MarkdownFilter], context
+pipeline.instrumentation_service = service
+
+# or instrument all new pipelines
+HTML::Pipeline.default_instrumentation_service = service
+```
+
+Filters are instrumented when they are run through the pipeline. A
+`call_filter.html_pipeline` event is published once the filter finishes. The
+`payload` should include the `filter` name. Each filter will trigger its own
+instrumentation call.
+
+``` ruby
+service.subscribe "call_filter.html_pipeline" do |event, start, ending, transaction_id, payload|
+  payload[:filter] #=> "MarkdownFilter"
+end
+```
+
+The full pipeline is also instrumented:
+
+``` ruby
+service.subscribe "call_pipeline.html_pipeline" do |event, start, ending, transaction_id, payload|
+  payload[:filters] #=> ["MarkdownFilter"]
+end
 ```
 
 ## Development

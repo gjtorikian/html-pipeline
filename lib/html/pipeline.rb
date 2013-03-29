@@ -61,11 +61,21 @@ module HTML
     # Public: Returns an Array of Filter objects for this Pipeline.
     attr_reader :filters
 
+    # Public: Instrumentation service for the pipeline.
+    # Set an ActiveSupport::Notifications compatible object to enable.
+    attr_accessor :instrumentation_service
+
+    class << self
+      # Public: Default instrumentation service for new pipeline objects.
+      attr_accessor :default_instrumentation_service
+    end
+
     def initialize(filters, default_context = {}, result_class = nil)
       raise ArgumentError, "default_context cannot be nil" if default_context.nil?
       @filters = filters.flatten.freeze
       @default_context = default_context.freeze
       @result_class = result_class || Hash
+      @instrumentation_service = self.class.default_instrumentation_service
     end
 
     # Apply all filters in the pipeline to the given HTML.
@@ -84,8 +94,35 @@ module HTML
       context = @default_context.merge(context)
       context = context.freeze
       result ||= @result_class.new
-      result[:output] = @filters.inject(html) { |doc, filter| filter.call(doc, context, result) }
+      instrument "call_pipeline.html_pipeline", :filters => @filters.map(&:name) do
+        result[:output] =
+          @filters.inject(html) do |doc, filter|
+            perform_filter(filter, doc, context, result)
+          end
+      end
       result
+    end
+
+    # Internal: Applies a specific filter to the supplied doc.
+    #
+    # The filter is instrumented.
+    #
+    # Returns the result of the filter.
+    def perform_filter(filter, doc, context, result)
+      instrument "call_filter.html_pipeline", :filter => filter.name do
+        filter.call(doc, context, result)
+      end
+    end
+
+    # Internal: if the `instrumentation_service` object is set, instruments the
+    # block, otherwise the block is ran without instrumentation.
+    #
+    # Returns the result of the provided block.
+    def instrument(event, payload = nil)
+      return yield unless instrumentation_service
+      instrumentation_service.instrument event, payload do
+        yield
+      end
     end
 
     # Like call but guarantee the value returned is a DocumentFragment.
