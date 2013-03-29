@@ -197,9 +197,9 @@ Pipeline.new [ RootRelativeFilter ], { :base_url => 'http://somehost.com' }
 
 ## Instrumenting
 
-To instrument each filter, set an [ActiveSupport::Notifications]
-(http://api.rubyonrails.org/classes/ActiveSupport/Notifications.html) service
-object on a pipeline object. New pipeline objects will default to the
+To instrument each filter and a full pipeline call, set an
+[ActiveSupport::Notifications](http://api.rubyonrails.org/classes/ActiveSupport/Notifications.html)
+service object on a pipeline object. New pipeline objects will default to the
 `HTML::Pipeline.default_instrumentation_service` object.
 
 ``` ruby
@@ -222,6 +222,14 @@ instrumentation call.
 ``` ruby
 service.subscribe "call_filter.html_pipeline" do |event, start, ending, transaction_id, payload|
   payload[:filter] #=> "MarkdownFilter"
+end
+```
+
+The full pipeline is also instrumented:
+
+``` ruby
+service.subscribe "call_pipeline.html_pipeline" do |event, start, ending, transaction_id, payload|
+  payload[:filters] #=> ["MarkdownFilter"]
 end
 ```
 

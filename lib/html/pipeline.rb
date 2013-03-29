@@ -94,10 +94,12 @@ module HTML
       context = @default_context.merge(context)
       context = context.freeze
       result ||= @result_class.new
-      result[:output] =
-        @filters.inject(html) do |doc, filter|
-          perform_filter(filter, doc, context, result)
-        end
+      instrument "call_pipeline.html_pipeline", :filters => @filters.map(&:name) do
+        result[:output] =
+          @filters.inject(html) do |doc, filter|
+            perform_filter(filter, doc, context, result)
+          end
+      end
       result
     end
 

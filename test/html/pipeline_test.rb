@@ -17,12 +17,24 @@ class HTML::PipelineTest < Test::Unit::TestCase
 
   def test_filter_instrumentation
     service = MockedInstrumentationService.new
+    service.subscribe "call_filter.html_pipeline"
     @pipeline.instrumentation_service = service
     filter("hello")
     event, payload, res = service.events.pop
     assert event, "event expected"
     assert_equal "call_filter.html_pipeline", event
     assert_equal TestFilter.name, payload[:filter]
+  end
+
+  def test_pipeline_instrumentation
+    service = MockedInstrumentationService.new
+    service.subscribe "call_pipeline.html_pipeline"
+    @pipeline.instrumentation_service = service
+    filter("hello")
+    event, payload, res = service.events.pop
+    assert event, "event expected"
+    assert_equal "call_pipeline.html_pipeline", event
+    assert_equal @pipeline.filters.map(&:name), payload[:filters]
   end
 
   def test_default_instrumentation_service
