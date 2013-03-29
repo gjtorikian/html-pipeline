@@ -2,7 +2,8 @@
 
 GitHub HTML processing filters and utilities. This module includes a small
 framework for defining DOM based content filters and applying them to user
-provided content.
+provided content. Read an introduction about this project in
+[this blog post](https://github.com/blog/1311-html-pipeline-chainable-content-filters).
 
 ## Installation
 
@@ -250,21 +251,8 @@ rake test
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new [Pull Request](https://help.github.com/articles/using-pull-requests)
 
-
-## TODO
-
-* test whether emoji filter works on heroku
-* test whether nokogiri monkey patch is still necessary
-
 ## Contributors
 
-* [Aman Gupta](mailto:aman@tmm1.net)
-* [Jake Boxer](mailto:jake@github.com)
-* [Joshua Peek](mailto:josh@joshpeek.com)
-* [Kyle Neath](mailto:kneath@gmail.com)
-* [Rob Sanheim](mailto:rsanheim@gmail.com)
-* [Simon Rozet](mailto:simon@rozet.name)
-* [Vicent Martí](mailto:tanoku@gmail.com)
-* [Risk :danger: Olson](mailto:technoweenie@gmail.com)
+Thanks to all of [these contributors](https://github.com/jch/html-pipeline/graphs/contributors).
 
 Project is a member of the [OSS Manifesto](http://ossmanifesto.org/).
