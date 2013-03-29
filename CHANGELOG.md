@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.0.11
+
+  * add instrumentation support. readme cleanup mtodd #45
+
 ## 0.0.10
 
   * add bin/html-pipeline util indirect #44
