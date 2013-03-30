@@ -94,12 +94,13 @@ module HTML
       context = @default_context.merge(context)
       context = context.freeze
       result ||= @result_class.new
-      instrument "call_pipeline.html_pipeline", :filters => @filters.map(&:name) do |payload|
+      payload = default_payload :filters => @filters.map(&:name),
+        :doc => html, :context => context, :result => result
+      instrument "call_pipeline.html_pipeline", payload do
         result[:output] =
           @filters.inject(html) do |doc, filter|
             perform_filter(filter, doc, context, result)
           end
-        payload[:result] = result
       end
       result
     end
@@ -110,8 +111,9 @@ module HTML
     #
     # Returns the result of the filter.
     def perform_filter(filter, doc, context, result)
-      instrument "call_filter.html_pipeline", :filter => filter.name do |payload|
-        payload[:result] = result
+      payload = default_payload :filter => filter.name,
+        :doc => doc, :context => context, :result => result
+      instrument "call_filter.html_pipeline", payload do |payload|
         payload[:output] = filter.call(doc, context, result)
       end
     end
@@ -121,11 +123,20 @@ module HTML
     #
     # Returns the result of the provided block.
     def instrument(event, payload = nil)
+      payload ||= default_payload
       return yield(payload) unless instrumentation_service
-      payload ||= {}
       instrumentation_service.instrument event, payload do |payload|
         yield payload
       end
+    end
+
+    # Internal: Default payload for instrumentation.
+    #
+    # Accepts a Hash of additional payload data to be merged.
+    #
+    # Returns a Hash.
+    def default_payload(payload = {})
+      {:pipeline => self.class.name}.merge(payload)
     end
 
     # Like call but guarantee the value returned is a DocumentFragment.

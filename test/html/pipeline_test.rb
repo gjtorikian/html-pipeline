@@ -5,7 +5,7 @@ class HTML::PipelineTest < Test::Unit::TestCase
   Pipeline = HTML::Pipeline
   class TestFilter
     def self.call(input, context, result)
-      input
+      input.reverse
     end
   end
 
@@ -19,22 +19,28 @@ class HTML::PipelineTest < Test::Unit::TestCase
     service = MockedInstrumentationService.new
     service.subscribe "call_filter.html_pipeline"
     @pipeline.instrumentation_service = service
-    filter("hello")
+    filter(body = "hello")
     event, payload, res = service.events.pop
     assert event, "event expected"
     assert_equal "call_filter.html_pipeline", event
     assert_equal TestFilter.name, payload[:filter]
+    assert_equal @pipeline.class.name, payload[:pipeline]
+    assert_equal body, payload[:doc]
+    assert_equal body.reverse, payload[:output]
   end
 
   def test_pipeline_instrumentation
     service = MockedInstrumentationService.new
     service.subscribe "call_pipeline.html_pipeline"
     @pipeline.instrumentation_service = service
-    filter("hello")
+    filter(body = "hello")
     event, payload, res = service.events.pop
     assert event, "event expected"
     assert_equal "call_pipeline.html_pipeline", event
     assert_equal @pipeline.filters.map(&:name), payload[:filters]
+    assert_equal @pipeline.class.name, payload[:pipeline]
+    assert_equal body, payload[:doc]
+    assert_equal body.reverse, payload[:result][:output]
   end
 
   def test_default_instrumentation_service
