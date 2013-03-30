@@ -26,7 +26,7 @@ class HTML::PipelineTest < Test::Unit::TestCase
     assert_equal TestFilter.name, payload[:filter]
     assert_equal @pipeline.class.name, payload[:pipeline]
     assert_equal body, payload[:doc]
-    assert_equal body.reverse, payload[:output]
+    assert_equal body.reverse, payload[:result][:output]
   end
 
   def test_pipeline_instrumentation

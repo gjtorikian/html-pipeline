@@ -113,8 +113,8 @@ module HTML
     def perform_filter(filter, doc, context, result)
       payload = default_payload :filter => filter.name,
         :doc => doc, :context => context, :result => result
-      instrument "call_filter.html_pipeline", payload do |payload|
-        payload[:output] = filter.call(doc, context, result)
+      instrument "call_filter.html_pipeline", payload do
+        filter.call(doc, context, result)
       end
     end
 
