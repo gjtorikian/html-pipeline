@@ -227,6 +227,7 @@ service.subscribe "call_filter.html_pipeline" do |event, start, ending, transact
   payload[:doc] #=> HTML String or Nokogiri::DocumentFragment
   payload[:context] #=> context Hash
   payload[:result] #=> instance of result class
+  payload[:result][:output] #=> output HTML String or Nokogiri::DocumentFragment
 end
 ```
 
@@ -239,6 +240,7 @@ service.subscribe "call_pipeline.html_pipeline" do |event, start, ending, transa
   payload[:doc] #=> HTML String or Nokogiri::DocumentFragment
   payload[:context] #=> context Hash
   payload[:result] #=> instance of result class
+  payload[:result][:output] #=> output HTML String or Nokogiri::DocumentFragment
 end
 ```
 
