@@ -222,7 +222,11 @@ instrumentation call.
 
 ``` ruby
 service.subscribe "call_filter.html_pipeline" do |event, start, ending, transaction_id, payload|
+  payload[:pipeline] #=> "MarkdownPipeline"
   payload[:filter] #=> "MarkdownFilter"
+  payload[:doc] #=> HTML String or Nokogiri::DocumentFragment
+  payload[:context] #=> context Hash
+  payload[:result] #=> instance of result class
 end
 ```
 
@@ -230,7 +234,11 @@ The full pipeline is also instrumented:
 
 ``` ruby
 service.subscribe "call_pipeline.html_pipeline" do |event, start, ending, transaction_id, payload|
+  payload[:pipeline] #=> "MarkdownPipeline"
   payload[:filters] #=> ["MarkdownFilter"]
+  payload[:doc] #=> HTML String or Nokogiri::DocumentFragment
+  payload[:context] #=> context Hash
+  payload[:result] #=> instance of result class
 end
 ```
 
