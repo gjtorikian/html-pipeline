@@ -94,11 +94,12 @@ module HTML
       context = @default_context.merge(context)
       context = context.freeze
       result ||= @result_class.new
-      instrument "call_pipeline.html_pipeline", :filters => @filters.map(&:name) do
+      instrument "call_pipeline.html_pipeline", :filters => @filters.map(&:name) do |payload|
         result[:output] =
           @filters.inject(html) do |doc, filter|
             perform_filter(filter, doc, context, result)
           end
+        payload[:result] = result
       end
       result
     end
@@ -109,8 +110,9 @@ module HTML
     #
     # Returns the result of the filter.
     def perform_filter(filter, doc, context, result)
-      instrument "call_filter.html_pipeline", :filter => filter.name do
-        filter.call(doc, context, result)
+      instrument "call_filter.html_pipeline", :filter => filter.name do |payload|
+        payload[:result] = result
+        payload[:output] = filter.call(doc, context, result)
       end
     end
 
@@ -119,9 +121,10 @@ module HTML
     #
     # Returns the result of the provided block.
     def instrument(event, payload = nil)
-      return yield unless instrumentation_service
-      instrumentation_service.instrument event, payload do
-        yield
+      return yield(payload) unless instrumentation_service
+      payload ||= {}
+      instrumentation_service.instrument event, payload do |payload|
+        yield payload
       end
     end
 
