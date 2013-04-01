@@ -234,6 +234,10 @@ service.subscribe "call_pipeline.html_pipeline" do |event, start, ending, transa
 end
 ```
 
+## Documentation
+
+Full reference documentation can be [found here](http://rubydoc.info/gems/html-pipeline/frames).
+
 ## Development
 
 To see what has changed in recent versions, see the [CHANGELOG](https://github.com/jch/html-pipeline/blob/master/CHANGELOG.md).
