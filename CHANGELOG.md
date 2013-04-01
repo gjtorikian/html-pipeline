@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.0.12
+
+  * add additional payload information for instrumentation mtodd #46
+  * generate and link to gem docs in README
+
 ## 0.0.11
 
   * add instrumentation support. readme cleanup mtodd #45
