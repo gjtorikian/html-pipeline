@@ -25,7 +25,6 @@ module HTML
   #                   some semblance of type safety.
   class Pipeline
     autoload :VERSION,               'html/pipeline/version'
-    autoload :Pipeline,              'html/pipeline/pipeline'
     autoload :Filter,                'html/pipeline/filter'
     autoload :AbsoluteSourceFilter,  'html/pipeline/absolute_source_filter'
     autoload :BodyContent,           'html/pipeline/body_content'
@@ -65,6 +64,12 @@ module HTML
     # Set an ActiveSupport::Notifications compatible object to enable.
     attr_accessor :instrumentation_service
 
+    # Public: String name for this Pipeline. Defaults to Class name.
+    attr_writer :instrumentation_name
+    def instrumentation_name
+      @instrumentation_name || self.class.name
+    end
+
     class << self
       # Public: Default instrumentation service for new pipeline objects.
       attr_accessor :default_instrumentation_service
@@ -94,7 +99,9 @@ module HTML
       context = @default_context.merge(context)
       context = context.freeze
       result ||= @result_class.new
-      instrument "call_pipeline.html_pipeline", :filters => @filters.map(&:name) do
+      payload = default_payload :filters => @filters.map(&:name),
+        :context => context, :result => result
+      instrument "call_pipeline.html_pipeline", payload do
         result[:output] =
           @filters.inject(html) do |doc, filter|
             perform_filter(filter, doc, context, result)
@@ -109,19 +116,10 @@ module HTML
     #
     # Returns the result of the filter.
     def perform_filter(filter, doc, context, result)
-      instrument "call_filter.html_pipeline", :filter => filter.name do
+      payload = default_payload :filter => filter.name,
+        :context => context, :result => result
+      instrument "call_filter.html_pipeline", payload do
         filter.call(doc, context, result)
-      end
-    end
-
-    # Internal: if the `instrumentation_service` object is set, instruments the
-    # block, otherwise the block is ran without instrumentation.
-    #
-    # Returns the result of the provided block.
-    def instrument(event, payload = nil)
-      return yield unless instrumentation_service
-      instrumentation_service.instrument event, payload do
-        yield
       end
     end
 
@@ -142,6 +140,36 @@ module HTML
       else
         output.to_s
       end
+    end
+
+    # Public: setup instrumentation for this pipeline.
+    #
+    # Returns nothing.
+    def setup_instrumentation(name = nil, service = nil)
+      self.instrumentation_name = name
+      self.instrumentation_service =
+        service || self.class.default_instrumentation_service
+    end
+
+    # Internal: if the `instrumentation_service` object is set, instruments the
+    # block, otherwise the block is ran without instrumentation.
+    #
+    # Returns the result of the provided block.
+    def instrument(event, payload = nil)
+      payload ||= default_payload
+      return yield(payload) unless instrumentation_service
+      instrumentation_service.instrument event, payload do |payload|
+        yield payload
+      end
+    end
+
+    # Internal: Default payload for instrumentation.
+    #
+    # Accepts a Hash of additional payload data to be merged.
+    #
+    # Returns a Hash.
+    def default_payload(payload = {})
+      {:pipeline => instrumentation_name}.merge(payload)
     end
   end
 end
