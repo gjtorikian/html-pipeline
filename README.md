@@ -198,9 +198,10 @@ Pipeline.new [ RootRelativeFilter ], { :base_url => 'http://somehost.com' }
 
 ## Instrumenting
 
-To instrument each filter and a full pipeline call, set an
-[ActiveSupport::Notifications](http://api.rubyonrails.org/classes/ActiveSupport/Notifications.html)
-service object on a pipeline object. New pipeline objects will default to the
+Filters and Pipelines can be set up to be instrumented when called. The pipeline
+must be setup with an [ActiveSupport::Notifications]
+(http://api.rubyonrails.org/classes/ActiveSupport/Notifications.html)
+compatible service object and a name. New pipeline objects will default to the
 `HTML::Pipeline.default_instrumentation_service` object.
 
 ``` ruby
@@ -209,10 +210,12 @@ service = ActiveSupport::Notifications
 
 # instrument a specific pipeline
 pipeline = HTML::Pipeline.new [MarkdownFilter], context
-pipeline.instrumentation_service = service
+pipeline.setup_instrumentation "MarkdownPipeline", service
 
-# or instrument all new pipelines
+# or set default instrumentation service for all new pipelines
 HTML::Pipeline.default_instrumentation_service = service
+pipeline = HTML::Pipeline.new [MarkdownFilter], context
+pipeline.setup_instrumentation "MarkdownPipeline"
 ```
 
 Filters are instrumented when they are run through the pipeline. A
@@ -222,7 +225,11 @@ instrumentation call.
 
 ``` ruby
 service.subscribe "call_filter.html_pipeline" do |event, start, ending, transaction_id, payload|
+  payload[:pipeline] #=> "MarkdownPipeline", set with `setup_instrumentation`
   payload[:filter] #=> "MarkdownFilter"
+  payload[:context] #=> context Hash
+  payload[:result] #=> instance of result class
+  payload[:result][:output] #=> output HTML String or Nokogiri::DocumentFragment
 end
 ```
 
@@ -230,7 +237,12 @@ The full pipeline is also instrumented:
 
 ``` ruby
 service.subscribe "call_pipeline.html_pipeline" do |event, start, ending, transaction_id, payload|
+  payload[:pipeline] #=> "MarkdownPipeline", set with `setup_instrumentation`
   payload[:filters] #=> ["MarkdownFilter"]
+  payload[:doc] #=> HTML String or Nokogiri::DocumentFragment
+  payload[:context] #=> context Hash
+  payload[:result] #=> instance of result class
+  payload[:result][:output] #=> output HTML String or Nokogiri::DocumentFragment
 end
 ```
 
