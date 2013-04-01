@@ -12,5 +12,6 @@ class MockedInstrumentationService
   end
   def subscribe(event)
     @subscribe = event
+    @events
   end
 end

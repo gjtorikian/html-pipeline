@@ -64,6 +64,12 @@ module HTML
     # Set an ActiveSupport::Notifications compatible object to enable.
     attr_accessor :instrumentation_service
 
+    # Public: String name for this Pipeline. Defaults to Class name.
+    attr_writer :instrumentation_name
+    def instrumentation_name
+      @instrumentation_name || self.class.name
+    end
+
     class << self
       # Public: Default instrumentation service for new pipeline objects.
       attr_accessor :default_instrumentation_service
@@ -94,7 +100,7 @@ module HTML
       context = context.freeze
       result ||= @result_class.new
       payload = default_payload :filters => @filters.map(&:name),
-        :doc => html, :context => context, :result => result
+        :context => context, :result => result
       instrument "call_pipeline.html_pipeline", payload do
         result[:output] =
           @filters.inject(html) do |doc, filter|
@@ -111,10 +117,38 @@ module HTML
     # Returns the result of the filter.
     def perform_filter(filter, doc, context, result)
       payload = default_payload :filter => filter.name,
-        :doc => doc, :context => context, :result => result
+        :context => context, :result => result
       instrument "call_filter.html_pipeline", payload do
         filter.call(doc, context, result)
       end
+    end
+
+    # Like call but guarantee the value returned is a DocumentFragment.
+    # Pipelines may return a DocumentFragment or a String. Callers that need a
+    # DocumentFragment should use this method.
+    def to_document(input, context = {}, result = nil)
+      result = call(input, context, result)
+      HTML::Pipeline.parse(result[:output])
+    end
+
+    # Like call but guarantee the value returned is a string of HTML markup.
+    def to_html(input, context = {}, result = nil)
+      result = call(input, context, result = nil)
+      output = result[:output]
+      if output.respond_to?(:to_html)
+        output.to_html
+      else
+        output.to_s
+      end
+    end
+
+    # Public: setup instrumentation for this pipeline.
+    #
+    # Returns nothing.
+    def setup_instrumentation(name = nil, service = nil)
+      self.instrumentation_name = name
+      self.instrumentation_service =
+        service || self.class.default_instrumentation_service
     end
 
     # Internal: if the `instrumentation_service` object is set, instruments the
@@ -135,26 +169,7 @@ module HTML
     #
     # Returns a Hash.
     def default_payload(payload = {})
-      {:pipeline => self.class.name}.merge(payload)
-    end
-
-    # Like call but guarantee the value returned is a DocumentFragment.
-    # Pipelines may return a DocumentFragment or a String. Callers that need a
-    # DocumentFragment should use this method.
-    def to_document(input, context = {}, result = nil)
-      result = call(input, context, result)
-      HTML::Pipeline.parse(result[:output])
-    end
-
-    # Like call but guarantee the value returned is a string of HTML markup.
-    def to_html(input, context = {}, result = nil)
-      result = call(input, context, result = nil)
-      output = result[:output]
-      if output.respond_to?(:to_html)
-        output.to_html
-      else
-        output.to_s
-      end
+      {:pipeline => instrumentation_name}.merge(payload)
     end
   end
 end
