@@ -44,4 +44,10 @@ class HTML::Pipeline::SanitizationFilterTest < Test::Unit::TestCase
     stuff = '<a href="github-windows://spillthelog">Spill this yo</a> and so on'
     assert_equal stuff, SanitizationFilter.call(stuff).to_s
   end
+
+  def test_html_tags_arent_truncated
+    stuff = "a\n<p>b</p>\n</html>\nc"
+    html  = SanitizationFilter.call(stuff).to_s
+    assert_equal "a\n<p>b</p>\n&lt;/html&gt;\nc", html
+  end
 end

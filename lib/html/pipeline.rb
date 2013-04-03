@@ -1,6 +1,7 @@
 require "nokogiri"
 require "active_support/xml_mini/nokogiri" # convert Documents to hashes
 require "escape_utils"
+require "cgi"
 
 module HTML
   # GitHub HTML processing filters and utilities. This module includes a small
@@ -51,7 +52,8 @@ module HTML
     def self.parse(document_or_html)
       document_or_html ||= ''
       if document_or_html.is_a?(String)
-        DocumentFragment.parse(document_or_html)
+        escaped = CGI::escapeElement(document_or_html, ['html'])
+        DocumentFragment.parse(escaped)
       else
         document_or_html
       end
