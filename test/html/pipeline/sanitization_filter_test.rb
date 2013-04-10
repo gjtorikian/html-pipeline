@@ -44,4 +44,9 @@ class HTML::Pipeline::SanitizationFilterTest < Test::Unit::TestCase
     stuff = '<a href="github-windows://spillthelog">Spill this yo</a> and so on'
     assert_equal stuff, SanitizationFilter.call(stuff).to_s
   end
+
+  def test_script_contents_are_removed
+    orig = '<script>JavaScript!</script>'
+    assert_equal "", SanitizationFilter.call(orig).to_s
+  end
 end
