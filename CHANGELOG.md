@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.0.13
+
+  * Update icon class name (only affects TOC pipeline) cameronmcefee #52
+
 ## 0.0.12
 
   * add additional payload information for instrumentation mtodd #46
