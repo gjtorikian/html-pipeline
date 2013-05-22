@@ -41,7 +41,7 @@ module HTML
         @result = result || {}
         validate
       end
-      
+
       # Public: Returns a simple Hash used to pass extra information into filters
       # and also to allow filters to make extracted information available to the
       # caller.
@@ -74,7 +74,7 @@ module HTML
       def call
         raise NotImplementedError
       end
-      
+
       # Make sure the context has everything we need. Noop: Subclasses can override.
       def validate
       end
@@ -92,18 +92,6 @@ module HTML
       # was specified
       def current_user
         context[:current_user]
-      end
-
-      # Return whether the filter can access a given repo while
-      # applying a filter
-      #
-      # A repo can only be accessed if its pullable by the user who
-      # submitted the content of this filter, or if it's the same as
-      # the repository context in which the filter runs
-      def can_access_repo?(repo)
-        return false if repo.nil?
-        return true if repo == repository
-        repo.pullable_by?(current_user)
       end
 
       # The site's base URL provided in the context hash, or '/' when no
@@ -158,10 +146,10 @@ module HTML
           output.to_s
         end
       end
-      
-      # Validator for required context. This will check that anything passed in 
+
+      # Validator for required context. This will check that anything passed in
       # contexts exists in @contexts
-      # 
+      #
       # If any errors are found an ArgumentError will be raised with a
       # message listing all the missing contexts and the filters that
       # require them.
