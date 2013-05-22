@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.0.14
+
+  * Remove unused can_access_repo? method jch
+
 ## 0.0.13
 
   * Update icon class name (only affects TOC pipeline) cameronmcefee #52
