@@ -49,4 +49,23 @@ class HTML::Pipeline::SanitizationFilterTest < Test::Unit::TestCase
     orig = '<script>JavaScript!</script>'
     assert_equal "", SanitizationFilter.call(orig).to_s
   end
+
+  def test_table_rows_and_cells_removed_if_not_in_table
+    orig = %(<tr><td>Foo</td></tr><td>Bar</td>)
+    assert_equal 'FooBar', SanitizationFilter.call(orig).to_s
+  end
+
+  def test_table_sections_removed_if_not_in_table
+    orig = %(<thead><tr><td>Foo</td></tr></thead>)
+    assert_equal 'Foo', SanitizationFilter.call(orig).to_s
+  end
+
+  def test_table_sections_are_not_removed
+    orig = %(<table>
+<thead><tr><th>Column 1</th></tr></thead>
+<tfoot><tr><td>Sum</td></tr></tfoot>
+<tbody><tr><td>1</td></tr></tbody>
+</table>)
+    assert_equal orig, SanitizationFilter.call(orig).to_s
+  end
 end
