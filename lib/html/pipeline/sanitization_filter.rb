@@ -63,6 +63,14 @@ module HTML
           'img' => {'src'  => ['http', 'https', :relative]}
         },
         :transformers => [
+          lambda { |env|
+            name, node = env[:node_name], env[:node]
+            if node.element? && name == 'i' && node.text.length == 0 && node.has_attribute?('alt')
+              node.set_attribute('class', node.remove_attribute('alt'))
+              {:node_whitelist => [node]}
+            end
+          },
+
           # Top-level <li> elements are removed because they can break out of
           # containing markup.
           lambda { |env|

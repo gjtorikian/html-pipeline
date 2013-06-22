@@ -68,6 +68,36 @@ require 'asciidoctor/backends/html5'
 
 module Asciidoctor
   module HTML5
+    # copied from Asciidoctor::HTML5::BlockAdmonitionTemplate, tweaked for GitHub
+    # yes, this template is ugly, but it's (mostly) optimized for speed, not looks
+    # templates should not be overridden this way generally, but rather by using Tilt-supported templates
+    # since this is such a narrow change, we are monkeypatching to avoid a dependency on Tilt
+    class BlockAdmonitionTemplate < BaseTemplate
+      OCTICON_MAPPING = {
+        'tip'       => 'star',
+        'note'      => 'info',
+        'warning'   => 'alert',
+        'caution'   => 'megaphone',
+        'important' => 'stop'
+      }
+
+      def template
+        @template ||= @eruby.new <<-EOS
+<%#encoding:UTF-8%><table>
+<tr>
+<td>
+<i alt="mega-octicon octicon-<%= template.class::OCTICON_MAPPING[attr 'name'] %>"></i>
+</td>
+<td><%= title? ? %(
+<div>\#{title}</div>) : nil %>
+<%= content %>
+</td>
+</tr>
+</table>
+      EOS
+      end
+    end
+
     # copied from Asciidoctor::HTML5::BlockListingTemplate, tweaked for GitHub
     # yes, this template is ugly, but it's (mostly) optimized for speed, not looks
     # templates should not be overridden this way generally, but rather by using Tilt-supported templates
