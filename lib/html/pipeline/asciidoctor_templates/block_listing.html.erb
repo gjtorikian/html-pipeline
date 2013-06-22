@@ -1,0 +1,7 @@
+<%#encoding:UTF-8%><%= title? ? %(
+<div>#{@caption}#{title}</div>) : nil %><%
+if attr? 'style', 'source', false %>
+<pre lang="<%= (attr 'language') %>"><code><%= content %></code></pre><%
+else %>
+<pre><%= content %></pre><%
+end %>
