@@ -25,15 +25,16 @@ module HTML
       # of places we're using tables to contain formatted user content (like pull
       # request review comments).
       TABLE_ITEMS = Set.new(%w(tr td th).freeze)
-      TABLE       = 'table'.freeze
+      TABLE = 'table'.freeze
+      TABLE_SECTIONS = Set.new(%w(thead tbody tfoot).freeze)
 
       # The main sanitization whitelist. Only these elements and attributes are
       # allowed through by default.
       WHITELIST = {
         :elements => %w(
           h1 h2 h3 h4 h5 h6 h7 h8 br b i strong em a pre code img tt
-          div ins del sup sub p ol ul table blockquote dl dt dd
-          kbd q samp var hr ruby rt rp li tr td th
+          div ins del sup sub p ol ul table thead tbody tfoot blockquote
+          dl dt dd kbd q samp var hr ruby rt rp li tr td th
         ),
         :remove_contents => ['script'],
         :attributes => {
@@ -75,7 +76,7 @@ module HTML
           # Table child elements that are not contained by a <table> are removed.
           lambda { |env|
             name, node = env[:node_name], env[:node]
-            if TABLE_ITEMS.include?(name) && !node.ancestors.any? { |n| n.name == TABLE }
+            if (TABLE_SECTIONS.include?(name) || TABLE_ITEMS.include?(name)) && !node.ancestors.any? { |n| n.name == TABLE }
               node.replace(node.children)
             end
           }
