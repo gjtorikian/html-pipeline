@@ -16,8 +16,9 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.add_dependency "gemoji",          "~> 1.0"
-  gem.add_dependency "nokogiri",        "~> 1.4"
+  gem.add_dependency "nokogiri",        "~> 1.5.10"
   gem.add_dependency "github-markdown", "~> 0.5"
+  gem.add_dependency "asciidoctor",     "~> 0.1.3"
   gem.add_dependency "sanitize",        "~> 2.0"
   gem.add_dependency "rinku",           "~> 1.7"
   gem.add_dependency "escape_utils",    "~> 0.3"

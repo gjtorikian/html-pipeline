@@ -1,0 +1,17 @@
+<%#encoding:UTF-8%><table>
+<tr>
+<td>
+<i alt="mega-octicon octicon-<%= {
+  'tip'       => 'star',
+  'note'      => 'info',
+  'warning'   => 'alert',
+  'caution'   => 'megaphone',
+  'important' => 'top'
+}[attr 'name'] %>"></i>
+</td>
+<td><%= title? ? %(
+<div>#{title}</div>) : nil %>
+<%= content %>
+</td>
+</tr>
+</table>

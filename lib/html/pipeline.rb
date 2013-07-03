@@ -35,6 +35,7 @@ module HTML
     autoload :HttpsFilter,           'html/pipeline/https_filter'
     autoload :ImageMaxWidthFilter,   'html/pipeline/image_max_width_filter'
     autoload :MarkdownFilter,        'html/pipeline/markdown_filter'
+    autoload :AsciiDocFilter,        'html/pipeline/asciidoc_filter'
     autoload :MentionFilter,         'html/pipeline/@mention_filter'
     autoload :PlainTextInputFilter,  'html/pipeline/plain_text_input_filter'
     autoload :SanitizationFilter,    'html/pipeline/sanitization_filter'
