@@ -1,3 +1,4 @@
+# encoding: utf-8
 require "test_helper"
 
 class HTML::Pipeline::TableOfContentsFilterTest < Test::Unit::TestCase
@@ -42,6 +43,13 @@ class HTML::Pipeline::TableOfContentsFilterTest < Test::Unit::TestCase
     doc = TocFilter.call(orig)
     assert_equal 6, doc.search('a').size
   end
+
+  def test_anchors_with_non_english_stuff
+    orig = %(<h1>日本語</h1>
+             <h1>Русский</h1)
+
+    names = TocFilter.call(orig).search('a').map { |a| a['name'] }
+    assert_includes "日本語", names
+    assert_includes "Русский", names
+  end
 end
-
-
