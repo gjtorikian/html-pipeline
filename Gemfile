@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'activesupport', '< 4.0.0' if RUBY_VERSION < '1.9.3'
+gem 'nokogiri',      '< 1.6.0' if RUBY_VERSION < '1.9.2'
 
 group :development do
   gem 'bundler'
