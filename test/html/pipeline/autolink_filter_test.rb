@@ -19,4 +19,12 @@ class HTML::Pipeline::AutolinkFilterTest < Test::Unit::TestCase
     assert_equal '<p>"<a href="http://github">http://github</a>"</p>',
       AutolinkFilter.to_html('<p>"http://github"</p>', :flags => Rinku::AUTOLINK_SHORT_DOMAINS)
   end
+
+  def test_autolink_skip_tags
+    assert_equal '<code>"http://github.com"</code>',
+      AutolinkFilter.to_html('<code>"http://github.com"</code>')
+
+    assert_equal '<code>"<a href="http://github.com">http://github.com</a>"</code>',
+      AutolinkFilter.to_html('<code>"http://github.com"</code>', :skip_tags => %w(kbd script))
+  end
 end
