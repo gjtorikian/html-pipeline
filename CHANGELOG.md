@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 0.1.0
+
+I realized I wasn't properly following [semver](http://semver.org) for interface
+changes and new features. Starting from this release, semver will be followed.
+
+  * Whitelist table section elements in sanitization filter #55 mojavelinux
+  * Update readme typo #57 envygeeks
+  * Add :skip_tags option for AutolinkFilter #65 pengwynn
+  * Fix CI dependency issues #67 jch
+
 ## 0.0.14
 
   * Remove unused can_access_repo? method jch
