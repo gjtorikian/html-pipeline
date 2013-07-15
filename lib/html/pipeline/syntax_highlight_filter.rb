@@ -1,7 +1,7 @@
 begin
   require 'linguist'
 rescue LoadError
-  raise LoadError, "You need to install linguist before using the SyntaxHighlightFilter. See README.md for details"
+  raise LoadError, "You need to install 'github-linguist' before using the SyntaxHighlightFilter. See README.md for details"
 end
 
 module HTML
