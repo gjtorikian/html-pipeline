@@ -1,3 +1,4 @@
+# encoding: utf-8
 require "test_helper"
 
 class HTML::Pipeline::TableOfContentsFilterTest < Test::Unit::TestCase
@@ -42,6 +43,16 @@ class HTML::Pipeline::TableOfContentsFilterTest < Test::Unit::TestCase
     doc = TocFilter.call(orig)
     assert_equal 6, doc.search('a').size
   end
+
+  def test_anchors_with_utf8_characters
+    orig = %(<h1>日本語</h1>
+             <h1>Русский</h1)
+
+    rendered_h1s = TocFilter.call(orig).search('h1').map(&:to_s)
+
+    assert_equal "<h1>\n<a name=\"%E6%97%A5%E6%9C%AC%E8%AA%9E\" class=\"anchor\" href=\"#%E6%97%A5%E6%9C%AC%E8%AA%9E\"><span class=\"octicon octicon-link\"></span></a>日本語</h1>",
+                 rendered_h1s[0]
+    assert_equal "<h1>\n<a name=\"%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9\" class=\"anchor\" href=\"#%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9\"><span class=\"octicon octicon-link\"></span></a>Русский</h1>",
+                 rendered_h1s[1]
+  end
 end
-
-
