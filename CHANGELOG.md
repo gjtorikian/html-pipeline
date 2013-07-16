@@ -7,7 +7,7 @@ changes and new features. Starting from this release, semver will be followed.
 
   * Whitelist table section elements in sanitization filter #55 mojavelinux
   * Update readme typo #57 envygeeks
-  * TOC unicode characters and anchor names #64 jakedouglas/non_english_anchors
+  * TOC unicode characters and anchor names for Ruby > 1.9 #64 jakedouglas/non_english_anchors
   * Add :skip_tags option for AutolinkFilter #65 pengwynn
   * Fix CI dependency issues #67 jch
   * Fix ignored test and add Ruby 2.0 to CI. #71, #72 tricknotes
