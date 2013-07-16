@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## 0.1.0
+
+I realized I wasn't properly following [semver](http://semver.org) for interface
+changes and new features. Starting from this release, semver will be followed.
+
+  * Whitelist table section elements in sanitization filter #55 mojavelinux
+  * Update readme typo #57 envygeeks
+  * TOC unicode characters and anchor names for Ruby > 1.9 #64 jakedouglas/non_english_anchors
+  * Add :skip_tags option for AutolinkFilter #65 pengwynn
+  * Fix CI dependency issues #67 jch
+  * Fix ignored test and add Ruby 2.0 to CI. #71, #72 tricknotes
+
 ## 0.0.14
 
   * Remove unused can_access_repo? method jch
