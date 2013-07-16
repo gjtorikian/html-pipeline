@@ -7,11 +7,13 @@ module HTML
     # eventually generating the Table of Contents itself, with links
     # to each header
     class TableOfContentsFilter < Filter
+      PUNCTUATION_REGEXP = RUBY_VERSION > "1.9" ? /[^\p{Word}\- ]/u : /[^\w\- ]/
+
       def call
         headers = Hash.new(0)
         doc.css('h1, h2, h3, h4, h5, h6').each do |node|
           name = node.text.downcase
-          name.gsub!(/[^\p{Word}\- ]/u, '') # remove punctuation
+          name.gsub!(PUNCTUATION_REGEXP, '') # remove punctuation
           name.gsub!(' ', '-') # replace spaces with dash
 
           uniq = (headers[name] > 0) ? "-#{headers[name]}" : ''
