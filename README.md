@@ -160,7 +160,7 @@ HtmlEmailPipeline = Pipeline.new [
 
 # Just emoji.
 EmojiPipeline = Pipeline.new [
-  HTMLInputFilter,
+  PlainTextInputFilter,
   EmojiFilter
 ], context
 ```
