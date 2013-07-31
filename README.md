@@ -96,7 +96,7 @@ filter.call
 * `SanitizationFilter` - whitelist sanitize user markup
 * `SyntaxHighlightFilter` - [code syntax highlighter](#syntax-highlighting)
 * `TextileFilter` - convert textile to html
-* `TableOfContentsFilter` - anchor headings with name attributes
+* `TableOfContentsFilter` - anchor headings with name attributes and generate Table of Contents html unordered list linking headings
 
 ## Syntax highlighting
 
@@ -127,7 +127,7 @@ context = {
 # related features.
 SimplePipeline = Pipeline.new [
   SanitizationFilter,
-  TableOfContentsFilter, # add 'name' anchors to all headers
+  TableOfContentsFilter, # add 'name' anchors to all headers and generate toc list
   CamoFilter,
   ImageMaxWidthFilter,
   SyntaxHighlightFilter,
