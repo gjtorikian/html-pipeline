@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.2.0
+
+  * Fix README typo #74 tricknotes
+  * TableOfContentsFilter generates list of sections #75 simeonwillbanks
+
 ## 0.1.0
 
 I realized I wasn't properly following [semver](http://semver.org) for interface
