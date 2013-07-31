@@ -42,13 +42,8 @@ module HTML
             header_content.add_previous_sibling(%Q{<a name="#{name}#{uniq}" class="anchor" href="##{name}#{uniq}"><span class="octicon octicon-link"></span></a>})
           end
         end
-        build_toc
-        doc
-      end
-
-      # Private: Wrap Table of Contents list items within a container.
-      def build_toc
         result[:toc] = %Q{<ul class="section-nav">\n#{result[:toc]}</ul>} unless result[:toc].empty?
+        doc
       end
     end
   end
