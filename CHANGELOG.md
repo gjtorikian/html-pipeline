@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.1
+
+  * Moves ActiveSupport as a development dependency #79
+
 ## 0.2.0
 
   * Fix README typo #74 tricknotes
