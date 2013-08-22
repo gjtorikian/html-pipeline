@@ -1,4 +1,9 @@
-require 'rinku'
+begin
+  require "rinku"
+rescue LoadError => e
+  missing = HTML::Pipeline::Filter::MissingDependencyException
+  raise missing, missing::MESSAGE % "rinku", e.backtrace
+end
 
 module HTML
   class Pipeline

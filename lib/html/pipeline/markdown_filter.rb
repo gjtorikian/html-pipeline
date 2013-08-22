@@ -1,4 +1,9 @@
-require 'github/markdown'
+begin
+  require "github/markdown"
+rescue LoadError => e
+  missing = HTML::Pipeline::Filter::MissingDependencyException
+  raise missing, missing::MESSAGE % "github-markdown", e.backtrace
+end
 
 module HTML
   class Pipeline

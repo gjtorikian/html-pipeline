@@ -1,3 +1,10 @@
+begin
+  require "escape_utils"
+rescue LoadError => e
+  missing = HTML::Pipeline::Filter::MissingDependencyException
+  raise missing, missing::MESSAGE % "escape_utils", e.backtrace
+end
+
 module HTML
   class Pipeline
     # Simple filter for plain text input. HTML escapes the text input and wraps it

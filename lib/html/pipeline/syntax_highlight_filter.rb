@@ -1,7 +1,8 @@
 begin
-  require 'linguist'
-rescue LoadError
-  raise LoadError, "You need to install 'github-linguist' before using the SyntaxHighlightFilter. See README.md for details"
+  require "linguist"
+rescue LoadError => e
+  missing = HTML::Pipeline::Filter::MissingDependencyException
+  raise missing, missing::MESSAGE % "github-linguist", e.backtrace
 end
 
 module HTML

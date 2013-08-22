@@ -15,13 +15,17 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^test})
   gem.require_paths = ["lib"]
 
-  gem.add_dependency "gemoji",          "~> 1.0"
-  gem.add_dependency "nokogiri",        RUBY_VERSION < "1.9.2" ? [">= 1.4", "< 1.6"] : "~> 1.4"
-  gem.add_dependency "github-markdown", "~> 0.5"
-  gem.add_dependency "sanitize",        RUBY_VERSION < "1.9.2" ? [">= 2", "< 2.0.4"] : "~> 2.0"
-  gem.add_dependency "rinku",           "~> 1.7"
-  gem.add_dependency "escape_utils",    "~> 0.3"
+  gem.add_dependency "nokogiri", RUBY_VERSION < "1.9.2" ? [">= 1.4", "< 1.6"] : "~> 1.4"
 
   gem.add_development_dependency "activesupport", RUBY_VERSION < "1.9.3" ? [">= 2", "< 4"] : ">= 2"
-  gem.add_development_dependency "github-linguist", "~> 2.6.2"
+
+  gem.post_install_message = <<msg
+----------------------------------------------
+Thank you for installing html-pipeline!
+Filter gem dependencies are no longer bundled.
+You must bundle Filter gem dependencies.
+See html-pipeline README.md for more details.
+https://github.com/jch/html-pipeline
+----------------------------------------------
+msg
 end

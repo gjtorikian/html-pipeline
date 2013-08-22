@@ -27,6 +27,23 @@ module HTML
     # Each filter may define additional options and output values. See the class
     # docs for more info.
     class Filter
+      # Public: Custom Exception raised when a Filter dependency is not installed.
+      #
+      # Examples
+      #
+      #   begin
+      #     require "rinku"
+      #   rescue LoadError => e
+      #     missing = HTML::Pipeline::Filter::MissingDependencyException
+      #     raise missing, missing::MESSAGE % "rinku", e.backtrace
+      #   end
+      class MissingDependencyException < StandardError
+        # Public: Format String for MissingDependencyException message.
+        MESSAGE = "Missing html-pipeline dependency: " +
+                  "Please add `%s` to your Gemfile; " +
+                  "see html-pipeline Gemfile for version."
+      end
+
       class InvalidDocumentException < StandardError; end
 
       def initialize(doc, context = nil, result = nil)

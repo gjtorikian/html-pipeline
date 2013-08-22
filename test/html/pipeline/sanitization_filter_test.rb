@@ -3,6 +3,10 @@ require "test_helper"
 class HTML::Pipeline::SanitizationFilterTest < Test::Unit::TestCase
   SanitizationFilter = HTML::Pipeline::SanitizationFilter
 
+  def test_dependency_management
+    assert_dependency_management_error "sanitization_filter", "sanitize"
+  end
+
   def test_removing_script_tags
     orig = %(<p><img src="http://github.com/img.png" /><script></script></p>)
     html = SanitizationFilter.call(orig).to_s

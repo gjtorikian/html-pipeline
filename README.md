@@ -98,17 +98,28 @@ filter.call
 * `TextileFilter` - convert textile to html
 * `TableOfContentsFilter` - anchor headings with name attributes and generate Table of Contents html unordered list linking headings
 
-## Syntax highlighting
+## Dependencies
 
+Filter gem dependencies are not bundled; you must bundle the filter's gem
+dependencies. The below list details filters with dependencies. For example,
 `SyntaxHighlightFilter` uses [github-linguist](https://github.com/github/linguist)
-to detect and highlight languages. It isn't included as a dependency by default
-because it's a large dependency and
-[a hassle to build on heroku](https://github.com/jch/html-pipeline/issues/33).
-To use the filter, add the following to your Gemfile:
+to detect and highlight languages. To use the `SyntaxHighlightFilter`,
+add the following to your Gemfile:
 
 ```ruby
 gem 'github-linguist'
 ```
+
+* `AutolinkFilter` - `rinku`
+* `EmailReplyFilter` - `escape_utils`
+* `EmojiFilter` - `gemoji`
+* `MarkdownFilter` - `github-markdown`
+* `PlainTextInputFilter` - `escape_utils`
+* `SanitizationFilter` - `sanitize`
+* `SyntaxHighlightFilter` - `github-linguist`
+* `TextileFilter` - `RedCloth`
+
+_Note:_ See [Gemfile](https://github.com/jch/html-pipeline/blob/master/Gemfile) `:test` block for version requirements.
 
 ## Examples
 
