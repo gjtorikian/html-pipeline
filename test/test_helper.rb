@@ -1,7 +1,6 @@
 require "bundler/setup"
 require "html/pipeline"
 require "test/unit"
-require "helpers/testing_dependency"
 
 require "active_support/core_ext/object/try"
 
@@ -38,15 +37,19 @@ module TestHelpers
   # Asserts that when a Filter is loaded without its dependencies installed,
   # a HTML::Pipeline::Filter::MissingDependencyException is raised with a
   # message describing the problem and a fix.
-  def assert_dependency_management_error(filter_name, gem_name)
-    TestingDependency.temporarily_remove_dependency_by gem_name do
-      exception = assert_raise HTML::Pipeline::Filter::MissingDependencyException do
-        load TestingDependency.filter_path_from filter_name
+  def assert_dependency(filter_name, gem_name)
+    Kernel.module_eval do
+      def require(name)
+        raise LoadError
       end
-
-      assert_equal exception.message,
-        "Missing html-pipeline dependency: Please add `#{gem_name}` to your Gemfile; see html-pipeline Gemfile for version."
     end
+
+    exception = assert_raise HTML::Pipeline::Filter::MissingDependencyException do
+      load File.join(File.dirname(__FILE__), "..", "lib", "html", "pipeline", "#{filter_name}.rb")
+    end
+
+    assert_equal exception.message,
+      "Missing html-pipeline dependency: Please add `#{gem_name}` to your Gemfile; see html-pipeline Gemfile for version."
   end
 end
 

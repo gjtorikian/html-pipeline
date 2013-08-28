@@ -4,7 +4,7 @@ class HTML::Pipeline::EmojiFilterTest < Test::Unit::TestCase
   EmojiFilter = HTML::Pipeline::EmojiFilter
 
   def test_dependency_management
-    assert_dependency_management_error "emoji_filter", "gemoji"
+    assert_dependency "emoji_filter", "gemoji"
   end
 
   def test_emojify

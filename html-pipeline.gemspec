@@ -20,12 +20,11 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "activesupport", RUBY_VERSION < "1.9.3" ? [">= 2", "< 4"] : ">= 2"
 
   gem.post_install_message = <<msg
-----------------------------------------------
+-------------------------------------------------
 Thank you for installing html-pipeline!
-Filter gem dependencies are no longer bundled.
 You must bundle Filter gem dependencies.
 See html-pipeline README.md for more details.
-https://github.com/jch/html-pipeline
-----------------------------------------------
+https://github.com/jch/html-pipeline#dependencies
+-------------------------------------------------
 msg
 end

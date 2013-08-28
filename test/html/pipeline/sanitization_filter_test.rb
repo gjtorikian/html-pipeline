@@ -4,7 +4,7 @@ class HTML::Pipeline::SanitizationFilterTest < Test::Unit::TestCase
   SanitizationFilter = HTML::Pipeline::SanitizationFilter
 
   def test_dependency_management
-    assert_dependency_management_error "sanitization_filter", "sanitize"
+    assert_dependency "sanitization_filter", "sanitize"
   end
 
   def test_removing_script_tags

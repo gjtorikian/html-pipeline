@@ -19,7 +19,7 @@ class HTML::Pipeline::MarkdownFilterTest < Test::Unit::TestCase
   end
 
   def test_dependency_management
-    assert_dependency_management_error "markdown_filter", "github-markdown"
+    assert_dependency "markdown_filter", "github-markdown"
   end
 
   def test_fails_when_given_a_documentfragment

@@ -103,7 +103,7 @@ filter.call
 Filter gem dependencies are not bundled; you must bundle the filter's gem
 dependencies. The below list details filters with dependencies. For example,
 `SyntaxHighlightFilter` uses [github-linguist](https://github.com/github/linguist)
-to detect and highlight languages. To use the `SyntaxHighlightFilter`,
+to detect and highlight languages. For example, to use the `SyntaxHighlightFilter`,
 add the following to your Gemfile:
 
 ```ruby
