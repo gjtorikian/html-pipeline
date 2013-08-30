@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.0
+
+  * Add support for manually specified default language in SyntaxHighlightFilter #81 jbarnette
+
 ## 0.2.1
 
   * Moves ActiveSupport as a development dependency #79
