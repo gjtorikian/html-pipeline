@@ -8,7 +8,7 @@ class HTML::Pipeline::SyntaxHighlightFilterTest < Test::Unit::TestCase
       "<pre>hello</pre>", :highlight => "coffeescript"
 
     doc = filter.call
-    assert_not_empty doc.css ".highlight-coffeescript"
+    assert !doc.css(".highlight-coffeescript").empty?
   end
 
   def test_highlight_default_will_not_override
@@ -16,7 +16,7 @@ class HTML::Pipeline::SyntaxHighlightFilterTest < Test::Unit::TestCase
       "<pre lang='c'>hello</pre>", :highlight => "coffeescript"
 
     doc = filter.call
-    assert_empty doc.css ".highlight-coffeescript"
-    assert_not_empty doc.css ".highlight-c"
+    assert doc.css(".highlight-coffeescript").empty?
+    assert !doc.css(".highlight-c").empty?
   end
 end
