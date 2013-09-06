@@ -7,12 +7,10 @@ module HTML
       def call
         begin
           # definition of a YAML header
-          if text =~ /\A(---\s*\n.*?\n?)^(---\s*$\n?)/m
-            content = $POSTMATCH
+          if text =~ /\A(---\s*\n.*?\n?)^(---\s*$\n?)(.*)/m
+            content = $3
             data = YAML.safe_load($1)
-            puts data
-          else
-            return text
+            text = process_yaml(data) << "\n\n" << content
           end
         rescue SyntaxError => e
           puts "YAML Exception reading #{text}: #{e.message}"
@@ -20,6 +18,17 @@ module HTML
 
         text
       end
+
+      def process_yaml(data)
+        html = "<table>"
+        data.each do |key, value|
+          html << "<tr>"
+          html << "<td>#{key}</td><td>#{value}</td>"
+          html << "</tr>"
+        end
+        html << "</table>"
+      end
     end
+
   end
 end
