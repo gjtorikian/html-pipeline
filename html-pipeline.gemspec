@@ -22,6 +22,8 @@ Gem::Specification.new do |gem|
   gem.add_dependency "rinku",           "~> 1.7"
   gem.add_dependency "escape_utils",    "~> 0.3"
 
+  gem.add_runtime_dependency('safe_yaml', "~> 0.7.0")
+
   gem.add_development_dependency "activesupport", RUBY_VERSION < "1.9.3" ? [">= 2", "< 4"] : ">= 2"
   gem.add_development_dependency "github-linguist", "~> 2.6.2"
 end
