@@ -1,3 +1,14 @@
-<pre>title:A very interesting piece</pre>
+<table>
+  <thead>
+  <tr>
+  <th>title</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td>A very interesting piece</td>
+  </tr>
+  </tbody>
+</table>
 
 Well hello there!

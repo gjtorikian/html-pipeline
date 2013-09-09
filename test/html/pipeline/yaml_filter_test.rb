@@ -21,19 +21,35 @@ class HTML::Pipeline::YamlFilterTest < Test::Unit::TestCase
     assert_equal res, load_fixture("after", "basic.text")
   end
 
-  def test_yaml_with_error
-    body = ""
+  def test_array_data
+    res  = filter("array_data.md")
+
+    assert_equal res, load_fixture("after", "array_data.text")
   end
-
-  MarkdownPipeline =
-    HTML::Pipeline.new [
-      HTML::Pipeline::YamlFilter,
-      HTML::Pipeline::MarkdownFilter
-    ]
-
-  def test_basic_markdown_filter
-    res = markdown_filter("basic_with_markdown.md")
-
-    assert_equal res, load_fixture("after", "basic_with_markdown.text")
-  end
+  #
+  # def test_nested_yaml
+  #   res  = filter("nested_yaml.md")
+  #
+  #   assert_equal res, load_fixture("after", "nested_yaml.text")
+  # end
+  #
+  # MarkdownPipeline =
+  #   HTML::Pipeline.new [
+  #     HTML::Pipeline::YamlFilter,
+  #     HTML::Pipeline::MarkdownFilter
+  #   ]
+  #
+  # def test_basic_markdown_filter
+  #   res = markdown_filter("basic_with_markdown.md")
+  #
+  #   assert_equal res, load_fixture("after", "basic_with_markdown.text")
+  # end
+  #
+  # def test_file_with_no_yaml
+  #
+  # end
+  #
+  # def test_yaml_with_error
+  #
+  # end
 end
