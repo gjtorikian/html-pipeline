@@ -1,4 +1,4 @@
-<table>
+<table id="metadata">
   <thead>
   <tr>
   <th>categories</th>
@@ -6,7 +6,19 @@
   </thead>
   <tbody>
   <tr>
-  <td>["Occupy", "mustache", "flexitarian", "8-bit"]</td>
+  <td><table>
+  <tbody>
+  <tr>
+  <td>Occupy</td>
+  
+  <td>mustache</td>
+  
+  <td>flexitarian</td>
+  
+  <td>8-bit</td>
+  </tr>
+  </tbody>
+</table></td>
   </tr>
   </tbody>
 </table>

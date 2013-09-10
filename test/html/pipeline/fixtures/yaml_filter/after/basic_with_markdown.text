@@ -1,3 +1,10 @@
-<pre>title:A great title</pre>
+<table>
+  <tr>
+    <td>title</td>
+  </tr>
+  <tr>
+    <td>A great title</td>
+  </tr>
+</table>
 
 <p><strong>Well <em>hello</em> there!</strong></p>

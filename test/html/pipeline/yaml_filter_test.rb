@@ -26,12 +26,12 @@ class HTML::Pipeline::YamlFilterTest < Test::Unit::TestCase
 
     assert_equal res, load_fixture("after", "array_data.text")
   end
-  #
-  # def test_nested_yaml
-  #   res  = filter("nested_yaml.md")
-  #
-  #   assert_equal res, load_fixture("after", "nested_yaml.text")
-  # end
+
+  def test_nested_yaml
+    res  = filter("nested_yaml.md")
+
+    assert_equal res, load_fixture("after", "nested_yaml.text")
+  end
   #
   # MarkdownPipeline =
   #   HTML::Pipeline.new [

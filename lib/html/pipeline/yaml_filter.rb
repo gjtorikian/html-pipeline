@@ -11,7 +11,8 @@ module HTML
           if text =~ /\A(---\s*\n.*?\n?)^(---\s*$\n?)(.*)/m
             content = $3
             data = YAML.safe_load($1)
-            text = process_yaml(data) << "\n\n" << content
+            # the point of the sub is to add an id to the first table element
+            text = process_yaml(data).sub(/<table/, "<table id=\"metadata\"") << "\n\n" << content
           end
         rescue SyntaxError => e
           puts "YAML Exception reading #{text}: #{e.message}"
@@ -25,34 +26,42 @@ module HTML
         tb_row = ''
         tr_row = ''
 
-        if !data.keys.empty?
+        is_array = data.is_a?(Array)
+        is_hash_array = is_array && data.any? { |d| d.is_a?(Hash) }
+
+        if is_hash_array
+          data[0].keys.each do |header|
+            th_row << table_format("TH", header)
+          end
+        elsif !data.is_a?(Array)
           data.keys.each do |header|
             th_row << table_format("TH", header)
           end
-
-          th = table_format("THEAD", table_format("TR", th_row))
-
-          if !data.keys.empty?
-            data.values.each do |value|
-              if value.is_a?(Hash)
-                tb_row << table_format("TD", process_yaml(value))
-              else
-                tb_row << table_format("TD", value)
-              end
-
-              tr_row << table_format("TR", tb_row)
-              tb_row = ""
-            end
-          end
-
-          tb = table_format("TB", tr_row)
-
-          table_format("TBL", th, tb)
-        else
-          ""
         end
-      end
 
+        th = table_format("THEAD", table_format("TR", th_row)) unless th_row.empty?
+
+        values = is_array ? data : data.values
+
+        values.each do |value|
+          if value.is_a?(Array)
+            tb_row << table_format("TD", process_yaml(value))
+          elsif value.is_a?(Hash)
+            value.values.each do |nested_value|
+              tb_row << table_format("TD", nested_value)
+            end
+            tr_row << table_format("TR", tb_row)
+            tb_row = ""
+          else
+            tb_row << table_format("TD", value)
+          end
+        end
+
+        tr_row << table_format("TR", tb_row) unless tb_row.empty?
+        tb = table_format("TB", tr_row)
+
+        table_format("TBL", th, tb)
+      end
 
       def table_format(str, *values)
         # patterns for table elements
