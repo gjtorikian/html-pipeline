@@ -26,6 +26,7 @@ module HTML
         tb_row = ''
         tr_row = ''
 
+        # checks for whether the YAML is an array, including an array of Hashes
         is_array = data.is_a?(Array)
         is_hash_array = is_array && data.any? { |d| d.is_a?(Hash) }
 
@@ -33,6 +34,7 @@ module HTML
           data[0].keys.each do |header|
             th_row << table_format("TH", header)
           end
+        # we can skip simple arrays, because they'll be represented as <table>s
         elsif !data.is_a?(Array)
           data.keys.each do |header|
             th_row << table_format("TH", header)
@@ -41,9 +43,9 @@ module HTML
 
         th = table_format("THEAD", table_format("TR", th_row)) unless th_row.empty?
 
-        values = is_array ? data : data.values
+        elements = is_array ? data : data.values
 
-        values.each do |value|
+        elements.each do |value|
           if value.is_a?(Array)
             tb_row << table_format("TD", process_yaml(value))
           elsif value.is_a?(Hash)
