@@ -8,17 +8,18 @@ module HTML
       def call
         begin
           # definition of a YAML header
-          if text =~ /\A(---\s*\n.*?\n?)^(---\s*$\n?)(.*)/m
+          if text.dup =~ /\A(---\s*\n(.*?\n?)^---\s*$\n?)(.*)/m
             content = $3
-            data = YAML.safe_load($1)
+            data = YAML.safe_load($2)
             # the point of the sub is to add an id to the first table element
-            text = process_yaml(data).sub(/<table/, "<table id=\"metadata\"") << "\n\n" << content
+            process_yaml(data).sub(/<table/, "<table id=\"metadata\"") << "\n\n" << content
+          else
+            text
           end
         rescue SyntaxError => e
-          puts "YAML Exception reading #{text}: #{e.message}"
+          puts "YAML Exception reading\n#{$1}#{e.message}"
+          "``` yaml\n#{$1}```\n\n#{content}"
         end
-
-        text
       end
 
       def process_yaml(data)
