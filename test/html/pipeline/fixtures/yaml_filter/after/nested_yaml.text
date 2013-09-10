@@ -1,0 +1,65 @@
+<table id="metadata">
+  <thead>
+  <tr>
+  <th>layout</th>
+  
+  <th>product</th>
+  
+  <th>tax</th>
+  
+  <th>total</th>
+  
+  <th>comments</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td>post</td>
+  
+  <td><table>
+  <thead>
+  <tr>
+  <th>sku</th>
+  
+  <th>quantity</th>
+  
+  <th>description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td>BL394D</td>
+  
+  <td>4</td>
+  
+  <td>Basketball</td>
+  </tr>
+  
+  <tr>
+  <td>BL4438H</td>
+  
+  <td>1</td>
+  
+  <td>Baseball</td>
+  </tr>
+  
+  <tr>
+  <td>BL4138H</td>
+  
+  <td>15</td>
+  
+  <td>Soccer</td>
+  </tr>
+  </tbody>
+</table></td>
+  
+  <td>251.42</td>
+  
+  <td>4443.52</td>
+  
+  <td>Late afternoon is best. Backup contact is Nancy Billsmer @ 555-4338.</td>
+  </tr>
+  </tbody>
+</table>
+
+Not much to say here, eh?

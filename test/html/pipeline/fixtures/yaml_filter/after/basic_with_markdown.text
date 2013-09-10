@@ -1,0 +1,14 @@
+<table id="metadata">
+  <thead>
+  <tr>
+  <th>title</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td>A great title</td>
+  </tr>
+  </tbody>
+</table>
+
+<p><strong>Well <em>hello</em> there!</strong></p>

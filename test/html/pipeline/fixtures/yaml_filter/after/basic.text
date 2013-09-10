@@ -1,0 +1,26 @@
+<table id="metadata">
+  <thead>
+  <tr>
+  <th>layout</th>
+  
+  <th>title</th>
+  
+  <th>description</th>
+  
+  <th>eventdate</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td>bare</td>
+  
+  <td>San Francisco Java Users Group - Guts of Git</td>
+  
+  <td>San Francisco Java Users Group presentation notes</td>
+  
+  <td>2012-09-11</td>
+  </tr>
+  </tbody>
+</table>
+
+Well hello there!
