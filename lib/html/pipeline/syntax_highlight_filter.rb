@@ -19,11 +19,12 @@ module HTML
           html = highlight_with_timeout_handling(lexer, text)
           next if html.nil?
 
-          node = node.replace(html).first
-          klass = node["class"]
-          klass = [klass, "highlight-#{lang}"].compact.join " "
+          if (node = node.replace(html).first)
+            klass = node["class"]
+            klass = [klass, "highlight-#{lang}"].compact.join " "
 
-          node["class"] = klass
+            node["class"] = klass
+          end
         end
         doc
       end
