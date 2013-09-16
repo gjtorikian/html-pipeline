@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.1
+
+  * Guard against nil node replacement in SyntaxHighlightFilter #84 jbarnette
+
 ## 0.3.0
 
   * Add support for manually specified default language in SyntaxHighlightFilter #81 jbarnette
