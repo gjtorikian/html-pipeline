@@ -2,6 +2,7 @@ require 'bundler/setup'
 require 'html/pipeline'
 require 'test/unit'
 
+require 'active_support/core_ext/string'
 require 'active_support/core_ext/object/try'
 
 module TestHelpers
