@@ -98,6 +98,16 @@ filter.call
 * `TextileFilter` - convert textile to html
 * `TableOfContentsFilter` - anchor headings with name attributes and generate Table of Contents html unordered list linking headings
 
+## 3rd Party Extensions
+
+If you have an idea for a filter, propose it as
+[an issue](https://github.com/jch/html-pipeline/issues) first. This allows us discuss
+whether the filter is a common enough use case to belong in this gem, or should be
+built as an external gem.
+
+* [html-pipeline-asciidoc_filter](https://github.com/asciidoctor/html-pipeline-asciidoc_filter) - asciidoc support
+
+
 ## Syntax highlighting
 
 `SyntaxHighlightFilter` uses [github-linguist](https://github.com/github/linguist)
