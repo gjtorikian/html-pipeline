@@ -98,6 +98,10 @@ filter.call
 * `TextileFilter` - convert textile to html
 * `TableOfContentsFilter` - anchor headings with name attributes and generate Table of Contents html unordered list linking headings
 
+## Third-party filters
+
+* `AsciiDocFilter` - convert AsciiDoc to HTML using Asciidoctor; see [html-pipeline-asciidoc_filter](https://github.com/asciidoctor/html-pipeline-asciidoc_filter)
+
 ## Syntax highlighting
 
 `SyntaxHighlightFilter` uses [github-linguist](https://github.com/github/linguist)
