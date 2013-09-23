@@ -121,6 +121,15 @@ gem 'github-linguist'
 
 _Note:_ See [Gemfile](https://github.com/jch/html-pipeline/blob/master/Gemfile) `:test` block for version requirements.
 
+## 3rd Party Extensions
+
+If you have an idea for a filter, propose it as
+[an issue](https://github.com/jch/html-pipeline/issues) first. This allows us discuss
+whether the filter is a common enough use case to belong in this gem, or should be
+built as an external gem.
+
+* [html-pipeline-asciidoc_filter](https://github.com/asciidoctor/html-pipeline-asciidoc_filter) - asciidoc support
+
 ## Examples
 
 We define different pipelines for different parts of our app. Here are a few

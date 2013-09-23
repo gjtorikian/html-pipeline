@@ -2,8 +2,8 @@ require "bundler/setup"
 require "html/pipeline"
 require "test/unit"
 
+require "active_support/core_ext/string"
 require "active_support/core_ext/object/try"
-require "active_support/xml_mini/nokogiri" # convert Documents to hashes
 
 module TestHelpers
   # Asserts that `needle` is not a member of `haystack`, where

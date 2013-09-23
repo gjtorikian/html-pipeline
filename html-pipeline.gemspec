@@ -15,9 +15,8 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^test})
   gem.require_paths = ["lib"]
 
-  gem.add_dependency "nokogiri", RUBY_VERSION < "1.9.2" ? [">= 1.4", "< 1.6"] : "~> 1.4"
-
-  gem.add_development_dependency "activesupport", RUBY_VERSION < "1.9.3" ? [">= 2", "< 4"] : ">= 2"
+  gem.add_dependency "nokogiri",      RUBY_VERSION < "1.9.2" ? [">= 1.4", "< 1.6"] : "~> 1.4"
+  gem.add_dependency "activesupport", RUBY_VERSION < "1.9.3" ? [">= 2", "< 4"] : ">= 2"
 
   gem.post_install_message = <<msg
 -------------------------------------------------
