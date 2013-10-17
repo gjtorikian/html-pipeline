@@ -6,6 +6,7 @@ module HTML
     #
     # Context options:
     #   :autolink  - boolean whether to autolink urls
+    #   :link_attr - HTML attributes for the link that will be generated
     #   :skip_tags - HTML tags inside which autolinking will be skipped.
     #                See Rinku.skip_tags
     #   :flags     - additional Rinku flags. See https://github.com/vmg/rinku
@@ -19,7 +20,7 @@ module HTML
         flags = 0
         flags |= context[:flags] if context[:flags]
 
-        Rinku.auto_link(html, :urls, nil, skip_tags, flags)
+        Rinku.auto_link(html, :urls, context[:link_attr], skip_tags, flags)
       end
     end
   end
