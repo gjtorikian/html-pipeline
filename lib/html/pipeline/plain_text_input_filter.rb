@@ -1,3 +1,9 @@
+begin
+  require "escape_utils"
+rescue LoadError => _
+  abort "Missing dependency 'escape_utils' for PlainTextInputFilter. See README.md for details."
+end
+
 module HTML
   class Pipeline
     # Simple filter for plain text input. HTML escapes the text input and wraps it

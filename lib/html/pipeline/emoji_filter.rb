@@ -1,4 +1,8 @@
-require 'emoji'
+begin
+  require "gemoji"
+rescue LoadError => _
+  abort "Missing dependency 'gemoji' for EmojiFilter. See README.md for details."
+end
 
 module HTML
   class Pipeline

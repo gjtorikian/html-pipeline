@@ -1,4 +1,8 @@
-require 'rinku'
+begin
+  require "rinku"
+rescue LoadError => _
+  abort "Missing dependency 'rinku' for AutolinkFilter. See README.md for details."
+end
 
 module HTML
   class Pipeline

@@ -1,3 +1,9 @@
+begin
+  require "redcloth"
+rescue LoadError => _
+  abort "Missing dependency 'RedCloth' for TextileFilter. See README.md for details."
+end
+
 module HTML
   class Pipeline
     # HTML Filter that converts Textile text into HTML and converts into a

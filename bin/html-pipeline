@@ -54,8 +54,6 @@ else
     case name
     when "Text"
       raise NameError # Text filter doesn't work, no call method
-    when "Textile"
-      require "RedCloth" # Textile filter doesn't require RedCloth
     end
 
     HTML::Pipeline.const_get("#{name}Filter")

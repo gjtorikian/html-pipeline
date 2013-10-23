@@ -1,4 +1,8 @@
-require 'sanitize'
+begin
+  require "sanitize"
+rescue LoadError => _
+  abort "Missing dependency 'sanitize' for SanitizationFilter. See README.md for details."
+end
 
 module HTML
   class Pipeline

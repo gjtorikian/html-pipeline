@@ -1,3 +1,9 @@
+begin
+  require "escape_utils"
+rescue LoadError => _
+  abort "Missing dependency 'escape_utils' for EmailReplyFilter. See README.md for details."
+end
+
 module HTML
   class Pipeline
     # HTML Filter that converts email reply text into an HTML DocumentFragment.
