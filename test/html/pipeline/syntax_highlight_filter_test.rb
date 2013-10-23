@@ -3,10 +3,6 @@ require "test_helper"
 SyntaxHighlightFilter = HTML::Pipeline::SyntaxHighlightFilter
 
 class HTML::Pipeline::SyntaxHighlightFilterTest < Test::Unit::TestCase
-  def test_dependency_management
-    assert_dependency "syntax_highlight_filter", "github-linguist"
-  end
-
   def test_highlight_default
     filter = SyntaxHighlightFilter.new \
       "<pre>hello</pre>", :highlight => "coffeescript"

@@ -1,16 +1,12 @@
-require "test_helper"
+require 'test_helper'
 
 class HTML::Pipeline::EmojiFilterTest < Test::Unit::TestCase
   EmojiFilter = HTML::Pipeline::EmojiFilter
-
-  def test_dependency_management
-    assert_dependency "emoji_filter", "gemoji"
-  end
-
+  
   def test_emojify
-    filter = EmojiFilter.new("<p>:shipit:</p>", {:asset_root => "https://foo.com"})
+    filter = EmojiFilter.new("<p>:shipit:</p>", {:asset_root => 'https://foo.com'})
     doc = filter.call
-    assert_match "https://foo.com/emoji/shipit.png", doc.search("img").attr("src").value
+    assert_match "https://foo.com/emoji/shipit.png", doc.search('img').attr('src').value
   end
   
   def test_required_context_validation
