@@ -16,7 +16,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.add_dependency "gemoji",          "~> 1.0"
-  gem.add_dependency "nokogiri",        RUBY_VERSION < "1.9.2" ? [">= 1.4", "< 1.6"] : "~> 1.4"
+  gem.add_dependency "nokogiri",        RUBY_VERSION < "1.9.2" ? [">= 1.4", "< 1.6"] : "~> 1.6"
   gem.add_dependency "github-markdown", "~> 0.5"
   gem.add_dependency "sanitize",        RUBY_VERSION < "1.9.2" ? [">= 2", "< 2.0.4"] : "~> 2.0"
   gem.add_dependency "rinku",           "~> 1.7"
