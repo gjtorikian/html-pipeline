@@ -119,7 +119,7 @@ gem 'github-linguist'
 * `SyntaxHighlightFilter` - `github-linguist`
 * `TextileFilter` - `RedCloth`
 
-_Note:_ See [Gemfile](https://github.com/jch/html-pipeline/blob/master/Gemfile) `:test` block for version requirements.
+_Note:_ See [Gemfile](/Gemfile) `:test` block for version requirements.
 
 ## 3rd Party Extensions
 
