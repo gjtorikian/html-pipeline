@@ -1,8 +1,7 @@
 begin
   require "linguist"
-rescue LoadError => e
-  missing = HTML::Pipeline::Filter::MissingDependencyException
-  raise missing, missing::MESSAGE % "github-linguist", e.backtrace
+rescue LoadError => _
+  abort "Missing dependency 'github-linguist' for SyntaxHighlightFilter. See README.md for details."
 end
 
 module HTML

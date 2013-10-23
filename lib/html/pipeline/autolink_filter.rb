@@ -1,8 +1,7 @@
 begin
   require "rinku"
-rescue LoadError => e
-  missing = HTML::Pipeline::Filter::MissingDependencyException
-  raise missing, missing::MESSAGE % "rinku", e.backtrace
+rescue LoadError => _
+  abort "Missing dependency 'rinku' for AutolinkFilter. See README.md for details."
 end
 
 module HTML

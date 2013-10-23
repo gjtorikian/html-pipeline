@@ -1,8 +1,7 @@
 begin
   require "sanitize"
-rescue LoadError => e
-  missing = HTML::Pipeline::Filter::MissingDependencyException
-  raise missing, missing::MESSAGE % "sanitize", e.backtrace
+rescue LoadError => _
+  abort "Missing dependency 'sanitize' for SanitizationFilter. See README.md for details."
 end
 
 module HTML

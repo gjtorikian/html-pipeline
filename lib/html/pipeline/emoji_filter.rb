@@ -1,8 +1,7 @@
 begin
   require "gemoji"
-rescue LoadError => e
-  missing = HTML::Pipeline::Filter::MissingDependencyException
-  raise missing, missing::MESSAGE % "gemoji", e.backtrace
+rescue LoadError => _
+  abort "Missing dependency 'gemoji' for EmojiFilter. See README.md for details."
 end
 
 module HTML

@@ -1,8 +1,7 @@
 begin
   require "escape_utils"
-rescue LoadError => e
-  missing = HTML::Pipeline::Filter::MissingDependencyException
-  raise missing, missing::MESSAGE % "escape_utils", e.backtrace
+rescue LoadError => _
+  abort "Missing dependency 'escape_utils' for EmailReplyFilter. See README.md for details."
 end
 
 module HTML

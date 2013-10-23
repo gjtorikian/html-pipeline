@@ -1,8 +1,7 @@
 begin
   require "redcloth"
-rescue LoadError => e
-  missing = HTML::Pipeline::Filter::MissingDependencyException
-  raise missing, missing::MESSAGE % "RedCloth", e.backtrace
+rescue LoadError => _
+  abort "Missing dependency 'RedCloth' for TextileFilter. See README.md for details."
 end
 
 module HTML
