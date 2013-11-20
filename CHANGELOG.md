@@ -1,14 +1,18 @@
 # CHANGELOG
 
+## 1.1.0
+
+  * escape emoji filenames in urls #92 jayroh
+
 ## 1.0.0
 
 To upgrade to this release, you will need to include separate gems for each of
 the filters. See [this section of the README](/README.md#dependencies) for
 details.
 
-* filter dependencies are no longer included #80 from simeonwillbanks/simple-dependency-management
-* Add link_attr option to Autolink filter #89 from excid3/master
-* Add ActiveSupport back in as dependency for xml-mini #85 from mojavelinux/xml-mini
+  * filter dependencies are no longer included #80 from simeonwillbanks/simple-dependency-management
+  * Add link_attr option to Autolink filter #89 from excid3/master
+  * Add ActiveSupport back in as dependency for xml-mini #85 from mojavelinux/xml-mini
 
 ## 0.3.1
 
