@@ -1,3 +1,5 @@
+require "cgi"
+
 begin
   require "gemoji"
 rescue LoadError => _
@@ -42,7 +44,7 @@ module HTML
 
         text.gsub EmojiPattern do |match|
           name = $1
-          "<img class='emoji' title=':#{name}:' alt=':#{name}:' src='#{File.join(asset_root, "emoji", "#{name}.png")}' height='20' width='20' align='absmiddle' />"
+          "<img class='emoji' title=':#{name}:' alt=':#{name}:' src='#{emoji_url(name)}' height='20' width='20' align='absmiddle' />"
         end
       end
 
@@ -52,6 +54,12 @@ module HTML
       # Returns the context's asset_root.
       def asset_root
         context[:asset_root]
+      end
+
+      private
+
+      def emoji_url(name)
+        File.join(asset_root, "emoji", "#{::CGI.escape(name)}.png")
       end
     end
   end
