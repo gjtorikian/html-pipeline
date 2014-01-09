@@ -1,4 +1,5 @@
 require 'openssl'
+require 'uri'
 
 module HTML
   class Pipeline
@@ -20,13 +21,19 @@ module HTML
       # go through the github asset proxy.
       def call
         doc.search("img").each do |element|
-          next if element['src'].nil?
           next if context[:disable_asset_proxy]
+          next if element['src'].nil?
 
-          src = element['src'].strip
-          next if src.match(%r!^https://(\w+\.)?github(app)?.com!)
+          begin
+            uri = URI.parse(element['src'])
+          rescue Exception
+            next
+          end
 
-          element['src'] = asset_proxy_url(src)
+          next if uri.hostname.nil?
+          next if uri.hostname.match(/^(\w+\.)?github(app)?\.com$/)
+
+          element['src'] = asset_proxy_url(uri.to_s)
         end
         doc
       end
