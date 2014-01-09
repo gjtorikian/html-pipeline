@@ -18,15 +18,9 @@ class HTML::Pipeline::CamoFilterTest < Test::Unit::TestCase
       CamoFilter.call(orig, @options).to_s
   end
 
-  def test_rewrites_dotcom_image_urls
-    orig = %(<p><img src="http://github.com/img.png"></p>)
-    assert_equal "<p><img src=\"https://github.com/img.png\"></p>",
-      CamoFilter.call(orig, @options).to_s
-  end
-
-  def test_not_camouflaging_https_image_urls
+  def test_camouflaging_https_image_urls
     orig = %(<p><img src="https://foo.com/img.png"></p>)
-    assert_doesnt_include 'img src="' + @asset_proxy_url,
+    assert_includes 'img src="' + @asset_proxy_url,
       CamoFilter.call(orig, @options).to_s
   end
 
@@ -36,10 +30,10 @@ class HTML::Pipeline::CamoFilterTest < Test::Unit::TestCase
       CamoFilter.call(orig, @options).to_s
     end
   end
-    
+
   def test_required_context_validation
-    exception = assert_raise(ArgumentError) { 
-      CamoFilter.call("", {}) 
+    exception = assert_raise(ArgumentError) {
+      CamoFilter.call("", {})
     }
     assert_match /:asset_proxy[^_]/, exception.message
     assert_match /:asset_proxy_secret_key/, exception.message
