@@ -21,10 +21,11 @@ module HTML
       def call
         doc.search("img").each do |element|
           next if element['src'].nil?
-          src = element['src'].strip
-          src = src.sub(%r!^http://github.com!, 'https://github.com')
-
           next if context[:disable_asset_proxy]
+
+          src = element['src'].strip
+          next if src.match(%r!^https://(\w+\.)?github(app)?.com!)
+
           element['src'] = asset_proxy_url(src)
         end
         doc

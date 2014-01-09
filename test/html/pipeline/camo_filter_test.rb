@@ -18,9 +18,21 @@ class HTML::Pipeline::CamoFilterTest < Test::Unit::TestCase
       CamoFilter.call(orig, @options).to_s
   end
 
-  def test_rewrites_dotcom_image_urls
-    orig = %(<p><img src="http://github.com/img.png"></p>)
+  def test_doesnt_rewrite_dotcom_image_urls
+    orig = %(<p><img src="https://github.com/img.png"></p>)
     assert_equal "<p><img src=\"https://github.com/img.png\"></p>",
+      CamoFilter.call(orig, @options).to_s
+  end
+
+  def test_doesnt_rewrite_dotcom_subdomain_image_urls
+    orig = %(<p><img src="https://raw.github.com/img.png"></p>)
+    assert_equal "<p><img src=\"https://raw.github.com/img.png\"></p>",
+      CamoFilter.call(orig, @options).to_s
+  end
+
+  def test_doesnt_rewrite_dotcom_app_image_urls
+    orig = %(<p><img src="https://githubapp.com/img.png"></p>)
+    assert_equal "<p><img src=\"https://githubapp.com/img.png\"></p>",
       CamoFilter.call(orig, @options).to_s
   end
 
