@@ -48,7 +48,7 @@ class HTML::Pipeline::CamoFilterTest < Test::Unit::TestCase
       CamoFilter.call(orig, @options).to_s
   end
 
- def test_doesnt_rewrite_absolute_image_urls
+  def test_doesnt_rewrite_absolute_image_urls
     orig = %(<p><img src="/img.png"></p>)
     assert_equal "<p><img src=\"/img.png\"></p>",
       CamoFilter.call(orig, @options).to_s
