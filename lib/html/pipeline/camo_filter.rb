@@ -20,12 +20,10 @@ module HTML
       # go through the github asset proxy.
       def call
         doc.search("img").each do |element|
-          next if element['src'].nil?
-          src = element['src'].strip
-          src = src.sub(%r!^http://github.com!, 'https://github.com')
-
           next if context[:disable_asset_proxy]
-          element['src'] = asset_proxy_url(src)
+          if src = element['src']
+            element['src'] = asset_proxy_url(src)
+          end
         end
         doc
       end
