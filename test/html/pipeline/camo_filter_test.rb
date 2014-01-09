@@ -18,6 +18,12 @@ class HTML::Pipeline::CamoFilterTest < Test::Unit::TestCase
       CamoFilter.call(orig, @options).to_s
   end
 
+  def test_rewrites_dotcom_image_urls
+    orig = %(<p><img src="http://github.com/img.png"></p>)
+    assert_equal "<p><img src=\"https://github.com/img.png\"></p>",
+      CamoFilter.call(orig, @options).to_s
+  end
+
   def test_camouflaging_https_image_urls
     orig = %(<p><img src="https://foo.com/img.png"></p>)
     assert_includes 'img src="' + @asset_proxy_url,
