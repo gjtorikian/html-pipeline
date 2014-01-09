@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.2.0
+
+  * CamoFilter now camos https images. #96 josh
+
 ## 1.1.0
 
   * escape emoji filenames in urls #92 jayroh
