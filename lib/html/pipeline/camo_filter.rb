@@ -31,7 +31,7 @@ module HTML
           end
 
           next if uri.hostname.nil?
-          next if uri.hostname.match(/^(\w+\.)?github(app)?\.com$/)
+          next if uri.hostname.match(/(^|\.)github(app)?\.com$/)
 
           element['src'] = asset_proxy_url(uri.to_s)
         end

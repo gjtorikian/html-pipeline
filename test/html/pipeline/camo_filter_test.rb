@@ -30,7 +30,25 @@ class HTML::Pipeline::CamoFilterTest < Test::Unit::TestCase
       CamoFilter.call(orig, @options).to_s
   end
 
+  def test_doesnt_rewrite_dotcom_subsubdomain_image_urls
+    orig = %(<p><img src="https://f.assets.github.com/img.png"></p>)
+    assert_equal "<p><img src=\"https://f.assets.github.com/img.png\"></p>",
+      CamoFilter.call(orig, @options).to_s
+  end
+
+  def test_camouflaging_github_prefixed_image_urls
+    orig = %(<p><img src="https://notgithub.com/img.png"></p>)
+    assert_includes 'img src="' + @asset_proxy_url,
+      CamoFilter.call(orig, @options).to_s
+  end
+
   def test_doesnt_rewrite_dotcom_app_image_urls
+    orig = %(<p><img src="https://githubapp.com/img.png"></p>)
+    assert_equal "<p><img src=\"https://githubapp.com/img.png\"></p>",
+      CamoFilter.call(orig, @options).to_s
+  end
+
+  def test_rewrite_dotcom_app_image_urls
     orig = %(<p><img src="https://githubapp.com/img.png"></p>)
     assert_equal "<p><img src=\"https://githubapp.com/img.png\"></p>",
       CamoFilter.call(orig, @options).to_s
@@ -47,7 +65,6 @@ class HTML::Pipeline::CamoFilterTest < Test::Unit::TestCase
     assert_equal "<p><img src=\"img.png\"></p>",
       CamoFilter.call(orig, @options).to_s
   end
-
 
   def test_camouflaging_https_image_urls
     orig = %(<p><img src="https://foo.com/img.png"></p>)
