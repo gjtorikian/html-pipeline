@@ -37,6 +37,7 @@ module HTML
           next if asset_hostname_whitelisted?(uri.hostname)
 
           element['src'] = asset_proxy_url(uri.to_s)
+          element['data-canonical-src'] = uri.to_s
         end
         doc
       end

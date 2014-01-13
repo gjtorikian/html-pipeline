@@ -17,6 +17,8 @@ class HTML::Pipeline::CamoFilterTest < Test::Unit::TestCase
     orig = %(<p><img src="http://twitter.com/img.png"></p>)
     assert_includes 'img src="' + @asset_proxy_url,
       CamoFilter.call(orig, @options).to_s
+    assert_includes 'data-canonical-src="http://twitter.com/img.png"',
+      CamoFilter.call(orig, @options).to_s
   end
 
   def test_doesnt_rewrite_dotcom_image_urls
