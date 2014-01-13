@@ -14,7 +14,7 @@ module HTML
     # Context options:
     #   :asset_proxy (required) - Base URL for constructed asset proxy URLs.
     #   :asset_proxy_secret_key (required) - The shared secret used to encode URLs.
-    #   :asset_proxy_whitelist - Array of hostname Strings or Regexps to skip
+    #   :asset_proxy_whitelist - Array of host Strings or Regexps to skip
     #                            src rewriting.
     #
     # This filter does not write additional information to the context.
@@ -33,8 +33,8 @@ module HTML
             next
           end
 
-          next if uri.hostname.nil?
-          next if asset_hostname_whitelisted?(uri.hostname)
+          next if uri.host.nil?
+          next if asset_host_whitelisted?(uri.host)
 
           element['src'] = asset_proxy_url(uri.to_s)
           element['data-canonical-src'] = uri.to_s
@@ -64,7 +64,7 @@ module HTML
         !context[:disable_asset_proxy]
       end
 
-      # Private: the hostname to use for generated asset proxied URLs.
+      # Private: the host to use for generated asset proxied URLs.
       def asset_proxy_host
         context[:asset_proxy]
       end
@@ -77,9 +77,9 @@ module HTML
         context[:asset_proxy_whitelist] || []
       end
 
-      def asset_hostname_whitelisted?(hostname)
+      def asset_host_whitelisted?(host)
         asset_proxy_whitelist.any? do |test|
-          test.is_a?(String) ? hostname == test : test.match(hostname)
+          test.is_a?(String) ? host == test : test.match(host)
         end
       end
 
