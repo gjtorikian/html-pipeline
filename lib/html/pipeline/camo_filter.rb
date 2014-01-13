@@ -14,6 +14,8 @@ module HTML
     # Context options:
     #   :asset_proxy (required) - Base URL for constructed asset proxy URLs.
     #   :asset_proxy_secret_key (required) - The shared secret used to encode URLs.
+    #   :asset_proxy_whitelist - Array of hostname Strings or Regexps to skip
+    #                            src rewriting.
     #
     # This filter does not write additional information to the context.
     class CamoFilter < Filter
@@ -32,7 +34,7 @@ module HTML
           end
 
           next if uri.hostname.nil?
-          next if uri.hostname.match(/(^|\.)github(app)?\.com$/)
+          next if asset_hostname_whitelisted?(uri.hostname)
 
           element['src'] = asset_proxy_url(uri.to_s)
         end
@@ -68,6 +70,16 @@ module HTML
 
       def asset_proxy_secret_key
         context[:asset_proxy_secret_key]
+      end
+
+      def asset_proxy_whitelist
+        context[:asset_proxy_whitelist] || []
+      end
+
+      def asset_hostname_whitelisted?(hostname)
+        asset_proxy_whitelist.any? do |test|
+          test.is_a?(String) ? hostname == test : test.match(hostname)
+        end
       end
 
       # Private: helper to hexencode a string. Each byte ends up encoded into

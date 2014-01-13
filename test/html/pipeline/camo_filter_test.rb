@@ -8,7 +8,8 @@ class HTML::Pipeline::CamoFilterTest < Test::Unit::TestCase
     @asset_proxy_secret_key = 'ssssh-secret'
     @options = {
       :asset_proxy            => @asset_proxy_url,
-      :asset_proxy_secret_key => @asset_proxy_secret_key
+      :asset_proxy_secret_key => @asset_proxy_secret_key,
+      :asset_proxy_whitelist  => [/(^|\.)github\.com$/]
     }
   end
 
@@ -39,12 +40,6 @@ class HTML::Pipeline::CamoFilterTest < Test::Unit::TestCase
   def test_camouflaging_github_prefixed_image_urls
     orig = %(<p><img src="https://notgithub.com/img.png"></p>)
     assert_includes 'img src="' + @asset_proxy_url,
-      CamoFilter.call(orig, @options).to_s
-  end
-
-  def test_doesnt_rewrite_dotcom_app_image_urls
-    orig = %(<p><img src="https://githubapp.com/img.png"></p>)
-    assert_equal "<p><img src=\"https://githubapp.com/img.png\"></p>",
       CamoFilter.call(orig, @options).to_s
   end
 
