@@ -15,9 +15,12 @@ module HTML
     # https://github.com/rgrove/sanitize/#readme
     #
     # Context options:
-    #   :whitelist - The sanitizer whitelist configuration to use. This can be one
-    #                of the options constants defined in this class or a custom
-    #                sanitize options hash.
+    #   :whitelist      - The sanitizer whitelist configuration to use. This
+    #                     can be one of the options constants defined in this
+    #                     class or a custom sanitize options hash.
+    #   :anchor_schemes - The URL schemes to allow in <a href> attributes. The
+    #                     default set is provided in the ANCHOR_SCHEMES
+    #                     constant in this class.
     #
     # This filter does not write additional information to the context.
     class SanitizationFilter < Filter
@@ -31,6 +34,9 @@ module HTML
       TABLE_ITEMS = Set.new(%w(tr td th).freeze)
       TABLE = 'table'.freeze
       TABLE_SECTIONS = Set.new(%w(thead tbody tfoot).freeze)
+
+      # These schemes are the only ones allowed in <a href> attributes by default.
+      ANCHOR_SCHEMES = ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac'].freeze
 
       # The main sanitization whitelist. Only these elements and attributes are
       # allowed through by default.
@@ -64,8 +70,8 @@ module HTML
                     'vspace', 'width', 'itemprop']
         },
         :protocols => {
-          'a'   => {'href' => ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac']},
-          'img' => {'src'  => ['http', 'https', :relative]}
+          # Allowed protocols for <a href> are controlled via #anchor_schemes.
+          'img' => {'src' => ['http', 'https', :relative]}
         },
         :transformers => [
           # Top-level <li> elements are removed because they can break out of
@@ -104,7 +110,17 @@ module HTML
       # The whitelist to use when sanitizing. This can be passed in the context
       # hash to the filter but defaults to WHITELIST constant value above.
       def whitelist
-        context[:whitelist] || WHITELIST
+        whitelist = (context[:whitelist] || WHITELIST).dup
+        whitelist[:protocols] = whitelist[:protocols].dup
+        whitelist[:protocols]['a'] = (whitelist[:protocols]['a'] || {}).merge('href' => anchor_schemes)
+        whitelist
+      end
+
+      # The schemes to allow in <a href> attributes. This can be passed in the
+      # context hash to the filter but defaults to ANCHOR_SCHEMES constant
+      # value above.
+      def anchor_schemes
+        context[:anchor_schemes] || ANCHOR_SCHEMES
       end
     end
   end
