@@ -20,8 +20,9 @@ module HTML
       # Hijacks images in the markup provided, replacing them with URLs that
       # go through the github asset proxy.
       def call
+        return unless asset_proxy_enabled?
+
         doc.search("img").each do |element|
-          next if context[:disable_asset_proxy]
           next if element['src'].nil?
 
           begin
@@ -53,6 +54,11 @@ module HTML
       def asset_url_hash(url)
         digest = OpenSSL::Digest::Digest.new('sha1')
         OpenSSL::HMAC.hexdigest(digest, asset_proxy_secret_key, url)
+      end
+
+      # Private: Return true if asset proxy filter should be enabled
+      def asset_proxy_enabled?
+        !context[:disable_asset_proxy]
       end
 
       # Private: the hostname to use for generated asset proxied URLs.
