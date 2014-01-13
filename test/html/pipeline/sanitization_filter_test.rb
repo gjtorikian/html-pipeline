@@ -45,6 +45,12 @@ class HTML::Pipeline::SanitizationFilterTest < Test::Unit::TestCase
     assert_equal stuff, SanitizationFilter.call(stuff).to_s
   end
 
+  def test_unknown_schemes_are_removed
+    stuff = '<a href="something-weird://heyyy">Wat</a> is this'
+    html  = SanitizationFilter.call(stuff).to_s
+    assert_equal '<a>Wat</a> is this', html
+  end
+
   def test_script_contents_are_removed
     orig = '<script>JavaScript!</script>'
     assert_equal "", SanitizationFilter.call(orig).to_s
