@@ -1,6 +1,8 @@
 # CHANGELOG
 
-## 1.2.0
+## 1.3.0
+
+1.2.0 didn't actually include the following changes. Yanked that release.
 
   * CamoFilter now camos https images. #96 josh
 

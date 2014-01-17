@@ -14,14 +14,17 @@ module HTML
     # Context options:
     #   :asset_proxy (required) - Base URL for constructed asset proxy URLs.
     #   :asset_proxy_secret_key (required) - The shared secret used to encode URLs.
+    #   :asset_proxy_whitelist - Array of host Strings or Regexps to skip
+    #                            src rewriting.
     #
     # This filter does not write additional information to the context.
     class CamoFilter < Filter
       # Hijacks images in the markup provided, replacing them with URLs that
       # go through the github asset proxy.
       def call
+        return unless asset_proxy_enabled?
+
         doc.search("img").each do |element|
-          next if context[:disable_asset_proxy]
           next if element['src'].nil?
 
           begin
@@ -30,10 +33,11 @@ module HTML
             next
           end
 
-          next if uri.hostname.nil?
-          next if uri.hostname.match(/(^|\.)github(app)?\.com$/)
+          next if uri.host.nil?
+          next if asset_host_whitelisted?(uri.host)
 
           element['src'] = asset_proxy_url(uri.to_s)
+          element['data-canonical-src'] = uri.to_s
         end
         doc
       end
@@ -55,13 +59,28 @@ module HTML
         OpenSSL::HMAC.hexdigest(digest, asset_proxy_secret_key, url)
       end
 
-      # Private: the hostname to use for generated asset proxied URLs.
+      # Private: Return true if asset proxy filter should be enabled
+      def asset_proxy_enabled?
+        !context[:disable_asset_proxy]
+      end
+
+      # Private: the host to use for generated asset proxied URLs.
       def asset_proxy_host
         context[:asset_proxy]
       end
 
       def asset_proxy_secret_key
         context[:asset_proxy_secret_key]
+      end
+
+      def asset_proxy_whitelist
+        context[:asset_proxy_whitelist] || []
+      end
+
+      def asset_host_whitelisted?(host)
+        asset_proxy_whitelist.any? do |test|
+          test.is_a?(String) ? host == test : test.match(host)
+        end
       end
 
       # Private: helper to hexencode a string. Each byte ends up encoded into
