@@ -77,6 +77,13 @@ class HTML::Pipeline::SanitizationFilterTest < Test::Unit::TestCase
     assert_equal '<a href="something-weird://heyyy">Wat</a> is this', html
   end
 
+  def test_whitelist_from_full_constant
+    stuff  = '<a href="something-weird://heyyy" ping="more-weird://hiii">Wat</a> is this'
+    filter = SanitizationFilter.new(stuff, :whitelist => SanitizationFilter::FULL)
+    html   = filter.call.to_s
+    assert_equal 'Wat is this', html
+  end
+
   def test_script_contents_are_removed
     orig = '<script>JavaScript!</script>'
     assert_equal "", SanitizationFilter.call(orig).to_s

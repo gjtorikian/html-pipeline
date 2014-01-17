@@ -111,7 +111,7 @@ module HTML
       # hash to the filter but defaults to WHITELIST constant value above.
       def whitelist
         whitelist = (context[:whitelist] || WHITELIST).dup
-        whitelist[:protocols] = whitelist[:protocols].dup
+        whitelist[:protocols] = (whitelist[:protocols] || {}).dup
         whitelist[:protocols]['a'] = (whitelist[:protocols]['a'] || {}).merge('href' => anchor_schemes)
         whitelist
       end
