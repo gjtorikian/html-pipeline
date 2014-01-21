@@ -15,51 +15,44 @@ class HTML::Pipeline::CamoFilterTest < Test::Unit::TestCase
 
   def test_camouflaging_http_image_urls
     orig = %(<p><img src="http://twitter.com/img.png"></p>)
-    assert_includes 'img src="' + @asset_proxy_url,
-      CamoFilter.call(orig, @options).to_s
-    assert_includes 'data-canonical-src="http://twitter.com/img.png"',
+    assert_equal %(<p><img src="https//assets.example.org/a5ad43494e343b20d745586282be61ff530e6fa0/687474703a2f2f747769747465722e636f6d2f696d672e706e67" data-canonical-src="http://twitter.com/img.png"></p>),
       CamoFilter.call(orig, @options).to_s
   end
 
   def test_doesnt_rewrite_dotcom_image_urls
     orig = %(<p><img src="https://github.com/img.png"></p>)
-    assert_equal "<p><img src=\"https://github.com/img.png\"></p>",
-      CamoFilter.call(orig, @options).to_s
+    assert_equal orig, CamoFilter.call(orig, @options).to_s
   end
 
   def test_doesnt_rewrite_dotcom_subdomain_image_urls
     orig = %(<p><img src="https://raw.github.com/img.png"></p>)
-    assert_equal "<p><img src=\"https://raw.github.com/img.png\"></p>",
-      CamoFilter.call(orig, @options).to_s
+    assert_equal orig, CamoFilter.call(orig, @options).to_s
   end
 
   def test_doesnt_rewrite_dotcom_subsubdomain_image_urls
     orig = %(<p><img src="https://f.assets.github.com/img.png"></p>)
-    assert_equal "<p><img src=\"https://f.assets.github.com/img.png\"></p>",
-      CamoFilter.call(orig, @options).to_s
+    assert_equal orig, CamoFilter.call(orig, @options).to_s
   end
 
   def test_camouflaging_github_prefixed_image_urls
     orig = %(<p><img src="https://notgithub.com/img.png"></p>)
-    assert_includes 'img src="' + @asset_proxy_url,
+    assert_equal %(<p><img src="https//assets.example.org/5d4a96c69713f850520538e04cb9661035cfb534/68747470733a2f2f6e6f746769746875622e636f6d2f696d672e706e67" data-canonical-src="https://notgithub.com/img.png"></p>),
       CamoFilter.call(orig, @options).to_s
   end
 
   def test_doesnt_rewrite_absolute_image_urls
     orig = %(<p><img src="/img.png"></p>)
-    assert_equal "<p><img src=\"/img.png\"></p>",
-      CamoFilter.call(orig, @options).to_s
+    assert_equal orig, CamoFilter.call(orig, @options).to_s
   end
 
   def test_doesnt_rewrite_relative_image_urls
     orig = %(<p><img src="img.png"></p>)
-    assert_equal "<p><img src=\"img.png\"></p>",
-      CamoFilter.call(orig, @options).to_s
+    assert_equal orig, CamoFilter.call(orig, @options).to_s
   end
 
   def test_camouflaging_https_image_urls
     orig = %(<p><img src="https://foo.com/img.png"></p>)
-    assert_includes 'img src="' + @asset_proxy_url,
+    assert_equal %(<p><img src="https//assets.example.org/3c5c6dc74fd6592d2596209dfcb8b7e5461383c8/68747470733a2f2f666f6f2e636f6d2f696d672e706e67" data-canonical-src="https://foo.com/img.png"></p>),
       CamoFilter.call(orig, @options).to_s
   end
 
