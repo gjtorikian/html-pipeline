@@ -70,8 +70,8 @@ module HTML
                     'vspace', 'width', 'itemprop']
         },
         :protocols => {
-          # Allowed protocols for <a href> are controlled via #anchor_schemes.
-          'img' => {'src' => ['http', 'https', :relative]}
+          'a'   => {'href' => ANCHOR_SCHEMES},
+          'img' => {'src'  => ['http', 'https', :relative]}
         },
         :transformers => [
           # Top-level <li> elements are removed because they can break out of

@@ -77,6 +77,10 @@ class HTML::Pipeline::SanitizationFilterTest < Test::Unit::TestCase
     assert_equal '<a href="something-weird://heyyy">Wat</a> is this', html
   end
 
+  def test_whitelist_contains_default_anchor_schemes
+    assert_equal SanitizationFilter::WHITELIST[:protocols]['a']['href'], ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac']
+  end
+
   def test_whitelist_from_full_constant
     stuff  = '<a href="something-weird://heyyy" ping="more-weird://hiii">Wat</a> is this'
     filter = SanitizationFilter.new(stuff, :whitelist => SanitizationFilter::FULL)
