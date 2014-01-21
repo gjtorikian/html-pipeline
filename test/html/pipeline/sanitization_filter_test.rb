@@ -88,6 +88,10 @@ class HTML::Pipeline::SanitizationFilterTest < Test::Unit::TestCase
     assert_equal 'Wat is this', html
   end
 
+  def test_exports_default_anchor_schemes
+    assert_equal SanitizationFilter::ANCHOR_SCHEMES, ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac']
+  end
+
   def test_script_contents_are_removed
     orig = '<script>JavaScript!</script>'
     assert_equal "", SanitizationFilter.call(orig).to_s
