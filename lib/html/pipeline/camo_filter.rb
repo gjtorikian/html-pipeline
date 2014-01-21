@@ -25,10 +25,11 @@ module HTML
         return unless asset_proxy_enabled?
 
         doc.search("img").each do |element|
-          next if element['src'].nil?
+          original_src = element['src']
+          next unless original_src
 
           begin
-            uri = URI.parse(element['src'])
+            uri = URI.parse(original_src)
           rescue Exception
             next
           end
@@ -36,8 +37,8 @@ module HTML
           next if uri.host.nil?
           next if asset_host_whitelisted?(uri.host)
 
-          element['src'] = asset_proxy_url(uri.to_s)
-          element['data-canonical-src'] = uri.to_s
+          element['src'] = asset_proxy_url(original_src)
+          element['data-canonical-src'] = original_src
         end
         doc
       end
