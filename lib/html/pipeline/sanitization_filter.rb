@@ -20,7 +20,8 @@ module HTML
     #                     class or a custom sanitize options hash.
     #   :anchor_schemes - The URL schemes to allow in <a href> attributes. The
     #                     default set is provided in the ANCHOR_SCHEMES
-    #                     constant in this class.
+    #                     constant in this class. If passed, this overrides any
+    #                     schemes specified in the whitelist configuration.
     #
     # This filter does not write additional information to the context.
     class SanitizationFilter < Filter
@@ -110,17 +111,13 @@ module HTML
       # The whitelist to use when sanitizing. This can be passed in the context
       # hash to the filter but defaults to WHITELIST constant value above.
       def whitelist
-        whitelist = (context[:whitelist] || WHITELIST).dup
+        whitelist = context[:whitelist] || WHITELIST
+        anchor_schemes = context[:anchor_schemes]
+        return whitelist unless anchor_schemes
+        whitelist = whitelist.dup
         whitelist[:protocols] = (whitelist[:protocols] || {}).dup
         whitelist[:protocols]['a'] = (whitelist[:protocols]['a'] || {}).merge('href' => anchor_schemes)
         whitelist
-      end
-
-      # The schemes to allow in <a href> attributes. This can be passed in the
-      # context hash to the filter but defaults to ANCHOR_SCHEMES constant
-      # value above.
-      def anchor_schemes
-        context[:anchor_schemes] || ANCHOR_SCHEMES
       end
     end
   end
