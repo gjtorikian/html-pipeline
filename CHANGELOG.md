@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.4.0
+
+  * Fix CamoFilter double entity encoding. #101 josh
+
 ## 1.3.0
 
 1.2.0 didn't actually include the following changes. Yanked that release.
