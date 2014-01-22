@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 1.5.0
+
+  * More flexible whitelist configuration for SanitizationFilter #98 aroben
+
 ## 1.4.0
 
   * Fix CamoFilter double entity encoding. #101 josh
