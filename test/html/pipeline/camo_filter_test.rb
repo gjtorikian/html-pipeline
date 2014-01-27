@@ -13,6 +13,12 @@ class HTML::Pipeline::CamoFilterTest < Test::Unit::TestCase
     }
   end
 
+  def test_asset_proxy_disabled
+    orig = %(<p><img src="http://twitter.com/img.png"></p>)
+    assert_equal orig,
+      CamoFilter.call(orig, @options.merge(:disable_asset_proxy => true)).to_s
+  end
+
   def test_camouflaging_http_image_urls
     orig = %(<p><img src="http://twitter.com/img.png"></p>)
     assert_equal %(<p><img src="https//assets.example.org/a5ad43494e343b20d745586282be61ff530e6fa0/687474703a2f2f747769747465722e636f6d2f696d672e706e67" data-canonical-src="http://twitter.com/img.png"></p>),

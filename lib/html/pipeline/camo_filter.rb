@@ -22,7 +22,7 @@ module HTML
       # Hijacks images in the markup provided, replacing them with URLs that
       # go through the github asset proxy.
       def call
-        return unless asset_proxy_enabled?
+        return doc unless asset_proxy_enabled?
 
         doc.search("img").each do |element|
           original_src = element['src']
