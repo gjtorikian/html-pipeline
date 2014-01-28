@@ -56,7 +56,7 @@ module HTML
 
       # Private: calculate the HMAC digest for a image source URL.
       def asset_url_hash(url)
-        digest = OpenSSL::Digest::Digest.new('sha1')
+        digest = OpenSSL::Digest.new('sha1')
         OpenSSL::HMAC.hexdigest(digest, asset_proxy_secret_key, url)
       end
 
