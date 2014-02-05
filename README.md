@@ -111,7 +111,7 @@ gem 'github-linguist'
 ```
 
 * `AutolinkFilter` - `rinku`
-* `EmailReplyFilter` - `escape_utils`
+* `EmailReplyFilter` - `escape_utils`, `email_reply_parser`
 * `EmojiFilter` - `gemoji`
 * `MarkdownFilter` - `github-markdown`
 * `PlainTextInputFilter` - `escape_utils`
