@@ -71,6 +71,8 @@ Prints:
 </div>
 ```
 
+To generate CSS for HTML formatted code, use the [pygments.rb](https://github.com/tmm1/pygments.rb#usage) `#css` method. `pygments.rb` is a dependency of the `SyntaxHighlightFilter`.
+
 Some filters take an optional **context** and/or **result** hash. These are
 used to pass around arguments and metadata between filters in a pipeline. For
 example, if you want don't want to use GitHub formatted Markdown, you can
