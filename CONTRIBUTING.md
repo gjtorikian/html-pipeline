@@ -12,10 +12,14 @@ If there's an idea you'd like to propose, or a design change, feel free to file 
 If you have an implementation question or believe you've found a bug, please provide as many details as possible:
 
 - Input document
-- `HTML::Pipeline` usage
 - Output HTML document
-- `bundle exec nokogiri -v`
-- `ruby -v`
+- the exact `HTML::Pipeline` code you are using
+- output of the following from your project
+
+```
+ruby -v
+bundle exec nokogiri -v
+```
 
 ## Sending a Pull Request
 
@@ -29,15 +33,15 @@ Before sending, please add tests and ensure the test suite passes.
 
 To run the full suite:
 
-  `$ bundle exec rake`
+  `bundle exec rake`
 
 To run a specific test file:
 
-  `$ bundle exec ruby -Itest test/html/pipeline_test.rb`
+  `bundle exec ruby -Itest test/html/pipeline_test.rb`
 
 To run a specific test:
 
-  `$ bundle exec ruby -Itest test/html/pipeline/markdown_filter_test.rb -n test_disabling_gfm`  
+  `bundle exec ruby -Itest test/html/pipeline/markdown_filter_test.rb -n test_disabling_gfm`  
 
 To run the full suite with all [supported rubies][travisyaml] in bash:
 
