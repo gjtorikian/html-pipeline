@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 1.6.0
+
+  * Doc update for syntax highlighting #108 simeonwillbanks
+  * Add missing dependency for EmailReplyFilter #110 foca
+  * Fix deprecation warning for Digest::Digest #103 chrishunt
+
 ## 1.5.0
 
   * More flexible whitelist configuration for SanitizationFilter #98 aroben
