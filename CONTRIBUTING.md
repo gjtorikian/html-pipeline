@@ -14,7 +14,8 @@ If you have an implementation question or believe you've found a bug, please pro
 - Input document
 - `HTML::Pipeline` usage
 - Output HTML document
-- `$ bundle exec nokogiri -v`
+- `bundle exec nokogiri -v`
+- `ruby -v`
 
 ## Sending a Pull Request
 
