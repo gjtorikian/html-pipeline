@@ -281,6 +281,23 @@ bundle
 rake test
 ```
 
+## Releasing a new version
+
+This section is for gem maintainers to cut a new version of the gem.
+
+* update lib/html/pipeline/version.rb to next version number X.X.X following [semver](http://semver.org).
+* update CHANGELOG.md. Get latest changes with `git log --oneline vLAST_RELEASE..HEAD | grep Merge`
+* on the master branch, run:
+
+```sh
+$ git commit -m "bump vX.X.X"
+$ git tag vX.X.X
+$ git push origin master
+$ git push --tags
+$ gem build html-pipeline.gemspec
+$ gem push html-pipeline-X.X.X.gem
+```
+
 ## Contributing
 
 1. [Fork it](https://help.github.com/articles/fork-a-repo)
