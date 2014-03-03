@@ -12,10 +12,16 @@ group :test do
   gem "rinku",              "~> 1.7",   :require => false
   gem "gemoji",             "~> 1.0",   :require => false
   gem "RedCloth",           "~> 4.2.9", :require => false
-  gem "escape_utils",       "~> 0.3",   :require => false
-  gem "github-linguist",    "~> 2.6.2", :require => false
   gem "github-markdown",    "~> 0.5",   :require => false
   gem "email_reply_parser", "~> 0.5",   :require => false
+
+  if RUBY_VERSION < "2.1.0"
+    gem "escape_utils",       "~> 0.3",   :require => false
+    gem "github-linguist",    "~> 2.6.2", :require => false
+  else
+    gem "escape_utils",       "~> 1.0",   :require => false
+    gem "github-linguist",    "~> 2.10", :require => false
+  end
 
   if RUBY_VERSION < "1.9.2"
     gem "sanitize", ">= 2", "< 2.0.4", :require => false
