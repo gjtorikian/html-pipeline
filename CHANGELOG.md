@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.7.0
+
+  * SanitizationFilter whitelists <s> and <strike> elements #120 charliesome
+  * ruby 2.1.1 support #119 simeonwillbanks
+
 ## 1.6.0
 
   * Doc update for syntax highlighting #108 simeonwillbanks
