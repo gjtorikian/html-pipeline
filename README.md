@@ -8,9 +8,6 @@ provided content. Read an introduction about this project in
 - [Installation](#installation)
 - [Usage](#usage)
   - [Examples](#examples)
-    - [Rails](#rails) 
-    - [Sinatra](#sinatra) 
-    - [Command Line](#command-line) 
 - [Filters](#filters)
 - [Dependencies](#dependencies)
 - [Documentation](#documentation)
@@ -153,15 +150,6 @@ EmojiPipeline = Pipeline.new [
   EmojiFilter
 ], context
 ```
-
-#### Rails
-*TODO*
-
-#### Sinatra
-*TODO*
-
-#### Command Line
-*TODO*
 
 ## Filters
 
