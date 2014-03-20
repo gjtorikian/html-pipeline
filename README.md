@@ -11,9 +11,9 @@ provided content. Read an introduction about this project in
     - [Rails](#rails) 
     - [Sinatra](#sinatra) 
     - [Command Line](#command-line) 
-  - [Filters](#filters)
-  - [Dependencies](#dependencies)
-  - [Documentation](#documentation)
+- [Filters](#filters)
+- [Dependencies](#dependencies)
+- [Documentation](#documentation)
 - [Extending](#extending)
   - [3rd Party Extensions](#3rd-party-extensions)
 - [Instrumenting](#instrumenting)
@@ -163,7 +163,7 @@ EmojiPipeline = Pipeline.new [
 #### Command Line
 *TODO*
 
-### Filters
+## Filters
 
 * `MentionFilter` - replace `@user` mentions with links
 * `AbsoluteSourceFilter` - replace relative image urls with fully qualified versions
@@ -180,7 +180,7 @@ EmojiPipeline = Pipeline.new [
 * `TextileFilter` - convert textile to html
 * `TableOfContentsFilter` - anchor headings with name attributes and generate Table of Contents html unordered list linking headings
 
-### Dependencies
+## Dependencies
 
 Filter gem dependencies are not bundled; you must bundle the filter's gem
 dependencies. The below list details filters with dependencies. For example,
@@ -203,7 +203,7 @@ gem 'github-linguist'
 
 _Note:_ See [Gemfile](/Gemfile) `:test` block for version requirements.
 
-### Documentation
+## Documentation
 
 Full reference documentation can be [found here](http://rubydoc.info/gems/html-pipeline/frames).
 
