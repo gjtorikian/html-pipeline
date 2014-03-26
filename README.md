@@ -1,4 +1,4 @@
-# HTML::Pipeline [![Build Status](https://secure.travis-ci.org/jch/html-pipeline.png)](http://travis-ci.org/jch/html-pipeline)
+# HTML::Pipeline [![Build Status](https://secure.travis-ci.org/jch/html-pipeline.png)](http://travis-ci.org/jch/html-pipeline) [![Inline docs](http://inch-pages.github.io/github/jch/html-pipeline.png)](http://inch-pages.github.io/github/jch/html-pipeline)
 
 GitHub HTML processing filters and utilities. This module includes a small
 framework for defining DOM based content filters and applying them to user
