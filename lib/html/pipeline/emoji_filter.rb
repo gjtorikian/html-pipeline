@@ -12,7 +12,7 @@ module HTML
     #
     # Context:
     #   :asset_root (required) - base url to link to emoji sprite
-    #   :asset_path (optional) - url path to link to emoji sprite. :file_name can be used as a placeholder for the sprite file name.
+    #   :asset_path (optional) - url path to link to emoji sprite. :file_name can be used as a placeholder for the sprite file name. If no asset_path is set "emoji/:file_name" is used.
     class EmojiFilter < Filter
       # Build a regexp that matches all valid :emoji: names.
       EmojiPattern = /:(#{Emoji.names.map { |name| Regexp.escape(name) }.join('|')}):/
@@ -59,7 +59,7 @@ module HTML
 
       # The url path to link emoji sprites
       #
-      # :file_name can be used in the asset_path as a placeholder for the sprite file name.
+      # :file_name can be used in the asset_path as a placeholder for the sprite file name. If no asset_path is set in the context "emoji/:file_name" is used.
       # Returns the context's asset_path or the default path if no context asset_path is given.
       def asset_path(name)
         if context[:asset_path]
