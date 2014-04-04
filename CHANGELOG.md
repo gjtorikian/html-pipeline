@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 1.8.0
+
+  * Add custom path support for EmojiFilter #122 bradly
+  * Reorganize README and add table of contents #118 simeonwillbanks
+
 ## 1.7.0
 
   * SanitizationFilter whitelists <s> and <strike> elements #120 charliesome
