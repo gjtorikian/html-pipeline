@@ -21,4 +21,10 @@ class HTML::Pipeline::EmojiFilterTest < Test::Unit::TestCase
     }
     assert_match /:asset_root/, exception.message
   end
+
+  def test_custom_asset_path
+    filter = EmojiFilter.new("<p>:+1:</p>", {:asset_path => ':file_name', :asset_root => 'https://foo.com'})
+    doc = filter.call
+    assert_match "https://foo.com/%2B1.png", doc.search('img').attr('src').value
+  end
 end
