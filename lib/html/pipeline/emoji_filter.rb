@@ -57,7 +57,6 @@ module HTML
         context[:asset_root]
       end
 
-
       # The url path to link emoji sprites
       #
       # :file_name can be used in the asset_path as a placeholder for the sprite file name.
