@@ -65,7 +65,7 @@ module HTML
         if context[:asset_path]
           context[:asset_path].gsub(":file_name", "#{::CGI.escape(name)}.png")
         else
-          "emoji/#{::CGI.escape(name)}.png"
+          File.join("emoji", "#{::CGI.escape(name)}.png")
         end
       end
 
