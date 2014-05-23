@@ -1,7 +1,7 @@
 # encoding: utf-8
 require "test_helper"
 
-class HTML::Pipeline::TableOfContentsFilterTest < Test::Unit::TestCase
+class HTML::Pipeline::TableOfContentsFilterTest < HTML::Pipeline::Test
   TocFilter = HTML::Pipeline::TableOfContentsFilter
 
   TocPipeline =
@@ -17,30 +17,30 @@ class HTML::Pipeline::TableOfContentsFilterTest < Test::Unit::TestCase
 
   def test_anchors_are_added_properly
     orig = %(<h1>Ice cube</h1><p>Will swarm on any motherfucker in a blue uniform</p>)
-    assert_includes '<a name=', TocFilter.call(orig).to_s
+    assert_include '<a name=', TocFilter.call(orig).to_s
   end
 
   def test_toc_list_added_properly
     @orig = %(<h1>Ice cube</h1><p>Will swarm on any motherfucker in a blue uniform</p>)
-    assert_includes %Q{<ul class="section-nav">\n<li><a href="}, toc
+    assert_include %Q{<ul class="section-nav">\n<li><a href="}, toc
   end
 
   def test_anchors_have_sane_names
     orig = %(<h1>Dr Dre</h1><h1>Ice Cube</h1><h1>Eazy-E</h1><h1>MC Ren</h1>)
     result = TocFilter.call(orig).to_s
 
-    assert_includes '"dr-dre"', result
-    assert_includes '"ice-cube"', result
-    assert_includes '"eazy-e"', result
-    assert_includes '"mc-ren"', result
+    assert_include '"dr-dre"', result
+    assert_include '"ice-cube"', result
+    assert_include '"eazy-e"', result
+    assert_include '"mc-ren"', result
   end
 
   def test_toc_hrefs_have_sane_values
     @orig = %(<h1>Dr Dre</h1><h1>Ice Cube</h1><h1>Eazy-E</h1><h1>MC Ren</h1>)
-    assert_includes '"#dr-dre"', toc
-    assert_includes '"#ice-cube"', toc
-    assert_includes '"#eazy-e"', toc
-    assert_includes '"#mc-ren"', toc
+    assert_include '"#dr-dre"', toc
+    assert_include '"#ice-cube"', toc
+    assert_include '"#eazy-e"', toc
+    assert_include '"#mc-ren"', toc
   end
 
   def test_dupe_headers_have_unique_trailing_identifiers
@@ -51,8 +51,8 @@ class HTML::Pipeline::TableOfContentsFilterTest < Test::Unit::TestCase
 
     result = TocFilter.call(orig).to_s
 
-    assert_includes '"dopeman"', result
-    assert_includes '"dopeman-1"', result
+    assert_include '"dopeman"', result
+    assert_include '"dopeman-1"', result
   end
 
   def test_dupe_headers_have_unique_toc_anchors
@@ -61,8 +61,8 @@ class HTML::Pipeline::TableOfContentsFilterTest < Test::Unit::TestCase
               <h3>Express Yourself</h3>
               <h1>Dopeman</h1>)
 
-    assert_includes '"#dopeman"', toc
-    assert_includes '"#dopeman-1"', toc
+    assert_include '"#dopeman"', toc
+    assert_include '"#dopeman-1"', toc
   end
 
   def test_all_header_tags_are_found_when_adding_anchors
