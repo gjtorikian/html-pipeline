@@ -25,27 +25,55 @@ module HTML
     #
     # This filter does not write additional information to the context.
     class SanitizationFilter < Filter
-      LISTS     = Set.new(%w(ul ol).freeze)
+      # These schemes are the only ones allowed in <a href> attributes by default.
+      ANCHOR_SCHEMES = ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac'].freeze
+
+      LISTS     = Set.new(%w(ol ul).freeze)
       LIST_ITEM = 'li'.freeze
+
+      DEF_LIST      = 'dl'.freeze
+      DEF_LIST_ITEMS = Set.new(%w(dt dd).freeze)
 
       # List of table child elements. These must be contained by a <table> element
       # or they are not allowed through. Otherwise they can be used to break out
       # of places we're using tables to contain formatted user content (like pull
       # request review comments).
-      TABLE_ITEMS = Set.new(%w(tr td th).freeze)
       TABLE = 'table'.freeze
-      TABLE_SECTIONS = Set.new(%w(thead tbody tfoot).freeze)
-
-      # These schemes are the only ones allowed in <a href> attributes by default.
-      ANCHOR_SCHEMES = ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac'].freeze
+      TABLE_SECTIONS = Set.new(%w(caption colgroup thead tbody tfoot).freeze)
+      TABLE_ITEMS = Set.new(%w(col tr td th).freeze)
 
       # The main sanitization whitelist. Only these elements and attributes are
       # allowed through by default.
       WHITELIST = {
         :elements => %w(
-          h1 h2 h3 h4 h5 h6 h7 h8 br b i strong em a pre code img tt
-          div ins del sup sub p ol ul table thead tbody tfoot blockquote
-          dl dt dd kbd q samp var hr ruby rt rp li tr td th s strike
+          # block elements (with mixed content)
+          div
+          h1 h2 h3 h4 h5 h6 h7 h8
+          blockquote p
+          pre
+          # + section heading summary nav content ?
+          #  block elements (with block-structured content)
+          ol ul li
+          dl dt dd
+          table caption
+          colgroup thead tbody tfoot
+          col tr th td
+          # block elements (without content)
+          hr
+          # inline or block elements (with mixed content)
+          bdi bdo a
+          # inline elements (with inline content)
+          span q
+          b strong
+          i em var
+          u ins
+          s strike del
+          tt code kbd samp
+          sup sub
+          small big
+          ruby rt rp
+          # unline elements (without content)
+          br img
         ),
         :remove_contents => ['script'],
         :attributes => {
@@ -75,11 +103,22 @@ module HTML
           'img' => {'src'  => ['http', 'https', :relative]}
         },
         :transformers => [
+          # Top-level <li> elements are placed in a default unordered list
+          # because they can break out ofcontaining markup.
+          lambda { |env|
+            name, node = env[:node_name], env[:node]
+            if LIST_ITEM == name
+            && !node.ancestors.any?{ |n| LISTS.include?(n.name) }
+              node.replace(node.children)
+            end
+          },
+
           # Top-level <li> elements are removed because they can break out of
           # containing markup.
           lambda { |env|
             name, node = env[:node_name], env[:node]
-            if name == LIST_ITEM && !node.ancestors.any?{ |n| LISTS.include?(n.name) }
+            if DEF_LIST_ITEMS.include?(name)
+            && !node.ancestors.any?{ |n| DEF_LIST == n.name }
               node.replace(node.children)
             end
           },
@@ -87,7 +126,8 @@ module HTML
           # Table child elements that are not contained by a <table> are removed.
           lambda { |env|
             name, node = env[:node_name], env[:node]
-            if (TABLE_SECTIONS.include?(name) || TABLE_ITEMS.include?(name)) && !node.ancestors.any? { |n| n.name == TABLE }
+            if (TABLE_SECTIONS.include?(name) || TABLE_ITEMS.include?(name))
+            && !node.ancestors.any?{ |n| TABLE == n.name }
               node.replace(node.children)
             end
           }
@@ -98,7 +138,19 @@ module HTML
       # protocols, and transformers from WHITELIST but with a more locked down
       # set of allowed elements.
       LIMITED = WHITELIST.merge(
-        :elements => %w(b i strong em a pre code img ins del sup sub p ol ul li))
+        :elements => %w(
+          p
+          pre
+          ol ul li
+          b strong
+          i em
+          u ins
+          s del 
+          tt code
+          sup sub
+          a img
+        )
+      )
 
       # Strip all HTML tags from the document.
       FULL = { :elements => [] }
@@ -113,11 +165,12 @@ module HTML
       def whitelist
         whitelist = context[:whitelist] || WHITELIST
         anchor_schemes = context[:anchor_schemes]
-        return whitelist unless anchor_schemes
-        whitelist = whitelist.dup
-        whitelist[:protocols] = (whitelist[:protocols] || {}).dup
-        whitelist[:protocols]['a'] = (whitelist[:protocols]['a'] || {}).merge('href' => anchor_schemes)
-        whitelist
+        if anchor_schemes
+          whitelist = whitelist.dup
+          whitelist[:protocols] = (whitelist[:protocols] || {}).dup
+          whitelist[:protocols]['a'] = (whitelist[:protocols]['a'] || {}).merge('href' => anchor_schemes)
+        end
+        return whitelist
       end
     end
   end
