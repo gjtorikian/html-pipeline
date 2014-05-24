@@ -17,30 +17,30 @@ class HTML::Pipeline::TableOfContentsFilterTest < HTML::Pipeline::Test
 
   def test_anchors_are_added_properly
     orig = %(<h1>Ice cube</h1><p>Will swarm on any motherfucker in a blue uniform</p>)
-    assert_include '<a name=', TocFilter.call(orig).to_s
+    assert_includes TocFilter.call(orig).to_s, '<a name='
   end
 
   def test_toc_list_added_properly
     @orig = %(<h1>Ice cube</h1><p>Will swarm on any motherfucker in a blue uniform</p>)
-    assert_include %Q{<ul class="section-nav">\n<li><a href="}, toc
+    assert_includes toc, %Q{<ul class="section-nav">\n<li><a href="}
   end
 
   def test_anchors_have_sane_names
     orig = %(<h1>Dr Dre</h1><h1>Ice Cube</h1><h1>Eazy-E</h1><h1>MC Ren</h1>)
     result = TocFilter.call(orig).to_s
 
-    assert_include '"dr-dre"', result
-    assert_include '"ice-cube"', result
-    assert_include '"eazy-e"', result
-    assert_include '"mc-ren"', result
+    assert_includes result, '"dr-dre"'
+    assert_includes result, '"ice-cube"'
+    assert_includes result, '"eazy-e"'
+    assert_includes result, '"mc-ren"'
   end
 
   def test_toc_hrefs_have_sane_values
     @orig = %(<h1>Dr Dre</h1><h1>Ice Cube</h1><h1>Eazy-E</h1><h1>MC Ren</h1>)
-    assert_include '"#dr-dre"', toc
-    assert_include '"#ice-cube"', toc
-    assert_include '"#eazy-e"', toc
-    assert_include '"#mc-ren"', toc
+    assert_includes toc, '"#dr-dre"'
+    assert_includes toc, '"#ice-cube"'
+    assert_includes toc, '"#eazy-e"'
+    assert_includes toc, '"#mc-ren"'
   end
 
   def test_dupe_headers_have_unique_trailing_identifiers
@@ -51,8 +51,8 @@ class HTML::Pipeline::TableOfContentsFilterTest < HTML::Pipeline::Test
 
     result = TocFilter.call(orig).to_s
 
-    assert_include '"dopeman"', result
-    assert_include '"dopeman-1"', result
+    assert_includes result, '"dopeman"'
+    assert_includes result, '"dopeman-1"'
   end
 
   def test_dupe_headers_have_unique_toc_anchors
@@ -61,8 +61,8 @@ class HTML::Pipeline::TableOfContentsFilterTest < HTML::Pipeline::Test
               <h3>Express Yourself</h3>
               <h1>Dopeman</h1>)
 
-    assert_include '"#dopeman"', toc
-    assert_include '"#dopeman-1"', toc
+    assert_includes toc, '"#dopeman"'
+    assert_includes toc, '"#dopeman-1"'
   end
 
   def test_all_header_tags_are_found_when_adding_anchors
