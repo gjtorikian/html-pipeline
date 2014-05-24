@@ -2,7 +2,7 @@ language: ruby
 
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install -qq libicu-dev libmagic-dev
+  - sudo apt-get install -qq libicu-dev
 
 script: "bundle exec rake"
 
