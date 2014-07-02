@@ -15,7 +15,8 @@ module HTML
     #   :asset_path (optional) - url path to link to emoji sprite. :file_name can be used as a placeholder for the sprite file name. If no asset_path is set "emoji/:file_name" is used.
     class EmojiFilter < Filter
       # Build a regexp that matches all valid :emoji: names.
-      EmojiPattern = /:(#{Emoji.names.map { |name| Regexp.escape(name) }.join('|')}):/
+      emoji_names = Emoji.respond_to?(:all) ? Emoji.all.map(&:name) : Emoji.names
+      EmojiPattern = /:(#{emoji_names.map { |name| Regexp.escape(name) }.join('|')}):/
 
       def call
         doc.search('text()').each do |node|
@@ -62,10 +63,17 @@ module HTML
       # :file_name can be used in the asset_path as a placeholder for the sprite file name. If no asset_path is set in the context "emoji/:file_name" is used.
       # Returns the context's asset_path or the default path if no context asset_path is given.
       def asset_path(name)
-        if context[:asset_path]
-          context[:asset_path].gsub(":file_name", "#{::CGI.escape(name)}.png")
+        if Emoji.respond_to?(:find_by_alias)
+          emoji = Emoji.find_by_alias(name)
+          image_filename = emoji.image_filename
         else
-          File.join("emoji", "#{::CGI.escape(name)}.png")
+          image_filename = "#{::CGI.escape(name)}.png"
+        end
+
+        if context[:asset_path]
+          context[:asset_path].gsub(":file_name", image_filename)
+        else
+          File.join("emoji", image_filename)
         end
       end
 
