@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class HTML::Pipeline::EmojiFilterTest < HTML::Pipeline::Test
+class HTML::Pipeline::EmojiFilterTest < Test::Unit::TestCase
   EmojiFilter = HTML::Pipeline::EmojiFilter
   
   def test_emojify
@@ -16,7 +16,7 @@ class HTML::Pipeline::EmojiFilterTest < HTML::Pipeline::Test
   end
   
   def test_required_context_validation
-    exception = assert_raises(ArgumentError) { 
+    exception = assert_raise(ArgumentError) { 
       EmojiFilter.call("", {}) 
     }
     assert_match /:asset_root/, exception.message

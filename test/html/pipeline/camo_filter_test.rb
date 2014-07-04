@@ -1,6 +1,6 @@
 require "test_helper"
 
-class HTML::Pipeline::CamoFilterTest < HTML::Pipeline::Test
+class HTML::Pipeline::CamoFilterTest < Test::Unit::TestCase
   CamoFilter = HTML::Pipeline::CamoFilter
 
   def setup
@@ -64,11 +64,13 @@ class HTML::Pipeline::CamoFilterTest < HTML::Pipeline::Test
 
   def test_handling_images_with_no_src_attribute
     orig = %(<p><img></p>)
-    assert_equal orig, CamoFilter.call(orig, @options).to_s
+    assert_nothing_raised do
+      CamoFilter.call(orig, @options).to_s
+    end
   end
 
   def test_required_context_validation
-    exception = assert_raises(ArgumentError) {
+    exception = assert_raise(ArgumentError) {
       CamoFilter.call("", {})
     }
     assert_match /:asset_proxy[^_]/, exception.message
