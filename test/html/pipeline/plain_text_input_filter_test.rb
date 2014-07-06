@@ -1,6 +1,6 @@
 require "test_helper"
 
-class HTML::Pipeline::PlainTextInputFilterTest < MiniTest::Test
+class HTML::Pipeline::PlainTextInputFilterTest < Minitest::Test
   PlainTextInputFilter = HTML::Pipeline::PlainTextInputFilter
 
   def test_fails_when_given_a_documentfragment

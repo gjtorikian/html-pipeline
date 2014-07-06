@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class HTML::Pipeline::EmojiFilterTest < MiniTest::Test
+class HTML::Pipeline::EmojiFilterTest < Minitest::Test
   EmojiFilter = HTML::Pipeline::EmojiFilter
   
   def test_emojify

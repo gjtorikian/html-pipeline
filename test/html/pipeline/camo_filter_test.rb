@@ -1,6 +1,6 @@
 require "test_helper"
 
-class HTML::Pipeline::CamoFilterTest < MiniTest::Test
+class HTML::Pipeline::CamoFilterTest < Minitest::Test
   CamoFilter = HTML::Pipeline::CamoFilter
 
   def setup

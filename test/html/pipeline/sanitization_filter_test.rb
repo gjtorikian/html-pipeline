@@ -1,6 +1,6 @@
 require "test_helper"
 
-class HTML::Pipeline::SanitizationFilterTest < MiniTest::Test
+class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
   SanitizationFilter = HTML::Pipeline::SanitizationFilter
 
   def test_removing_script_tags

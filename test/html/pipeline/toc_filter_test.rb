@@ -1,7 +1,7 @@
 # encoding: utf-8
 require "test_helper"
 
-class HTML::Pipeline::TableOfContentsFilterTest < MiniTest::Test
+class HTML::Pipeline::TableOfContentsFilterTest < Minitest::Test
   TocFilter = HTML::Pipeline::TableOfContentsFilter
 
   TocPipeline =

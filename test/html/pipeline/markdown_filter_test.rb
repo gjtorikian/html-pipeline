@@ -2,7 +2,7 @@ require "test_helper"
 
 MarkdownFilter = HTML::Pipeline::MarkdownFilter
 
-class HTML::Pipeline::MarkdownFilterTest < MiniTest::Test
+class HTML::Pipeline::MarkdownFilterTest < Minitest::Test
   def setup
     @haiku =
       "Pointing at the moon\n" +
@@ -50,7 +50,7 @@ class HTML::Pipeline::MarkdownFilterTest < MiniTest::Test
   end
 end
 
-class GFMTest < MiniTest::Test
+class GFMTest < Minitest::Test
   def gfm(text)
     MarkdownFilter.call(text, :gfm => true)
   end

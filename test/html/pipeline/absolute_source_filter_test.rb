@@ -1,6 +1,6 @@
 require "test_helper"
 
-class HTML::Pipeline::AbsoluteSourceFilterTest < MiniTest::Test
+class HTML::Pipeline::AbsoluteSourceFilterTest < Minitest::Test
   AbsoluteSourceFilter = HTML::Pipeline::AbsoluteSourceFilter
 
   def setup
