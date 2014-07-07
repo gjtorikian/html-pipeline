@@ -1,6 +1,6 @@
 require "test_helper"
 
-class HTML::Pipeline::ImageMaxWidthFilterTest < Test::Unit::TestCase
+class HTML::Pipeline::ImageMaxWidthFilterTest < Minitest::Test
   def filter(html)
     HTML::Pipeline::ImageMaxWidthFilter.call(html)
   end
