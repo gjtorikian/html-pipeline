@@ -2,7 +2,7 @@ require "test_helper"
 
 HttpsFilter = HTML::Pipeline::HttpsFilter
 
-class HTML::Pipeline::AutolinkFilterTest < Test::Unit::TestCase
+class HTML::Pipeline::AutolinkFilterTest < Minitest::Test
   def filter(html, base_url="http://github.com")
     HttpsFilter.to_html(html, :base_url => base_url)
   end
@@ -28,7 +28,7 @@ class HTML::Pipeline::AutolinkFilterTest < Test::Unit::TestCase
   end
 
   def test_validation
-    exception = assert_raise(ArgumentError) { HttpsFilter.call(nil, {}) }
+    exception = assert_raises(ArgumentError) { HttpsFilter.call(nil, {}) }
     assert_match "HTML::Pipeline::HttpsFilter: :base_url", exception.message
   end
 end
