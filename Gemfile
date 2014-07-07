@@ -26,7 +26,12 @@ group :test do
 
   if RUBY_VERSION < "1.9.2"
     gem "sanitize", ">= 2", "< 2.0.4", :require => false
+    gem "nokogiri", ">= 1.4", "< 1.6"
   else
     gem "sanitize", "~> 2.0",          :require => false
+  end
+
+  if RUBY_VERSION < "1.9.3"
+    gem "activesupport", ">= 2", "< 4"
   end
 end
