@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.9.0
+
+  * Generalize https filter with :base_url #124 #131 rymohr
+  * Clean up gemspec dependencies #130 mislav
+  * EmojiFilter compatibility with gemoji v2 #129 mislav
+  * Now using Minitest #126 simeonwillbanks
+
 ## 1.8.0
 
   * Add custom path support for EmojiFilter #122 bradly
