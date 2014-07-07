@@ -1,7 +1,7 @@
 require "test_helper"
 require "helpers/mocked_instrumentation_service"
 
-class HTML::PipelineTest < Test::Unit::TestCase
+class HTML::PipelineTest < Minitest::Test
   Pipeline = HTML::Pipeline
   class TestFilter
     def self.call(input, context, result)
