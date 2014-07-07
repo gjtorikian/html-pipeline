@@ -2,7 +2,7 @@ require "test_helper"
 
 MarkdownFilter = HTML::Pipeline::MarkdownFilter
 
-class HTML::Pipeline::MarkdownFilterTest < Test::Unit::TestCase
+class HTML::Pipeline::MarkdownFilterTest < Minitest::Test
   def setup
     @haiku =
       "Pointing at the moon\n" +
@@ -21,7 +21,7 @@ class HTML::Pipeline::MarkdownFilterTest < Test::Unit::TestCase
   def test_fails_when_given_a_documentfragment
     body = "<p>heyo</p>"
     doc  = HTML::Pipeline.parse(body)
-    assert_raise(TypeError) { MarkdownFilter.call(doc, {}) }
+    assert_raises(TypeError) { MarkdownFilter.call(doc, {}) }
   end
 
   def test_gfm_enabled_by_default
@@ -50,7 +50,7 @@ class HTML::Pipeline::MarkdownFilterTest < Test::Unit::TestCase
   end
 end
 
-class GFMTest < Test::Unit::TestCase
+class GFMTest < Minitest::Test
   def gfm(text)
     MarkdownFilter.call(text, :gfm => true)
   end

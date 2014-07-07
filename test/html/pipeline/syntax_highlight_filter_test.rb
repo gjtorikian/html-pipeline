@@ -2,7 +2,7 @@ require "test_helper"
 
 SyntaxHighlightFilter = HTML::Pipeline::SyntaxHighlightFilter
 
-class HTML::Pipeline::SyntaxHighlightFilterTest < Test::Unit::TestCase
+class HTML::Pipeline::SyntaxHighlightFilterTest < Minitest::Test
   def test_highlight_default
     filter = SyntaxHighlightFilter.new \
       "<pre>hello</pre>", :highlight => "coffeescript"

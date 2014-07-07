@@ -1,6 +1,6 @@
 require "test_helper"
 
-class HTML::Pipeline::MentionFilterTest < Test::Unit::TestCase
+class HTML::Pipeline::MentionFilterTest < Minitest::Test
   def filter(html, base_url='/', info_url=nil)
     HTML::Pipeline::MentionFilter.call(html, :base_url => base_url, :info_url => info_url)
   end
