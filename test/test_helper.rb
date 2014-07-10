@@ -3,7 +3,6 @@ require 'html/pipeline'
 require 'minitest/autorun'
 
 require 'active_support/core_ext/string'
-require 'active_support/core_ext/object/try'
 
 module TestHelpers
   # Asserts that two html fragments are equivalent. Attribute order
