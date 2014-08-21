@@ -27,11 +27,12 @@ module HTML
 
       def call
         result[:toc] = ""
+        id_prefix = "chapter_"
 
         headers = Hash.new(0)
         doc.css('h1, h2, h3, h4, h5, h6').each do |node|
           text = node.text
-          name = text.downcase
+          name = id_prefix + text.downcase
           name.gsub!(PUNCTUATION_REGEXP, '') # remove punctuation
           name.gsub!(' ', '-') # replace spaces with dash
 
@@ -39,7 +40,7 @@ module HTML
           headers[name] += 1
           if header_content = node.children.first
             result[:toc] << %Q{<li><a href="##{name}#{uniq}">#{text}</a></li>\n}
-            header_content.add_previous_sibling(%Q{<a name="#{name}#{uniq}" class="anchor" href="##{name}#{uniq}"><span class="octicon octicon-link"></span></a>})
+            header_content.add_previous_sibling(%Q{<a id="#{name}#{uniq}" class="anchor" href="##{name}#{uniq}"><span class="octicon octicon-link"></span></a>})
           end
         end
         result[:toc] = %Q{<ul class="section-nav">\n#{result[:toc]}</ul>} unless result[:toc].empty?
