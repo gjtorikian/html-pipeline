@@ -88,8 +88,8 @@ To generate CSS for HTML formatted code, use the [pygments.rb](https://github.co
 
 Some filters take an optional **context** and/or **result** hash. These are
 used to pass around arguments and metadata between filters in a pipeline. For
-example, if you want don't want to use GitHub formatted Markdown, you can
-pass an option in the context hash:
+example, if you don't want to use GitHub formatted Markdown, you can pass an
+option in the context hash:
 
 ```ruby
 filter = HTML::Pipeline::MarkdownFilter.new("Hi **world**!", :gfm => false)
