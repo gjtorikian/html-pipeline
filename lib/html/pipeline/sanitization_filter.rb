@@ -57,7 +57,7 @@ module HTML
                     'border', 'cellpadding', 'cellspacing', 'char',
                     'charoff', 'charset', 'checked', 'cite',
                     'clear', 'cols', 'colspan', 'color',
-                    'compact', 'coords', 'datetime', 'dir',
+                    'compact', 'coords', 'datetime', 'details', 'dir',
                     'disabled', 'enctype', 'for', 'frame',
                     'headers', 'height', 'hreflang',
                     'hspace', 'ismap', 'label', 'lang',
