@@ -39,7 +39,7 @@ module HTML
           headers[name] += 1
           if header_content = node.children.first
             result[:toc] << %Q{<li><a href="##{name}#{uniq}">#{text}</a></li>\n}
-            header_content.add_previous_sibling(%Q{<a name="#{name}#{uniq}" class="anchor" href="##{name}#{uniq}"><span class="octicon octicon-link"></span></a>})
+            header_content.add_previous_sibling(%Q{<a id="#{name}#{uniq}" class="anchor" href="##{name}#{uniq}"><span class="octicon octicon-link"></span></a>})
           end
         end
         result[:toc] = %Q{<ul class="section-nav">\n#{result[:toc]}</ul>} unless result[:toc].empty?
