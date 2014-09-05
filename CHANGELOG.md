@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.10.0
+
+  * Anchor TOCFilter with id's instead of name's #140 bkeepers
+  * Add `details` to sanitization whitelist #139 tansaku
+  * Fix README spelling #137 Razer6
+  * Remove ActiveSupport `try` dependency #132 simeonwillbanks
+
 ## 1.9.0
 
   * Generalize https filter with :base_url #124 #131 rymohr
