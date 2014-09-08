@@ -1,21 +1,26 @@
 module HTML
   class Pipeline
-    # HTML Filter for replacing http references to :base_url with https versions.
+    # HTML Filter for replacing http references to :http_url with https versions.
     # Subdomain references are not rewritten.
     #
     # Context options:
-    #   :base_url - The url to force https
+    #   :http_url - The HTTP url to force HTTPS. Falls back to :base_url
     class HttpsFilter < Filter
       def call
-        doc.css(%Q(a[href^="#{context[:base_url]}"])).each do |element|
+        doc.css(%Q(a[href^="#{http_url}"])).each do |element|
           element['href'] = element['href'].sub(/^http:/,'https:')
         end
         doc
       end
 
-      # Raise error if :base_url undefined
+      # HTTP url to replace. Falls back to :base_url
+      def http_url
+        context[:http_url] || context[:base_url]
+      end
+
+      # Raise error if :http_url undefined
       def validate
-        needs :base_url
+        needs :http_url unless http_url
       end
     end
   end
