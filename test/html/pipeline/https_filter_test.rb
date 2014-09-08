@@ -50,4 +50,4 @@ class HTML::Pipeline::AutolinkFilterTest < Minitest::Test
     exception = assert_raises(ArgumentError) { filter("") }
     assert_match "HTML::Pipeline::HttpsFilter: :http_url", exception.message
   end
-  end
+end
