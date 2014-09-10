@@ -57,7 +57,7 @@ module HTML
       )
 
       # Don't look for mentions in text nodes that are children of these elements
-      IGNORE_PARENTS = %w(pre code a).to_set
+      IGNORE_PARENTS = %w(pre code a style).to_set
 
       def call
         result[:mentioned_usernames] ||= []
