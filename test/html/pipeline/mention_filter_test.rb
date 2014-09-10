@@ -36,6 +36,11 @@ class HTML::Pipeline::MentionFilterTest < Minitest::Test
     assert_equal body, filter(body).to_html
   end
 
+  def test_not_replacing_mentions_in_style_tags
+    body = "<style>@media (min-width: 768px) { color: red; }</style>"
+    assert_equal body, filter(body).to_html
+  end
+
   def test_not_replacing_mentions_in_links
     body = "<p><a>@kneath</a> okay</p>"
     assert_equal body, filter(body).to_html
