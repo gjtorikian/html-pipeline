@@ -17,7 +17,7 @@ module HTML
       def call
         search_text_nodes(doc).each do |node|
           content = node.to_html
-          next if !content.include?(':')
+          next unless content.include?(':')
           next if has_ancestor?(node, %w(pre code))
           html = emoji_image_filter(content)
           next if html == content
@@ -38,8 +38,6 @@ module HTML
       #
       # Returns a String with :emoji: replaced with images.
       def emoji_image_filter(text)
-        return text unless text.include?(':')
-
         text.gsub(emoji_pattern) do |match|
           name = $1
           "<img class='emoji' title=':#{name}:' alt=':#{name}:' src='#{emoji_url(name)}' height='20' width='20' align='absmiddle' />"
