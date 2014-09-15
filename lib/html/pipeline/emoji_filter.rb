@@ -15,7 +15,7 @@ module HTML
     #   :asset_path (optional) - url path to link to emoji sprite. :file_name can be used as a placeholder for the sprite file name. If no asset_path is set "emoji/:file_name" is used.
     class EmojiFilter < Filter
       def call
-        doc.search('text()').each do |node|
+        search_text_nodes(doc).each do |node|
           content = node.to_html
           next if !content.include?(':')
           next if has_ancestor?(node, %w(pre code))
