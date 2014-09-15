@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 1.11.0
+
+  * Search for text nodes on DocumentFragments without root tags #146 Razer6
+  * Don't filter @mentions in <style> tags #145 jch
+  * Prefer `http_url` in HttpsFilter. `base_url` still works. #142 bkeepers
+  * Remove duplicate check in EmojiFilter #141 Razer6
+
 ## 1.10.0
 
   * Anchor TOCFilter with id's instead of name's #140 bkeepers
