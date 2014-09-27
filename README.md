@@ -141,6 +141,7 @@ NonGFMMarkdownPipeline = Pipeline.new(MarkdownPipeline.filters,
 # Pipelines aren't limited to the web. You can use them for email
 # processing also.
 HtmlEmailPipeline = Pipeline.new [
+  PlainTextInputFilter,
   ImageMaxWidthFilter
 ], {}
 
@@ -233,7 +234,15 @@ If you have an idea for a filter, propose it as
 whether the filter is a common enough use case to belong in this gem, or should be
 built as an external gem.
 
-* [html-pipeline-asciidoc_filter](https://github.com/asciidoctor/html-pipeline-asciidoc_filter) - asciidoc support
+Here are some extensions people have built:
+
+* [html-pipeline-asciidoc_filter](https://github.com/asciidoctor/html-pipeline-asciidoc_filter)
+* [jekyll-html-pipeline](https://github.com/gjtorikian/jekyll-html-pipeline)
+* [nanoc-html-pipeline](https://github.com/burnto/nanoc-html-pipeline)
+* [html-pipeline-bity](https://github.com/dewski/html-pipeline-bitly)
+* [html-pipeline-cite](https://github.com/lifted-studios/html-pipeline-cite)
+* [tilt-html-pipeline](https://github.com/bradgessler/tilt-html-pipeline)
+* [html-pipeline-wiki-link'](https://github.com/lifted-studios/html-pipeline-wiki-link) - WikiMedia-style wiki links
 
 ## Instrumenting
 
@@ -284,6 +293,36 @@ service.subscribe "call_pipeline.html_pipeline" do |event, start, ending, transa
   payload[:result][:output] #=> output HTML String or Nokogiri::DocumentFragment
 end
 ```
+
+## FAQ
+
+### 1. Why doesn't my pipeline work when there's no root element in the document?
+
+To make a pipeline work on a plain text document, put the `PlainTextInputFilter`
+at the beginning of your pipeline. This will wrap the content in a `div` so the
+filters have a root element to work with. If you're passing in an HTML fragment,
+but it doesn't have a root element, you can wrap the content in a `div`
+yourself. For example:
+
+```ruby
+EmojiPipeline = Pipeline.new [
+  PlainTextInputFilter,  # <- Wraps input in a div and escapes html tags
+  EmojiFilter
+], context
+
+plain_text = "Gutentag! :wave:"
+EmojiPipeline.call(plain_text)
+
+html_fragment = "This is outside of an html element, but <strong>this isn't. :+1:</strong>"
+EmojiPipeline.call("<div>#{html_fragment}</div>") # <- Wrap your own html fragments to avoid escaping
+```
+
+### 2. How do I customize a whitelist for `SanitizationFilter`s?
+
+`SanitizationFilter::WHITELIST` is the default whitelist used if no `:whitelist`
+argument is given in the context. The default is a good starting template for
+you to add additional elements. You can either modify the constant's value, or
+re-define your own constant and pass that in via the context.
 
 ## Contributing
 
