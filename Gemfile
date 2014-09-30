@@ -30,6 +30,7 @@ group :test do
   else
     gem "sanitize", "~> 2.0",          :require => false
   end
+  gem "sanitize-whitelist",            :require => false, :github => "bkeepers/sanitize-whitelist"
 
   if RUBY_VERSION < "1.9.3"
     gem "activesupport", ">= 2", "< 4"
