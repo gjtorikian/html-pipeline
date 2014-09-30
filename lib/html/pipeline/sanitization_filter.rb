@@ -91,7 +91,7 @@ module HTML
 
       # Sanitize markup using the Sanitize library.
       def call
-        Sanitize.clean_node!(doc, whitelist.to_h)
+        Sanitize.clean_node!(doc, whitelist.to_hash)
       end
 
       # The whitelist to use when sanitizing. This can be passed in the context

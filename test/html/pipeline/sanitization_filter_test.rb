@@ -90,7 +90,7 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
   end
 
   def test_whitelist_contains_default_anchor_schemes
-    assert_equal SanitizationFilter::WHITELIST.to_h[:protocols]['a']['href'], ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac']
+    assert_equal SanitizationFilter::WHITELIST.to_hash[:protocols]['a']['href'], ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac']
   end
 
   def test_whitelist_from_full_constant
