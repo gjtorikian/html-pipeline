@@ -17,6 +17,15 @@ class HTML::Pipeline::MentionFilterTest < Minitest::Test
       res.to_html
   end
 
+  def test_filtering_username_that_starts_with_an_underscore
+    body = "<p>@_f7: check it out.</p>"
+    res  = filter(body, '/')
+
+    link = "<a href=\"/_f7\" class=\"user-mention\">@_f7</a>"
+    assert_equal "<p>#{link}: check it out.</p>",
+      res.to_html
+  end
+
   def test_filtering_plain_text
     body = "<p>@kneath: check it out.</p>"
     res  = filter(body, '/')

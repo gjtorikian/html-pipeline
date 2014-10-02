@@ -36,14 +36,14 @@ module HTML
 
       # Pattern used to extract @mentions from text.
       MentionPattern = /
-        (?:^|\W)                   # beginning of string or non-word char
-        @((?>[a-z0-9][a-z0-9-]*))  # @username
-        (?!\/)                     # without a trailing slash
+        (?:^|\W)                    # beginning of string or non-word char
+        @((?>[_a-z0-9][a-z0-9-]*))  # @username
+        (?!\/)                      # without a trailing slash
         (?=
-          \.+[ \t\W]|              # dots followed by space or non-word character
-          \.+$|                    # dots at end of line
-          [^0-9a-zA-Z_.]|          # non-word character except dot
-          $                        # end of line
+          \.+[ \t\W]|               # dots followed by space or non-word character
+          \.+$|                     # dots at end of line
+          [^0-9a-zA-Z_.]|           # non-word character except dot
+          $                         # end of line
         )
       /ix
 
