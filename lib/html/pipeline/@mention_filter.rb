@@ -11,6 +11,8 @@ module HTML
     #               mention.
     #   :info_url - Used to link to "more info" when someone mentions @mention
     #               or @mentioned.
+    #   :username_pattern - Used to provide a custom regular expression to
+    #                       identify usernames
     #
     class MentionFilter < Filter
       # Public: Find user @mentions in text.  See
@@ -27,25 +29,31 @@ module HTML
       # the original text.
       #
       # Returns a String replaced with the return of the block.
-      def self.mentioned_logins_in(text)
-        text.gsub MentionPattern do |match|
+      def self.mentioned_logins_in(text, username_pattern=UsernamePattern)
+        text.gsub MentionPatterns[username_pattern] do |match|
           login = $1
           yield match, login, MentionLogins.include?(login.downcase)
         end
       end
 
-      # Pattern used to extract @mentions from text.
-      MentionPattern = /
-        (?:^|\W)                   # beginning of string or non-word char
-        @((?>[a-z0-9][a-z0-9-]*))  # @username
-        (?!\/)                     # without a trailing slash
-        (?=
-          \.+[ \t\W]|              # dots followed by space or non-word character
-          \.+$|                    # dots at end of line
-          [^0-9a-zA-Z_.]|          # non-word character except dot
-          $                        # end of line
-        )
-      /ix
+      # Hash that contains all of the mention patterns used by the pipeline
+      MentionPatterns = Hash.new do |hash, key|
+        hash[key] = /
+          (?:^|\W)                    # beginning of string or non-word char
+          @((?>#{key}))  # @username
+          (?!\/)                      # without a trailing slash
+          (?=
+            \.+[ \t\W]|               # dots followed by space or non-word character
+            \.+$|                     # dots at end of line
+            [^0-9a-zA-Z_.]|           # non-word character except dot
+            $                         # end of line
+          )
+        /ix
+      end
+
+      # Default pattern used to extract usernames from text. The value can be
+      # overriden by providing the username_pattern variable in the context.
+      UsernamePattern = /[a-z0-9][a-z0-9-]*/
 
       # List of username logins that, when mentioned, link to the blog post
       # about @mentions instead of triggering a real mention.
@@ -66,7 +74,7 @@ module HTML
           content = node.to_html
           next if !content.include?('@')
           next if has_ancestor?(node, IGNORE_PARENTS)
-          html = mention_link_filter(content, base_url, info_url)
+          html = mention_link_filter(content, base_url, info_url, username_pattern)
           next if html == content
           node.replace(html)
         end
@@ -79,6 +87,10 @@ module HTML
         context[:info_url] || nil
       end
 
+      def username_pattern
+        context[:username_pattern] || UsernamePattern
+      end
+
       # Replace user @mentions in text with links to the mentioned user's
       # profile page.
       #
@@ -86,11 +98,13 @@ module HTML
       # base_url  - The base URL used to construct user profile URLs.
       # info_url  - The "more info" URL used to link to more info on @mentions.
       #             If nil we don't link @mention or @mentioned.
+      # username_pattern  - Regular expression used to identify usernames in
+      #                     text
       #
       # Returns a string with @mentions replaced with links. All links have a
       # 'user-mention' class name attached for styling.
-      def mention_link_filter(text, base_url='/', info_url=nil)
-        self.class.mentioned_logins_in(text) do |match, login, is_mentioned|
+      def mention_link_filter(text, base_url='/', info_url=nil, username_pattern)
+        self.class.mentioned_logins_in(text, username_pattern) do |match, login, is_mentioned|
           link =
             if is_mentioned
               link_to_mention_info(login, info_url)
