@@ -15,6 +15,7 @@ group :test do
   gem "RedCloth",           "~> 4.2.9", :require => false
   gem "github-markdown",    "~> 0.5",   :require => false
   gem "email_reply_parser", "~> 0.5",   :require => false
+  gem "sanitize",           "~> 2.0",   :require => false
 
   if RUBY_VERSION < "2.1.0"
     gem "escape_utils",     "~> 0.3",   :require => false
@@ -22,13 +23,6 @@ group :test do
   else
     gem "escape_utils",     "~> 1.0",   :require => false
     gem "github-linguist",  "~> 2.10",  :require => false
-  end
-
-  if RUBY_VERSION < "1.9.2"
-    gem "sanitize", ">= 2", "< 2.0.4", :require => false
-    gem "nokogiri", ">= 1.4", "< 1.6"
-  else
-    gem "sanitize", "~> 2.0",          :require => false
   end
 
   if RUBY_VERSION < "1.9.3"
