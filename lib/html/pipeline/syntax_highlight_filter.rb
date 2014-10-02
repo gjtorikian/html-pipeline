@@ -13,7 +13,7 @@ module HTML
         doc.search('pre').each do |node|
           default = context[:highlight] && context[:highlight].to_s
           next unless lang = node['lang'] || default
-          next unless lexer = Pygments::Lexer[lang]
+          next unless lexer = Linguist::Language[lang] && Linguist::Language[lang].lexer
           text = node.inner_text
 
           html = highlight_with_timeout_handling(lexer, text)
