@@ -13,7 +13,7 @@ module HTML
         doc.search('pre').each do |node|
           default = context[:highlight] && context[:highlight].to_s
           next unless lang = node['lang'] || default
-          next unless lexer = Linguist::Language[lang] && Linguist::Language[lang].lexer
+          next unless lexer = get_lexer(lang)
           text = node.inner_text
 
           html = highlight_with_timeout_handling(lexer, text)
@@ -33,6 +33,14 @@ module HTML
         lexer.highlight(text)
       rescue Timeout::Error => boom
         nil
+      end
+
+      def get_lexer(lang)
+        lexer = Linguist::Language[lang] && Linguist::Language[lang].lexer
+        unless lexer
+          lexer = Pygments::Lexer[lang]
+        end
+        lexer
       end
     end
   end
