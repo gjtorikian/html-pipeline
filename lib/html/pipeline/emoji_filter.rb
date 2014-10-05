@@ -18,7 +18,7 @@ module HTML
         search_text_nodes(doc).each do |node|
           content = node.to_html
           next unless content.include?(':')
-          next if has_ancestor?(node, %w(pre code))
+          next if has_ancestor?(node, %w(pre code tt))
           html = emoji_image_filter(content)
           next if html == content
           node.replace(html)

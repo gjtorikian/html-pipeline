@@ -33,4 +33,25 @@ class HTML::Pipeline::EmojiFilterTest < Minitest::Test
     doc = filter.call
     assert_match "https://foo.com/%2B1.png", doc.search('img').attr('src').value
   end
+
+  def test_not_emojify_in_code_tags
+    body = "<code>:shipit:</code>"
+    filter = EmojiFilter.new(body, {:asset_root => 'https://foo.com'})
+    doc = filter.call
+    assert_equal body, doc.to_html
+  end
+
+  def test_not_emojify_in_tt_tags
+    body = "<tt>:shipit:</tt>"
+    filter = EmojiFilter.new(body, {:asset_root => 'https://foo.com'})
+    doc = filter.call
+    assert_equal body, doc.to_html
+  end
+
+  def test_not_emojify_in_pre_tags
+    body = "<pre>:shipit:</pre>"
+    filter = EmojiFilter.new(body, {:asset_root => 'https://foo.com'})
+    doc = filter.call
+    assert_equal body, doc.to_html
+  end
 end
