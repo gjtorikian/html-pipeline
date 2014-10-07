@@ -59,13 +59,6 @@ module HTML
         @doc ||= parse_html(html)
       end
 
-      # Searches a Nokogiri::HTML::DocumentFragment for text nodes. If no elements
-      # are found, a second search without root tags is invoked.
-      def search_text_nodes(doc)
-        nodes = doc.xpath('.//text()')
-        nodes.empty? ? doc.xpath('text()') : nodes
-      end
-
       # The String representation of the document. If a DocumentFragment was
       # provided to the Filter, it is serialized into a String when this method is
       # called.
