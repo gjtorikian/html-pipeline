@@ -8,12 +8,6 @@ class HTML::Pipeline::EmojiFilterTest < Minitest::Test
     doc = filter.call
     assert_match "https://foo.com/emoji/shipit.png", doc.search('img').attr('src').value
   end
-
-  def test_emojify_on_string
-    filter = EmojiFilter.new(":shipit:", {:asset_root => 'https://foo.com'})
-    doc = filter.call
-    assert_match "https://foo.com/emoji/shipit.png", doc.search('img').attr('src').value
-  end
   
   def test_uri_encoding
     filter = EmojiFilter.new("<p>:+1:</p>", {:asset_root => 'https://foo.com'})

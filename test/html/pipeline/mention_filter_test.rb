@@ -1,8 +1,8 @@
 require "test_helper"
 
 class HTML::Pipeline::MentionFilterTest < Minitest::Test
-  def filter(html, base_url='/', info_url=nil)
-    HTML::Pipeline::MentionFilter.call(html, :base_url => base_url, :info_url => info_url)
+  def filter(html, base_url='/', info_url=nil, username_pattern=nil)
+    HTML::Pipeline::MentionFilter.call(html, :base_url => base_url, :info_url => info_url, :username_pattern => username_pattern)
   end
 
   def test_filtering_a_documentfragment
@@ -157,5 +157,29 @@ class HTML::Pipeline::MentionFilterTest < Minitest::Test
   def test_mention_at_end_of_parenthetical_sentence
     @body = "(We're talking 'bout @ymendel.)"
     assert_equal %w[ymendel], mentioned_usernames
+  end
+
+  def test_username_pattern_can_be_customized
+    body = "<p>@_abc: test.</p>"
+    doc  = Nokogiri::HTML::DocumentFragment.parse(body)
+
+    res  = filter(doc, '/', nil, /(_[a-z]{3})/)
+
+    link = "<a href=\"/_abc\" class=\"user-mention\">@_abc</a>"
+    assert_equal "<p>#{link}: test.</p>",
+      res.to_html
+  end
+
+  def test_filter_does_not_create_a_new_object_for_default_username_pattern
+    body = "<div>@test</div>"
+    doc = Nokogiri::HTML::DocumentFragment.parse(body)
+
+    filter(doc.clone, '/', nil)
+    pattern_count = HTML::Pipeline::MentionFilter::MentionPatterns.length
+    filter(doc.clone, '/', nil)
+
+    assert_equal pattern_count, HTML::Pipeline::MentionFilter::MentionPatterns.length
+    filter(doc.clone, '/', nil, /test/)
+    assert_equal pattern_count + 1, HTML::Pipeline::MentionFilter::MentionPatterns.length
   end
 end
