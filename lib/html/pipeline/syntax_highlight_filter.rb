@@ -1,7 +1,11 @@
 begin
   require "linguist"
-rescue LoadError => _
-  abort "Missing dependency 'github-linguist' for SyntaxHighlightFilter. See README.md for details."
+rescue LoadError => e
+  if e.message =~ /linguist$/
+    abort "Missing dependency 'github-linguist' for SyntaxHighlightFilter. See README.md for details."
+  else
+    raise
+  end
 end
 
 module HTML
@@ -31,7 +35,7 @@ module HTML
 
       def highlight_with_timeout_handling(lexer, text)
         lexer.highlight(text)
-      rescue Timeout::Error => boom
+      rescue Timeout::Error
         nil
       end
     end
