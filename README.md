@@ -243,6 +243,7 @@ Here are some extensions people have built:
 * [html-pipeline-cite](https://github.com/lifted-studios/html-pipeline-cite)
 * [tilt-html-pipeline](https://github.com/bradgessler/tilt-html-pipeline)
 * [html-pipeline-wiki-link'](https://github.com/lifted-studios/html-pipeline-wiki-link) - WikiMedia-style wiki links
+* [task_list](https://github.com/github/task_list) - GitHub flavor Markdown Task List
 
 ## Instrumenting
 
