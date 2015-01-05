@@ -86,13 +86,6 @@ class HTML::Pipeline::MentionFilterTest < Minitest::Test
       filter(body, '/userprofile').to_html
   end
 
-  def test_base_url_tilde
-    body = "<p>Hi, @jch!</p>"
-    link = "<a href=\"/~jch\" class=\"user-mention\">@jch</a>"
-    assert_equal "<p>Hi, #{link}!</p>",
-      filter(body, '~').to_html
-  end
-
   def test_base_url_slash_with_tilde
     body = "<p>Hi, @jch!</p>"
     link = "<a href=\"/~jch\" class=\"user-mention\">@jch</a>"

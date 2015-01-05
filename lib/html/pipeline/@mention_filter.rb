@@ -126,11 +126,7 @@ module HTML
       def link_to_mentioned_user(login)
         result[:mentioned_usernames] |= [login]
 
-        if base_url.last == '~' && base_url.last(2) != '/~'
-          base_url.prepend("/")
-        else
-          base_url << "/" unless base_url.last =~ /\/|~/
-        end
+        base_url << "/" unless base_url.last =~ /\/|~/
 
         "<a href='#{base_url << login}' class='user-mention'>" +
         "@#{login}" +
