@@ -1,12 +1,12 @@
 require "test_helper"
 
-class HTML::Pipeline::PlainTextInputFilterTest < Test::Unit::TestCase
+class HTML::Pipeline::PlainTextInputFilterTest < Minitest::Test
   PlainTextInputFilter = HTML::Pipeline::PlainTextInputFilter
 
   def test_fails_when_given_a_documentfragment
     body = "<p>heyo</p>"
     doc  = Nokogiri::HTML::DocumentFragment.parse(body)
-    assert_raise(TypeError) { PlainTextInputFilter.call(doc, {}) }
+    assert_raises(TypeError) { PlainTextInputFilter.call(doc, {}) }
   end
 
   def test_wraps_input_in_a_div_element

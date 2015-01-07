@@ -1,5 +1,5 @@
 module HTML
-  module Pipeline
-    VERSION = "0.0.2"
+  class Pipeline
+    VERSION = "1.11.0"
   end
 end

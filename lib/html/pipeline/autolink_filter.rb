@@ -1,20 +1,31 @@
-require 'rinku'
+begin
+  require "rinku"
+rescue LoadError => _
+  abort "Missing dependency 'rinku' for AutolinkFilter. See README.md for details."
+end
 
-module HTML::Pipeline
-  # HTML Filter for auto_linking urls in HTML.
-  #
-  # Context options:
-  #   :autolink - boolean whether to autolink urls
-  #   :flags    - additional Rinku flags. See https://github.com/vmg/rinku
-  #
-  # This filter does not write additional information to the context.
-  class AutolinkFilter < Filter
-    def call
-      return html if context[:autolink] == false
-      flags = 0
-      flags |= context[:flags] if context[:flags]
+module HTML
+  class Pipeline
+    # HTML Filter for auto_linking urls in HTML.
+    #
+    # Context options:
+    #   :autolink  - boolean whether to autolink urls
+    #   :link_attr - HTML attributes for the link that will be generated
+    #   :skip_tags - HTML tags inside which autolinking will be skipped.
+    #                See Rinku.skip_tags
+    #   :flags     - additional Rinku flags. See https://github.com/vmg/rinku
+    #
+    # This filter does not write additional information to the context.
+    class AutolinkFilter < Filter
+      def call
+        return html if context[:autolink] == false
 
-      Rinku.auto_link(html, :urls, nil, %w[a script kbd pre code], flags)
+        skip_tags = context[:skip_tags]
+        flags = 0
+        flags |= context[:flags] if context[:flags]
+
+        Rinku.auto_link(html, :urls, context[:link_attr], skip_tags, flags)
+      end
     end
   end
 end
