@@ -13,19 +13,23 @@ module HTML
     # Context:
     #   :asset_root (required) - base url to link to emoji sprite
     #   :asset_path (optional) - url path to link to emoji sprite. :file_name can be used as a placeholder for the sprite file name. If no asset_path is set "emoji/:file_name" is used.
+    #   :ignored_ancestor_tags (optional) - Tags to stop the emojification. Node has matched ancestor HTML tags will not be emojified. Default to pre, code, and tt tags. Extra tags please pass in the form of array, e.g., %w(blockquote summary).
     class EmojiFilter < Filter
+
+      DEFAULT_IGNORED_ANCESTOR_TAGS = %w(pre code tt).freeze
+
       def call
         doc.search('text()').each do |node|
           content = node.to_html
           next unless content.include?(':')
-          next if has_ancestor?(node, %w(pre code tt))
+          next if has_ancestor?(node, ignored_ancestor_tags)
           html = emoji_image_filter(content)
           next if html == content
           node.replace(html)
         end
         doc
       end
-      
+
       # Implementation of validate hook.
       # Errors should raise exceptions or use an existing validator.
       def validate
@@ -96,6 +100,17 @@ module HTML
 
         def emoji_filename(name)
           "#{::CGI.escape(name)}.png"
+        end
+      end
+
+      # Return ancestor tags to stop the emojification.
+      #
+      # @return [Array<String>] Ancestor tags.
+      def ignored_ancestor_tags
+        if context[:ignored_ancestor_tags]
+          DEFAULT_IGNORED_ANCESTOR_TAGS | context[:ignored_ancestor_tags]
+        else
+          DEFAULT_IGNORED_ANCESTOR_TAGS
         end
       end
     end
