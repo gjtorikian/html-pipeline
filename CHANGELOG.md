@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## 1.12.0
+
+**New**
+
+* Implement new EmojiFilter context option: ignored_ancestor_tags to accept more ignored tags. [#170](https://github.com/jch/html-pipeline/pull/170) @JuanitoFatas
+* Add GitHub flavor Markdown Task List extension [#162](https://github.com/jch/html-pipeline/pull/162) @simeonwillbanks
+* @mention allow for custom regex to identify usernames. [#157](https://github.com/jch/html-pipeline/pull/157) @brittballard
+
+**Changes**
+* Restrict nokogiri to >= 1.4, <= 1.6.5 [#176](https://github.com/jch/html-pipeline/pull/176) @simeonwillbanks
+* MentionFilter#link_to_mentioned_user: Replace String introspection with Regexp match [#172](https://github.com/jch/html-pipeline/pull/172) @simeonwillbanks
+* Whitelist summary and details element. [#171](https://github.com/jch/html-pipeline/pull/171) @JuanitoFatas
+* Support ~login for MentionFilter. [#167](https://github.com/jch/html-pipeline/pull/167) @JuanitoFatas
+* Revert "Search for text nodes on DocumentFragments without root tags" [#158](https://github.com/jch/html-pipeline/pull/158) @jch
+* Drop support for ruby ree, 1.9.2 [#156](https://github.com/jch/html-pipeline/pull/156) @jch
+* Skip EmojiFilter in <tt> tags [#147](https://github.com/jch/html-pipeline/pull/147) @moskvax
+* Use Linguist lexers [#153](https://github.com/jch/html-pipeline/pull/153) @pchaigno
+
 ## 1.11.0
 
   * Search for text nodes on DocumentFragments without root tags #146 Razer6
