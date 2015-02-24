@@ -72,6 +72,27 @@ class HTML::Pipeline::MentionFilterTest < Minitest::Test
       filter(body, '/', 'https://github.com/blog/821').to_html
   end
 
+  def test_base_url_slash
+    body = "<p>Hi, @jch!</p>"
+    link = "<a href=\"/jch\" class=\"user-mention\">@jch</a>"
+    assert_equal "<p>Hi, #{link}!</p>",
+      filter(body, '/').to_html
+  end
+
+  def test_base_url_under_custom_route
+    body = "<p>Hi, @jch!</p>"
+    link = "<a href=\"/userprofile/jch\" class=\"user-mention\">@jch</a>"
+    assert_equal "<p>Hi, #{link}!</p>",
+      filter(body, '/userprofile').to_html
+  end
+
+  def test_base_url_slash_with_tilde
+    body = "<p>Hi, @jch!</p>"
+    link = "<a href=\"/~jch\" class=\"user-mention\">@jch</a>"
+    assert_equal "<p>Hi, #{link}!</p>",
+      filter(body, '/~').to_html
+  end
+
   MarkdownPipeline =
     HTML::Pipeline.new [
       HTML::Pipeline::MarkdownFilter,

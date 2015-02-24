@@ -127,4 +127,28 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
 </table>)
     assert_equal orig, SanitizationFilter.call(orig).to_s
   end
+
+  def test_summary_tag_are_not_removed
+    orig = %(<summary>Foo</summary>)
+    assert_equal orig, SanitizationFilter.call(orig).to_s
+  end
+
+  def test_details_tag_and_open_attribute_are_not_removed
+    orig = %(<details open>Foo</details>)
+    assert_equal orig, SanitizationFilter.call(orig).to_s
+  end
+
+  def test_nested_details_tag_are_not_removed
+    orig = <<-NESTED
+      <details>
+        <summary>Foo</summary>
+        <details>
+          Bar
+          <summary>Baz</summary>
+        </details>
+        Qux
+      </details>
+    NESTED
+    assert_equal orig, SanitizationFilter.call(orig).to_s
+  end
 end

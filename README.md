@@ -1,4 +1,4 @@
-# HTML::Pipeline [![Build Status](https://secure.travis-ci.org/jch/html-pipeline.png)](http://travis-ci.org/jch/html-pipeline)
+# HTML::Pipeline [![Build Status](https://travis-ci.org/jch/html-pipeline.svg?branch=master)](https://travis-ci.org/jch/html-pipeline)
 
 GitHub HTML processing filters and utilities. This module includes a small
 framework for defining DOM based content filters and applying them to user
@@ -243,6 +243,8 @@ Here are some extensions people have built:
 * [html-pipeline-cite](https://github.com/lifted-studios/html-pipeline-cite)
 * [tilt-html-pipeline](https://github.com/bradgessler/tilt-html-pipeline)
 * [html-pipeline-wiki-link'](https://github.com/lifted-studios/html-pipeline-wiki-link) - WikiMedia-style wiki links
+* [task_list](https://github.com/github/task_list) - GitHub flavor Markdown Task List
+* [html-pipeline-rouge_filter](https://github.com/JuanitoFatas/html-pipeline-rouge_filter) - Syntax highlight with [Rouge](https://github.com/jneen/rouge/)
 
 ## Instrumenting
 

@@ -48,4 +48,18 @@ class HTML::Pipeline::EmojiFilterTest < Minitest::Test
     doc = filter.call
     assert_equal body, doc.to_html
   end
+
+  def test_not_emojify_in_custom_single_tag_foo
+    body = "<foo>:shipit:</foo>"
+    filter = EmojiFilter.new(body, {:asset_root => 'https://foo.com', ignored_ancestor_tags: %w(foo)})
+    doc = filter.call
+    assert_equal body, doc.to_html
+  end
+
+  def test_not_emojify_in_custom_multiple_tags_foo_and_bar
+    body = "<bar>:shipit:</bar>"
+    filter = EmojiFilter.new(body, {:asset_root => 'https://foo.com', ignored_ancestor_tags: %w(foo bar)})
+    doc = filter.call
+    assert_equal body, doc.to_html
+  end
 end
