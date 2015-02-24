@@ -348,6 +348,9 @@ Project is a member of the [OSS Manifesto](http://ossmanifesto.org/).
 
 This section is for gem maintainers to cut a new version of the gem.
 
-* update lib/html/pipeline/version.rb to next version number X.X.X following [semver](http://semver.org).
-* update CHANGELOG.md. Get latest changes with `git log --oneline vLAST_RELEASE..HEAD | grep Merge`
+* create a new branch named `release-x.y.z` where `x.y.z` follows [semver](http://semver.org)
+* update lib/html/pipeline/version.rb to next version number X.X.X
+* update CHANGELOG.md. Prepare a draft with `script/changelog`
+* push branch and create a new pull request
+* after tests are green, merge to master
 * on the master branch, run `script/release`
