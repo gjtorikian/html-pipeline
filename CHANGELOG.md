@@ -7,8 +7,10 @@
 * Implement new EmojiFilter context option: ignored_ancestor_tags to accept more ignored tags. [#170](https://github.com/jch/html-pipeline/pull/170) @JuanitoFatas
 * Add GitHub flavor Markdown Task List extension [#162](https://github.com/jch/html-pipeline/pull/162) @simeonwillbanks
 * @mention allow for custom regex to identify usernames. [#157](https://github.com/jch/html-pipeline/pull/157) @brittballard
+* EmojiFilter now requires gemoji ~> 2. [#159](https://github.com/jch/html-pipeline/pull/159) @jch
 
 **Changes**
+
 * Restrict nokogiri to >= 1.4, <= 1.6.5 [#176](https://github.com/jch/html-pipeline/pull/176) @simeonwillbanks
 * MentionFilter#link_to_mentioned_user: Replace String introspection with Regexp match [#172](https://github.com/jch/html-pipeline/pull/172) @simeonwillbanks
 * Whitelist summary and details element. [#171](https://github.com/jch/html-pipeline/pull/171) @JuanitoFatas
