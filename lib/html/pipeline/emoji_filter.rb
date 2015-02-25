@@ -83,24 +83,12 @@ module HTML
         self.class.emoji_pattern
       end
 
-      # Detect gemoji v2 which has a new API
-      # https://github.com/jch/html-pipeline/pull/129
-      if Emoji.respond_to?(:all)
-        def self.emoji_names
-          Emoji.all.map(&:aliases).flatten.sort
-        end
+      def self.emoji_names
+        Emoji.all.map(&:aliases).flatten.sort
+      end
 
-        def emoji_filename(name)
-          Emoji.find_by_alias(name).image_filename
-        end
-      else
-        def self.emoji_names
-          Emoji.names
-        end
-
-        def emoji_filename(name)
-          "#{::CGI.escape(name)}.png"
-        end
+      def emoji_filename(name)
+        Emoji.find_by_alias(name).image_filename
       end
 
       # Return ancestor tags to stop the emojification.

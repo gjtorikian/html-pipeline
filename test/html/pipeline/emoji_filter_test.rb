@@ -12,7 +12,7 @@ class HTML::Pipeline::EmojiFilterTest < Minitest::Test
   def test_uri_encoding
     filter = EmojiFilter.new("<p>:+1:</p>", {:asset_root => 'https://foo.com'})
     doc = filter.call
-    assert_match "https://foo.com/emoji/%2B1.png", doc.search('img').attr('src').value
+    assert_match "https://foo.com/emoji/unicode/1f44d.png", doc.search('img').attr('src').value
   end
 
   def test_required_context_validation
@@ -25,7 +25,7 @@ class HTML::Pipeline::EmojiFilterTest < Minitest::Test
   def test_custom_asset_path
     filter = EmojiFilter.new("<p>:+1:</p>", {:asset_path => ':file_name', :asset_root => 'https://foo.com'})
     doc = filter.call
-    assert_match "https://foo.com/%2B1.png", doc.search('img').attr('src').value
+    assert_match "https://foo.com/unicode/1f44d.png", doc.search('img').attr('src').value
   end
 
   def test_not_emojify_in_code_tags
