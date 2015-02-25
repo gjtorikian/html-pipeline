@@ -15,7 +15,7 @@
 * Support ~login for MentionFilter. [#167](https://github.com/jch/html-pipeline/pull/167) @JuanitoFatas
 * Revert "Search for text nodes on DocumentFragments without root tags" [#158](https://github.com/jch/html-pipeline/pull/158) @jch
 * Drop support for ruby ree, 1.9.2 [#156](https://github.com/jch/html-pipeline/pull/156) @jch
-* Skip EmojiFilter in <tt> tags [#147](https://github.com/jch/html-pipeline/pull/147) @moskvax
+* Skip EmojiFilter in `<tt>` tags [#147](https://github.com/jch/html-pipeline/pull/147) @moskvax
 * Use Linguist lexers [#153](https://github.com/jch/html-pipeline/pull/153) @pchaigno
 * Constrain Active Support >= 2, < 5 [#180](https://github.com/jch/html-pipeline/pull/180) @jch
 
