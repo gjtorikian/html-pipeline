@@ -63,7 +63,7 @@ module HTML
     # Public: Returns an Array of Filter objects for this Pipeline.
     attr_reader :filters
 
-    # Public: Gets/Sets the Instrumentation service for the pipeline. Set an
+    # Public: Gets/Sets the instrumentation service for the pipeline. Set an
     #         ActiveSupport::Notifications compatible object to enable.
     attr_accessor :instrumentation_service
 
@@ -71,7 +71,8 @@ module HTML
     attr_writer :instrumentation_name
 
     # Public: Returns the instrumentation name.
-    # Retuns instrumentation name (default to class name).
+    #
+    # Returns instrumentation name (default to class name).
     def instrumentation_name
       @instrumentation_name || self.class.name
     end
@@ -112,9 +113,9 @@ module HTML
     #           is where Filters store extracted information from the content.
     #           (default to nil).
     #
-    # Returns the result Hash after being filtered by this Pipeline.  Contains an
-    # :output key with the DocumentFragment or String HTML markup based on the
-    # output of the last filter in the pipeline.
+    # Returns the result Hash after being filtered by this Pipeline. Contains an
+    #         :output key with the DocumentFragment or String HTML markup based
+    #         on the output of the last filter in the pipeline.
     def call(html, context = {}, result = nil)
       context = @default_context.merge(context)
       context = context.freeze
@@ -142,7 +143,7 @@ module HTML
     #           is where Filters store extracted information from the content.
     #           (default to nil).
     #
-    # Returns the result of the filter.
+    # Returns the result of applying filter to given doc and context.
     def perform_filter(filter, doc, context, result)
       payload = default_payload :filter => filter.name,
         :context => context, :result => result
@@ -208,7 +209,7 @@ module HTML
     #           block, otherwise the block is ran without instrumentation.
     #
     # event   - The String name of instrument event.
-    # payload - (default to {}).
+    # payload - the payload to be yielded (default to nil).
     #
     # Yields the Hash of payload if instrumentation_service object is not set.
     # Yields the Hash of payload with instruments block if
