@@ -245,6 +245,8 @@ Here are some extensions people have built:
 * [html-pipeline-wiki-link'](https://github.com/lifted-studios/html-pipeline-wiki-link) - WikiMedia-style wiki links
 * [task_list](https://github.com/github/task_list) - GitHub flavor Markdown Task List
 * [html-pipeline-rouge_filter](https://github.com/JuanitoFatas/html-pipeline-rouge_filter) - Syntax highlight with [Rouge](https://github.com/jneen/rouge/)
+* [html-pipeline-nico_link](https://github.com/rutan/html-pipeline-nico_link) - An HTML::Pipeline filter for [niconico](http://www.nicovideo.jp) description links
+* [html-pipeline-gitlab](https://gitlab.com/gitlab-org/html-pipeline-gitlab) - This gem implements various filters for html-pipeline used by GitLab
 
 ## Instrumenting
 
