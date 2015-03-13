@@ -78,10 +78,8 @@ Prints:
 ```html
 <p>This is <em>great</em>:</p>
 
-<div class="highlight">
-<pre><span class="n">some_code</span><span class="p">(</span><span class="ss">:first</span><span class="p">)</span>
-</pre>
-</div>
+<pre><code>some_code(:first)
+</code></pre>
 ```
 
 To generate CSS for HTML formatted code, use the [pygments.rb](https://github.com/tmm1/pygments.rb#usage) `#css` method. `pygments.rb` is a dependency of the `SyntaxHighlightFilter`.
