@@ -50,7 +50,7 @@ module HTML
         :remove_contents => ['script'],
         :attributes => {
           'a' => ['href'],
-          'img' => ['src'],
+          'img' => ['src', 'srcset'],
           'div' => ['itemscope', 'itemtype'],
           :all  => ['abbr', 'accept', 'accept-charset',
                     'accesskey', 'action', 'align', 'alt', 'axis',
