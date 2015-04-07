@@ -41,6 +41,7 @@ module HTML
     autoload :TextileFilter,         'html/pipeline/textile_filter'
     autoload :TableOfContentsFilter, 'html/pipeline/toc_filter'
     autoload :TextFilter,            'html/pipeline/text_filter'
+    autoload :AnchorTargetFilter,    'html/pipeline/anchor_target_filter'
 
     # Our DOM implementation.
     DocumentFragment = Nokogiri::HTML::DocumentFragment
