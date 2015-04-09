@@ -37,7 +37,7 @@ module HTML
       TABLE_SECTIONS = Set.new(%w(thead tbody tfoot).freeze)
 
       # These schemes are the only ones allowed in <a href> attributes by default.
-      ANCHOR_SCHEMES = ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac'].freeze
+      ANCHOR_SCHEMES = ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac', 'irc', 'ircs'].freeze
 
       # The main sanitization whitelist. Only these elements and attributes are
       # allowed through by default.
