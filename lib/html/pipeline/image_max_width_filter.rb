@@ -9,9 +9,8 @@ module HTML
     class ImageMaxWidthFilter < Filter
       def call
         doc.search('img').each do |element|
-          # Skip if there's already a style attribute. Not sure how this
-          # would happen but we can reconsider it in the future.
-          next if element['style']
+          # Skip if there's already a style attribute or width attribute set to auto.
+          next if element['style'] || element['width'] == 'auto'
 
           # Bail out if src doesn't look like a valid http url. trying to avoid weird
           # js injection via javascript: urls.
