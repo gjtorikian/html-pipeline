@@ -20,11 +20,6 @@ class HTML::Pipeline::AutolinkFilterTest < Minitest::Test
       AutolinkFilter.to_html('<p>"http://www.github.com"</p>', :link_attr => 'target="_blank"')
   end
 
-  def test_autolink_flags
-    assert_equal '<p>"<a href="http://github">http://github</a>"</p>',
-      AutolinkFilter.to_html('<p>"http://github"</p>', :flags => Rinku::AUTOLINK_SHORT_DOMAINS)
-  end
-
   def test_autolink_skip_tags
     assert_equal '<code>"http://github.com"</code>',
       AutolinkFilter.to_html('<code>"http://github.com"</code>')
