@@ -17,6 +17,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "nokogiri", [">= 1.4", "<= 1.6.5"]
   gem.add_dependency "activesupport", [">= 2", "< 5"]
+  gem.add_dependency "rinku", "~> 1.7"
 
   gem.post_install_message = <<msg
 -------------------------------------------------
