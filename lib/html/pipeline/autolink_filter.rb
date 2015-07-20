@@ -21,10 +21,7 @@ module HTML
         return html if context[:autolink] == false
 
         skip_tags = context[:skip_tags]
-        flags = 0
-        flags |= context[:flags] if context[:flags]
-
-        Rinku.auto_link(html, :urls, context[:link_attr], skip_tags, flags)
+        Rinku.auto_link(html, :urls, context[:link_attr], skip_tags)
       end
     end
   end
