@@ -29,7 +29,7 @@ module HTML
       private
 
       def max_value(attr)
-        value = context["max#{attr}".to_sym]
+        value = context["flickr_max#{attr}".to_sym]
         value.to_i >= 0 ? value.to_i : 0
       end
     end
