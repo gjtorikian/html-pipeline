@@ -3,10 +3,6 @@ require "test_helper"
 YoutubeFilter = HTML::Pipeline::YoutubeFilter
 
 class HTML::Pipeline::YoutubeFilterTest < Minitest::Test
-  def filter(html)
-    YoutubeFilter.to_html(html)
-  end
-
   def test_transform_with_default_value
     assert_equal %(<div class="video youtube"><iframe width="420" height="315" src="//www.youtube.com/embed/Kg4aWWIsszw" frameborder="0" allowfullscreen></iframe></div>),
     YoutubeFilter.to_html(%(https://www.youtube.com/watch?v=Kg4aWWIsszw))
