@@ -3,6 +3,12 @@ require 'net/http'
 
 module HTML
   class Pipeline
+    # HTML Filter for converting flickr's link into linkable image
+    #
+    # Context options:
+    #   :flickr_maxwidth, flickr_minheight - representing maxwidth and maxheight in oembed format's params.
+    #   :flickr_link_attr - HTML attributes for the link that will be generated
+
     class FlickrFilter < TextFilter
       def call
         regex = %r{https?://(www\.)?flickr\.com/photos/[^\s<]*}
