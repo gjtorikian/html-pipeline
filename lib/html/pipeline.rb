@@ -32,6 +32,7 @@ module HTML
     autoload :EmailReplyFilter,      'html/pipeline/email_reply_filter'
     autoload :EmojiFilter,           'html/pipeline/emoji_filter'
     autoload :HttpsFilter,           'html/pipeline/https_filter'
+    autoload :ImageFilter,           'html/pipeline/image_filter'
     autoload :ImageMaxWidthFilter,   'html/pipeline/image_max_width_filter'
     autoload :MarkdownFilter,        'html/pipeline/markdown_filter'
     autoload :MentionFilter,         'html/pipeline/@mention_filter'
