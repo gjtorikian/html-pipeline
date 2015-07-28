@@ -43,8 +43,7 @@ module HTML
       # Returns a String with :emoji: replaced with images.
       def emoji_image_filter(text)
         text.gsub(emoji_pattern) do |match|
-          name = $1
-          "<img class='emoji' title=':#{name}:' alt=':#{name}:' src='#{emoji_url(name)}' height='20' width='20' align='absmiddle' />"
+          emoji_image_tag($1)
         end
       end
 
@@ -69,6 +68,11 @@ module HTML
       end
 
       private
+
+      # Build an emoji image tag
+      def emoji_image_tag(name)
+        "<img class='emoji' title=':#{name}:' alt=':#{name}:' src='#{emoji_url(name)}' height='20' width='20' align='absmiddle' />"
+      end
 
       def emoji_url(name)
         File.join(asset_root, asset_path(name))
