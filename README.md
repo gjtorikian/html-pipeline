@@ -247,6 +247,7 @@ Here are some extensions people have built:
 * [html-pipeline-gitlab](https://gitlab.com/gitlab-org/html-pipeline-gitlab) - This gem implements various filters for html-pipeline used by GitLab
 * [html-pipeline-youtube](https://github.com/st0012/html-pipeline-youtube)
 * [html-pipeline-flickr](https://github.com/st0012/html-pipeline-flickr)
+* [html-pipeline-vimeo](https://github.com/dlackty/html-pipeline-vimeo)
 
 ## Instrumenting
 
