@@ -245,9 +245,9 @@ Here are some extensions people have built:
 * [html-pipeline-rouge_filter](https://github.com/JuanitoFatas/html-pipeline-rouge_filter) - Syntax highlight with [Rouge](https://github.com/jneen/rouge/)
 * [html-pipeline-nico_link](https://github.com/rutan/html-pipeline-nico_link) - An HTML::Pipeline filter for [niconico](http://www.nicovideo.jp) description links
 * [html-pipeline-gitlab](https://gitlab.com/gitlab-org/html-pipeline-gitlab) - This gem implements various filters for html-pipeline used by GitLab
-* [html-pipeline-youtube](https://github.com/st0012/html-pipeline-youtube)
-* [html-pipeline-flickr](https://github.com/st0012/html-pipeline-flickr)
-* [html-pipeline-vimeo](https://github.com/dlackty/html-pipeline-vimeo)
+* [html-pipeline-youtube](https://github.com/st0012/html-pipeline-youtube) - An HTML::Pipeline filter for YouTube links
+* [html-pipeline-flickr](https://github.com/st0012/html-pipeline-flickr) - An HTML::Pipeline filter for Flickr links
+* [html-pipeline-vimeo](https://github.com/dlackty/html-pipeline-vimeo) - An HTML::Pipeline filter for Vimeo links
 
 ## Instrumenting
 
