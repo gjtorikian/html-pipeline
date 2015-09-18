@@ -72,7 +72,10 @@ module HTML
         },
         :protocols => {
           'a'   => {'href' => ANCHOR_SCHEMES},
-          'img' => {'src'  => ['http', 'https', :relative]}
+          'img' => {
+            'src'      => ['http', 'https', :relative],
+            'longdesc' => ['http', 'https', :relative]
+          }
         },
         :transformers => [
           # Top-level <li> elements are removed because they can break out of
