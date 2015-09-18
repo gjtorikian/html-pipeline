@@ -50,7 +50,7 @@ module HTML
         :remove_contents => ['script'],
         :attributes => {
           'a' => ['href'],
-          'img' => ['src'],
+          'img' => ['src', 'longdesc'],
           'div' => ['itemscope', 'itemtype'],
           :all  => ['abbr', 'accept', 'accept-charset',
                     'accesskey', 'action', 'align', 'alt', 'axis',
@@ -61,7 +61,7 @@ module HTML
                     'disabled', 'enctype', 'for', 'frame',
                     'headers', 'height', 'hreflang',
                     'hspace', 'ismap', 'label', 'lang',
-                    'longdesc', 'maxlength', 'media', 'method',
+                    'maxlength', 'media', 'method',
                     'multiple', 'name', 'nohref', 'noshade',
                     'nowrap', 'open', 'prompt', 'readonly', 'rel', 'rev',
                     'rows', 'rowspan', 'rules', 'scope',
