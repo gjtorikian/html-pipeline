@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2.1.0
+
+* Whitelist schemes for longdesc [#221](https://github.com/jch/html-pipeline/pull/221)
+* Extract emoji image tag generation to own method [#195](https://github.com/jch/html-pipeline/pull/195)
+* Update README.md [#211](https://github.com/jch/html-pipeline/pull/211)
+* Add ImageFilter for image url to img tag conversion [#207](https://github.com/jch/html-pipeline/pull/207)
+
 ## 2.0
 
 **New**
