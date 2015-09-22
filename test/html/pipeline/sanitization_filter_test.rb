@@ -51,6 +51,18 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
     assert_equal '<a>Wat</a> is this', html
   end
 
+  def test_whitelisted_longdesc_schemes_are_allowed
+    stuff = '<img src="./foo.jpg" longdesc="http://longdesc.com">'
+    html  = SanitizationFilter.call(stuff).to_s
+    assert_equal '<img src="./foo.jpg" longdesc="http://longdesc.com">', html
+  end
+
+  def test_weird_longdesc_schemes_are_removed
+    stuff = '<img src="./foo.jpg" longdesc="javascript:alert(1)">'
+    html  = SanitizationFilter.call(stuff).to_s
+    assert_equal '<img src="./foo.jpg">', html
+  end
+
   def test_standard_schemes_are_removed_if_not_specified_in_anchor_schemes
     stuff  = '<a href="http://www.example.com/">No href for you</a>'
     filter = SanitizationFilter.new(stuff, {:anchor_schemes => []})
