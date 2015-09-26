@@ -52,10 +52,11 @@ module HTML
           'a' => ['href'],
           'img' => ['src', 'longdesc'],
           'div' => ['itemscope', 'itemtype'],
+          'blockquote' => ['cite'],
           :all  => ['abbr', 'accept', 'accept-charset',
                     'accesskey', 'action', 'align', 'alt', 'axis',
                     'border', 'cellpadding', 'cellspacing', 'char',
-                    'charoff', 'charset', 'checked', 'cite',
+                    'charoff', 'charset', 'checked',
                     'clear', 'cols', 'colspan', 'color',
                     'compact', 'coords', 'datetime', 'dir',
                     'disabled', 'enctype', 'for', 'frame',
@@ -71,8 +72,9 @@ module HTML
                     'vspace', 'width', 'itemprop']
         },
         :protocols => {
-          'a'   => {'href' => ANCHOR_SCHEMES},
-          'img' => {
+          'a'          => {'href' => ANCHOR_SCHEMES},
+          'blockquote' => {'cite' => ['http', 'https', :relative]},
+          'img'        => {
             'src'      => ['http', 'https', :relative],
             'longdesc' => ['http', 'https', :relative]
           }
