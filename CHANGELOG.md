@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.2.0
+
+* Only allow cite attribute on blockquote and restrict schemes [#223](https://github.com/jch/html-pipeline/pull/223)
+
 ## 2.1.0
 
 * Whitelist schemes for longdesc [#221](https://github.com/jch/html-pipeline/pull/221)
