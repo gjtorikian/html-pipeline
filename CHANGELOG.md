@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.2.1
+
+* Soften Nokogiri dependency to versions ">= 1.4" [#208](https://github.com/jch/html-pipeline/pull/208)
+
 ## 2.2.0
 
 * Only allow cite attribute on blockquote and restrict schemes [#223](https://github.com/jch/html-pipeline/pull/223)
