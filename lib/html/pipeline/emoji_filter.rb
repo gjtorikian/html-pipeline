@@ -19,7 +19,7 @@ module HTML
       DEFAULT_IGNORED_ANCESTOR_TAGS = %w(pre code tt).freeze
 
       def call
-        doc.search('text()').each do |node|
+        doc.search('.//text()').each do |node|
           content = node.to_html
           next unless content.include?(':')
           next if has_ancestor?(node, ignored_ancestor_tags)
