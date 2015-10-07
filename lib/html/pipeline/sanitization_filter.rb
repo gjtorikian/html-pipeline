@@ -81,7 +81,7 @@ module HTML
           'ins'        => {'cite' => ['http', 'https', :relative]},
           'q'          => {'cite' => ['http', 'https', :relative]},
           'img'        => {
-            'src'      => ['http', 'https', :relative],
+            'src'      => ['http', 'https', 'data', :relative],
             'longdesc' => ['http', 'https', :relative]
           }
         },
