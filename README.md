@@ -249,6 +249,7 @@ Here are some extensions people have built:
 * [html-pipeline-flickr](https://github.com/st0012/html-pipeline-flickr) - An HTML::Pipeline filter for Flickr links
 * [html-pipeline-vimeo](https://github.com/dlackty/html-pipeline-vimeo) - An HTML::Pipeline filter for Vimeo links
 * [html-pipeline-hashtag](https://github.com/mr-dxdy/html-pipeline-hashtag) - An HTML::Pipeline filter for hashtags
+* [html-pipeline-linkify_github](https://github.com/jollygoodcode/html-pipeline-linkify_github) - An HTML::Pipeline filter to autolink GitHub urls
 
 ## Instrumenting
 
