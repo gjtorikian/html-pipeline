@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 2.2.2
+
+* Fix for calling mention_link_filter with only one argument [#230](https://github.com/jch/html-pipeline/pull/230)
+* Add html-pipeline-linkify_github to 3rd Party Extensions in README [#228](https://github.com/jch/html-pipeline/pull/228)
+
 ## 2.2.1
 
 * Soften Nokogiri dependency to versions ">= 1.4" [#208](https://github.com/jch/html-pipeline/pull/208)
