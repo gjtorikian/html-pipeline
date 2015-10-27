@@ -103,7 +103,7 @@ module HTML
       #
       # Returns a string with @mentions replaced with links. All links have a
       # 'user-mention' class name attached for styling.
-      def mention_link_filter(text, base_url='/', info_url=nil, username_pattern)
+      def mention_link_filter(text, base_url='/', info_url=nil, username_pattern=UsernamePattern)
         self.class.mentioned_logins_in(text, username_pattern) do |match, login, is_mentioned|
           link =
             if is_mentioned

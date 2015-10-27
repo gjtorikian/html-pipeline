@@ -203,4 +203,10 @@ class HTML::Pipeline::MentionFilterTest < Minitest::Test
     filter(doc.clone, '/', nil, /test/)
     assert_equal pattern_count + 1, HTML::Pipeline::MentionFilter::MentionPatterns.length
   end
+
+  def test_mention_link_filter
+    filter = HTML::Pipeline::MentionFilter.new nil
+    expected = "<a href='/hubot' class='user-mention'>@hubot</a>"
+    assert_equal expected, filter.mention_link_filter("@hubot")
+  end
 end
