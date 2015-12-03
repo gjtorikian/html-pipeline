@@ -23,6 +23,9 @@ group :test do
   else
     gem "escape_utils",     "~> 1.0",   :require => false
     gem "github-linguist",  "~> 2.10",  :require => false
+    # github-linguist version > 4 need to explicitly include pygments.rb,
+    # see https://github.com/jch/html-pipeline/issues/235
+    # gem "pygments.rb",                :require => false
   end
 
   if RUBY_VERSION < "1.9.3"
