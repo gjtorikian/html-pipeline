@@ -1,8 +1,10 @@
 language: ruby
+sudo: false
 
-before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq libicu-dev
+addons:
+  apt:
+    sources:
+      - libicu-dev
 
 script: "bundle exec rake"
 
