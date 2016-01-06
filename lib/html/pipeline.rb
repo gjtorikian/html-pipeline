@@ -8,20 +8,20 @@ module HTML
   #
   # See HTML::Pipeline::Filter for information on building filters.
   #
-  # Construct a Pipeline for running multiple HTML filters.  A pipeline is created once
-  # with one to many filters, and it then can be `call`ed many times over the course
-  # of its lifetime with input.
+  # Construct a Pipeline for running multiple HTML filters. A pipeline is created
+  # once with one to many filters, and it then can be `call`ed many times over the
+  # course of its lifetime with input.
   #
-  # filters         - Array of Filter objects. Each must respond to call(doc,
-  #                   context) and return the modified DocumentFragment or a
-  #                   String containing HTML markup. Filters are performed in the
-  #                   order provided.
-  # default_context - The default context hash. Values specified here will be merged
-  #                   into values from the each individual pipeline run.  Can NOT be
-  #                   nil.  Default: empty Hash.
-  # result_class    - The default Class of the result object for individual
-  #                   calls.  Default: Hash.  Protip:  Pass in a Struct to get
-  #                   some semblance of type safety.
+  # filters         - Array of Filter objects. Each must respond to call (doc,
+  #                   context) and return the modified DocumentFragment or a String
+  #                   containing HTML markup. Filters are performed in the order
+  #                   provided.
+  # default_context - The default context hash. Values specified here will be
+  #                   merged into values from the each individual pipeline run.
+  #                   CANNOT be nil (default: {}).
+  # result_class    - The default Class of the result object for individual calls
+  #                   (default: nil). Protip: Pass in a Struct to get some of type
+  #                   safety.
   class Pipeline
     autoload :VERSION,               'html/pipeline/version'
     autoload :Filter,                'html/pipeline/filter'
@@ -43,11 +43,15 @@ module HTML
     autoload :TableOfContentsFilter, 'html/pipeline/toc_filter'
     autoload :TextFilter,            'html/pipeline/text_filter'
 
-    # Our DOM implementation.
+    # Public: Our DOM implementation, a Nokogiri::HTML::DocumentFragment.
     DocumentFragment = Nokogiri::HTML::DocumentFragment
 
-    # Parse a String into a DocumentFragment object. When a DocumentFragment is
-    # provided, return it verbatim.
+    # Public: Parse a String into a DocumentFragment object. When a
+    #         DocumentFragment is provided, return it verbatim.
+    #
+    # document_or_html - The document or HTML to be parsed (default to '').
+    #
+    # Returns the DocumentFragment verbatim or parsed String.
     def self.parse(document_or_html)
       document_or_html ||= ''
       if document_or_html.is_a?(String)
@@ -60,12 +64,16 @@ module HTML
     # Public: Returns an Array of Filter objects for this Pipeline.
     attr_reader :filters
 
-    # Public: Instrumentation service for the pipeline.
-    # Set an ActiveSupport::Notifications compatible object to enable.
+    # Public: Gets/Sets the instrumentation service for the pipeline. Set an
+    #         ActiveSupport::Notifications compatible object to enable.
     attr_accessor :instrumentation_service
 
-    # Public: String name for this Pipeline. Defaults to Class name.
+    # Public: Sets the Instrumentation name for this Pipeline.
     attr_writer :instrumentation_name
+
+    # Public: Returns the instrumentation name.
+    #
+    # Returns instrumentation name (default to class name).
     def instrumentation_name
       @instrumentation_name || self.class.name
     end
@@ -75,6 +83,18 @@ module HTML
       attr_accessor :default_instrumentation_service
     end
 
+    # Public: Initialize a Pipeline object.
+    #
+    # filters         - Array of `HTML::Pipeline::Filter`s.
+    # default_context - The default context hash. Values specified here will be
+    #                   merged into values from the each individual pipeline run.
+    #                   CANNOT be nil (default: {}).
+    # result_class    - The default Class of the result object for individual calls
+    #                   (default: nil). Protip: Pass in a Struct to get some of type
+    #                   safety.
+    #
+    # Raises ArgumentError if default_context is nil.
+    # Returns nothing.
     def initialize(filters, default_context = {}, result_class = nil)
       raise ArgumentError, "default_context cannot be nil" if default_context.nil?
       @filters = filters.flatten.freeze
@@ -83,18 +103,20 @@ module HTML
       @instrumentation_service = self.class.default_instrumentation_service
     end
 
-    # Apply all filters in the pipeline to the given HTML.
+    # Public: Apply all filters in the pipeline to the given HTML.
     #
     # html    - A String containing HTML or a DocumentFragment object.
     # context - The context hash passed to each filter. See the Filter docs
     #           for more info on possible values. This object MUST NOT be modified
-    #           in place by filters.  Use the Result for passing state back.
-    # result  - The result Hash passed to each filter for modification.  This
+    #           in place by filters. Use the Result for passing state back.
+    #           (default to {}).
+    # result  - The result Hash passed to each filter for modification. This
     #           is where Filters store extracted information from the content.
+    #           (default to nil).
     #
-    # Returns the result Hash after being filtered by this Pipeline.  Contains an
-    # :output key with the DocumentFragment or String HTML markup based on the
-    # output of the last filter in the pipeline.
+    # Returns the result Hash after being filtered by this Pipeline. Contains an
+    #         :output key with the DocumentFragment or String HTML markup based
+    #         on the output of the last filter in the pipeline.
     def call(html, context = {}, result = nil)
       context = @default_context.merge(context)
       context = context.freeze
@@ -110,11 +132,19 @@ module HTML
       result
     end
 
-    # Internal: Applies a specific filter to the supplied doc.
+    # Internal: Applies a specific filter to the supplied doc. The filter will
+    #           be instrumented.
+    # filter  - Filter to apply.
+    # doc     - Document to apply filter.
+    # context - The context hash passed to each filter. See the Filter docs
+    #           for more info on possible values. This object MUST NOT be modified
+    #           in place by filters. Use the Result for passing state back.
+    #           (default to {}).
+    # result  - The result Hash passed to each filter for modification. This
+    #           is where Filters store extracted information from the content.
+    #           (default to nil).
     #
-    # The filter is instrumented.
-    #
-    # Returns the result of the filter.
+    # Returns the result of applying filter to given doc and context.
     def perform_filter(filter, doc, context, result)
       payload = default_payload :filter => filter.name,
         :context => context, :result => result
@@ -123,15 +153,37 @@ module HTML
       end
     end
 
-    # Like call but guarantee the value returned is a DocumentFragment.
-    # Pipelines may return a DocumentFragment or a String. Callers that need a
-    # DocumentFragment should use this method.
+    # Public: Like call but guarantee the return value is a DocumentFragment.
+    #         Pipelines may return a DocumentFragment or a String. Callers that
+    #         need a DocumentFragment should use this method.
+    #
+    # input   - The input to pass through filters.
+    # context - The context hash passed to each filter. See the Filter docs
+    #           for more info on possible values. This object MUST NOT be modified
+    #           in place by filters. Use the Result for passing state back.
+    #           (default to {}).
+    # result  - The result Hash passed to each filter for modification. This
+    #           is where Filters store extracted information from the content.
+    #           (default to nil).
+    #
+    # Returns the DocumentFragment of parsed input.
     def to_document(input, context = {}, result = nil)
       result = call(input, context, result)
       HTML::Pipeline.parse(result[:output])
     end
 
-    # Like call but guarantee the value returned is a string of HTML markup.
+    # Public: Like call but guarantee the value returned is a string of HTML markup.
+    #
+    # input   - The input to pass through filters.
+    # context - The context hash passed to each filter. See the Filter docs
+    #           for more info on possible values. This object MUST NOT be modified
+    #           in place by filters. Use the Result for passing state back.
+    #           (default to {}).
+    # result  - The result Hash passed to each filter for modification. This
+    #           is where Filters store extracted information from the content.
+    #           (default to nil).
+    #
+    # Returns the String of HTML output.
     def to_html(input, context = {}, result = nil)
       result = call(input, context, result = nil)
       output = result[:output]
@@ -142,7 +194,10 @@ module HTML
       end
     end
 
-    # Public: setup instrumentation for this pipeline.
+    # Public: Setup instrumentation for this pipeline.
+    #
+    # name    - Sets the name of instrumentation (default to nil).
+    # service - Sets instrumentation service object (default to nil).
     #
     # Returns nothing.
     def setup_instrumentation(name = nil, service = nil)
@@ -152,9 +207,14 @@ module HTML
     end
 
     # Internal: if the `instrumentation_service` object is set, instruments the
-    # block, otherwise the block is ran without instrumentation.
+    #           block, otherwise the block is ran without instrumentation.
     #
-    # Returns the result of the provided block.
+    # event   - The String name of instrument event.
+    # payload - the payload to be yielded (default to nil).
+    #
+    # Yields the Hash of payload if instrumentation_service object is not set.
+    # Yields the Hash of payload with instruments block if
+    #   instrumentation_service object is set.
     def instrument(event, payload = nil)
       payload ||= default_payload
       return yield(payload) unless instrumentation_service
@@ -163,22 +223,24 @@ module HTML
       end
     end
 
-    # Internal: Default payload for instrumentation.
+    # Internal: Default payload for instrumentation. Accepts a Hash of
+    #           additional payload data to be merged.
     #
-    # Accepts a Hash of additional payload data to be merged.
+    # payload - a Hash of additional payload data (default to {}).
     #
-    # Returns a Hash.
+    # Returns a Hash of payload.
     def default_payload(payload = {})
       {:pipeline => instrumentation_name}.merge(payload)
     end
   end
 end
 
-# XXX nokogiri monkey patches for 1.8
+# XXX Nokogiri monkey patches for 1.8.
+# See https://github.com/jch/html-pipeline/pull/40.
 if not ''.respond_to?(:force_encoding)
   class Nokogiri::XML::Node
-    # Work around an issue with utf-8 encoded data being erroneously converted to
-    # ... some other shit when replacing text nodes. See 'utf-8 output 2' in
+    # Work around an issue with utf-8 encoded data being erroneously converted
+    # to ... some other shit when replacing text nodes. See 'utf-8 output 2' in
     # user_content_test.rb for details.
     def replace_with_encoding_fix(replacement)
       if replacement.respond_to?(:to_str)
