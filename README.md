@@ -237,7 +237,7 @@ Here are some extensions people have built:
 * [html-pipeline-asciidoc_filter](https://github.com/asciidoctor/html-pipeline-asciidoc_filter)
 * [jekyll-html-pipeline](https://github.com/gjtorikian/jekyll-html-pipeline)
 * [nanoc-html-pipeline](https://github.com/burnto/nanoc-html-pipeline)
-* [html-pipeline-bity](https://github.com/dewski/html-pipeline-bitly)
+* [html-pipeline-bitly](https://github.com/dewski/html-pipeline-bitly)
 * [html-pipeline-cite](https://github.com/lifted-studios/html-pipeline-cite)
 * [tilt-html-pipeline](https://github.com/bradgessler/tilt-html-pipeline)
 * [html-pipeline-wiki-link'](https://github.com/lifted-studios/html-pipeline-wiki-link) - WikiMedia-style wiki links
