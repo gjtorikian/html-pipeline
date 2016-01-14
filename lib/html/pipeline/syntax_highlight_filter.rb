@@ -1,7 +1,7 @@
 begin
   require "linguist"
 rescue LoadError => _
-  abort "Missing dependency 'github-linguist' for SyntaxHighlightFilter. See README.md for details."
+  raise MissingDependencyError, "Missing dependency 'github-linguist' for SyntaxHighlightFilter. See README.md for details."
 end
 
 module HTML

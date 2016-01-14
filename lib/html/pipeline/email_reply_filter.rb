@@ -1,13 +1,13 @@
 begin
   require "escape_utils"
 rescue LoadError => _
-  abort "Missing dependency 'escape_utils' for EmailReplyFilter. See README.md for details."
+  raise MissingDependencyError, "Missing dependency 'escape_utils' for EmailReplyFilter. See README.md for details."
 end
 
 begin
   require "email_reply_parser"
 rescue LoadError => _
-  abort "Missing dependency 'email_reply_parser' for EmailReplyFilter. See README.md for details."
+  raise MissingDependencyError, "Missing dependency 'email_reply_parser' for EmailReplyFilter. See README.md for details."
 end
 
 module HTML

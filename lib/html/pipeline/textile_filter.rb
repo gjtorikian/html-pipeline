@@ -1,7 +1,7 @@
 begin
   require "redcloth"
 rescue LoadError => _
-  abort "Missing dependency 'RedCloth' for TextileFilter. See README.md for details."
+  raise MissingDependencyError, "Missing dependency 'RedCloth' for TextileFilter. See README.md for details."
 end
 
 module HTML
