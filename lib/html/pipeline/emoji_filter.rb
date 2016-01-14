@@ -3,7 +3,7 @@ require "cgi"
 begin
   require "gemoji"
 rescue LoadError => _
-  abort "Missing dependency 'gemoji' for EmojiFilter. See README.md for details."
+  raise MissingDependencyError, "Missing dependency 'gemoji' for EmojiFilter. See README.md for details."
 end
 
 module HTML

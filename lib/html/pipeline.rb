@@ -43,6 +43,8 @@ module HTML
     autoload :TableOfContentsFilter, 'html/pipeline/toc_filter'
     autoload :TextFilter,            'html/pipeline/text_filter'
 
+    class MissingDependencyError < LoadError; end
+
     # Our DOM implementation.
     DocumentFragment = Nokogiri::HTML::DocumentFragment
 
