@@ -42,8 +42,8 @@ module HTML
     autoload :TextileFilter,         'html/pipeline/textile_filter'
     autoload :TableOfContentsFilter, 'html/pipeline/toc_filter'
     autoload :TextFilter,            'html/pipeline/text_filter'
-    
-    MissingDependencyError = Class.new(LoadError)
+
+    class MissingDependencyError < LoadError; end
 
     # Our DOM implementation.
     DocumentFragment = Nokogiri::HTML::DocumentFragment
