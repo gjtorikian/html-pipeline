@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2.2.3
+
+* raise MissingDependencyError instead of aborting on missing dependency [#241](https://github.com/jch/html-pipeline/pull/241)
+* Fix typo [#239](https://github.com/jch/html-pipeline/pull/239)
+* Test against Ruby 2.3.0 on Travis CI [#238](https://github.com/jch/html-pipeline/pull/238)
+* use travis containers [#237](https://github.com/jch/html-pipeline/pull/237)
+
 ## 2.2.2
 
 * Fix for calling mention_link_filter with only one argument [#230](https://github.com/jch/html-pipeline/pull/230)
