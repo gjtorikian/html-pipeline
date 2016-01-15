@@ -1,7 +1,7 @@
 begin
   require "redcloth"
 rescue LoadError => _
-  raise MissingDependencyError, "Missing dependency 'RedCloth' for TextileFilter. See README.md for details."
+  raise HTML::Pipeline::MissingDependencyError, "Missing dependency 'RedCloth' for TextileFilter. See README.md for details."
 end
 
 module HTML
