@@ -1,7 +1,7 @@
 begin
   require "sanitize"
 rescue LoadError => _
-  raise MissingDependencyError, "Missing dependency 'sanitize' for SanitizationFilter. See README.md for details."
+  raise HTML::Pipeline::MissingDependencyError, "Missing dependency 'sanitize' for SanitizationFilter. See README.md for details."
 end
 
 module HTML

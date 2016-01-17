@@ -1,7 +1,7 @@
 begin
   require "escape_utils"
 rescue LoadError => _
-  raise MissingDependencyError, "Missing dependency 'escape_utils' for PlainTextInputFilter. See README.md for details."
+  raise HTML::Pipeline::MissingDependencyError, "Missing dependency 'escape_utils' for PlainTextInputFilter. See README.md for details."
 end
 
 module HTML

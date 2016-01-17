@@ -1,7 +1,7 @@
 begin
   require "github/markdown"
 rescue LoadError => _
-  raise MissingDependencyError, "Missing dependency 'github-markdown' for MarkdownFilter. See README.md for details."
+  raise HTML::Pipeline::MissingDependencyError, "Missing dependency 'github-markdown' for MarkdownFilter. See README.md for details."
 end
 
 module HTML

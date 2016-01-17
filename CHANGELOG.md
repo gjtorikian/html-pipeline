@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.2.4
+
+* Use entire namespace so MissingDependencyError constant is resolved [#243](https://github.com/jch/html-pipeline/pull/243)
+
 ## 2.2.3
 
 * raise MissingDependencyError instead of aborting on missing dependency [#241](https://github.com/jch/html-pipeline/pull/241)
