@@ -25,6 +25,11 @@ module HTML
     class TableOfContentsFilter < Filter
       PUNCTUATION_REGEXP = RUBY_VERSION > "1.9" ? /[^\p{Word}\- ]/u : /[^\w\- ]/
 
+      # The icon that will be placed next to an anchored rendered markdown header
+      def anchor_icon
+        context[:anchor_icon] || "<span aria-hidden=\"true\" class=\"octicon octicon-link\"></span>"
+      end
+
       def call
         result[:toc] = ""
 
@@ -39,7 +44,7 @@ module HTML
           headers[id] += 1
           if header_content = node.children.first
             result[:toc] << %Q{<li><a href="##{id}#{uniq}">#{text}</a></li>\n}
-            header_content.add_previous_sibling(%Q{<a id="#{id}#{uniq}" class="anchor" href="##{id}#{uniq}" aria-hidden="true"><span class="octicon octicon-link"></span></a>})
+            header_content.add_previous_sibling(%Q{<a id="#{id}#{uniq}" class="anchor" href="##{id}#{uniq}" aria-hidden="true">#{anchor_icon}</a>})
           end
         end
         result[:toc] = %Q{<ul class="section-nav">\n#{result[:toc]}</ul>} unless result[:toc].empty?

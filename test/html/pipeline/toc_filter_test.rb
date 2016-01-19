@@ -107,9 +107,9 @@ class HTML::Pipeline::TableOfContentsFilterTest < Minitest::Test
 
       rendered_h1s = TocFilter.call(orig).search('h1').map(&:to_s)
 
-      assert_equal "<h1>\n<a id=\"日本語\" class=\"anchor\" href=\"#%E6%97%A5%E6%9C%AC%E8%AA%9E\" aria-hidden=\"true\"><span class=\"octicon octicon-link\"></span></a>日本語</h1>",
+      assert_equal "<h1>\n<a id=\"日本語\" class=\"anchor\" href=\"#%E6%97%A5%E6%9C%AC%E8%AA%9E\" aria-hidden=\"true\"><span aria-hidden=\"true\" class=\"octicon octicon-link\"></span></a>日本語</h1>",
                    rendered_h1s[0]
-      assert_equal "<h1>\n<a id=\"Русский\" class=\"anchor\" href=\"#%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9\" aria-hidden=\"true\"><span class=\"octicon octicon-link\"></span></a>Русский</h1>",
+      assert_equal "<h1>\n<a id=\"Русский\" class=\"anchor\" href=\"#%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9\" aria-hidden=\"true\"><span aria-hidden=\"true\" class=\"octicon octicon-link\"></span></a>Русский</h1>",
                    rendered_h1s[1]
     end
 
