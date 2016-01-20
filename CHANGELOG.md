@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.3.0
+
+* Add option to pass in an anchor icon, instead of using octicons [#244](https://github.com/jch/html-pipeline/pull/244)
+
 ## 2.2.4
 
 * Use entire namespace so MissingDependencyError constant is resolved [#243](https://github.com/jch/html-pipeline/pull/243)
