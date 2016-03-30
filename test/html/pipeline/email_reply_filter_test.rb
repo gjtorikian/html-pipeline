@@ -28,6 +28,6 @@ EMAIL
     filter = EmailReplyFilter.new(@body, :hide_quoted_email_addresses => true)
     doc = filter.call.to_s
     refute_match %r(example@example.com), doc
-    refute_match %r(alreadyleaked@example.com), doc
+    assert_match %r(alreadyleaked@example.com), doc
   end
 end
