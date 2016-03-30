@@ -47,10 +47,12 @@ module HTML
         paragraphs = EmailReplyParser.read(text.dup).fragments.map do |fragment|
           pieces = [escape_html(fragment.to_s.strip).gsub(/^\s*(>|&gt;)/, '')]
           if fragment.quoted?
-            pieces.map! do |piece|
-              lines = piece.lines
-              lines.first.gsub!(EMAIL_REGEX, HIDDEN_EMAIL_PATTERN)
-              lines
+            if context[:hide_quoted_email_addresses]
+              pieces.map! do |piece|
+                lines = piece.lines
+                lines.first.gsub!(EMAIL_REGEX, HIDDEN_EMAIL_PATTERN)
+                lines
+              end
             end
             pieces.unshift EMAIL_QUOTED_HEADER
             pieces << EMAIL_HEADER_END

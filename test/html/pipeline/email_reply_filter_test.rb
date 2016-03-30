@@ -3,8 +3,8 @@ require "test_helper"
 EmailReplyFilter = HTML::Pipeline::EmailReplyFilter
 
 class HTML::Pipeline::EmailReplyFilterTest < Minitest::Test
-  def test_hides_email_addresses
-    filter = EmailReplyFilter.new(<<-EMAIL, :highlight => "coffeescript")
+  def setup
+    @body = <<-EMAIL
 Hey, don't send email addresses in comments. They aren't filtered.
 
 > On Mar 5, 2016, at 08:05, Hacker J. Hackerson <example@example.com> wrote:
@@ -15,9 +15,19 @@ Hey, don't send email addresses in comments. They aren't filtered.
 > Reply to this email directly or view it on GitHub.
 >
 EMAIL
+  end
 
-    doc = filter.call
-    refute_match %r(example@example.com), doc.to_s
-    assert_match %r(alreadyleaked@example.com), doc.to_s
+  def test_doesnt_hide_by_default
+    filter = EmailReplyFilter.new(@body)
+    doc = filter.call.to_s
+    assert_match %r(example@example.com), doc
+    assert_match %r(alreadyleaked@example.com), doc
+  end
+
+  def test_hides_email_addresses_when_configured
+    filter = EmailReplyFilter.new(@body, :hide_quoted_email_addresses => true)
+    doc = filter.call.to_s
+    refute_match %r(example@example.com), doc
+    assert_match %r(alreadyleaked@example.com), doc
   end
 end
