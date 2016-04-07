@@ -49,9 +49,7 @@ module HTML
           if fragment.quoted?
             if context[:hide_quoted_email_addresses]
               pieces.map! do |piece|
-                lines = piece.lines
-                lines.first.gsub!(EMAIL_REGEX, HIDDEN_EMAIL_PATTERN)
-                lines
+                piece.gsub!(EMAIL_REGEX, HIDDEN_EMAIL_PATTERN)
               end
             end
             pieces.unshift EMAIL_QUOTED_HEADER
