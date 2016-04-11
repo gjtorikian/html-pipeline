@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.4.0
+
+* Optionally filter email addresses [#247](https://github.com/jch/html-pipeline/pull/247)
+
 ## 2.3.0
 
 * Add option to pass in an anchor icon, instead of using octicons [#244](https://github.com/jch/html-pipeline/pull/244)
