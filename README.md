@@ -250,6 +250,9 @@ Here are some extensions people have built:
 * [html-pipeline-vimeo](https://github.com/dlackty/html-pipeline-vimeo) - An HTML::Pipeline filter for Vimeo links
 * [html-pipeline-hashtag](https://github.com/mr-dxdy/html-pipeline-hashtag) - An HTML::Pipeline filter for hashtags
 * [html-pipeline-linkify_github](https://github.com/jollygoodcode/html-pipeline-linkify_github) - An HTML::Pipeline filter to autolink GitHub urls
+* [html-pipeline-redcarpet_filter](https://github.com/bmikol/html-pipeline-redcarpet_filter) - Render Markdown source text into Markdown HTML using Redcarpet
+* [html-pipeline-typogruby_filter](https://github.com/bmikol/html-pipeline-typogruby_filter) - Add Typogruby text filters to your HTML::Pipeline
+
 
 ## Instrumenting
 
