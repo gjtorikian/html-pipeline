@@ -86,7 +86,7 @@ module HTML
       # Private: helper to hexencode a string. Each byte ends up encoded into
       # two characters, zero padded value in the range [0-9a-f].
       def hexencode(str)
-        str.to_enum(:each_byte).map { |byte| format('%02x', byte) }.join
+        str.unpack('H*').first
       end
     end
   end
