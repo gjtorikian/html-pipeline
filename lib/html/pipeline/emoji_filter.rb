@@ -14,6 +14,7 @@ module HTML
     #   :asset_root (required) - base url to link to emoji sprite
     #   :asset_path (optional) - url path to link to emoji sprite. :file_name can be used as a placeholder for the sprite file name. If no asset_path is set "emoji/:file_name" is used.
     #   :ignored_ancestor_tags (optional) - Tags to stop the emojification. Node has matched ancestor HTML tags will not be emojified. Default to pre, code, and tt tags. Extra tags please pass in the form of array, e.g., %w(blockquote summary).
+    #   :img_attrs (optional) - Attributes for generated img tag. E.g. Pass { "draggble" => true, "height" => nil } to set draggable attribute to "true" and clear height attribute of generated img tag.
     class EmojiFilter < Filter
 
       DEFAULT_IGNORED_ANCESTOR_TAGS = %w(pre code tt).freeze
@@ -71,7 +72,27 @@ module HTML
 
       # Build an emoji image tag
       def emoji_image_tag(name)
-        "<img class='emoji' title=':#{name}:' alt=':#{name}:' src='#{emoji_url(name)}' height='20' width='20' align='absmiddle' />"
+        require "active_support/core_ext/hash/indifferent_access"
+        html_attrs =
+          default_img_attrs(name).
+            merge!((context[:img_attrs] || {}).with_indifferent_access).
+            map { |attr, value| !value.nil? && %(#{attr}="#{value.try(:call, name) || value}") }.
+            reject(&:blank?).join(" ".freeze)
+
+        "<img #{html_attrs}>"
+      end
+
+      # Default attributes for img tag
+      def default_img_attrs(name)
+        {
+          "class" => "emoji".freeze,
+          "title" => ":#{name}:",
+          "alt" => ":#{name}:",
+          "src" => "#{emoji_url(name)}",
+          "height" => "20".freeze,
+          "width" => "20".freeze,
+          "align" => "absmiddle".freeze,
+        }
       end
 
       def emoji_url(name)
