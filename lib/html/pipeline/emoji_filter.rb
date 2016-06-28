@@ -71,7 +71,42 @@ module HTML
 
       # Build an emoji image tag
       def emoji_image_tag(name)
-        "<img class='emoji' title=':#{name}:' alt=':#{name}:' src='#{emoji_url(name)}' height='20' width='20' align='absmiddle' />"
+        "<img #{img_html_attrs(name)}>"
+      end
+
+      def img_html_attrs(name)
+        img_attrs(name).map { |attr, value| %(#{attr}="#{value}") }.join(" ")
+      end
+
+      def img_attrs(name)
+        user_overrides = customized_attrs(name).select { |k, v| !v.nil? }
+        excluded_keys = customized_attrs(name).select { |k, v| v.nil? }.keys
+        result = default_img_attrs(name).merge!(user_overrides)
+        result.except(*excluded_keys)
+      end
+
+      def default_img_attrs(name)
+        {
+          "class" => "emoji",
+          "title" => ":#{name}:",
+          "alt" => ":#{name}:",
+          "src" => "#{emoji_url(name)}",
+          "height" => "20",
+          "width" => "20",
+          "align" => "absmiddle",
+        }
+      end
+
+      def customized_attrs(name)
+        return {} unless context[:img_attrs]
+
+        @_custom_img_attributes ||= begin
+          custom_img_attributes = context[:img_attrs]
+
+          custom_img_attributes.each do |key, value|
+            custom_img_attributes[key] = value.call(name) if value.respond_to?(:call)
+          end
+        end
       end
 
       def emoji_url(name)

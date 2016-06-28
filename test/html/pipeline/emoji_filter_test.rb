@@ -62,4 +62,26 @@ class HTML::Pipeline::EmojiFilterTest < Minitest::Test
     doc = filter.call
     assert_equal body, doc.to_html
   end
+
+  def test_img_tag_attributes
+    body = ":shipit:"
+    filter = EmojiFilter.new(body, {:asset_root => 'https://foo.com'})
+    doc = filter.call
+    assert_equal %(<img class="emoji" title=":shipit:" alt=":shipit:" src="https://foo.com/emoji/shipit.png" height="20" width="20" align="absmiddle">), doc.to_html
+  end
+
+  def test_img_custom_tag_attributes
+    body = ":shipit:"
+    filter = EmojiFilter.new(body, {:asset_root => 'https://foo.com', img_attrs: Hash("draggable"=> false, "height" => nil, "width" => nil, "align" => nil)})
+    doc = filter.call
+    assert_equal %(<img class="emoji" title=":shipit:" alt=":shipit:" src="https://foo.com/emoji/shipit.png" draggable=\"false\">), doc.to_html
+  end
+
+  def test_img_attr_accept_proclike_object
+    remove_colons = ->(name) { name.gsub(":", "") }
+    body = ":shipit:"
+    filter = EmojiFilter.new(body, {:asset_root => 'https://foo.com', img_attrs: Hash("title" => remove_colons)})
+    doc = filter.call
+    assert_equal %(<img class="emoji" title="shipit" alt=":shipit:" src="https://foo.com/emoji/shipit.png" height="20" width="20" align="absmiddle">), doc.to_html
+  end
 end
