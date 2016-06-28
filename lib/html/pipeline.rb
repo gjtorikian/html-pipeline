@@ -160,8 +160,8 @@ module HTML
     def instrument(event, payload = nil)
       payload ||= default_payload
       return yield(payload) unless instrumentation_service
-      instrumentation_service.instrument event, payload do |payload|
-        yield payload
+      instrumentation_service.instrument event, payload do |the_payload|
+        yield the_payload
       end
     end
 
