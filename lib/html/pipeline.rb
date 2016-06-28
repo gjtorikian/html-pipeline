@@ -69,7 +69,7 @@ module HTML
     # Public: String name for this Pipeline. Defaults to Class name.
     attr_writer :instrumentation_name
     def instrumentation_name
-      @instrumentation_name || self.class.name
+      defined?(@instrumentation_name) && @instrumentation_name || self.class.name
     end
 
     class << self
