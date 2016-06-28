@@ -20,7 +20,7 @@ class HTML::PipelineTest < Minitest::Test
     events = service.subscribe "call_filter.html_pipeline"
     @pipeline.instrumentation_service = service
     filter(body = "hello")
-    event, payload, res = events.pop
+    event, payload, _ = events.pop
     assert event, "event expected"
     assert_equal "call_filter.html_pipeline", event
     assert_equal TestFilter.name, payload[:filter]
@@ -33,7 +33,7 @@ class HTML::PipelineTest < Minitest::Test
     events = service.subscribe "call_pipeline.html_pipeline"
     @pipeline.instrumentation_service = service
     filter(body = "hello")
-    event, payload, res = events.pop
+    event, payload, _ = events.pop
     assert event, "event expected"
     assert_equal "call_pipeline.html_pipeline", event
     assert_equal @pipeline.filters.map(&:name), payload[:filters]
@@ -62,7 +62,7 @@ class HTML::PipelineTest < Minitest::Test
 
     filter(body = 'foo')
 
-    event, payload, res = events.pop
+    event, payload, _ = events.pop
     assert event, "expected event"
     assert_equal name, payload[:pipeline]
     assert_equal body.reverse, payload[:result][:output]

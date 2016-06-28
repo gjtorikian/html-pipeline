@@ -31,7 +31,7 @@ module HTML
 
       def highlight_with_timeout_handling(lexer, text)
         lexer.highlight(text)
-      rescue Timeout::Error => boom
+      rescue Timeout::Error => _boom
         nil
       end
 
