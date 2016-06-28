@@ -19,7 +19,7 @@ class HTML::Pipeline::EmojiFilterTest < Minitest::Test
     exception = assert_raises(ArgumentError) {
       EmojiFilter.call("", {})
     }
-    assert_match /:asset_root/, exception.message
+    assert_match(/:asset_root/, exception.message)
   end
 
   def test_custom_asset_path

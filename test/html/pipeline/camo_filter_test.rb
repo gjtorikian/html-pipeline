@@ -71,7 +71,7 @@ class HTML::Pipeline::CamoFilterTest < Minitest::Test
     exception = assert_raises(ArgumentError) {
       CamoFilter.call("", {})
     }
-    assert_match /:asset_proxy[^_]/, exception.message
-    assert_match /:asset_proxy_secret_key/, exception.message
+    assert_match(/:asset_proxy[^_]/, exception.message)
+    assert_match(/:asset_proxy_secret_key/, exception.message)
   end
 end
