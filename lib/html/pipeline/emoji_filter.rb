@@ -14,6 +14,7 @@ module HTML
     #   :asset_root (required) - base url to link to emoji sprite
     #   :asset_path (optional) - url path to link to emoji sprite. :file_name can be used as a placeholder for the sprite file name. If no asset_path is set "emoji/:file_name" is used.
     #   :ignored_ancestor_tags (optional) - Tags to stop the emojification. Node has matched ancestor HTML tags will not be emojified. Default to pre, code, and tt tags. Extra tags please pass in the form of array, e.g., %w(blockquote summary).
+    #   :img_attrs (optional) - Attributes for generated img tag. E.g. Pass { "draggble" => true, "height" => nil } to set draggable attribute to "true" and clear height attribute of generated img tag.
     class EmojiFilter < Filter
 
       DEFAULT_IGNORED_ANCESTOR_TAGS = %w(pre code tt).freeze
@@ -71,40 +72,34 @@ module HTML
 
       # Build an emoji image tag
       def emoji_image_tag(name)
-        "<img #{img_html_attrs(name)}>"
+        html_attrs =
+          default_img_attrs(name).
+            merge!(customized_img_attrs(name)).
+            except(*customized_img_attrs(name).select { |_, v| v.nil? }.keys).
+            map { |attr, value| %(#{attr}="#{value}") }.join(" ".freeze)
+
+        "<img #{html_attrs}>"
       end
 
-      def img_html_attrs(name)
-        img_attrs(name).map { |attr, value| %(#{attr}="#{value}") }.join(" ")
-      end
-
-      def img_attrs(name)
-        user_overrides = customized_attrs(name).select { |k, v| !v.nil? }
-        excluded_keys = customized_attrs(name).select { |k, v| v.nil? }.keys
-        result = default_img_attrs(name).merge!(user_overrides)
-        result.except(*excluded_keys)
-      end
-
+      # Default attributes for img tag
       def default_img_attrs(name)
         {
-          "class" => "emoji",
+          "class" => "emoji".freeze,
           "title" => ":#{name}:",
           "alt" => ":#{name}:",
           "src" => "#{emoji_url(name)}",
-          "height" => "20",
-          "width" => "20",
-          "align" => "absmiddle",
+          "height" => "20".freeze,
+          "width" => "20".freeze,
+          "align" => "absmiddle".freeze,
         }
       end
 
-      def customized_attrs(name)
-        return {} unless context[:img_attrs]
+      def customized_img_attrs(name)
+        @_customized_img_attrs ||= begin
+          return {} unless context[:img_attrs]
 
-        @_custom_img_attributes ||= begin
-          custom_img_attributes = context[:img_attrs]
-
-          custom_img_attributes.each do |key, value|
-            custom_img_attributes[key] = value.call(name) if value.respond_to?(:call)
+          context[:img_attrs].each do |key, value|
+            context[:img_attrs][key] = value.call(name) if value.respond_to?(:call)
           end
         end
       end
