@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.4.2
+
+* Make EmojiFilter generated img tag HTML attributes configurable [#258](https://github.com/jch/html-pipeline/pull/258)
+
 ## 2.4.1
 
 * Regression in EmailReplyPipeline: unfiltered content is being ommitted [#253](https://github.com/jch/html-pipeline/pull/253)
