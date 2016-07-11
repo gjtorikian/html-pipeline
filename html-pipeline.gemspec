@@ -11,12 +11,11 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{Helpers for processing content through a chain of filters}
   gem.homepage      = "https://github.com/jch/html-pipeline"
 
-  gem.files         = `git ls-files`.split $/
-  gem.test_files    = gem.files.grep(%r{^test})
+  gem.files         = `git ls-files -z`.split("\x0").reject { |f| f =~ %r(^(test|gemfiles|script)/) }
   gem.require_paths = ["lib"]
 
   gem.add_dependency "nokogiri", ">= 1.4"
-  gem.add_dependency "activesupport", [">= 2", "< 5"]
+  gem.add_dependency "activesupport", ">= 2"
 
   gem.post_install_message = <<msg
 -------------------------------------------------
