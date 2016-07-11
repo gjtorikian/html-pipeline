@@ -76,7 +76,7 @@ module HTML
         html_attrs =
           default_img_attrs(name).
             merge!((context[:img_attrs] || {}).with_indifferent_access).
-            map { |attr, value| !value.nil? && %(#{attr}="#{value.try(:call, name) || value}") }.
+            map { |attr, value| !value.nil? && %(#{attr}="#{value.respond_to?(:call) && value.call(name) || value}") }.
             reject(&:blank?).join(" ".freeze)
 
         "<img #{html_attrs}>"
