@@ -170,14 +170,7 @@ EmojiPipeline = Pipeline.new [
 ## Dependencies
 
 Filter gem dependencies are not bundled; you must bundle the filter's gem
-dependencies. The below list details filters with dependencies. For example,
-`SyntaxHighlightFilter` uses [github-linguist](https://github.com/github/linguist)
-to detect and highlight languages. For example, to use the `SyntaxHighlightFilter`,
-add the following to your Gemfile:
-
-```ruby
-gem 'github-linguist'
-```
+dependencies. The below list details filters with dependencies. 
 
 * `AutolinkFilter` - `rinku`
 * `EmailReplyFilter` - `escape_utils`, `email_reply_parser`
@@ -189,6 +182,26 @@ gem 'github-linguist'
 * `TextileFilter` - `RedCloth`
 
 _Note:_ See [Gemfile](/Gemfile) `:test` block for version requirements.
+
+
+For example, `SyntaxHighlightFilter` uses [github-linguist](https://github.com/github/linguist)
+to detect and highlight languages. To use the `SyntaxHighlightFilter`, add the following to your Gemfile:
+
+```ruby
+gem 'github-linguist'
+```
+
+In turn, the actual syntax highlighting is handled by [pygments.rb](https://github.com/tmm1/pygments.rb). `Pygments.rb` can generate the styles.  The following generates the CSS for HTML formatted code:
+
+```
+❯ irb
+>> require 'pygments'
+=> true
+>> Pygments.css('.highlight')
+=> ".highlight .hll { background-color: #ffffcc }\n.highlight  { background: #f8f8f8..."
+```
+Then just copy and past the code into your css file. 
+
 
 ## Documentation
 
