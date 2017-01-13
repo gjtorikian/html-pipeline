@@ -15,6 +15,7 @@ gemfile:
   - gemfiles/rails_3.gemfile
 
 rvm:
+  - 2.4.0
   - 2.3.1
   - 2.2.5
   - 2.1
@@ -30,3 +31,7 @@ matrix:
       rvm: 2.1
     - gemfile: gemfiles/rails_5.gemfile
       rvm: 2.0
+    - gemfile: gemfiles/rails_4.gemfile
+      rvm: 2.4.0
+    - gemfile: gemfiles/rails_3.gemfile
+      rvm: 2.4.0
