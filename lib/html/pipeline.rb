@@ -31,6 +31,7 @@ module HTML
     autoload :CamoFilter,            'html/pipeline/camo_filter'
     autoload :EmailReplyFilter,      'html/pipeline/email_reply_filter'
     autoload :EmojiFilter,           'html/pipeline/emoji_filter'
+    autoload :FlickrFilter,          'html/pipeline/flickr_filter'
     autoload :HttpsFilter,           'html/pipeline/https_filter'
     autoload :ImageFilter,           'html/pipeline/image_filter'
     autoload :ImageMaxWidthFilter,   'html/pipeline/image_max_width_filter'
