@@ -42,6 +42,7 @@ module HTML
     autoload :TextileFilter,         'html/pipeline/textile_filter'
     autoload :TableOfContentsFilter, 'html/pipeline/toc_filter'
     autoload :TextFilter,            'html/pipeline/text_filter'
+    autoload :YoutubeFilter,         'html/pipeline/youtube_filter'
 
     class MissingDependencyError < LoadError; end
 
