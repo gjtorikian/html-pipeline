@@ -17,7 +17,7 @@ module HTML
     class MarkdownFilter < TextFilter
       def initialize(text, context = nil, result = nil)
         super text, context, result
-        @text = @text.gsub "\r", ''
+        @text.gsub! "\r", ""
       end
 
       # Convert Markdown to HTML using the best available implementation
