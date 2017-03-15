@@ -77,6 +77,13 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
     assert_equal stuff, html
   end
 
+  def test_custom_anchor_schemes_no_slashes_are_not_removed
+    stuff  = '<a href="about:config">about:config</a>'
+    filter = SanitizationFilter.new(stuff, {:anchor_schemes => ['about']})
+    html = filter.call.to_s
+    assert_equal stuff, html
+  end
+
   def test_anchor_schemes_are_merged_with_other_anchor_restrictions
     stuff  = '<a href="something-weird://heyyy" ping="more-weird://hiii">Wat</a> is this'
     whitelist = {
@@ -102,7 +109,7 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
   end
 
   def test_whitelist_contains_default_anchor_schemes
-    assert_equal SanitizationFilter::WHITELIST[:protocols]['a']['href'], ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac']
+    assert_equal SanitizationFilter::WHITELIST[:protocols]['a']['href'], ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac', 'about', 'chrome']
   end
 
   def test_whitelist_from_full_constant
@@ -113,7 +120,7 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
   end
 
   def test_exports_default_anchor_schemes
-    assert_equal SanitizationFilter::ANCHOR_SCHEMES, ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac']
+    assert_equal SanitizationFilter::ANCHOR_SCHEMES, ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac', 'about', 'chrome']
   end
 
   def test_script_contents_are_removed
