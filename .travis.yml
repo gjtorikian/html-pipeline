@@ -1,0 +1,37 @@
+language: ruby
+sudo: false
+cache: bundler
+
+addons:
+  apt:
+    sources:
+      - libicu-dev
+
+script: bundle exec rake
+
+gemfile:
+  - gemfiles/rails_5.gemfile
+  - gemfiles/rails_4.gemfile
+  - gemfiles/rails_3.gemfile
+
+rvm:
+  - 2.4.0
+  - 2.3.1
+  - 2.2.5
+  - 2.1
+  - 2.0
+  - ruby-head
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - rvm: ruby-head
+  exclude:
+    - gemfile: gemfiles/rails_5.gemfile
+      rvm: 2.1
+    - gemfile: gemfiles/rails_5.gemfile
+      rvm: 2.0
+    - gemfile: gemfiles/rails_4.gemfile
+      rvm: 2.4.0
+    - gemfile: gemfiles/rails_3.gemfile
+      rvm: 2.4.0
