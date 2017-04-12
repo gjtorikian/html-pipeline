@@ -182,7 +182,7 @@ gem 'github-linguist'
 * `AutolinkFilter` - `rinku`
 * `EmailReplyFilter` - `escape_utils`, `email_reply_parser`
 * `EmojiFilter` - `gemoji`
-* `MarkdownFilter` - `github-markdown`
+* `MarkdownFilter` - `commonmarker`
 * `PlainTextInputFilter` - `escape_utils`
 * `SanitizationFilter` - `sanitize`
 * `SyntaxHighlightFilter` - `github-linguist`
