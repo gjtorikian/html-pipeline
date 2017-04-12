@@ -1,7 +1,7 @@
 PATH
   remote: ../
   specs:
-    html-pipeline (2.4.2)
+    html-pipeline (2.5.0)
       activesupport (>= 2)
       nokogiri (>= 1.4)
 
