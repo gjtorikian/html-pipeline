@@ -76,24 +76,24 @@ class GFMTest < Minitest::Test
   end
 
   def test_turn_newlines_into_br_tags_in_simple_cases
-    assert_equal "<p>foo<br>\nbar</p>",
+    assert_equal "<p>foo<br />\nbar</p>",
                  gfm("foo\nbar")
   end
 
   def test_convert_newlines_in_all_groups
-    assert_equal "<p>apple<br>\npear<br>\norange</p>\n\n" +
-                 "<p>ruby<br>\npython<br>\nerlang</p>",
+    assert_equal "<p>apple<br />\npear<br />\norange</p>\n" +
+                 "<p>ruby<br />\npython<br />\nerlang</p>",
                  gfm("apple\npear\norange\n\nruby\npython\nerlang")
   end
 
   def test_convert_newlines_in_even_long_groups
-    assert_equal "<p>apple<br>\npear<br>\norange<br>\nbanana</p>\n\n" +
-                 "<p>ruby<br>\npython<br>\nerlang</p>",
+    assert_equal "<p>apple<br />\npear<br />\norange<br />\nbanana</p>\n" +
+                 "<p>ruby<br />\npython<br />\nerlang</p>",
                  gfm("apple\npear\norange\nbanana\n\nruby\npython\nerlang")
   end
 
   def test_not_convert_newlines_in_lists
-    assert_equal "<h1>foo</h1>\n\n<h1>bar</h1>",
+    assert_equal "<h1>foo</h1>\n<h1>bar</h1>",
                  gfm("# foo\n# bar")
     assert_equal "<ul>\n<li>foo</li>\n<li>bar</li>\n</ul>",
                  gfm("* foo\n* bar")
