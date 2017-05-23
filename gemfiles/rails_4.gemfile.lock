@@ -1,7 +1,7 @@
 PATH
   remote: ../
   specs:
-    html-pipeline (2.4.2)
+    html-pipeline (2.5.0)
       activesupport (>= 2)
       nokogiri (>= 1.4)
 
@@ -51,6 +51,8 @@ GEM
     arel (6.0.3)
     builder (3.2.2)
     charlock_holmes (0.7.3)
+    commonmarker (0.14.15)
+      ruby-enum (~> 0.5)
     concurrent-ruby (1.0.2)
     email_reply_parser (0.5.8)
     erubis (2.7.0)
@@ -61,7 +63,6 @@ GEM
       escape_utils (~> 1.0.1)
       mime-types (~> 1.19)
       pygments.rb (~> 0.6.0)
-    github-markdown (0.6.9)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     i18n (0.7.0)
@@ -110,6 +111,8 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (11.2.2)
     rinku (1.7.3)
+    ruby-enum (0.7.1)
+      i18n
     sanitize (2.1.0)
       nokogiri (>= 1.4.4)
     sprockets (3.6.2)
@@ -132,11 +135,11 @@ DEPENDENCIES
   RedCloth (~> 4.2.9)
   appraisal
   bundler
+  commonmarker (~> 0.14)
   email_reply_parser (~> 0.5)
   escape_utils (~> 1.0)
   gemoji (~> 2.0)
   github-linguist (~> 2.10)
-  github-markdown (~> 0.5)
   html-pipeline!
   minitest
   rack (< 2)

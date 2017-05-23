@@ -1,7 +1,7 @@
 begin
-  require "github/markdown"
+  require "commonmarker"
 rescue LoadError => _
-  raise HTML::Pipeline::MissingDependencyError, "Missing dependency 'github-markdown' for MarkdownFilter. See README.md for details."
+  raise HTML::Pipeline::MissingDependencyError, "Missing dependency 'commonmarker' for MarkdownFilter. See README.md for details."
 end
 
 module HTML
@@ -23,8 +23,9 @@ module HTML
       # Convert Markdown to HTML using the best available implementation
       # and convert into a DocumentFragment.
       def call
-        mode = (context[:gfm] != false) ? :gfm : :markdown
-        html = GitHub::Markdown.to_html(@text, mode)
+        options = [:GITHUB_PRE_LANG]
+        options << :HARDBREAKS if context[:gfm] != false
+        html = CommonMarker.render_html(@text, options, [:table, :strikethrough, :tagfilter, :autolink])
         html.rstrip!
         html
       end

@@ -6,6 +6,9 @@ addons:
   apt:
     sources:
       - libicu-dev
+      - kalakris-cmake
+    packages:
+      - cmake
 
 script: bundle exec rake
 

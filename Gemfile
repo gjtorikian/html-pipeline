@@ -14,7 +14,7 @@ group :test do
   gem "rinku",              "~> 1.7",   :require => false
   gem "gemoji",             "~> 2.0",   :require => false
   gem "RedCloth",           "~> 4.2.9", :require => false
-  gem "github-markdown",    "~> 0.5",   :require => false
+  gem "commonmarker",       "~> 0.14",  :require => false
   gem "email_reply_parser", "~> 0.5",   :require => false
   gem "sanitize",           "~> 2.0",   :require => false
 
