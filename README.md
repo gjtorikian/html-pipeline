@@ -252,6 +252,7 @@ Here are some extensions people have built:
 * [html-pipeline-linkify_github](https://github.com/jollygoodcode/html-pipeline-linkify_github) - An HTML::Pipeline filter to autolink GitHub urls
 * [html-pipeline-redcarpet_filter](https://github.com/bmikol/html-pipeline-redcarpet_filter) - Render Markdown source text into Markdown HTML using Redcarpet
 * [html-pipeline-typogruby_filter](https://github.com/bmikol/html-pipeline-typogruby_filter) - Add Typogruby text filters to your HTML::Pipeline
+* [korgi](https://github.com/jodeci/korgi) - HTML::Pipeline filters for links to Rails resources
 
 
 ## Instrumenting
