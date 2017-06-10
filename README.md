@@ -258,8 +258,8 @@ Here are some extensions people have built:
 ## Instrumenting
 
 Filters and Pipelines can be set up to be instrumented when called. The pipeline
-must be setup with an [ActiveSupport::Notifications]
-(http://api.rubyonrails.org/classes/ActiveSupport/Notifications.html)
+must be setup with an
+[ActiveSupport::Notifications](http://api.rubyonrails.org/classes/ActiveSupport/Notifications.html)
 compatible service object and a name. New pipeline objects will default to the
 `HTML::Pipeline.default_instrumentation_service` object.
 
