@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.6.0
+* Switch from github-markdown to CommonMark #274
+* Fixed a few warnings
+
 ## 2.5.0
 
 * Ruby 2.4 support. Backwards compatible, but bumped minor version so projects can choose to lock at older version [#268](https://github.com/jch/html-pipeline/pull/268)
