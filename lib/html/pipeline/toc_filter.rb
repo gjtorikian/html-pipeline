@@ -23,7 +23,7 @@ module HTML
     #  result[:output].to_s
     #  # => "<h1>\n<a id=\"ice-cube\" class=\"anchor\" href=\"#ice-cube\">..."
     class TableOfContentsFilter < Filter
-      PUNCTUATION_REGEXP = RUBY_VERSION > "1.9" ? /[^\p{Word}\- ]/u : /[^\w\- ]/
+      PUNCTUATION_REGEXP = RUBY_VERSION > "1.9" ? /[^\p{Word}\-]+/u : /[^\w\-]+/
 
       # The icon that will be placed next to an anchored rendered markdown header
       def anchor_icon
@@ -37,8 +37,7 @@ module HTML
         doc.css('h1, h2, h3, h4, h5, h6').each do |node|
           text = node.text
           id = ascii_downcase(text)
-          id.gsub!(PUNCTUATION_REGEXP, '') # remove punctuation
-          id.gsub!(' ', '-') # replace spaces with dash
+          id.gsub!(PUNCTUATION_REGEXP, '-') # remove punctuation
 
           uniq = (headers[id] > 0) ? "-#{headers[id]}" : ''
           headers[id] += 1
