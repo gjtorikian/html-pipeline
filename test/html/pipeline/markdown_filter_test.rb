@@ -48,6 +48,19 @@ class HTML::Pipeline::MarkdownFilterTest < Minitest::Test
     assert_equal 1, doc.search('pre').size
     assert_equal 'ruby', doc.search('pre').first['lang']
   end
+
+  def test_standard_extensions
+    iframe = "<iframe src='http://www.google.com'></iframe>"
+    iframe_escaped = "&lt;iframe src='http://www.google.com'>&lt;/iframe>"
+    doc = MarkdownFilter.new(iframe).call
+    assert_equal(doc, iframe_escaped)
+  end
+
+  def test_changing_extensions
+    iframe = "<iframe src='http://www.google.com'></iframe>"
+    doc = MarkdownFilter.new(iframe, commonmarker_extensions: []).call
+    assert_equal(doc, iframe)
+  end
 end
 
 class GFMTest < Minitest::Test

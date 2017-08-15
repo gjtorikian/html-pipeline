@@ -12,6 +12,8 @@ module HTML
     #
     # Context options:
     #   :gfm      => false    Disable GFM line-end processing
+    #   :commonmarker_extensions => [ :table, :strikethrough,
+    #      :tagfilter, :autolink ] Common marker extensions to include
     #
     # This filter does not write any additional information to the context hash.
     class MarkdownFilter < TextFilter
@@ -25,7 +27,10 @@ module HTML
       def call
         options = [:GITHUB_PRE_LANG]
         options << :HARDBREAKS if context[:gfm] != false
-        html = CommonMarker.render_html(@text, options, [:table, :strikethrough, :tagfilter, :autolink])
+        extensions = context.fetch(
+          :commonmarker_extensions,
+          [:table, :strikethrough, :tagfilter, :autolink])
+        html = CommonMarker.render_html(@text, options, extensions)
         html.rstrip!
         html
       end
