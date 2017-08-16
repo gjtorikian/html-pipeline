@@ -1,7 +1,7 @@
 PATH
-  remote: ../
+  remote: ..
   specs:
-    html-pipeline (2.5.0)
+    html-pipeline (2.6.0)
       activesupport (>= 2)
       nokogiri (>= 1.4)
 
@@ -149,4 +149,4 @@ DEPENDENCIES
   sanitize (~> 2.0)
 
 BUNDLED WITH
-   1.12.5
+   1.15.3
