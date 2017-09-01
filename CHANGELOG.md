@@ -14,7 +14,7 @@
 
 ## 2.4.1
 
-* Regression in EmailReplyPipeline: unfiltered content is being ommitted [#253](https://github.com/jch/html-pipeline/pull/253)
+* Regression in EmailReplyPipeline: unfiltered content is being omitted [#253](https://github.com/jch/html-pipeline/pull/253)
 
 ## 2.4.0
 
