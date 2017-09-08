@@ -44,6 +44,12 @@ module HTML
     autoload :TextFilter,            'html/pipeline/text_filter'
 
     class MissingDependencyError < LoadError; end
+    def self.require_dependency(name, requirer)
+      require name
+    rescue LoadError => e
+      raise MissingDependencyError,
+        "Missing dependency '#{name}' for #{requirer}. See README.md for details.\n#{e.class.name}: #{e}"
+    end
 
     # Our DOM implementation.
     DocumentFragment = Nokogiri::HTML::DocumentFragment
