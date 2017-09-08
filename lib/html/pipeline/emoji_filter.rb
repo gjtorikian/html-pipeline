@@ -1,10 +1,5 @@
 require "cgi"
-
-begin
-  require "gemoji"
-rescue LoadError => _
-  raise HTML::Pipeline::MissingDependencyError, "Missing dependency 'gemoji' for EmojiFilter. See README.md for details."
-end
+HTML::Pipeline.require_dependency("gemoji", "EmojiFilter")
 
 module HTML
   class Pipeline

@@ -1,8 +1,4 @@
-begin
-  require "rinku"
-rescue LoadError => _
-  raise HTML::Pipeline::MissingDependencyError, "Missing dependency 'rinku' for AutolinkFilter. See README.md for details."
-end
+HTML::Pipeline.require_dependency("rinku", "AutolinkFilter")
 
 module HTML
   class Pipeline
