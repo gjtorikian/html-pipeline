@@ -1,8 +1,4 @@
-begin
-  require "sanitize"
-rescue LoadError => _
-  raise HTML::Pipeline::MissingDependencyError, "Missing dependency 'sanitize' for SanitizationFilter. See README.md for details."
-end
+HTML::Pipeline.require_dependency("sanitize", "SanitizationFilter")
 
 module HTML
   class Pipeline
