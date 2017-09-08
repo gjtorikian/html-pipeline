@@ -1,6 +1,7 @@
 language: ruby
 sudo: false
 cache: bundler
+bundler_args: --path ../../vendor/bundle
 
 addons:
   apt:
