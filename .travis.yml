@@ -1,5 +1,4 @@
 language: ruby
-dist: trusty
 sudo: false
 cache: bundler
 bundler_args: --path ../../vendor/bundle
