@@ -1,8 +1,4 @@
-begin
-  require "linguist"
-rescue LoadError => _
-  raise HTML::Pipeline::MissingDependencyError, "Missing dependency 'github-linguist' for SyntaxHighlightFilter. See README.md for details."
-end
+HTML::Pipeline.require_dependency("linguist", "SyntaxHighlightFilter")
 
 module HTML
   class Pipeline

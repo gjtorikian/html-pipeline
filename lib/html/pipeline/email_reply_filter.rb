@@ -1,14 +1,5 @@
-begin
-  require "escape_utils"
-rescue LoadError => _
-  raise HTML::Pipeline::MissingDependencyError, "Missing dependency 'escape_utils' for EmailReplyFilter. See README.md for details."
-end
-
-begin
-  require "email_reply_parser"
-rescue LoadError => _
-  raise HTML::Pipeline::MissingDependencyError, "Missing dependency 'email_reply_parser' for EmailReplyFilter. See README.md for details."
-end
+HTML::Pipeline.require_dependency("escape_utils", "EmailReplyFilter")
+HTML::Pipeline.require_dependency("email_reply_parser", "EmailReplyFilter")
 
 module HTML
   class Pipeline

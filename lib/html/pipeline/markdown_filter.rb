@@ -1,8 +1,4 @@
-begin
-  require "commonmarker"
-rescue LoadError => _
-  raise HTML::Pipeline::MissingDependencyError, "Missing dependency 'commonmarker' for MarkdownFilter. See README.md for details."
-end
+HTML::Pipeline.require_dependency("commonmarker", "MarkdownFilter")
 
 module HTML
   class Pipeline

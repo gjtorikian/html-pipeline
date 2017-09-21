@@ -1,8 +1,4 @@
-begin
-  require "redcloth"
-rescue LoadError => _
-  raise HTML::Pipeline::MissingDependencyError, "Missing dependency 'RedCloth' for TextileFilter. See README.md for details."
-end
+HTML::Pipeline.require_dependency("redcloth", "RedCloth")
 
 module HTML
   class Pipeline
