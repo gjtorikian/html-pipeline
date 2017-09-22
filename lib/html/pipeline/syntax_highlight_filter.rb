@@ -1,5 +1,11 @@
 HTML::Pipeline.require_dependency("linguist", "SyntaxHighlightFilter")
 
+begin
+  require "pygments"
+rescue LoadError => _
+  abort "Missing dependency 'pygments.rb' for SyntaxHighlightFilter. See README.md for details."
+end
+
 module HTML
   class Pipeline
     # HTML Filter that syntax highlights code blocks wrapped

@@ -177,6 +177,7 @@ add the following to your Gemfile:
 
 ```ruby
 gem 'github-linguist'
+gem 'pygments.rb'
 ```
 
 * `AutolinkFilter` - `rinku`

@@ -19,4 +19,12 @@ class HTML::Pipeline::SyntaxHighlightFilterTest < Minitest::Test
     assert doc.css(".highlight-coffeescript").empty?
     assert !doc.css(".highlight-c").empty?
   end
+
+  def test_highlight_unknown
+    filter = SyntaxHighlightFilter.new \
+      "<pre>hello</pre>", :highlight => "something"
+
+    doc = filter.call
+    assert doc.css(".highlight-something").empty?
+  end
 end
