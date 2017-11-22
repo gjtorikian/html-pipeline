@@ -91,4 +91,11 @@ class HTML::Pipeline::EmojiFilterTest < Minitest::Test
     doc = filter.call
     assert_equal %(<img class="emoji" title=":shipit:" alt=":shipit:" src="https://foo.com/emoji/shipit.png" draggable="false">), doc.to_html
   end
+
+  def test_img_tag_attrs_screen_reader_alt_when_available
+    body = ":key:"
+    filter = EmojiFilter.new(body, {:asset_root => "https://foo.com"})
+    doc = filter.call
+    assert_equal %(<img class="emoji" title=":key:" alt="key emoji" src="https://foo.com/emoji/unicode/1f511.png" height="20" width="20" align="absmiddle">), doc.to_html
+  end
 end

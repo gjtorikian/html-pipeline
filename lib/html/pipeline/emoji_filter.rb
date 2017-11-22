@@ -82,7 +82,7 @@ module HTML
         {
           "class" => "emoji".freeze,
           "title" => ":#{name}:",
-          "alt" => ":#{name}:",
+          "alt" => "#{emoji_description(name)}",
           "src" => "#{emoji_url(name)}",
           "height" => "20".freeze,
           "width" => "20".freeze,
@@ -109,6 +109,16 @@ module HTML
 
       def emoji_filename(name)
         Emoji.find_by_alias(name).image_filename
+      end
+
+      def emoji_description(name)
+        # Gemoji 3 introduced a description for emoji which is better suited for screen readers.
+        if Emoji.find_by_alias(name).respond_to?(:description)
+          description = Emoji.find_by_alias(name).description
+          return "#{description} emoji" unless description.nil? ||  description.empty?
+        end
+
+        ":#{name}:"
       end
 
       # Return ancestor tags to stop the emojification.
