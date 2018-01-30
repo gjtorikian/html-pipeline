@@ -36,19 +36,36 @@ module HTML
         headers = Hash.new(0)
         doc.css('h1, h2, h3, h4, h5, h6').each do |node|
           text = node.text
-          id = ascii_downcase(text)
-          id.gsub!(PUNCTUATION_REGEXP, '') # remove punctuation
-          id.gsub!(' ', '-') # replace spaces with dash
+          id = text_to_id(text)
 
           uniq = (headers[id] > 0) ? "-#{headers[id]}" : ''
           headers[id] += 1
           if header_content = node.children.first
-            result[:toc] << %Q{<li><a href="##{id}#{uniq}">#{text}</a></li>\n}
-            header_content.add_previous_sibling(%Q{<a id="#{id}#{uniq}" class="anchor" href="##{id}#{uniq}" aria-hidden="true">#{anchor_icon}</a>})
+            result[:toc] << toc_item(id, uniq, text)
+            header_content.add_previous_sibling(toc_sibling(id, uniq, text))
           end
         end
-        result[:toc] = %Q{<ul class="section-nav">\n#{result[:toc]}</ul>} unless result[:toc].empty?
+        result[:toc] = toc_complete(result[:toc]) unless result[:toc].empty?
         doc
+      end
+      
+      def text_to_id(text)
+        id = ascii_downcase(text)
+        id.gsub!(PUNCTUATION_REGEXP, '') # remove punctuation
+        id.gsub!(' ', '-') # replace spaces with dash
+        id
+      end
+      
+      def toc_item(id, uniq, text)
+        %Q{<li><a href="##{id}#{uniq}">#{text}</a></li>\n}
+      end
+      
+      def toc_sibling(id, uniq, text)
+        %Q{<a id="#{id}#{uniq}" class="anchor" href="##{id}#{uniq}" aria-hidden="true">#{anchor_icon}</a>}        
+      end
+
+      def toc_complete(toc)
+        %Q{<ul class="section-nav">\n#{toc}</ul>}
       end
 
       if RUBY_VERSION >= "2.4"
