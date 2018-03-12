@@ -18,4 +18,6 @@ group :test do
   gem "email_reply_parser", "~> 0.5",   :require => false
   gem "sanitize",           "~> 2.0",   :require => false
 
+  gem "escape_utils",     "~> 1.0",   :require => false
+  gem "rouge",  "~> 3.1",  :require => false
 end
