@@ -15,7 +15,7 @@ module HTML
 
       def call
         doc.search('.//text()').each do |node|
-          content = node.to_html
+          content = node.text
           next unless content.include?(':')
           next if has_ancestor?(node, ignored_ancestor_tags)
           html = emoji_image_filter(content)
