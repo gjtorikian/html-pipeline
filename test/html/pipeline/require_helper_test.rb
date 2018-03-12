@@ -1,8 +1,7 @@
-# encoding: utf-8
-require "test_helper"
+
+require 'test_helper'
 
 class HTML::Pipeline::RequireHelperTest < Minitest::Test
-
   def test_works_with_existing
     HTML::Pipeline.require_dependency('rake', 'SomeClass')
   end
@@ -24,6 +23,6 @@ class HTML::Pipeline::RequireHelperTest < Minitest::Test
     error = assert_raises LoadError do
       HTML::Pipeline.require_dependency('non-existant', 'SomeClass')
     end
-    assert_includes(error.message, "LoadError: cannot load such file")
+    assert_includes(error.message, 'LoadError: cannot load such file')
   end
 end

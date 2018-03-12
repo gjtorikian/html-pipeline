@@ -1,4 +1,4 @@
-HTML::Pipeline.require_dependency("rouge", "SyntaxHighlightFilter")
+HTML::Pipeline.require_dependency('rouge', 'SyntaxHighlightFilter')
 
 module HTML
   class Pipeline
@@ -20,12 +20,11 @@ module HTML
           html = highlight_with_timeout_handling(text, lang)
           next if html.nil?
 
-          if (node = node.replace(html).first)
-            klass = node["class"]
-            klass = [klass, "highlight-#{lang}"].compact.join " "
+          next unless (node = node.replace(html).first)
+          klass = node['class']
+          klass = [klass, "highlight-#{lang}"].compact.join ' '
 
-            node["class"] = klass
-          end
+          node['class'] = klass
         end
         doc
       end

@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 EmailReplyFilter = HTML::Pipeline::EmailReplyFilter
 
@@ -19,15 +19,15 @@ EMAIL
   def test_doesnt_hide_by_default
     filter = EmailReplyFilter.new(@body)
     doc = filter.call.to_s
-    assert_match %r(alreadyleaked@example.com), doc
-    assert_match %r(boatymcboatface@example.com), doc
+    assert_match /alreadyleaked@example.com/, doc
+    assert_match /boatymcboatface@example.com/, doc
   end
 
   def test_hides_email_addresses_when_configured
-    filter = EmailReplyFilter.new(@body, :hide_quoted_email_addresses => true)
+    filter = EmailReplyFilter.new(@body, hide_quoted_email_addresses: true)
     doc = filter.call.to_s
-    refute_match %r(boatymcboatface@example.com), doc
-    refute_match %r(alreadyleaked@example.com), doc
+    refute_match /boatymcboatface@example.com/, doc
+    refute_match /alreadyleaked@example.com/, doc
   end
 
   def test_preserves_non_email_content_while_filtering
@@ -46,7 +46,7 @@ Yes, this is a bit dumb, but vc checks for that (or amd) to determine that it's 
 Boaty McBoatface | http://example.org
 EMAIL
 
-    filter = EmailReplyFilter.new(str, :hide_quoted_email_addresses => true)
+    filter = EmailReplyFilter.new(str, hide_quoted_email_addresses: true)
     doc = filter.call.to_s
 
     expected = <<-EXPECTED

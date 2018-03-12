@@ -30,7 +30,7 @@ module HTML
       class InvalidDocumentException < StandardError; end
 
       def initialize(doc, context = nil, result = nil)
-        if doc.kind_of?(String)
+        if doc.is_a?(String)
           @html = doc.to_str
           @doc = nil
         else
@@ -76,8 +76,7 @@ module HTML
       end
 
       # Make sure the context has everything we need. Noop: Subclasses can override.
-      def validate
-      end
+      def validate; end
 
       # The Repository object provided in the context hash, or nil when no
       # :repository was specified.
@@ -116,9 +115,7 @@ module HTML
       # Returns true when the node has a matching ancestor.
       def has_ancestor?(node, tags)
         while node = node.parent
-          if tags.include?(node.name.downcase)
-            break true
-          end
+          break true if tags.include?(node.name.downcase)
         end
       end
 
@@ -134,7 +131,7 @@ module HTML
       # the last filter returns a String.
       def self.to_document(input, context = nil)
         html = call(input, context)
-        HTML::Pipeline::parse(html)
+        HTML::Pipeline.parse(html)
       end
 
       # Like call but guarantees that a string of HTML markup is returned.
@@ -158,7 +155,7 @@ module HTML
 
         if missing.any?
           raise ArgumentError,
-            "Missing context keys for #{self.class.name}: #{missing.map(&:inspect).join ', '}"
+                "Missing context keys for #{self.class.name}: #{missing.map(&:inspect).join ', '}"
         end
       end
     end

@@ -24,7 +24,7 @@ module HTML
       def call
         return doc unless asset_proxy_enabled?
 
-        doc.search("img").each do |element|
+        doc.search('img').each do |element|
           original_src = element['src']
           next unless original_src
 
@@ -86,7 +86,7 @@ module HTML
       # Private: helper to hexencode a string. Each byte ends up encoded into
       # two characters, zero padded value in the range [0-9a-f].
       def hexencode(str)
-        str.to_enum(:each_byte).map { |byte| "%02x" % byte }.join
+        str.to_enum(:each_byte).map { |byte| format('%02x', byte) }.join
       end
     end
   end

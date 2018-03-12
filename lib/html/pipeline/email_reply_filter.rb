@@ -1,5 +1,5 @@
-HTML::Pipeline.require_dependency("escape_utils", "EmailReplyFilter")
-HTML::Pipeline.require_dependency("email_reply_parser", "EmailReplyFilter")
+HTML::Pipeline.require_dependency('escape_utils', 'EmailReplyFilter')
+HTML::Pipeline.require_dependency('email_reply_parser', 'EmailReplyFilter')
 
 module HTML
   class Pipeline
@@ -17,9 +17,9 @@ module HTML
       EMAIL_QUOTED_HEADER    = %(<div class="email-quoted-reply">).freeze
       EMAIL_SIGNATURE_HEADER = %(<div class="email-signature-reply">).freeze
       EMAIL_FRAGMENT_HEADER  = %(<div class="email-fragment">).freeze
-      EMAIL_HEADER_END       = "</div>".freeze
+      EMAIL_HEADER_END       = '</div>'.freeze
       EMAIL_REGEX            = /[^@\s.][^@\s]*@\[?[a-z0-9.-]+\]?/
-      HIDDEN_EMAIL_PATTERN   = "***@***.***"
+      HIDDEN_EMAIL_PATTERN   = '***@***.***'.freeze
 
       # Scans an email body to determine which bits are quoted and which should
       # be hidden. EmailReplyParser is used to split the comment into an Array
