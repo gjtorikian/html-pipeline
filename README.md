@@ -171,12 +171,12 @@ EmojiPipeline = Pipeline.new [
 
 Filter gem dependencies are not bundled; you must bundle the filter's gem
 dependencies. The below list details filters with dependencies. For example,
-`SyntaxHighlightFilter` uses [github-linguist](https://github.com/github/linguist)
+`SyntaxHighlightFilter` uses [rouge](https://github.com/jneen/rouge)
 to detect and highlight languages. For example, to use the `SyntaxHighlightFilter`,
 add the following to your Gemfile:
 
 ```ruby
-gem 'github-linguist'
+gem 'rouge'
 ```
 
 * `AutolinkFilter` - `rinku`
@@ -185,7 +185,7 @@ gem 'github-linguist'
 * `MarkdownFilter` - `commonmarker`
 * `PlainTextInputFilter` - `escape_utils`
 * `SanitizationFilter` - `sanitize`
-* `SyntaxHighlightFilter` - `github-linguist`
+* `SyntaxHighlightFilter` - `rouge`
 * `TextileFilter` - `RedCloth`
 
 _Note:_ See [Gemfile](/Gemfile) `:test` block for version requirements.

@@ -41,9 +41,9 @@ if ARGV.empty?
     HTML::Pipeline::TableOfContentsFilter
   ]
 
-  # Add syntax highlighting if linguist is present
+  # Add syntax highlighting if rouge is present
   begin
-    require 'linguist'
+    require 'rouge'
     filters << HTML::Pipeline::SyntaxHighlightFilter
   rescue LoadError
   end
