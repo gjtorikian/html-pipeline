@@ -4,12 +4,14 @@ class MockedInstrumentationService
     @events = events
     subscribe event
   end
+
   def instrument(event, payload = nil)
     payload ||= {}
     res = yield payload
     events << [event, payload, res] if @subscribe == event
     res
   end
+
   def subscribe(event)
     @subscribe = event
     @events

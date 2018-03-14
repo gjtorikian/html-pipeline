@@ -1,4 +1,4 @@
-HTML::Pipeline.require_dependency("commonmarker", "MarkdownFilter")
+HTML::Pipeline.require_dependency('commonmarker', 'MarkdownFilter')
 
 module HTML
   class Pipeline
@@ -15,7 +15,7 @@ module HTML
     class MarkdownFilter < TextFilter
       def initialize(text, context = nil, result = nil)
         super text, context, result
-        @text = @text.gsub "\r", ''
+        @text = @text.delete "\r"
       end
 
       # Convert Markdown to HTML using the best available implementation
@@ -25,7 +25,8 @@ module HTML
         options << :HARDBREAKS if context[:gfm] != false
         extensions = context.fetch(
           :commonmarker_extensions,
-          [:table, :strikethrough, :tagfilter, :autolink])
+          %i[table strikethrough tagfilter autolink]
+        )
         html = CommonMarker.render_html(@text, options, extensions)
         html.rstrip!
         html

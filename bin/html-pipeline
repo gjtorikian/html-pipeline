@@ -4,23 +4,23 @@ require 'html/pipeline'
 require 'optparse'
 
 # Accept "help", too
-ARGV.map!{|a| a == "help" ? "--help" : a }
+.map! { |a| a == 'help' ? '--help' : a }
 
-OptionParser.new do |opts|
+onParser.new do |opts|
   opts.banner = <<-HELP.gsub(/^    /, '')
     Usage: html-pipeline [-h] [-f]
            html-pipeline [FILTER [FILTER [...]]] < file.md
-           cat file.md | html-pipeline [FILTER [FILTER [...]]]
+       cat file.md | html-pipeline [FILTER [FILTER [...]]]
   HELP
 
-  opts.separator "Options:"
+ opts.separator 'Options:'
 
-  opts.on("-f", "--filters", "List the available filters") do
-    filters = HTML::Pipeline.constants.grep(/\w+Filter$/).
-      map{|f| f.to_s.gsub(/Filter$/,'') }
+  opts.on('-f', '--filters', 'List the available filters') do
+    filters = HTML::Pipeline.constants.grep(/\w+Filter$/)
+                            .map { |f| f.to_s.gsub(/Filter$/, '') }
 
     # Text filter doesn't work, no call method
-    filters -= ["Text"]
+    filters -= ['Text']
 
     abort <<-HELP.gsub(/^      /, '')
       Available filters:
@@ -38,12 +38,12 @@ if ARGV.empty?
     HTML::Pipeline::ImageMaxWidthFilter,
     HTML::Pipeline::EmojiFilter,
     HTML::Pipeline::AutolinkFilter,
-    HTML::Pipeline::TableOfContentsFilter,
+    HTML::Pipeline::TableOfContentsFilter
   ]
 
-  # Add syntax highlighting if linguist is present
+  # Add syntax highlighting if rouge is present
   begin
-    require 'linguist'
+    require 'rouge'
     filters << HTML::Pipeline::SyntaxHighlightFilter
   rescue LoadError
   end
@@ -52,7 +52,7 @@ else
 
   def filter_named(name)
     case name
-    when "Text"
+    when 'Text'
       raise NameError # Text filter doesn't work, no call method
     end
 
@@ -70,9 +70,9 @@ else
 end
 
 context = {
-  :asset_root => "/assets",
-  :base_url   => "/",
-  :gfm        => true
+  asset_root: '/assets',
+  base_url: '/',
+  gfm: true
 }
 
 puts HTML::Pipeline.new(filters, context).call(ARGF.read)[:output]

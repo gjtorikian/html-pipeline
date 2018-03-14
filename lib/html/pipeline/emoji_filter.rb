@@ -1,5 +1,5 @@
-require "cgi"
-HTML::Pipeline.require_dependency("gemoji", "EmojiFilter")
+require 'cgi'
+HTML::Pipeline.require_dependency('gemoji', 'EmojiFilter')
 
 module HTML
   class Pipeline
@@ -11,8 +11,7 @@ module HTML
     #   :ignored_ancestor_tags (optional) - Tags to stop the emojification. Node has matched ancestor HTML tags will not be emojified. Default to pre, code, and tt tags. Extra tags please pass in the form of array, e.g., %w(blockquote summary).
     #   :img_attrs (optional) - Attributes for generated img tag. E.g. Pass { "draggble" => true, "height" => nil } to set draggable attribute to "true" and clear height attribute of generated img tag.
     class EmojiFilter < Filter
-
-      DEFAULT_IGNORED_ANCESTOR_TAGS = %w(pre code tt).freeze
+      DEFAULT_IGNORED_ANCESTOR_TAGS = %w[pre code tt].freeze
 
       def call
         doc.search('.//text()').each do |node|
@@ -38,8 +37,8 @@ module HTML
       #
       # Returns a String with :emoji: replaced with images.
       def emoji_image_filter(text)
-        text.gsub(emoji_pattern) do |match|
-          emoji_image_tag($1)
+        text.gsub(emoji_pattern) do |_match|
+          emoji_image_tag(Regexp.last_match(1))
         end
       end
 
@@ -57,9 +56,9 @@ module HTML
       # Returns the context's asset_path or the default path if no context asset_path is given.
       def asset_path(name)
         if context[:asset_path]
-          context[:asset_path].gsub(":file_name", emoji_filename(name))
+          context[:asset_path].gsub(':file_name', emoji_filename(name))
         else
-          File.join("emoji", emoji_filename(name))
+          File.join('emoji', emoji_filename(name))
         end
       end
 
@@ -67,12 +66,12 @@ module HTML
 
       # Build an emoji image tag
       def emoji_image_tag(name)
-        require "active_support/core_ext/hash/indifferent_access"
+        require 'active_support/core_ext/hash/indifferent_access'
         html_attrs =
-          default_img_attrs(name).
-            merge!((context[:img_attrs] || {}).with_indifferent_access).
-            map { |attr, value| !value.nil? && %(#{attr}="#{value.respond_to?(:call) && value.call(name) || value}") }.
-            reject(&:blank?).join(" ".freeze)
+          default_img_attrs(name)
+          .merge!((context[:img_attrs] || {}).with_indifferent_access)
+          .map { |attr, value| !value.nil? && %(#{attr}="#{value.respond_to?(:call) && value.call(name) || value}") }
+          .reject(&:blank?).join(' '.freeze)
 
         "<img #{html_attrs}>"
       end
@@ -80,13 +79,13 @@ module HTML
       # Default attributes for img tag
       def default_img_attrs(name)
         {
-          "class" => "emoji".freeze,
-          "title" => ":#{name}:",
-          "alt" => ":#{name}:",
-          "src" => "#{emoji_url(name)}",
-          "height" => "20".freeze,
-          "width" => "20".freeze,
-          "align" => "absmiddle".freeze,
+          'class' => 'emoji'.freeze,
+          'title' => ":#{name}:",
+          'alt' => ":#{name}:",
+          'src' => emoji_url(name).to_s,
+          'height' => '20'.freeze,
+          'width' => '20'.freeze,
+          'align' => 'absmiddle'.freeze
         }
       end
 

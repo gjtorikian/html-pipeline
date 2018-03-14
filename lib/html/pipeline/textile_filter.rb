@@ -1,4 +1,4 @@
-HTML::Pipeline.require_dependency("redcloth", "RedCloth")
+HTML::Pipeline.require_dependency('redcloth', 'RedCloth')
 
 module HTML
   class Pipeline

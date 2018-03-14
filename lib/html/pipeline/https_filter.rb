@@ -7,8 +7,8 @@ module HTML
     #   :http_url - The HTTP url to force HTTPS. Falls back to :base_url
     class HttpsFilter < Filter
       def call
-        doc.css(%Q(a[href^="#{http_url}"])).each do |element|
-          element['href'] = element['href'].sub(/^http:/,'https:')
+        doc.css(%(a[href^="#{http_url}"])).each do |element|
+          element['href'] = element['href'].sub(/^http:/, 'https:')
         end
         doc
       end

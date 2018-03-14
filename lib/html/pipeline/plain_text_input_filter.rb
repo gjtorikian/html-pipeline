@@ -1,4 +1,4 @@
-HTML::Pipeline.require_dependency("escape_utils", "PlainTextInputFilter")
+HTML::Pipeline.require_dependency('escape_utils', 'PlainTextInputFilter')
 
 module HTML
   class Pipeline

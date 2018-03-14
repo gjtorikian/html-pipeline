@@ -29,9 +29,9 @@ module HTML
       # the original text.
       #
       # Returns a String replaced with the return of the block.
-      def self.mentioned_logins_in(text, username_pattern=UsernamePattern)
+      def self.mentioned_logins_in(text, username_pattern = UsernamePattern)
         text.gsub MentionPatterns[username_pattern] do |match|
-          login = $1
+          login = Regexp.last_match(1)
           yield match, login, MentionLogins.include?(login.downcase)
         end
       end
@@ -57,12 +57,12 @@ module HTML
 
       # List of username logins that, when mentioned, link to the blog post
       # about @mentions instead of triggering a real mention.
-      MentionLogins = %w(
+      MentionLogins = %w[
         mention
         mentions
         mentioned
         mentioning
-      )
+      ].freeze
 
       # Don't look for mentions in text nodes that are children of these elements
       IGNORE_PARENTS = %w(pre code a style script).to_set
@@ -71,8 +71,8 @@ module HTML
         result[:mentioned_usernames] ||= []
 
         doc.search('.//text()').each do |node|
-          content = node.text
-          next if !content.include?('@')
+          content = node.to_html
+          next unless content.include?('@')
           next if has_ancestor?(node, IGNORE_PARENTS)
           html = mention_link_filter(content, base_url, info_url, username_pattern)
           next if html == content
@@ -103,7 +103,7 @@ module HTML
       #
       # Returns a string with @mentions replaced with links. All links have a
       # 'user-mention' class name attached for styling.
-      def mention_link_filter(text, base_url='/', info_url=nil, username_pattern=UsernamePattern)
+      def mention_link_filter(text, _base_url = '/', info_url = nil, username_pattern = UsernamePattern)
         self.class.mentioned_logins_in(text, username_pattern) do |match, login, is_mentioned|
           link =
             if is_mentioned
@@ -116,22 +116,22 @@ module HTML
         end
       end
 
-      def link_to_mention_info(text, info_url=nil)
+      def link_to_mention_info(text, info_url = nil)
         return "@#{text}" if info_url.nil?
-        "<a href='#{info_url}' class='user-mention'>" +
-        "@#{text}" +
-        "</a>"
+        "<a href='#{info_url}' class='user-mention'>" \
+          "@#{text}" \
+          '</a>'
       end
 
       def link_to_mentioned_user(login)
         result[:mentioned_usernames] |= [login]
 
         url = base_url.dup
-        url << "/" unless url =~ /[\/~]\z/
+        url << '/' unless url =~ /[\/~]\z/
 
-        "<a href='#{url << login}' class='user-mention'>" +
-        "@#{login}" +
-        "</a>"
+        "<a href='#{url << login}' class='user-mention'>" \
+          "@#{login}" \
+          '</a>'
       end
     end
   end

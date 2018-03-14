@@ -1,4 +1,4 @@
-HTML::Pipeline.require_dependency("rinku", "AutolinkFilter")
+HTML::Pipeline.require_dependency('rinku', 'AutolinkFilter')
 
 module HTML
   class Pipeline
