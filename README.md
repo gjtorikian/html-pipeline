@@ -82,7 +82,7 @@ Prints:
 </code></pre>
 ```
 
-To generate CSS for HTML formatted code, use the [pygments.rb](https://github.com/tmm1/pygments.rb#usage) `#css` method. `pygments.rb` is a dependency of the `SyntaxHighlightFilter`.
+To generate CSS for HTML formatted code, use the [Rouge CSS Theme](https://github.com/jneen/rouge#css-theme-options) `#css` method. `rouge` is a dependency of the `SyntaxHighlightFilter`.
 
 Some filters take an optional **context** and/or **result** hash. These are
 used to pass around arguments and metadata between filters in a pipeline. For
@@ -163,7 +163,7 @@ EmojiPipeline = Pipeline.new [
 * `MarkdownFilter` - convert markdown to html
 * `PlainTextInputFilter` - html escape text and wrap the result in a div
 * `SanitizationFilter` - whitelist sanitize user markup
-* `SyntaxHighlightFilter` - [code syntax highlighter](#syntax-highlighting)
+* `SyntaxHighlightFilter` - code syntax highlighter
 * `TextileFilter` - convert textile to html
 * `TableOfContentsFilter` - anchor headings with name attributes and generate Table of Contents html unordered list linking headings
 
