@@ -20,9 +20,10 @@ module HTML
           html = highlight_with_timeout_handling(text, lang)
           next if html.nil?
 
-          next unless (node = node.replace(html).first)
+          node.inner_html = html
           klass = node['class']
-          klass = [klass, "highlight-#{lang}"].compact.join ' '
+          scope = context[:scope] || "highlight-#{lang}"
+          klass = [klass, scope].compact.join ' '
 
           node['class'] = klass
         end
