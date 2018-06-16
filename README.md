@@ -186,6 +186,7 @@ gem 'rouge'
 * `PlainTextInputFilter` - `escape_utils`
 * `SanitizationFilter` - `sanitize`
 * `SyntaxHighlightFilter` - `rouge`
+* `TableOfContentsFilter` - `escape_utils`
 * `TextileFilter` - `RedCloth`
 
 _Note:_ See [Gemfile](/Gemfile) `:test` block for version requirements.

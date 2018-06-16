@@ -92,6 +92,12 @@ class HTML::Pipeline::TableOfContentsFilterTest < Minitest::Test
     assert_equal 6, doc.search('a').size
   end
 
+  def test_toc_outputs_escaped_html
+    @orig = %(<h1>&lt;img src="x" onerror="alert(42)"&gt;</h1>)
+
+    refute_includes toc, %(<img src="x" onerror="alert(42)">)
+  end
+
   def test_toc_is_complete
     @orig = %(<h1>"Funky President" by James Brown</h1>
               <h2>"It's My Thing" by Marva Whitney</h2>
@@ -101,7 +107,7 @@ class HTML::Pipeline::TableOfContentsFilterTest < Minitest::Test
               <h6>"Ruthless Villain" by Eazy-E</h6>
               <h7>"Be Thankful for What You Got" by William DeVaughn</h7>)
 
-    expected = %(<ul class="section-nav">\n<li><a href="#funky-president-by-james-brown">"Funky President" by James Brown</a></li>\n<li><a href="#its-my-thing-by-marva-whitney">"It's My Thing" by Marva Whitney</a></li>\n<li><a href="#boogie-back-by-roy-ayers">"Boogie Back" by Roy Ayers</a></li>\n<li><a href="#feel-good-by-fancy">"Feel Good" by Fancy</a></li>\n<li><a href="#funky-drummer-by-james-brown">"Funky Drummer" by James Brown</a></li>\n<li><a href="#ruthless-villain-by-eazy-e">"Ruthless Villain" by Eazy-E</a></li>\n</ul>)
+    expected = %(<ul class="section-nav">\n<li><a href="#funky-president-by-james-brown">&quot;Funky President&quot; by James Brown</a></li>\n<li><a href="#its-my-thing-by-marva-whitney">&quot;It&#39;s My Thing&quot; by Marva Whitney</a></li>\n<li><a href="#boogie-back-by-roy-ayers">&quot;Boogie Back&quot; by Roy Ayers</a></li>\n<li><a href="#feel-good-by-fancy">&quot;Feel Good&quot; by Fancy</a></li>\n<li><a href="#funky-drummer-by-james-brown">&quot;Funky Drummer&quot; by James Brown</a></li>\n<li><a href="#ruthless-villain-by-eazy-e">&quot;Ruthless Villain&quot; by Eazy-E</a></li>\n</ul>)
 
     assert_equal expected, toc
   end

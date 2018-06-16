@@ -1,3 +1,5 @@
+HTML::Pipeline.require_dependency('escape_utils', 'TableOfContentsFilter')
+
 module HTML
   class Pipeline
     # HTML filter that adds an 'id' attribute to all headers
@@ -43,7 +45,7 @@ module HTML
           uniq = headers[id] > 0 ? "-#{headers[id]}" : ''
           headers[id] += 1
           if header_content = node.children.first
-            result[:toc] << %(<li><a href="##{id}#{uniq}">#{text}</a></li>\n)
+            result[:toc] << %(<li><a href="##{id}#{uniq}">#{EscapeUtils.escape_html(text)}</a></li>\n)
             header_content.add_previous_sibling(%(<a id="#{id}#{uniq}" class="anchor" href="##{id}#{uniq}" aria-hidden="true">#{anchor_icon}</a>))
           end
         end
