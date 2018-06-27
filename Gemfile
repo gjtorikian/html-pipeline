@@ -16,7 +16,7 @@ group :test do
   gem 'minitest'
   gem 'RedCloth',           '~> 4.2.9', require: false
   gem 'rinku',              '~> 1.7',   require: false
-  gem 'sanitize',           '~> 2.0',   require: false
+  gem 'sanitize',           '~> 4.6', require: false
 
   gem 'escape_utils', '~> 1.0', require: false
   gem 'rouge', '~> 3.1', require: false
