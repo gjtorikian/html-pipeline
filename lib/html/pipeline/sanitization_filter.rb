@@ -43,16 +43,16 @@ module HTML
           div ins del sup sub p ol ul table thead tbody tfoot blockquote
           dl dt dd kbd q samp var hr ruby rt rp li tr td th s strike summary
           details caption figure figcaption
-        ],
-        remove_contents: ['script'],
+        ].freeze,
+        remove_contents: ['script'].freeze,
         attributes: {
-          'a'          => ['href'],
-          'img'        => %w[src longdesc],
-          'div'        => %w[itemscope itemtype],
-          'blockquote' => ['cite'],
-          'del'        => ['cite'],
-          'ins'        => ['cite'],
-          'q'          => ['cite'],
+          'a'          => ['href'].freeze,
+          'img'        => %w[src longdesc].freeze,
+          'div'        => %w[itemscope itemtype].freeze,
+          'blockquote' => ['cite'].freeze,
+          'del'        => ['cite'].freeze,
+          'ins'        => ['cite'].freeze,
+          'q'          => ['cite'].freeze,
           all: %w[abbr accept accept-charset
                   accesskey action align alt
                   aria-describedby aria-hidden aria-label aria-labelledby
@@ -70,18 +70,18 @@ module HTML
                   selected shape size span
                   start summary tabindex target
                   title type usemap valign value
-                  vspace width itemprop]
-        },
+                  vspace width itemprop].freeze
+        }.freeze,
         protocols: {
           'a'          => { 'href' => ANCHOR_SCHEMES },
-          'blockquote' => { 'cite' => ['http', 'https', :relative] },
-          'del'        => { 'cite' => ['http', 'https', :relative] },
-          'ins'        => { 'cite' => ['http', 'https', :relative] },
-          'q'          => { 'cite' => ['http', 'https', :relative] },
+          'blockquote' => { 'cite' => ['http', 'https', :relative].freeze },
+          'del'        => { 'cite' => ['http', 'https', :relative].freeze },
+          'ins'        => { 'cite' => ['http', 'https', :relative].freeze },
+          'q'          => { 'cite' => ['http', 'https', :relative].freeze },
           'img'        => {
-            'src'      => ['http', 'https', :relative],
-            'longdesc' => ['http', 'https', :relative]
-          }
+            'src'      => ['http', 'https', :relative].freeze,
+            'longdesc' => ['http', 'https', :relative].freeze
+          }.freeze
         },
         transformers: [
           # Top-level <li> elements are removed because they can break out of
@@ -102,7 +102,7 @@ module HTML
               node.replace(node.children)
             end
           }
-        ]
+        ].freeze
       }.freeze
 
       # A more limited sanitization whitelist. This includes all attributes,
