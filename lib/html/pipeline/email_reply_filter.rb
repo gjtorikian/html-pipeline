@@ -1,14 +1,5 @@
-begin
-  require "escape_utils"
-rescue LoadError => _
-  abort "Missing dependency 'escape_utils' for EmailReplyFilter. See README.md for details."
-end
-
-begin
-  require "email_reply_parser"
-rescue LoadError => _
-  abort "Missing dependency 'email_reply_parser' for EmailReplyFilter. See README.md for details."
-end
+HTML::Pipeline.require_dependency('escape_utils', 'EmailReplyFilter')
+HTML::Pipeline.require_dependency('email_reply_parser', 'EmailReplyFilter')
 
 module HTML
   class Pipeline
@@ -26,7 +17,9 @@ module HTML
       EMAIL_QUOTED_HEADER    = %(<div class="email-quoted-reply">).freeze
       EMAIL_SIGNATURE_HEADER = %(<div class="email-signature-reply">).freeze
       EMAIL_FRAGMENT_HEADER  = %(<div class="email-fragment">).freeze
-      EMAIL_HEADER_END       = "</div>".freeze
+      EMAIL_HEADER_END       = '</div>'.freeze
+      EMAIL_REGEX            = /[^@\s.][^@\s]*@\[?[a-z0-9.-]+\]?/
+      HIDDEN_EMAIL_PATTERN   = '***@***.***'.freeze
 
       # Scans an email body to determine which bits are quoted and which should
       # be hidden. EmailReplyParser is used to split the comment into an Array
@@ -45,6 +38,11 @@ module HTML
         paragraphs = EmailReplyParser.read(text.dup).fragments.map do |fragment|
           pieces = [escape_html(fragment.to_s.strip).gsub(/^\s*(>|&gt;)/, '')]
           if fragment.quoted?
+            if context[:hide_quoted_email_addresses]
+              pieces.map! do |piece|
+                piece.gsub(EMAIL_REGEX, HIDDEN_EMAIL_PATTERN)
+              end
+            end
             pieces.unshift EMAIL_QUOTED_HEADER
             pieces << EMAIL_HEADER_END
           elsif fragment.signature?

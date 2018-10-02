@@ -1,8 +1,4 @@
-begin
-  require "escape_utils"
-rescue LoadError => _
-  abort "Missing dependency 'escape_utils' for PlainTextInputFilter. See README.md for details."
-end
+HTML::Pipeline.require_dependency('escape_utils', 'PlainTextInputFilter')
 
 module HTML
   class Pipeline

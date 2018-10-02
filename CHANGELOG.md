@@ -1,5 +1,45 @@
 # CHANGELOG
 
+## 2.6.0
+* Switch from github-markdown to CommonMark #274
+* Fixed a few warnings
+
+## 2.5.0
+
+* Ruby 2.4 support. Backwards compatible, but bumped minor version so projects can choose to lock at older version [#268](https://github.com/jch/html-pipeline/pull/268)
+
+## 2.4.2
+
+* Make EmojiFilter generated img tag HTML attributes configurable [#258](https://github.com/jch/html-pipeline/pull/258)
+
+## 2.4.1
+
+* Regression in EmailReplyPipeline: unfiltered content is being omitted [#253](https://github.com/jch/html-pipeline/pull/253)
+
+## 2.4.0
+
+* Optionally filter email addresses [#247](https://github.com/jch/html-pipeline/pull/247)
+
+## 2.3.0
+
+* Add option to pass in an anchor icon, instead of using octicons [#244](https://github.com/jch/html-pipeline/pull/244)
+
+## 2.2.4
+
+* Use entire namespace so MissingDependencyError constant is resolved [#243](https://github.com/jch/html-pipeline/pull/243)
+
+## 2.2.3
+
+* raise MissingDependencyError instead of aborting on missing dependency [#241](https://github.com/jch/html-pipeline/pull/241)
+* Fix typo [#239](https://github.com/jch/html-pipeline/pull/239)
+* Test against Ruby 2.3.0 on Travis CI [#238](https://github.com/jch/html-pipeline/pull/238)
+* use travis containers [#237](https://github.com/jch/html-pipeline/pull/237)
+
+## 2.2.2
+
+* Fix for calling mention_link_filter with only one argument [#230](https://github.com/jch/html-pipeline/pull/230)
+* Add html-pipeline-linkify_github to 3rd Party Extensions in README [#228](https://github.com/jch/html-pipeline/pull/228)
+
 ## 2.2.1
 
 * Soften Nokogiri dependency to versions ">= 1.4" [#208](https://github.com/jch/html-pipeline/pull/208)

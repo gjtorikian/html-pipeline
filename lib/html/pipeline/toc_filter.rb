@@ -1,3 +1,5 @@
+HTML::Pipeline.require_dependency('escape_utils', 'TableOfContentsFilter')
+
 module HTML
   class Pipeline
     # HTML filter that adds an 'id' attribute to all headers
@@ -23,27 +25,42 @@ module HTML
     #  result[:output].to_s
     #  # => "<h1>\n<a id=\"ice-cube\" class=\"anchor\" href=\"#ice-cube\">..."
     class TableOfContentsFilter < Filter
-      PUNCTUATION_REGEXP = RUBY_VERSION > "1.9" ? /[^\p{Word}\- ]/u : /[^\w\- ]/
+      PUNCTUATION_REGEXP = RUBY_VERSION > '1.9' ? /[^\p{Word}\- ]/u : /[^\w\- ]/
+
+      # The icon that will be placed next to an anchored rendered markdown header
+      def anchor_icon
+        context[:anchor_icon] || '<span aria-hidden="true" class="octicon octicon-link"></span>'
+      end
 
       def call
-        result[:toc] = ""
+        result[:toc] = ''
 
         headers = Hash.new(0)
         doc.css('h1, h2, h3, h4, h5, h6').each do |node|
           text = node.text
-          id = text.downcase
+          id = ascii_downcase(text)
           id.gsub!(PUNCTUATION_REGEXP, '') # remove punctuation
-          id.gsub!(' ', '-') # replace spaces with dash
+          id.tr!(' ', '-') # replace spaces with dash
 
-          uniq = (headers[id] > 0) ? "-#{headers[id]}" : ''
+          uniq = headers[id] > 0 ? "-#{headers[id]}" : ''
           headers[id] += 1
           if header_content = node.children.first
-            result[:toc] << %Q{<li><a href="##{id}#{uniq}">#{text}</a></li>\n}
-            header_content.add_previous_sibling(%Q{<a id="#{id}#{uniq}" class="anchor" href="##{id}#{uniq}" aria-hidden="true"><span class="octicon octicon-link"></span></a>})
+            result[:toc] << %(<li><a href="##{id}#{uniq}">#{EscapeUtils.escape_html(text)}</a></li>\n)
+            header_content.add_previous_sibling(%(<a id="#{id}#{uniq}" class="anchor" href="##{id}#{uniq}" aria-hidden="true">#{anchor_icon}</a>))
           end
         end
-        result[:toc] = %Q{<ul class="section-nav">\n#{result[:toc]}</ul>} unless result[:toc].empty?
+        result[:toc] = %(<ul class="section-nav">\n#{result[:toc]}</ul>) unless result[:toc].empty?
         doc
+      end
+
+      if RUBY_VERSION >= '2.4'
+        def ascii_downcase(str)
+          str.downcase(:ascii)
+        end
+      else
+        def ascii_downcase(str)
+          str.downcase
+        end
       end
     end
   end

@@ -1,5 +1,5 @@
-require "nokogiri"
-require "active_support/xml_mini/nokogiri" # convert Documents to hashes
+require 'nokogiri'
+require 'active_support/xml_mini/nokogiri' # convert Documents to hashes
 
 module HTML
   # GitHub HTML processing filters and utilities. This module includes a small
@@ -43,6 +43,14 @@ module HTML
     autoload :TableOfContentsFilter, 'html/pipeline/toc_filter'
     autoload :TextFilter,            'html/pipeline/text_filter'
 
+    class MissingDependencyError < RuntimeError; end
+    def self.require_dependency(name, requirer)
+      require name
+    rescue LoadError => e
+      raise MissingDependencyError,
+            "Missing dependency '#{name}' for #{requirer}. See README.md for details.\n#{e.class.name}: #{e}"
+    end
+
     # Our DOM implementation.
     DocumentFragment = Nokogiri::HTML::DocumentFragment
 
@@ -67,7 +75,8 @@ module HTML
     # Public: String name for this Pipeline. Defaults to Class name.
     attr_writer :instrumentation_name
     def instrumentation_name
-      @instrumentation_name || self.class.name
+      return @instrumentation_name if defined?(@instrumentation_name)
+      @instrumentation_name = self.class.name
     end
 
     class << self
@@ -76,7 +85,7 @@ module HTML
     end
 
     def initialize(filters, default_context = {}, result_class = nil)
-      raise ArgumentError, "default_context cannot be nil" if default_context.nil?
+      raise ArgumentError, 'default_context cannot be nil' if default_context.nil?
       @filters = filters.flatten.freeze
       @default_context = default_context.freeze
       @result_class = result_class || Hash
@@ -99,9 +108,9 @@ module HTML
       context = @default_context.merge(context)
       context = context.freeze
       result ||= @result_class.new
-      payload = default_payload :filters => @filters.map(&:name),
-        :context => context, :result => result
-      instrument "call_pipeline.html_pipeline", payload do
+      payload = default_payload filters: @filters.map(&:name),
+                                context: context, result: result
+      instrument 'call_pipeline.html_pipeline', payload do
         result[:output] =
           @filters.inject(html) do |doc, filter|
             perform_filter(filter, doc, context, result)
@@ -116,9 +125,9 @@ module HTML
     #
     # Returns the result of the filter.
     def perform_filter(filter, doc, context, result)
-      payload = default_payload :filter => filter.name,
-        :context => context, :result => result
-      instrument "call_filter.html_pipeline", payload do
+      payload = default_payload filter: filter.name,
+                                context: context, result: result
+      instrument 'call_filter.html_pipeline', payload do
         filter.call(doc, context, result)
       end
     end
@@ -169,13 +178,13 @@ module HTML
     #
     # Returns a Hash.
     def default_payload(payload = {})
-      {:pipeline => instrumentation_name}.merge(payload)
+      { pipeline: instrumentation_name }.merge(payload)
     end
   end
 end
 
 # XXX nokogiri monkey patches for 1.8
-if not ''.respond_to?(:force_encoding)
+unless ''.respond_to?(:force_encoding)
   class Nokogiri::XML::Node
     # Work around an issue with utf-8 encoded data being erroneously converted to
     # ... some other shit when replacing text nodes. See 'utf-8 output 2' in
@@ -187,8 +196,8 @@ if not ''.respond_to?(:force_encoding)
       replace_without_encoding_fix(replacement)
     end
 
-    alias_method :replace_without_encoding_fix, :replace
-    alias_method :replace, :replace_with_encoding_fix
+    alias replace_without_encoding_fix replace
+    alias replace replace_with_encoding_fix
 
     def swap(replacement)
       replace(replacement)

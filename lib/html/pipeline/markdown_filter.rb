@@ -1,8 +1,4 @@
-begin
-  require "github/markdown"
-rescue LoadError => _
-  abort "Missing dependency 'github-markdown' for MarkdownFilter. See README.md for details."
-end
+HTML::Pipeline.require_dependency('commonmarker', 'MarkdownFilter')
 
 module HTML
   class Pipeline
@@ -12,19 +8,26 @@ module HTML
     #
     # Context options:
     #   :gfm      => false    Disable GFM line-end processing
+    #   :commonmarker_extensions => [ :table, :strikethrough,
+    #      :tagfilter, :autolink ] Common marker extensions to include
     #
     # This filter does not write any additional information to the context hash.
     class MarkdownFilter < TextFilter
       def initialize(text, context = nil, result = nil)
         super text, context, result
-        @text = @text.gsub "\r", ''
+        @text = @text.delete "\r"
       end
 
       # Convert Markdown to HTML using the best available implementation
       # and convert into a DocumentFragment.
       def call
-        mode = (context[:gfm] != false) ? :gfm : :markdown
-        html = GitHub::Markdown.to_html(@text, mode)
+        options = [:GITHUB_PRE_LANG]
+        options << :HARDBREAKS if context[:gfm] != false
+        extensions = context.fetch(
+          :commonmarker_extensions,
+          %i[table strikethrough tagfilter autolink]
+        )
+        html = CommonMarker.render_html(@text, options, extensions)
         html.rstrip!
         html
       end

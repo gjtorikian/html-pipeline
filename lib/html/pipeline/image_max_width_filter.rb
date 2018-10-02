@@ -17,18 +17,16 @@ module HTML
           # js injection via javascript: urls.
           next if element['src'].to_s.strip =~ /\Ajavascript/i
 
-          element['style'] = "max-width:100%;"
+          element['style'] = 'max-width:100%;'
 
-          if !has_ancestor?(element, %w(a))
-            link_image element
-          end
+          link_image element unless has_ancestor?(element, %w[a])
         end
 
         doc
       end
 
       def link_image(element)
-        link = doc.document.create_element('a', :href => element['src'], :target => '_blank')
+        link = doc.document.create_element('a', href: element['src'], target: '_blank')
         link.add_child(element.dup)
         element.replace(link)
       end
