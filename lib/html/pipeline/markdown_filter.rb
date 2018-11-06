@@ -23,6 +23,7 @@ module HTML
       def call
         options = [:GITHUB_PRE_LANG]
         options << :HARDBREAKS if context[:gfm] != false
+        options << :UNSAFE if context[:unsafe]
         extensions = context.fetch(
           :commonmarker_extensions,
           %i[table strikethrough tagfilter autolink]

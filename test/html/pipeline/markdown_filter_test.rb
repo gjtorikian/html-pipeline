@@ -52,20 +52,20 @@ class HTML::Pipeline::MarkdownFilterTest < Minitest::Test
   def test_standard_extensions
     iframe = "<iframe src='http://www.google.com'></iframe>"
     iframe_escaped = "&lt;iframe src='http://www.google.com'>&lt;/iframe>"
-    doc = MarkdownFilter.new(iframe).call
+    doc = MarkdownFilter.new(iframe, unsafe: true).call
     assert_equal(doc, iframe_escaped)
   end
 
   def test_changing_extensions
     iframe = "<iframe src='http://www.google.com'></iframe>"
-    doc = MarkdownFilter.new(iframe, commonmarker_extensions: []).call
+    doc = MarkdownFilter.new(iframe, commonmarker_extensions: [], unsafe: true).call
     assert_equal(doc, iframe)
   end
 end
 
 class GFMTest < Minitest::Test
   def gfm(text)
-    MarkdownFilter.call(text, gfm: true)
+    MarkdownFilter.call(text, gfm: true, unsafe: true)
   end
 
   def test_not_touch_single_underscores_inside_words
