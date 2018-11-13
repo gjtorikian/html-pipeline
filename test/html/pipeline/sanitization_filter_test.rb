@@ -102,7 +102,7 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
   end
 
   def test_whitelist_contains_default_anchor_schemes
-    assert_equal SanitizationFilter::WHITELIST[:protocols]['a']['href'], ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac']
+    assert_equal SanitizationFilter::WHITELIST[:protocols]['a']['href'], ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac', 'irc', 'ircs']
   end
 
   def test_whitelist_from_full_constant
@@ -113,7 +113,7 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
   end
 
   def test_exports_default_anchor_schemes
-    assert_equal SanitizationFilter::ANCHOR_SCHEMES, ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac']
+    assert_equal SanitizationFilter::ANCHOR_SCHEMES, ['http', 'https', 'mailto', :relative, 'github-windows', 'github-mac', 'irc', 'ircs']
   end
 
   def test_script_contents_are_removed
