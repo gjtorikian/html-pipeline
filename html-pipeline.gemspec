@@ -5,8 +5,8 @@ Gem::Specification.new do |gem|
   gem.name          = 'html-pipeline'
   gem.version       = HTML::Pipeline::VERSION
   gem.license       = 'MIT'
-  gem.authors       = ['Ryan Tomayko', 'Jerry Cheung']
-  gem.email         = ['ryan@github.com', 'jerry@github.com']
+  gem.authors       = ['Ryan Tomayko', 'Jerry Cheung', 'Garen J. Torikian']
+  gem.email         = ['ryan@github.com', 'jerry@github.com', 'gjtorikian@gmail.com']
   gem.description   = 'GitHub HTML processing filters and utilities'
   gem.summary       = 'Helpers for processing content through a chain of filters'
   gem.homepage      = 'https://github.com/jch/html-pipeline'
