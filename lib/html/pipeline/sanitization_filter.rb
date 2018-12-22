@@ -43,6 +43,7 @@ module HTML
           div ins del sup sub p ol ul table thead tbody tfoot blockquote
           dl dt dd kbd q samp var hr ruby rt rp li tr td th s strike summary
           details caption figure figcaption
+          abbr bdo cite dfn mark small span time wbr
         ].freeze,
         remove_contents: ['script'].freeze,
         attributes: {
@@ -109,7 +110,7 @@ module HTML
       # protocols, and transformers from WHITELIST but with a more locked down
       # set of allowed elements.
       LIMITED = WHITELIST.merge(
-        elements: %w[b i strong em a pre code img ins del sup sub p ol ul li]
+        elements: %w[b i strong em a pre code img ins del sup sub mark abbr p ol ul li]
       )
 
       # Strip all HTML tags from the document.
