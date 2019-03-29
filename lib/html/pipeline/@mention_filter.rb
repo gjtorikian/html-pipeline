@@ -81,8 +81,8 @@ module HTML
         doc
       end
 
-      # The URL to provide when someone @mentions a "mention" name, such as
-      # @mention or @mentioned, that will give them more info on mentions.
+      # The URL to provide when someone @mentions a "mention" name, such
+      # [UnknownTag] Unknown tag @mentionas @mention or @mentioned, that will give them more info on mentions.
       def info_url
         context[:info_url] || nil
       end
