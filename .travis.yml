@@ -1,5 +1,4 @@
 language: ruby
-sudo: false
 cache: bundler
 bundler_args: --path ../../vendor/bundle
 
@@ -19,8 +18,8 @@ gemfile:
   - gemfiles/rails_3.gemfile
 
 rvm:
-  - 2.4.0
-  - 2.3.1
+  - 2.4.6
+  - 2.3.8
   - ruby-head
 
 matrix:
@@ -29,6 +28,6 @@ matrix:
     - rvm: ruby-head
   exclude:
     - gemfile: gemfiles/rails_4.gemfile
-      rvm: 2.4.0
+      rvm: 2.4.6
     - gemfile: gemfiles/rails_3.gemfile
-      rvm: 2.4.0
+      rvm: 2.4.6
