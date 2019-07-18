@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module HTML
   class Pipeline
     # This filter rewrites image tags with a max-width inline style and also wraps

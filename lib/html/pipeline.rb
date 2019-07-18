@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'nokogiri'
 require 'active_support/xml_mini/nokogiri' # convert Documents to hashes
 

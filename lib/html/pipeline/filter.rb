@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module HTML
   class Pipeline
     # Base class for user content HTML filters. Each filter takes an

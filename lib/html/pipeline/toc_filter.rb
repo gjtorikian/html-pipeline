@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 HTML::Pipeline.require_dependency('escape_utils', 'TableOfContentsFilter')
 
 module HTML
@@ -33,7 +35,7 @@ module HTML
       end
 
       def call
-        result[:toc] = ''
+        result[:toc] = String.new('')
 
         headers = Hash.new(0)
         doc.css('h1, h2, h3, h4, h5, h6').each do |node|
