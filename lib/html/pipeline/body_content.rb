@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module HTML
   class Pipeline
     # Public: Runs a String of content through an HTML processing pipeline,

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 HTML::Pipeline.require_dependency('escape_utils', 'PlainTextInputFilter')
 
 module HTML

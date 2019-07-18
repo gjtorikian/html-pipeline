@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 HTML::Pipeline.require_dependency('escape_utils', 'EmailReplyFilter')
 HTML::Pipeline.require_dependency('email_reply_parser', 'EmailReplyFilter')
 

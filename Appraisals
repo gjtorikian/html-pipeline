@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 appraise 'rails-3' do
   gem 'rack', '< 2'
   gem 'rails', '3.2.22.2'

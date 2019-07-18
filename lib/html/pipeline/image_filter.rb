@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module HTML
   class Pipeline
     # HTML Filter that converts image's url into <img> tag.

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'cgi'
 HTML::Pipeline.require_dependency('gemoji', 'EmojiFilter')
 
