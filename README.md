@@ -153,6 +153,7 @@ EmojiPipeline = Pipeline.new [
 ## Filters
 
 * `MentionFilter` - replace `@user` mentions with links
+* `TeamMentionFilter` - replace `@org/team` mentions with links
 * `AbsoluteSourceFilter` - replace relative image urls with fully qualified versions
 * `AutolinkFilter` - auto_linking urls in HTML
 * `CamoFilter` - replace http image urls with [camo-fied](https://github.com/atmos/camo) https versions
