@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 require 'set'
-require 'pry'
 
 module HTML
   class Pipeline
-    # HTML filter that replaces @org/team mentions with links. Mentions within <pre>,
-    # <code>, <a>, <style>, and <script> elements are ignored.
+    # HTML filter that replaces @org/team mentions with links. Mentions within
+    # <pre>, <code>, <a>, <style>, and <script> elements are ignored.
     #
     # Context options:
     #   :base_url - Used to construct links to team profile pages for each
@@ -24,7 +23,7 @@ module HTML
       #
       # text - String text to search.
       #
-      # Yields the String match, org name, and team name.  The yield's 
+      # Yields the String match, org name, and team name.  The yield's
       # return replaces the match in the original text.
       #
       # Returns a String replaced with the return of the block.
@@ -48,7 +47,7 @@ module HTML
       /ix
 
       # Don't look for mentions in text nodes that are children of these elements
-      IGNORE_PARENTS = %w(pre code a style script).to_set
+      IGNORE_PARENTS = %w[pre code a style script].to_set
 
       def call
         result[:mentioned_teams] ||= []
@@ -68,11 +67,11 @@ module HTML
         context[:team_pattern] || TeamPattern
       end
 
-      # Replace @org/team mentions in text with links to the mentioned user's
-      # profile page.
+      # Replace @org/team mentions in text with links to the mentioned team's
+      # page.
       #
       # text      - String text to replace @mention team names in.
-      # base_url  - The base URL used to construct team profile URLs.
+      # base_url  - The base URL used to construct team page URLs.
       # team_pattern  - Regular expression used to identify teams in text
       #
       # Returns a string with @team mentions replaced with links. All links have a

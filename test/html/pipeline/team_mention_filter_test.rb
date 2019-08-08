@@ -88,6 +88,14 @@ class HTML::Pipeline::TeamMentionFilterTest < Minitest::Test
                  filter(body, '/~').to_html
   end
 
+  def test_multiple_team_mentions
+    body = '<p>Hi, @github/whale and @github/donut!</p>'
+    link_whale = '<a href="/github/whale" class="team-mention">@github/whale</a>'
+    link_donut = '<a href="/github/donut" class="team-mention">@github/donut</a>'
+    assert_equal "<p>Hi, #{link_whale} and #{link_donut}!</p>",
+                 filter(body).to_html
+  end
+
   MarkdownPipeline =
     HTML::Pipeline.new [
       HTML::Pipeline::MarkdownFilter,
