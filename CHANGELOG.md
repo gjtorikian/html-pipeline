@@ -1,80 +1,81 @@
 # CHANGELOG
 
 ## 2.6.0
-* Switch from github-markdown to CommonMark #274
-* Fixed a few warnings
+
+  * Switch from github-markdown to CommonMark [#274](https://github.com/jch/html-pipeline/pull/274)
+  * Fixed a few warnings
 
 ## 2.5.0
 
-* Ruby 2.4 support. Backwards compatible, but bumped minor version so projects can choose to lock at older version [#268](https://github.com/jch/html-pipeline/pull/268)
+  * Ruby 2.4 support. Backwards compatible, but bumped minor version so projects can choose to lock at older version [#268](https://github.com/jch/html-pipeline/pull/268)
 
 ## 2.4.2
 
-* Make EmojiFilter generated img tag HTML attributes configurable [#258](https://github.com/jch/html-pipeline/pull/258)
+  * Make EmojiFilter generated img tag HTML attributes configurable [#258](https://github.com/jch/html-pipeline/pull/258)
 
 ## 2.4.1
 
-* Regression in EmailReplyPipeline: unfiltered content is being omitted [#253](https://github.com/jch/html-pipeline/pull/253)
+  * Regression in EmailReplyPipeline: unfiltered content is being omitted [#253](https://github.com/jch/html-pipeline/pull/253)
 
 ## 2.4.0
 
-* Optionally filter email addresses [#247](https://github.com/jch/html-pipeline/pull/247)
+  * Optionally filter email addresses [#247](https://github.com/jch/html-pipeline/pull/247)
 
 ## 2.3.0
 
-* Add option to pass in an anchor icon, instead of using octicons [#244](https://github.com/jch/html-pipeline/pull/244)
+  * Add option to pass in an anchor icon, instead of using octicons [#244](https://github.com/jch/html-pipeline/pull/244)
 
 ## 2.2.4
 
-* Use entire namespace so MissingDependencyError constant is resolved [#243](https://github.com/jch/html-pipeline/pull/243)
+  * Use entire namespace so MissingDependencyError constant is resolved [#243](https://github.com/jch/html-pipeline/pull/243)
 
 ## 2.2.3
 
-* raise MissingDependencyError instead of aborting on missing dependency [#241](https://github.com/jch/html-pipeline/pull/241)
-* Fix typo [#239](https://github.com/jch/html-pipeline/pull/239)
-* Test against Ruby 2.3.0 on Travis CI [#238](https://github.com/jch/html-pipeline/pull/238)
-* use travis containers [#237](https://github.com/jch/html-pipeline/pull/237)
+  * raise MissingDependencyError instead of aborting on missing dependency [#241](https://github.com/jch/html-pipeline/pull/241)
+  * Fix typo [#239](https://github.com/jch/html-pipeline/pull/239)
+  * Test against Ruby 2.3.0 on Travis CI [#238](https://github.com/jch/html-pipeline/pull/238)
+  * use travis containers [#237](https://github.com/jch/html-pipeline/pull/237)
 
 ## 2.2.2
 
-* Fix for calling mention_link_filter with only one argument [#230](https://github.com/jch/html-pipeline/pull/230)
-* Add html-pipeline-linkify_github to 3rd Party Extensions in README [#228](https://github.com/jch/html-pipeline/pull/228)
+  * Fix for calling mention_link_filter with only one argument [#230](https://github.com/jch/html-pipeline/pull/230)
+  * Add html-pipeline-linkify_github to 3rd Party Extensions in README [#228](https://github.com/jch/html-pipeline/pull/228)
 
 ## 2.2.1
 
-* Soften Nokogiri dependency to versions ">= 1.4" [#208](https://github.com/jch/html-pipeline/pull/208)
+  * Soften Nokogiri dependency to versions ">= 1.4" [#208](https://github.com/jch/html-pipeline/pull/208)
 
 ## 2.2.0
 
-* Only allow cite attribute on blockquote and restrict schemes [#223](https://github.com/jch/html-pipeline/pull/223)
+  * Only allow cite attribute on blockquote and restrict schemes [#223](https://github.com/jch/html-pipeline/pull/223)
 
 ## 2.1.0
 
-* Whitelist schemes for longdesc [#221](https://github.com/jch/html-pipeline/pull/221)
-* Extract emoji image tag generation to own method [#195](https://github.com/jch/html-pipeline/pull/195)
-* Update README.md [#211](https://github.com/jch/html-pipeline/pull/211)
-* Add ImageFilter for image url to img tag conversion [#207](https://github.com/jch/html-pipeline/pull/207)
+  * Whitelist schemes for longdesc [#221](https://github.com/jch/html-pipeline/pull/221)
+  * Extract emoji image tag generation to own method [#195](https://github.com/jch/html-pipeline/pull/195)
+  * Update README.md [#211](https://github.com/jch/html-pipeline/pull/211)
+  * Add ImageFilter for image url to img tag conversion [#207](https://github.com/jch/html-pipeline/pull/207)
 
 ## 2.0
 
 **New**
 
-* Implement new EmojiFilter context option: ignored_ancestor_tags to accept more ignored tags. [#170](https://github.com/jch/html-pipeline/pull/170) @JuanitoFatas
-* Add GitHub flavor Markdown Task List extension [#162](https://github.com/jch/html-pipeline/pull/162) @simeonwillbanks
-* @mention allow for custom regex to identify usernames. [#157](https://github.com/jch/html-pipeline/pull/157) @brittballard
-* EmojiFilter now requires gemoji ~> 2. [#159](https://github.com/jch/html-pipeline/pull/159) @jch
+  * Implement new EmojiFilter context option: ignored_ancestor_tags to accept more ignored tags. [#170](https://github.com/jch/html-pipeline/pull/170) @JuanitoFatas
+  * Add GitHub flavor Markdown Task List extension [#162](https://github.com/jch/html-pipeline/pull/162) @simeonwillbanks
+  * @mention allow for custom regex to identify usernames. [#157](https://github.com/jch/html-pipeline/pull/157) @brittballard
+  * EmojiFilter now requires gemoji ~> 2. [#159](https://github.com/jch/html-pipeline/pull/159) @jch
 
 **Changes**
 
-* Restrict nokogiri to >= 1.4, <= 1.6.5 [#176](https://github.com/jch/html-pipeline/pull/176) @simeonwillbanks
-* MentionFilter#link_to_mentioned_user: Replace String introspection with Regexp match [#172](https://github.com/jch/html-pipeline/pull/172) @simeonwillbanks
-* Whitelist summary and details element. [#171](https://github.com/jch/html-pipeline/pull/171) @JuanitoFatas
-* Support ~login for MentionFilter. [#167](https://github.com/jch/html-pipeline/pull/167) @JuanitoFatas
-* Revert "Search for text nodes on DocumentFragments without root tags" [#158](https://github.com/jch/html-pipeline/pull/158) @jch
-* Drop support for ruby ree, 1.9.2, 1.9.3 [#156](https://github.com/jch/html-pipeline/pull/156) @jch
-* Skip EmojiFilter in `<tt>` tags [#147](https://github.com/jch/html-pipeline/pull/147) @moskvax
-* Use Linguist lexers [#153](https://github.com/jch/html-pipeline/pull/153) @pchaigno
-* Constrain Active Support >= 2, < 5 [#180](https://github.com/jch/html-pipeline/pull/180) @jch
+  * Restrict nokogiri to >= 1.4, <= 1.6.5 [#176](https://github.com/jch/html-pipeline/pull/176) @simeonwillbanks
+  * MentionFilter#link_to_mentioned_user: Replace String introspection with Regexp match [#172](https://github.com/jch/html-pipeline/pull/172) @simeonwillbanks
+  * Whitelist summary and details element. [#171](https://github.com/jch/html-pipeline/pull/171) @JuanitoFatas
+  * Support ~login for MentionFilter. [#167](https://github.com/jch/html-pipeline/pull/167) @JuanitoFatas
+  * Revert "Search for text nodes on DocumentFragments without root tags" [#158](https://github.com/jch/html-pipeline/pull/158) @jch
+  * Drop support for ruby ree, 1.9.2, 1.9.3 [#156](https://github.com/jch/html-pipeline/pull/156) @jch
+  * Skip EmojiFilter in `<tt>` tags [#147](https://github.com/jch/html-pipeline/pull/147) @moskvax
+  * Use Linguist lexers [#153](https://github.com/jch/html-pipeline/pull/153) @pchaigno
+  * Constrain Active Support >= 2, < 5 [#180](https://github.com/jch/html-pipeline/pull/180) @jch
 
 ## 1.11.0
 
