@@ -1,5 +1,71 @@
 # CHANGELOG
 
+## 2.12.0
+
+  * Team mention filter [#314](https://github.com/jch/html-pipeline/pull/314)
+
+## 2.11.1
+
+  * Avoid YARD warning: Unknown tag @mention [#309](https://github.com/jch/html-pipeline/pull/309)
+  * Freeze string literals in Ruby 2.3 and beyond [#313](https://github.com/jch/html-pipeline/pull/313)
+
+## 2.11.0
+
+  * Test against Ruby 2.4 [#310](https://github.com/jch/html-pipeline/pull/310)
+  * CamoFilter: use String#unpack to hexencode URLs [#256](https://github.com/jch/html-pipeline/pull/256)
+
+## 2.10.0
+
+  * Add XMPP URI [#307](https://github.com/jch/html-pipeline/pull/307)
+  * Stop testing against Ruby 2.2
+
+## 2.9.2
+
+  * Whitelist various inline semantic/formatting tags [#306](https://github.com/jch/html-pipeline/pull/306)
+
+## 2.9.1
+
+  * Render irc and ircs URLs [#191](https://github.com/jch/html-pipeline/pull/191)
+
+## 2.9.0
+
+  * Fix one more missing freeze [#300](https://github.com/jch/html-pipeline/pull/300)
+  * Adds `UNSAFE` option to CommonMarker usage where needed [#304](https://github.com/jch/html-pipeline/pull/304)
+
+## 2.8.4
+
+  * Freeze all elements in HTML::Pipeline::SanitizationFilter [#299](https://github.com/jch/html-pipeline/pull/299)
+
+## 2.8.3
+
+  * Whitelist some accessibility properties [#298](https://github.com/jch/html-pipeline/pull/298)
+
+## 2.8.2
+
+  * Update ruby-sanitize (fixes CVE-2018-3740)
+
+## 2.8.1
+
+  * Fix XSS vulnerability on table of content generation [#296](https://github.com/jch/html-pipeline/pull/296)
+
+## 2.8.0
+
+  * Ensure `<pre>` nodes are not removed after syntax highlighting [#295](https://github.com/jch/html-pipeline/pull/295)
+
+## 2.7.2
+
+  * Apply mention filter & emoji filter on node text [#290](https://github.com/jch/html-pipeline/pull/290)
+  * Disable processing @mentions in `<script>` tag [#292](https://github.com/jch/html-pipeline/pull/292)
+  * Update dependencies [#291](https://github.com/jch/html-pipeline/pull/291)
+
+## 2.7.1
+
+  * Output underlying load error when wrapping [#284](https://github.com/jch/html-pipeline/pull/284)
+
+## 2.7.0
+
+  * Let users set the common marker extensions [#279](https://github.com/jch/html-pipeline/pull/279)
+
 ## 2.6.0
 
   * Switch from github-markdown to CommonMark [#274](https://github.com/jch/html-pipeline/pull/274)
