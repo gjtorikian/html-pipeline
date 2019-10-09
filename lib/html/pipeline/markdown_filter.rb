@@ -11,7 +11,7 @@ module HTML
     # Context options:
     #   :gfm      => false    Disable GFM line-end processing
     #   :commonmarker_extensions => [ :table, :strikethrough,
-    #      :tagfilter, :autolink ] Common marker extensions to include
+    #      :tagfilter, :autolink ] Commonmarker extensions to include
     #
     # This filter does not write any additional information to the context hash.
     class MarkdownFilter < TextFilter
@@ -23,14 +23,28 @@ module HTML
       # Convert Markdown to HTML using the best available implementation
       # and convert into a DocumentFragment.
       def call
-        options = [:GITHUB_PRE_LANG]
-        options << :HARDBREAKS if context[:gfm] != false
-        options << :UNSAFE if context[:unsafe]
         extensions = context.fetch(
           :commonmarker_extensions,
           %i[table strikethrough tagfilter autolink]
         )
-        html = CommonMarker.render_html(@text, options, extensions)
+        html = if (renderer = context[:commonmarker_renderer])
+          unless renderer < CommonMarker::HtmlRenderer
+            raise ArgumentError, "`commonmark_renderer` must be derived from `CommonMarker::HtmlRenderer`"
+          end
+          parse_options = :DEFAULT
+          parse_options = [:UNSAFE] if context[:unsafe]
+
+          render_options = [:GITHUB_PRE_LANG]
+          render_options << :HARDBREAKS if context[:gfm] != false
+
+          doc = CommonMarker.render_doc(@text, parse_options, extensions)
+          renderer.new(options: render_options, extensions: extensions).render(doc)
+        else
+          options = [:GITHUB_PRE_LANG]
+          options << :HARDBREAKS if context[:gfm] != false
+          options << :UNSAFE if context[:unsafe]
+          CommonMarker.render_html(@text, options, extensions)
+        end
         html.rstrip!
         html
       end

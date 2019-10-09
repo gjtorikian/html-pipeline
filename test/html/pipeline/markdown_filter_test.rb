@@ -5,6 +5,17 @@ require 'test_helper'
 MarkdownFilter = HTML::Pipeline::MarkdownFilter
 
 class HTML::Pipeline::MarkdownFilterTest < Minitest::Test
+  class CustomRenderer < CommonMarker::HtmlRenderer
+    def header(node)
+      block do
+        text = node.first_child.string_content
+        level = node.header_level
+        out("{level: #{level}, text: #{text}}")
+        super
+      end
+    end
+  end
+
   def setup
     @haiku =
       "Pointing at the moon\n" \
@@ -18,6 +29,15 @@ class HTML::Pipeline::MarkdownFilterTest < Minitest::Test
       "  'world'" \
       'end' \
       '```'
+    @header = <<~DOC
+    # Words
+
+    Some words
+
+    ## Words
+
+    More words?
+    DOC
   end
 
   def test_fails_when_given_a_documentfragment
@@ -62,6 +82,26 @@ class HTML::Pipeline::MarkdownFilterTest < Minitest::Test
     iframe = "<iframe src='http://www.google.com'></iframe>"
     doc = MarkdownFilter.new(iframe, commonmarker_extensions: [], unsafe: true).call
     assert_equal(doc, iframe)
+  end
+
+  def test_bogus_renderer
+    assert_raises ArgumentError do
+      MarkdownFilter.to_document(@haiku, commonmarker_renderer: 23)
+    end
+  end
+
+  def test_legitimate_renderer
+    results = MarkdownFilter.new(@header, commonmarker_renderer: CustomRenderer).call
+    expected = <<~DOC
+    {level: 1, text: Words}
+    <h1>Words</h1>
+    <p>Some words</p>
+    {level: 2, text: Words}
+    <h2>Words</h2>
+    <p>More words?</p>
+    DOC
+
+    assert_equal results, expected.chomp
   end
 end
 
