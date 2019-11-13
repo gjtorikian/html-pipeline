@@ -15,6 +15,8 @@ module HTML
     #
     # This filter does not write any additional information to the context hash.
     class MarkdownFilter < TextFilter
+      DEFAULT_COMMONMARKER_EXTENSIONS = %i[table strikethrough tagfilter autolink].freeze
+
       def initialize(text, context = nil, result = nil)
         super text, context, result
         @text = @text.delete "\r"
@@ -25,7 +27,7 @@ module HTML
       def call
         extensions = context.fetch(
           :commonmarker_extensions,
-          %i[table strikethrough tagfilter autolink]
+          DEFAULT_COMMONMARKER_EXTENSIONS
         )
         html = if (renderer = context[:commonmarker_renderer])
           unless renderer < CommonMarker::HtmlRenderer
