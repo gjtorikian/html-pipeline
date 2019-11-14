@@ -22,4 +22,5 @@ group :test do
 
   gem 'escape_utils', '~> 1.0', require: false
   gem 'rouge', '~> 3.1', require: false
+  gem 'minitest-focus', '~> 1.1'
 end
