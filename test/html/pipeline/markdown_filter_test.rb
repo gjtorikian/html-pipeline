@@ -103,6 +103,22 @@ class HTML::Pipeline::MarkdownFilterTest < Minitest::Test
 
     assert_equal results, expected.chomp
   end
+
+  def test_without_tagfilter
+    extensions = HTML::Pipeline::MarkdownFilter::DEFAULT_COMMONMARKER_EXTENSIONS - [:tagfilter]
+    script = '<script>foobar</script>'
+    results = MarkdownFilter.new(script, unsafe: true, commonmarker_extensions: extensions).call
+
+    assert_equal results, script
+  end
+
+  def test_legitimate_custom_renderer_without_tagfilter
+    extensions = HTML::Pipeline::MarkdownFilter::DEFAULT_COMMONMARKER_EXTENSIONS - [:tagfilter]
+    script = '<script>foobar</script>'
+    results = MarkdownFilter.new(script, unsafe: true, commonmarker_extensions: extensions, commonmarker_renderer: CustomRenderer).call
+
+    assert_equal results, script
+  end
 end
 
 class GFMTest < Minitest::Test
