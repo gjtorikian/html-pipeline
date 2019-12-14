@@ -82,7 +82,7 @@ Prints:
 </code></pre>
 ```
 
-To generate CSS for HTML formatted code, use the [Rouge CSS Theme](https://github.com/jneen/rouge#css-theme-options) `#css` method. `rouge` is a dependency of the `SyntaxHighlightFilter`.
+To generate CSS for HTML formatted code, use the [Rouge CSS Theme](https://github.com/rouge-ruby/rouge#css-options) `#css` method. `rouge` is a dependency of the `SyntaxHighlightFilter`.
 
 Some filters take an optional **context** and/or **result** hash. These are
 used to pass around arguments and metadata between filters in a pipeline. For
