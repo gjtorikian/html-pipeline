@@ -17,9 +17,9 @@ module HTML
           default = context[:highlight] && context[:highlight].to_s
           next unless lang = node['lang'] || default
           next unless lexer = lexer_for(lang)
-          text = node.inner_text
 
-          html = highlight_with_timeout_handling(text, lang)
+          text = node.inner_text
+          html = highlight_with_timeout_handling(text, lexer)
           next if html.nil?
 
           node.inner_html = html
@@ -32,8 +32,8 @@ module HTML
         doc
       end
 
-      def highlight_with_timeout_handling(text, lang)
-        Rouge.highlight(text, lang, @formatter)
+      def highlight_with_timeout_handling(text, lexer)
+        Rouge.highlight(text, lexer, @formatter)
       rescue Timeout::Error => _
         nil
       end
