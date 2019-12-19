@@ -23,7 +23,8 @@ module HTML
           next if html.nil?
 
           node.inner_html = html
-          node['class'] = context[:scope] || "highlight-#{lang}"
+          scope = context.fetch(:scope) { 'highlight' }
+          node['class'] = "#{scope} #{scope}-#{lang}"
         end
         doc
       end
