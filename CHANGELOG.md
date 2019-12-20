@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## 2.12.3
+
+  * Bug fix in `SyntaxHighlightFilter` [#325](https://github.com/jch/html-pipeline/pull/325)
+
+## 2.12.2
+
+  * Allow unsafe option for Custom Renderer of `MarkdownFilter` [#322](https://github.com/jch/html-pipeline/pull/322)
+  * Test with minitest-focus
+
+## 2.12.1
+
+  * Allow Custom Renderer for `MarkdownFilter` [#318](https://github.com/jch/html-pipeline/pull/318)
+  * Test against more Rails versions
+
 ## 2.12.0
 
   * Team mention filter [#314](https://github.com/jch/html-pipeline/pull/314)
