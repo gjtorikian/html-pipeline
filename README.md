@@ -4,7 +4,7 @@ HTML processing filters and utilities. This module includes a small
 framework for defining DOM based content filters and applying them to user
 provided content.
 
-This project was started at GitHub https://github.com/blog/1311-html-pipeline-chainable-content-filters. While GitHub still uses a similar design and pattern for rendering content, this gem should be considered standalone and independent from GitHub.
+[This project was started at GitHub](https://github.com/blog/1311-html-pipeline-chainable-content-filters). While GitHub still uses a similar design and pattern for rendering content, this gem should be considered standalone and independent from GitHub.
 
 - [Installation](#installation)
 - [Usage](#usage)
