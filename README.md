@@ -1,9 +1,10 @@
 # HTML::Pipeline [![Build Status](https://travis-ci.org/jch/html-pipeline.svg?branch=master)](https://travis-ci.org/jch/html-pipeline)
 
-GitHub HTML processing filters and utilities. This module includes a small
+HTML processing filters and utilities. This module includes a small
 framework for defining DOM based content filters and applying them to user
-provided content. Read an introduction about this project in
-[this blog post](https://github.com/blog/1311-html-pipeline-chainable-content-filters).
+provided content.
+
+[This project was started at GitHub](https://github.com/blog/1311-html-pipeline-chainable-content-filters). While GitHub still uses a similar design and pattern for rendering content, this gem should be considered standalone and independent from GitHub.
 
 - [Installation](#installation)
 - [Usage](#usage)
@@ -353,6 +354,8 @@ To see what has changed in recent versions, see the [CHANGELOG](https://github.c
 Thanks to all of [these contributors](https://github.com/jch/html-pipeline/graphs/contributors).
 
 Project is a member of the [OSS Manifesto](http://ossmanifesto.org/).
+
+The current maintainer is @gjtorikian
 
 ### Releasing A New Version
 
