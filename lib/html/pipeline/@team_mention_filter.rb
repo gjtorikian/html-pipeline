@@ -53,7 +53,7 @@ module HTML
         result[:mentioned_teams] ||= []
 
         doc.search('.//text()').each do |node|
-          content = node.to_html
+          content = node.text
           next unless content.include?('@')
           next if has_ancestor?(node, IGNORE_PARENTS)
           html = mention_link_filter(content, base_url, team_pattern)
