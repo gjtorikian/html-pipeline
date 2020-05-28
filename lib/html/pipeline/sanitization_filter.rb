@@ -69,7 +69,7 @@ module HTML
                   maxlength media method
                   multiple name nohref noshade
                   nowrap open prompt readonly rel rev
-                  rows rowspan rules scope
+                  role rows rowspan rules scope
                   selected shape size span
                   start summary tabindex target
                   title type usemap valign value
