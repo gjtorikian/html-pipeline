@@ -38,6 +38,10 @@ class HTML::Pipeline::MarkdownFilterTest < Minitest::Test
 
     More words?
     DOC
+    @non_utf_text = String.new(
+      "These curly quotes “make commonmarker throw an exception”",
+      encoding: "ASCII-8BIT",
+    )
   end
 
   def test_fails_when_given_a_documentfragment
@@ -118,6 +122,14 @@ class HTML::Pipeline::MarkdownFilterTest < Minitest::Test
     results = MarkdownFilter.new(script, unsafe: true, commonmarker_extensions: extensions, commonmarker_renderer: CustomRenderer).call
 
     assert_equal results, script
+  end
+
+  def test_non_utf_content_allowed
+    # Without forcing encoding, test would fail with an error like:
+    #   Encoding::UndefinedConversionError: "\xE2" from ASCII-8BIT to UTF-8
+    #   [...]/gems/commonmarker-0.21.0/lib/commonmarker.rb:42:in `encode'
+    #   [...]/gems/commonmarker-0.21.0/lib/commonmarker.rb:42:in `render_doc'
+    MarkdownFilter.new(@non_utf_text, force_encoding: "UTF-8").call
   end
 end
 

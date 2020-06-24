@@ -25,6 +25,9 @@ module HTML
       # Convert Markdown to HTML using the best available implementation
       # and convert into a DocumentFragment.
       def call
+        if encoding = context[:force_encoding]
+          @text.force_encoding(encoding)
+        end
         extensions = context.fetch(
           :commonmarker_extensions,
           DEFAULT_COMMONMARKER_EXTENSIONS
