@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 3.0.0
+
+Breaking Changes. Update terms in the codebase. See [#334](https://github.com/jch/html-pipeline/pull/334).
+
+### HTML::Pipeline::SanitizationFilter
+
+* Add `:allowlist` option to replace `:whitelist`
+* Add `ALLOWLIST` constant to replace `WHITELIST`
+
+### HTML::Pipeline::CamoFilter
+
+* Add `asset_proxy_allowlist` option to replace `:asset_proxy_whitelist`
+
 ## 2.12.3
 
   * Bug fix in `SyntaxHighlightFilter` [#325](https://github.com/jch/html-pipeline/pull/325)
