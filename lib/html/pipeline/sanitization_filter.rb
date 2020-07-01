@@ -4,7 +4,7 @@ HTML::Pipeline.require_dependency('sanitize', 'SanitizationFilter')
 
 module HTML
   class Pipeline
-    # HTML filter with sanization routines and whitelists. This module defines
+    # HTML filter with sanization routines and allowlist. This module defines
     # what HTML is allowed in user provided content and fixes up issues with
     # unbalanced tags and whatnot.
     #
@@ -13,13 +13,13 @@ module HTML
     # https://github.com/rgrove/sanitize/#readme
     #
     # Context options:
-    #   :whitelist      - The sanitizer whitelist configuration to use. This
+    #   :allowlist      - The sanitizer allowlist configuration to use. This
     #                     can be one of the options constants defined in this
     #                     class or a custom sanitize options hash.
     #   :anchor_schemes - The URL schemes to allow in <a href> attributes. The
     #                     default set is provided in the ANCHOR_SCHEMES
     #                     constant in this class. If passed, this overrides any
-    #                     schemes specified in the whitelist configuration.
+    #                     schemes specified in the allowlist configuration.
     #
     # This filter does not write additional information to the context.
     class SanitizationFilter < Filter
@@ -37,9 +37,9 @@ module HTML
       # These schemes are the only ones allowed in <a href> attributes by default.
       ANCHOR_SCHEMES = ['http', 'https', 'mailto', 'xmpp', :relative, 'github-windows', 'github-mac', 'irc', 'ircs'].freeze
 
-      # The main sanitization whitelist. Only these elements and attributes are
+      # The main sanitization allowlist. Only these elements and attributes are
       # allowed through by default.
-      WHITELIST = {
+      ALLOWLIST = {
         elements: %w[
           h1 h2 h3 h4 h5 h6 h7 h8 br b i strong em a pre code img tt
           div ins del sup sub p ol ul table thead tbody tfoot blockquote
@@ -108,10 +108,10 @@ module HTML
         ].freeze
       }.freeze
 
-      # A more limited sanitization whitelist. This includes all attributes,
-      # protocols, and transformers from WHITELIST but with a more locked down
+      # A more limited sanitization allowlist. This includes all attributes,
+      # protocols, and transformers from ALLOWLIST but with a more locked down
       # set of allowed elements.
-      LIMITED = WHITELIST.merge(
+      LIMITED = ALLOWLIST.merge(
         elements: %w[b i strong em a pre code img ins del sup sub mark abbr p ol ul li]
       )
 
@@ -120,19 +120,19 @@ module HTML
 
       # Sanitize markup using the Sanitize library.
       def call
-        Sanitize.clean_node!(doc, whitelist)
+        Sanitize.clean_node!(doc, allowlist)
       end
 
-      # The whitelist to use when sanitizing. This can be passed in the context
-      # hash to the filter but defaults to WHITELIST constant value above.
-      def whitelist
-        whitelist = context[:whitelist] || WHITELIST
+      # The allowlist to use when sanitizing. This can be passed in the context
+      # hash to the filter but defaults to ALLOWLIST constant value above.
+      def allowlist
+        allowlist = context[:allowlist] || ALLOWLIST
         anchor_schemes = context[:anchor_schemes]
-        return whitelist unless anchor_schemes
-        whitelist = whitelist.dup
-        whitelist[:protocols] = (whitelist[:protocols] || {}).dup
-        whitelist[:protocols]['a'] = (whitelist[:protocols]['a'] || {}).merge('href' => anchor_schemes)
-        whitelist
+        return allowlist unless anchor_schemes
+        allowlist = allowlist.dup
+        allowlist[:protocols] = (allowlist[:protocols] || {}).dup
+        allowlist[:protocols]['a'] = (allowlist[:protocols]['a'] || {}).merge('href' => anchor_schemes)
+        allowlist
       end
     end
   end
