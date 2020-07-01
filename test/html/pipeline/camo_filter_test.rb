@@ -11,7 +11,7 @@ class HTML::Pipeline::CamoFilterTest < Minitest::Test
     @options = {
       asset_proxy: @asset_proxy_url,
       asset_proxy_secret_key: @asset_proxy_secret_key,
-      asset_proxy_whitelist: [/(^|\.)github\.com$/]
+      asset_proxy_allowlist: [/(^|\.)github\.com$/]
     }
   end
 
