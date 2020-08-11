@@ -34,4 +34,24 @@ class HTML::Pipeline::AutolinkFilterTest < Minitest::Test
     assert_equal '<code>"<a href="http://github.com">http://github.com</a>"</code>',
                  AutolinkFilter.to_html('<code>"http://github.com"</code>', skip_tags: %w[kbd script])
   end
+
+  def test_link_mode_default
+    assert_equal '<p>"<a href="http://www.github.com">http://www.github.com</a>"</p><p>"user@example.com"</p>',
+                 AutolinkFilter.to_html('<p>"http://www.github.com"</p><p>"user@example.com"</p>')
+  end
+
+  def test_link_mode_urls
+    assert_equal '<p>"<a href="http://www.github.com">http://www.github.com</a>"</p><p>"user@example.com"</p>',
+                 AutolinkFilter.to_html('<p>"http://www.github.com"</p><p>"user@example.com"</p>', link_mode: :urls)
+  end
+
+  def test_link_mode_all
+    assert_equal '<p>"<a href="http://www.github.com">http://www.github.com</a>"</p><p>"<a href="mailto:user@example.com">user@example.com</a>"</p>',
+                 AutolinkFilter.to_html('<p>"http://www.github.com"</p><p>"user@example.com"</p>', link_mode: :all)
+  end
+
+  def test_link_mode_email_addresses
+    assert_equal '<p>"http://www.github.com"</p><p>"<a href="mailto:user@example.com">user@example.com</a>"</p>',
+                 AutolinkFilter.to_html('<p>"http://www.github.com"</p><p>"user@example.com"</p>', link_mode: :email_addresses)
+  end
 end
