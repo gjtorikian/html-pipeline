@@ -68,7 +68,7 @@ module HTML
                   hspace ismap label lang
                   maxlength media method
                   multiple name nohref noshade
-                  nowrap open prompt readonly rel rev
+                  nowrap open progress prompt readonly rel rev
                   role rows rowspan rules scope
                   selected shape size span
                   start summary tabindex target
