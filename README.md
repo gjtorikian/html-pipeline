@@ -164,7 +164,7 @@ EmojiPipeline = Pipeline.new [
 * `ImageMaxWidthFilter` - link to full size image for large images
 * `MarkdownFilter` - convert markdown to html
 * `PlainTextInputFilter` - html escape text and wrap the result in a div
-* `SanitizationFilter` - whitelist sanitize user markup
+* `SanitizationFilter` - allow sanitize user markup
 * `SyntaxHighlightFilter` - code syntax highlighter
 * `TextileFilter` - convert textile to html
 * `TableOfContentsFilter` - anchor headings with name attributes and generate Table of Contents html unordered list linking headings
@@ -330,9 +330,9 @@ html_fragment = "This is outside of an html element, but <strong>this isn't. :+1
 EmojiPipeline.call("<div>#{html_fragment}</div>") # <- Wrap your own html fragments to avoid escaping
 ```
 
-### 2. How do I customize a whitelist for `SanitizationFilter`s?
+### 2. How do I customize an allowlist for `SanitizationFilter`s?
 
-`SanitizationFilter::WHITELIST` is the default whitelist used if no `:whitelist`
+`SanitizationFilter::ALLOWLIST` is the default allowlist used if no `:allowlist`
 argument is given in the context. The default is a good starting template for
 you to add additional elements. You can either modify the constant's value, or
 re-define your own constant and pass that in via the context.

@@ -53,7 +53,7 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
     assert_equal '<a>Wat</a> is this', html
   end
 
-  def test_whitelisted_longdesc_schemes_are_allowed
+  def test_allowlisted_longdesc_schemes_are_allowed
     stuff = '<img src="./foo.jpg" longdesc="http://longdesc.com">'
     html  = SanitizationFilter.call(stuff).to_s
     assert_equal '<img src="./foo.jpg" longdesc="http://longdesc.com">', html
@@ -81,35 +81,35 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
 
   def test_anchor_schemes_are_merged_with_other_anchor_restrictions
     stuff = '<a href="something-weird://heyyy" ping="more-weird://hiii">Wat</a> is this'
-    whitelist = {
+    allowlist = {
       elements: ['a'],
       attributes: { 'a' => %w[href ping] },
       protocols: { 'a' => { 'ping' => ['http'] } }
     }
-    filter = SanitizationFilter.new(stuff, whitelist: whitelist, anchor_schemes: ['something-weird'])
+    filter = SanitizationFilter.new(stuff, allowlist: allowlist, anchor_schemes: ['something-weird'])
     html   = filter.call.to_s
     assert_equal '<a href="something-weird://heyyy">Wat</a> is this', html
   end
 
-  def test_uses_anchor_schemes_from_whitelist_when_not_separately_specified
+  def test_uses_anchor_schemes_from_allowlist_when_not_separately_specified
     stuff = '<a href="something-weird://heyyy">Wat</a> is this'
-    whitelist = {
+    allowlist = {
       elements: ['a'],
       attributes: { 'a' => ['href'] },
       protocols: { 'a' => { 'href' => ['something-weird'] } }
     }
-    filter = SanitizationFilter.new(stuff, whitelist: whitelist)
+    filter = SanitizationFilter.new(stuff, allowlist: allowlist)
     html   = filter.call.to_s
     assert_equal stuff, html
   end
 
-  def test_whitelist_contains_default_anchor_schemes
-    assert_equal SanitizationFilter::WHITELIST[:protocols]['a']['href'], ['http', 'https', 'mailto', 'xmpp', :relative, 'github-windows', 'github-mac', 'irc', 'ircs']
+  def test_allowlist_contains_default_anchor_schemes
+    assert_equal SanitizationFilter::ALLOWLIST[:protocols]['a']['href'], ['http', 'https', 'mailto', 'xmpp', :relative, 'github-windows', 'github-mac', 'irc', 'ircs']
   end
 
-  def test_whitelist_from_full_constant
+  def test_allowlist_from_full_constant
     stuff  = '<a href="something-weird://heyyy" ping="more-weird://hiii">Wat</a> is this'
-    filter = SanitizationFilter.new(stuff, whitelist: SanitizationFilter::FULL)
+    filter = SanitizationFilter.new(stuff, allowlist: SanitizationFilter::FULL)
     html   = filter.call.to_s
     assert_equal 'Wat is this', html
   end
@@ -164,5 +164,20 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
       </details>
     NESTED
     assert_equal orig, SanitizationFilter.call(orig).to_s
+  end
+
+  def test_deprecated_whitelist_context
+    orig = %(<p><style>hey now</style></p>)
+    context = { whitelist: ['table'] }
+
+    assert_equal ['table'], SanitizationFilter.new(orig, context).allowlist
+  end
+
+  def test_deprecation_warning_whitelist
+    orig = %(<p><style>hey now</style></p>)
+    _stdout, stderror  = capture_io do
+      SanitizationFilter.new(orig).whitelist
+    end
+    assert_match "[DEPRECATION] 'whitelist' is deprecated. Please use 'allowlist' instead.", stderror
   end
 end
