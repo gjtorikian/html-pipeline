@@ -119,6 +119,11 @@ class HTML::Pipeline::MarkdownFilterTest < Minitest::Test
 
     assert_equal results, script
   end
+
+  def test_unsafe_custom_renderer_fenced_code_blocks_with_language
+    doc = MarkdownFilter.to_document(@code.sub('```', '``` ruby'), unsafe: true, commonmarker_renderer: CustomRenderer)
+    assert_equal 'ruby', doc.search('pre').first['lang']
+  end
 end
 
 class GFMTest < Minitest::Test

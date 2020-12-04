@@ -38,7 +38,7 @@ module HTML
 
           render_options = [:GITHUB_PRE_LANG]
           render_options << :HARDBREAKS if context[:gfm] != false
-          render_options = [:UNSAFE] if context[:unsafe]
+          render_options << :UNSAFE if context[:unsafe]
 
           doc = CommonMarker.render_doc(@text, parse_options, extensions)
           renderer.new(options: render_options, extensions: extensions).render(doc)
