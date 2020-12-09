@@ -17,13 +17,4 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'activesupport', '>= 2'
   gem.add_dependency 'nokogiri', '>= 1.4'
-
-  gem.post_install_message = <<msg
--------------------------------------------------
-Thank you for installing html-pipeline!
-You must bundle Filter gem dependencies.
-See html-pipeline README.md for more details.
-https://github.com/jch/html-pipeline#dependencies
--------------------------------------------------
-msg
 end
