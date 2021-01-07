@@ -9,8 +9,6 @@ on:
 
 jobs:
   test:
-    env:
-      NOKOGIRI_USE_SYSTEM_LIBRARIES: true
     runs-on: ubuntu-latest
 
     strategy:
