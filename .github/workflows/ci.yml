@@ -1,0 +1,53 @@
+name: Ruby CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    env:
+      NOKOGIRI_USE_SYSTEM_LIBRARIES: true
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+      matrix:
+        gemfile:
+          - gemfiles/rails_6.gemfile
+          - gemfiles/rails_5.gemfile
+          - gemfiles/rails_4.gemfile
+          - gemfiles/rails_3.gemfile
+        ruby-version:
+          - 3.0.0
+          - 2.7.2
+          - 2.6.6
+          - 2.5.8
+        experimental: [false]
+        include:
+          - ruby-version: head
+            experimental: true
+          - ruby-version: truffleruby-head
+            experimental: true
+
+    continue-on-error: ${{ matrix.experimental }}
+
+    env:
+      BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install libxslt and libxml2
+        run: sudo apt-get install libxslt-dev libxml2-dev
+      - name: Set up Ruby ${{ matrix.ruby-version }}
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+          bundler-cache: true
+      - name: Install dependencies
+        run: bundle install
+      - name: Run tests
+        run: bundle exec rake
