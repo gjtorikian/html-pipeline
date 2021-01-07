@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.license       = 'MIT'
   gem.authors       = ['Ryan Tomayko', 'Jerry Cheung', 'Garen J. Torikian']
   gem.email         = ['ryan@github.com', 'jerry@github.com', 'gjtorikian@gmail.com']
-  gem.description   = 'GitHub HTML processing filters and utilities'
+  gem.description   = 'HTML processing filters and utilities'
   gem.summary       = 'Helpers for processing content through a chain of filters'
   gem.homepage      = 'https://github.com/jch/html-pipeline'
 
