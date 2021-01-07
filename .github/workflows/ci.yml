@@ -15,10 +15,10 @@ jobs:
       fail-fast: true
       matrix:
         gemfile:
-          - gemfiles/rails_6.gemfile
-          - gemfiles/rails_5.gemfile
-          - gemfiles/rails_4.gemfile
-          - gemfiles/rails_3.gemfile
+          - rails_6
+          - rails_5
+          - rails_4
+          - rails_3
         ruby-version:
           - 3.0.0
           - 2.7.2
