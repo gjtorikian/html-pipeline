@@ -17,7 +17,6 @@ Gem::Specification.new do |gem|
 
   gem.required_ruby_version = ['>= 2.5.8', '< 4.0']
 
-  gem.add_dependency 'activesupport', '~> 4'
   gem.add_dependency 'nokogiri', '~> 1.11'
 
   gem.post_install_message = <<~MSG
