@@ -2,9 +2,13 @@
 
 require 'bundler/setup'
 require 'html/pipeline'
+
 require 'minitest/autorun'
 require 'minitest/pride'
 require 'minitest/focus'
+require 'minitest/stub_any_instance'
+
+require 'awesome_print'
 
 module TestHelpers
   # Asserts that two html fragments are equivalent. Attribute order

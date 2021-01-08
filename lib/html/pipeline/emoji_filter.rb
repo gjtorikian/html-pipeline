@@ -82,12 +82,12 @@ module HTML
       end
 
       # Build a regexp that matches all valid :emoji: names.
-      def self.emoji_pattern
+      def emoji_pattern
         @emoji_pattern ||= /:(#{emoji_names.map { |name| Regexp.escape(name) }.join('|')}):/
       end
 
-      def self.emoji_names
-        if gemoji_loaded?
+      def emoji_names
+        if self.class.gemoji_loaded?
           Emoji.all.map(&:aliases)
         else
           Gemojione::Index.new.all.map { |i| i[1]['name'] }
@@ -109,10 +109,6 @@ module HTML
 
       private def emoji_url(name)
         File.join(asset_root, asset_path(name))
-      end
-
-      private def emoji_pattern
-        self.class.emoji_pattern
       end
 
       private def emoji_filename(name)

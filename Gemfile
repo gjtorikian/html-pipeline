@@ -5,13 +5,11 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in html-pipeline.gemspec
 gemspec
 
-group :development, :test do
-  gem 'awesome_print'
+gem 'awesome_print'
 
-  gem 'rubocop'
-  gem 'rubocop-performance'
-  gem 'rubocop-standard'
-end
+gem 'rubocop'
+gem 'rubocop-performance'
+gem 'rubocop-standard'
 
 group :development do
   gem 'bundler'
@@ -23,6 +21,7 @@ group :test do
   gem 'gemoji', '~> 3.0', require: false
   gem 'gemojione', '~> 4.3', require: false
   gem 'minitest'
+  gem 'minitest-stub_any_instance'
   gem 'rinku',              '~> 1.7', require: false
   gem 'sanitize',           '~> 5.2', require: false
 
