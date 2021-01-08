@@ -31,7 +31,7 @@ module HTML
     class Filter
       class InvalidDocumentException < StandardError; end
 
-      def initialize(doc, context = nil, result = nil)
+      def initialize(doc, context: {}, result: {})
         if doc.is_a?(String)
           @html = doc.to_str
           @doc = nil
@@ -39,8 +39,8 @@ module HTML
           @doc = doc
           @html = nil
         end
-        @context = context || {}
-        @result = result || {}
+        @context = context
+        @result = result
         validate
       end
 
@@ -126,20 +126,20 @@ module HTML
       #
       # Returns a HTML::Pipeline::DocumentFragment or a String containing HTML
       # markup.
-      def self.call(doc, context = nil, result = nil)
-        new(doc, context, result).call
+      def self.call(doc, context: {}, result: {})
+        new(doc, context: context, result: result).call
       end
 
       # Like call but guarantees that a DocumentFragment is returned, even when
       # the last filter returns a String.
-      def self.to_document(input, context = nil)
-        html = call(input, context)
+      def self.to_document(input, context: {})
+        html = call(input, context: context)
         HTML::Pipeline.parse(html)
       end
 
       # Like call but guarantees that a string of HTML markup is returned.
-      def self.to_html(input, context = nil)
-        output = call(input, context)
+      def self.to_html(input, context: {})
+        output = call(input, context: context)
         if output.respond_to?(:to_html)
           output.to_html
         else

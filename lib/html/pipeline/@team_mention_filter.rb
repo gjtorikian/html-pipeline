@@ -27,7 +27,7 @@ module HTML
       # return replaces the match in the original text.
       #
       # Returns a String replaced with the return of the block.
-      def self.mentioned_teams_in(text, team_pattern = TeamPattern)
+      def self.mentioned_teams_in(text, team_pattern = TEAM_PATTERN)
         text.gsub team_pattern do |match|
           org = Regexp.last_match(1)
           team = Regexp.last_match(2)
@@ -38,7 +38,7 @@ module HTML
       # Default pattern used to extract team names from text. The value can be
       # overridden by providing the team_pattern variable in the context. To
       # properly link the mention, should be in the format of /@(1)\/(2)/.
-      TeamPattern = %r{
+      TEAM_PATTERN = %r{
         (?<=^|\W)                  # beginning of string or non-word char
         @([a-z0-9][a-z0-9-]*)      # @organization
           /                       # dividing slash
@@ -57,7 +57,7 @@ module HTML
           next unless content.include?('@')
           next if has_ancestor?(node, IGNORE_PARENTS)
 
-          html = mention_link_filter(content, base_url, team_pattern)
+          html = mention_link_filter(content, base_url: base_url, team_pattern: team_pattern)
           next if html == content
 
           node.replace(html)
@@ -66,7 +66,7 @@ module HTML
       end
 
       def team_pattern
-        context[:team_pattern] || TeamPattern
+        context[:team_pattern] || TEAM_PATTERN
       end
 
       # Replace @org/team mentions in text with links to the mentioned team's
@@ -78,15 +78,15 @@ module HTML
       #
       # Returns a string with @team mentions replaced with links. All links have a
       # 'team-mention' class name attached for styling.
-      def mention_link_filter(text, _base_url = '/', team_pattern = TeamPattern)
+      def mention_link_filter(text, base_url: '/', team_pattern: TEAM_PATTERN)
         self.class.mentioned_teams_in(text, team_pattern) do |match, org, team|
-          link = link_to_mentioned_team(org, team)
+          link = link_to_mentioned_team(base_url, org, team)
 
           link ? match.sub("@#{org}/#{team}", link) : match
         end
       end
 
-      def link_to_mentioned_team(org, team)
+      def link_to_mentioned_team(base_url, org, team)
         result[:mentioned_teams] |= [team]
 
         url = base_url.dup

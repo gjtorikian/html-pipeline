@@ -67,14 +67,14 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
 
   def test_standard_schemes_are_removed_if_not_specified_in_anchor_schemes
     stuff  = '<a href="http://www.example.com/">No href for you</a>'
-    filter = SanitizationFilter.new(stuff, anchor_schemes: [])
+    filter = SanitizationFilter.new(stuff, context: { anchor_schemes: [] })
     html   = filter.call.to_s
     assert_equal '<a>No href for you</a>', html
   end
 
   def test_custom_anchor_schemes_are_not_removed
     stuff  = '<a href="something-weird://heyyy">Wat</a> is this'
-    filter = SanitizationFilter.new(stuff, anchor_schemes: ['something-weird'])
+    filter = SanitizationFilter.new(stuff, context: { anchor_schemes: ['something-weird'] })
     html   = filter.call.to_s
     assert_equal stuff, html
   end
@@ -86,7 +86,7 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
       attributes: { 'a' => %w[href ping] },
       protocols: { 'a' => { 'ping' => ['http'] } }
     }
-    filter = SanitizationFilter.new(stuff, allowlist: allowlist, anchor_schemes: ['something-weird'])
+    filter = SanitizationFilter.new(stuff, context: { allowlist: allowlist, anchor_schemes: ['something-weird'] })
     html   = filter.call.to_s
     assert_equal '<a href="something-weird://heyyy">Wat</a> is this', html
   end
@@ -98,7 +98,7 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
       attributes: { 'a' => ['href'] },
       protocols: { 'a' => { 'href' => ['something-weird'] } }
     }
-    filter = SanitizationFilter.new(stuff, allowlist: allowlist)
+    filter = SanitizationFilter.new(stuff, context: { allowlist: allowlist })
     html   = filter.call.to_s
     assert_equal stuff, html
   end
@@ -109,7 +109,7 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
 
   def test_allowlist_from_full_constant
     stuff  = '<a href="something-weird://heyyy" ping="more-weird://hiii">Wat</a> is this'
-    filter = SanitizationFilter.new(stuff, allowlist: SanitizationFilter::FULL)
+    filter = SanitizationFilter.new(stuff, context: { allowlist: SanitizationFilter::FULL })
     html   = filter.call.to_s
     assert_equal 'Wat is this', html
   end
@@ -170,7 +170,7 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
     orig = %(<p><style>hey now</style></p>)
     context = { whitelist: ['table'] }
 
-    assert_equal ['table'], SanitizationFilter.new(orig, context).allowlist
+    assert_equal ['table'], SanitizationFilter.new(orig, context: context).allowlist
   end
 
   def test_deprecation_warning_whitelist

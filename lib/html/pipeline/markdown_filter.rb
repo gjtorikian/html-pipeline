@@ -17,8 +17,8 @@ module HTML
     class MarkdownFilter < TextFilter
       DEFAULT_COMMONMARKER_EXTENSIONS = %i[table strikethrough tagfilter autolink].freeze
 
-      def initialize(text, context = nil, result = nil)
-        super text, context, result
+      def initialize(text, context: {}, result: {})
+        super text, context: context, result: result
         @text = @text.delete "\r"
       end
 
