@@ -23,7 +23,6 @@ group :test do
   gem 'email_reply_parser', '~> 0.5', require: false
   gem 'gemoji', '~> 2.0', require: false
   gem 'minitest'
-  gem 'RedCloth',           '~> 4.3', require: false
   gem 'rinku',              '~> 1.7', require: false
   gem 'sanitize',           '~> 5.2', require: false
 
