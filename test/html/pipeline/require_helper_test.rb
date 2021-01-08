@@ -8,7 +8,9 @@ class HTML::Pipeline::RequireHelperTest < Minitest::Test
   end
 
   def test_works_with_existing_dependencies
-    HTML::Pipeline.require_dependencies(%w[old_sql rake], 'SomeClass')
+    HTML::Pipeline.require_dependencies(%w[old_sql nokogiri], 'SomeClass')
+    assert HTML::Pipeline.nokogiri_loaded?
+    refute HTML::Pipeline.old_sql_loaded?
   end
 
   def test_raises_mising_dependency_error

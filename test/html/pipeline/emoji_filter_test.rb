@@ -93,4 +93,26 @@ class HTML::Pipeline::EmojiFilterTest < Minitest::Test
     doc = filter.call
     assert_equal %(<img class="emoji" title=":shipit:" alt=":shipit:" src="https://foo.com/emoji/shipit.png" draggable="false">), doc.to_html
   end
+
+  def test_works_with_gemoji
+    require 'gemojione'
+
+    EmojiFilter.stub :gemoji_loaded?, false do
+      body = ':flag_ar:'
+      filter = EmojiFilter.new(body, context: { asset_root: 'https://foo.com' })
+      doc = filter.call
+      assert_equal %(<img class="emoji" title=":flag_ar:" alt=":flag_ar:" src="https://foo.com/emoji/1f1e6-1f1f7.png" height="20" width="20" align="absmiddle">), doc.to_html
+    end
+  end
+
+  def test_gemoji_can_accept_symbolized_keys
+    require 'gemojione'
+
+    EmojiFilter.stub :gemoji_loaded?, false do
+      body = ':flag_ar:'
+      filter = EmojiFilter.new(body, context: { asset_root: 'https://coolwebsite.com', img_attrs: Hash(draggable: false, height: nil, width: nil, align: nil) })
+      doc = filter.call
+      assert_equal %(<img class="emoji" title=":flag_ar:" alt=":flag_ar:" src="https://coolwebsite.com/emoji/1f1e6-1f1f7.png" draggable="false">), doc.to_html
+    end
+  end
 end

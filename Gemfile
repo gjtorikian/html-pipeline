@@ -21,6 +21,7 @@ end
 group :test do
   gem 'commonmarker', '~> 0.16', require: false
   gem 'gemoji', '~> 3.0', require: false
+  gem 'gemojione', '~> 4.3', require: false
   gem 'minitest'
   gem 'rinku',              '~> 1.7', require: false
   gem 'sanitize',           '~> 5.2', require: false
