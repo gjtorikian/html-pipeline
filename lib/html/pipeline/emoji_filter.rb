@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'cgi'
-HTML::Pipeline.require_dependency('gemoji', 'EmojiFilter')
+HTML::Pipeline.require_dependencies(%w[gemoji gemojione], 'EmojiFilter')
 
 module HTML
   class Pipeline
@@ -41,7 +41,7 @@ module HTML
       #
       # Returns a String with :emoji: replaced with images.
       def emoji_image_filter(text)
-        text.gsub(emoji_pattern) do |_match|
+        text.gsub(emoji_pattern) do
           emoji_image_tag(Regexp.last_match(1))
         end
       end
@@ -82,12 +82,16 @@ module HTML
       end
 
       # Build a regexp that matches all valid :emoji: names.
-      def self.emoji_pattern
+      def emoji_pattern
         @emoji_pattern ||= /:(#{emoji_names.map { |name| Regexp.escape(name) }.join('|')}):/
       end
 
-      def self.emoji_names
-        Emoji.all.map(&:aliases).flatten.sort
+      def emoji_names
+        if self.class.gemoji_loaded?
+          Emoji.all.map(&:aliases)
+        else
+          Gemojione::Index.new.all.map { |i| i[1]['name'] }
+        end.flatten.sort
       end
 
       # Default attributes for img tag
@@ -107,12 +111,13 @@ module HTML
         File.join(asset_root, asset_path(name))
       end
 
-      private def emoji_pattern
-        self.class.emoji_pattern
-      end
-
       private def emoji_filename(name)
-        Emoji.find_by_alias(name).image_filename
+        if self.class.gemoji_loaded?
+          Emoji.find_by_alias(name).image_filename
+        else
+          # replace their asset_host with ours
+          Gemojione.image_url_for_name(name).sub(Gemojione.asset_host, '')
+        end
       end
 
       # Return ancestor tags to stop the emojification.

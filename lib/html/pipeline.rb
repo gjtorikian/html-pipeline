@@ -54,6 +54,39 @@ module HTML
             "Missing dependency '#{name}' for #{requirer}. See README.md for details.\n#{e.class.name}: #{e}"
     end
 
+    def self.require_dependencies(names, requirer)
+      dependency_list = names.dup
+      loaded = false
+
+      while !loaded && names.length > 1
+        name = names.shift
+
+        begin
+          require_dependency(name, requirer)
+          loaded = true # we got a dependency
+          define_dependency_loaded_method(name, true)
+        # try the next dependency
+        rescue MissingDependencyError
+          define_dependency_loaded_method(name, false)
+        end
+      end
+
+      return if loaded
+
+      begin
+        name = names.shift
+        require name
+        define_dependency_loaded_method(name, true)
+      rescue LoadError => e
+        raise MissingDependencyError,
+              "Missing all dependencies '#{dependency_list.join(', ')}' for #{requirer}. See README.md for details.\n#{e.class.name}: #{e}"
+      end
+    end
+
+    def self.define_dependency_loaded_method(name, value)
+      self.class.define_method :"#{name}_loaded?", -> { value }
+    end
+
     # Our DOM implementation.
     DocumentFragment = Nokogiri::HTML::DocumentFragment
 
