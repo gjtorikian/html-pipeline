@@ -22,8 +22,8 @@ module HTML
       def call
         doc.search('pre').each do |node|
           default = context[:highlight]&.to_s
-          next unless lang = node['lang'] || default
-          next unless lexer = lexer_for(lang)
+          next unless (lang = node['lang'] || default)
+          next unless (lexer = lexer_for(lang))
 
           text = node.inner_text
           html = highlight_with_timeout_handling(text, lexer)

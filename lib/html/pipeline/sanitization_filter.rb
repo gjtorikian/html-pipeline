@@ -119,15 +119,10 @@ module HTML
         Sanitize.clean_node!(doc, allowlist)
       end
 
-      def whitelist
-        warn "[DEPRECATION] 'whitelist' is deprecated. Please use 'allowlist' instead."
-        allowlist
-      end
-
       # The allowlist to use when sanitizing. This can be passed in the context
       # hash to the filter but defaults to ALLOWLIST constant value above.
       def allowlist
-        allowlist = context[:allowlist] || context[:whitelist] || ALLOWLIST
+        allowlist = context[:allowlist] || ALLOWLIST
         anchor_schemes = context[:anchor_schemes]
         return allowlist unless anchor_schemes
 

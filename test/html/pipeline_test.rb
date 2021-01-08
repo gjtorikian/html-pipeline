@@ -6,7 +6,7 @@ require 'helpers/mocked_instrumentation_service'
 class HTML::PipelineTest < Minitest::Test
   Pipeline = HTML::Pipeline
   class TestFilter
-    def self.call(input, context: {}, result: {})
+    def self.call(input, context: {}, result: {}) # rubocop:disable Lint/UnusedMethodArgument
       input.reverse
     end
   end
@@ -23,7 +23,7 @@ class HTML::PipelineTest < Minitest::Test
     @pipeline.instrumentation_service = service
     body = 'hello'
     @pipeline.call(body)
-    event, payload, res = events.pop
+    event, payload, = events.pop
     assert event, 'event expected'
     assert_equal 'call_filter.html_pipeline', event
     assert_equal TestFilter.name, payload[:filter]
@@ -37,7 +37,7 @@ class HTML::PipelineTest < Minitest::Test
     @pipeline.instrumentation_service = service
     body = 'hello'
     @pipeline.call(body)
-    event, payload, res = events.pop
+    event, payload, = events.pop
     assert event, 'event expected'
     assert_equal 'call_pipeline.html_pipeline', event
     assert_equal @pipeline.filters.map(&:name), payload[:filters]
@@ -68,7 +68,7 @@ class HTML::PipelineTest < Minitest::Test
     body = 'foo'
     @pipeline.call(body)
 
-    event, payload, res = events.pop
+    event, payload, = events.pop
     assert event, 'expected event'
     assert_equal name, payload[:pipeline]
     assert_equal body.reverse, payload[:result][:output]

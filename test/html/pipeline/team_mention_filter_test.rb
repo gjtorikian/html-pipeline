@@ -47,7 +47,7 @@ class HTML::Pipeline::TeamMentionFilterTest < Minitest::Test
 
   def test_not_replacing_mentions_in_code_tags
     body = '<p><code>@github/team:</code> okay</p>'
-    assert_equal body,@filter.call(body).to_html
+    assert_equal body, @filter.call(body).to_html
   end
 
   def test_not_replacing_mentions_in_style_tags
@@ -187,7 +187,7 @@ class HTML::Pipeline::TeamMentionFilterTest < Minitest::Test
     body = '<p>@_abc/XYZ: test</p>'
     doc  = Nokogiri::HTML::DocumentFragment.parse(body)
 
-    res  = @filter.call(doc,context: {team_pattern: %r{@(_[a-z]{3})/([A-Z]{3})}})
+    res  = @filter.call(doc, context: { team_pattern: %r{@(_[a-z]{3})/([A-Z]{3})} })
 
     link = '<a href="/_abc/XYZ" class="team-mention">@_abc/XYZ</a>'
     assert_equal "<p>#{link}: test</p>",

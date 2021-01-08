@@ -166,18 +166,10 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
     assert_equal orig, SanitizationFilter.call(orig).to_s
   end
 
-  def test_deprecated_whitelist_context
+  def test_allowlist_context
     orig = %(<p><style>hey now</style></p>)
-    context = { whitelist: ['table'] }
+    context = { allowlist: ['table'] }
 
     assert_equal ['table'], SanitizationFilter.new(orig, context: context).allowlist
-  end
-
-  def test_deprecation_warning_whitelist
-    orig = %(<p><style>hey now</style></p>)
-    _stdout, stderror = capture_io do
-      SanitizationFilter.new(orig).whitelist
-    end
-    assert_match "[DEPRECATION] 'whitelist' is deprecated. Please use 'allowlist' instead.", stderror
   end
 end

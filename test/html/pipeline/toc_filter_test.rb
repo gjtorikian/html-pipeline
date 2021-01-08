@@ -25,7 +25,7 @@ class HTML::Pipeline::TableOfContentsFilterTest < Minitest::Test
     orig = %(<h1>Ice cube</h1>)
     expected = %(<h1>\n<a id="ice-cube" class="anchor" href="#ice-cube" aria-hidden="true">#</a>Ice cube</h1>)
 
-    assert_equal expected, TocFilter.call(orig, context: {anchor_icon: '#'}).to_s
+    assert_equal expected, TocFilter.call(orig, context: { anchor_icon: '#' }).to_s
   end
 
   def test_toc_list_added_properly

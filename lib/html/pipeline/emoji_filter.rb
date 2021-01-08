@@ -66,10 +66,8 @@ module HTML
         end
       end
 
-      private
-
       # Build an emoji image tag
-      def emoji_image_tag(name)
+      private def emoji_image_tag(name)
         html_attrs =
           default_img_attrs(name).transform_keys(&:to_sym)
                                  .merge!(context[:img_attrs] || {}).transform_keys(&:to_sym)
@@ -83,8 +81,17 @@ module HTML
         "<img #{html_attrs}>"
       end
 
+      # Build a regexp that matches all valid :emoji: names.
+      def self.emoji_pattern
+        @emoji_pattern ||= /:(#{emoji_names.map { |name| Regexp.escape(name) }.join('|')}):/
+      end
+
+      def self.emoji_names
+        Emoji.all.map(&:aliases).flatten.sort
+      end
+
       # Default attributes for img tag
-      def default_img_attrs(name)
+      private def default_img_attrs(name)
         {
           'class' => 'emoji',
           'title' => ":#{name}:",
@@ -96,31 +103,22 @@ module HTML
         }
       end
 
-      def emoji_url(name)
+      private def emoji_url(name)
         File.join(asset_root, asset_path(name))
       end
 
-      # Build a regexp that matches all valid :emoji: names.
-      def self.emoji_pattern
-        @emoji_pattern ||= /:(#{emoji_names.map { |name| Regexp.escape(name) }.join('|')}):/
-      end
-
-      def emoji_pattern
+      private def emoji_pattern
         self.class.emoji_pattern
       end
 
-      def self.emoji_names
-        Emoji.all.map(&:aliases).flatten.sort
-      end
-
-      def emoji_filename(name)
+      private def emoji_filename(name)
         Emoji.find_by_alias(name).image_filename
       end
 
       # Return ancestor tags to stop the emojification.
       #
       # @return [Array<String>] Ancestor tags.
-      def ignored_ancestor_tags
+      private def ignored_ancestor_tags
         if context[:ignored_ancestor_tags]
           DEFAULT_IGNORED_ANCESTOR_TAGS | context[:ignored_ancestor_tags]
         else

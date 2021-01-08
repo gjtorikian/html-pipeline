@@ -8,9 +8,9 @@ class HTML::Pipeline::MentionFilterTest < Minitest::Test
     @context = { base_url: '/', info_url: nil, username_pattern: nil }
 
     @pipeline = HTML::Pipeline.new([
-                                              HTML::Pipeline::MarkdownFilter,
-                                              HTML::Pipeline::MentionFilter
-                                            ])
+                                     HTML::Pipeline::MarkdownFilter,
+                                     HTML::Pipeline::MentionFilter
+                                   ])
   end
 
   def mentioned_usernames(body) # rubocop:disable Minitest/TestMethodName
@@ -77,7 +77,7 @@ class HTML::Pipeline::MentionFilterTest < Minitest::Test
     body = '<p>Hi, @jch!</p>'
     link = '<a href="/jch" class="user-mention">@jch</a>'
     assert_equal "<p>Hi, #{link}!</p>",
-                 @filter.call(body, context: { base_url: '/'}).to_html
+                 @filter.call(body, context: { base_url: '/' }).to_html
   end
 
   def test_base_url_under_custom_route
@@ -173,7 +173,7 @@ class HTML::Pipeline::MentionFilterTest < Minitest::Test
     body = '<p>@_abc: test.</p>'
     doc  = Nokogiri::HTML::DocumentFragment.parse(body)
 
-    res  = @filter.call(doc, context: { base_url: '/', username_pattern: /(_[a-z]{3})/})
+    res  = @filter.call(doc, context: { base_url: '/', username_pattern: /(_[a-z]{3})/ })
 
     link = '<a href="/_abc" class="user-mention">@_abc</a>'
     assert_equal "<p>#{link}: test.</p>",
@@ -189,7 +189,7 @@ class HTML::Pipeline::MentionFilterTest < Minitest::Test
     @filter.call(doc.clone)
 
     assert_equal pattern_count, HTML::Pipeline::MentionFilter::MENTION_PATTERNS.length
-    @filter.call(doc.clone, context: {username_pattern: /test/})
+    @filter.call(doc.clone, context: { username_pattern: /test/ })
     assert_equal pattern_count + 1, HTML::Pipeline::MentionFilter::MENTION_PATTERNS.length
   end
 

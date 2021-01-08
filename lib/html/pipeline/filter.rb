@@ -116,8 +116,8 @@ module HTML
       # tags - An array of tag name strings to check. These should be downcase.
       #
       # Returns true when the node has a matching ancestor.
-      def has_ancestor?(node, tags)
-        while node = node.parent
+      def has_ancestor?(node, tags) # rubocop:disable Naming/PredicateName
+        while (node = node.parent)
           break true if tags.include?(node.name.downcase)
         end
       end
@@ -156,10 +156,10 @@ module HTML
       def needs(*keys)
         missing = keys.reject { |key| context.include? key }
 
-        if missing.any?
-          raise ArgumentError,
-                "Missing context keys for #{self.class.name}: #{missing.map(&:inspect).join ', '}"
-        end
+        return unless missing.any?
+
+        raise ArgumentError,
+              "Missing context keys for #{self.class.name}: #{missing.map(&:inspect).join ', '}"
       end
     end
   end

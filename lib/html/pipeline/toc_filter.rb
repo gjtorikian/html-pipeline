@@ -46,7 +46,7 @@ module HTML
 
           uniq = (headers[id]).positive? ? "-#{headers[id]}" : ''
           headers[id] += 1
-          if header_content = node.children.first
+          if (header_content = node.children.first)
             result[:toc] << %(<li><a href="##{id}#{uniq}">#{EscapeUtils.escape_html(text)}</a></li>\n)
             header_content.add_previous_sibling(%(<a id="#{id}#{uniq}" class="anchor" href="##{id}#{uniq}" aria-hidden="true">#{anchor_icon}</a>))
           end

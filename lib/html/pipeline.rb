@@ -36,8 +36,8 @@ module HTML
     autoload :ImageFilter,           'html/pipeline/image_filter'
     autoload :ImageMaxWidthFilter,   'html/pipeline/image_max_width_filter'
     autoload :MarkdownFilter,        'html/pipeline/markdown_filter'
-    autoload :MentionFilter,         'html/pipeline/@mention_filter'
-    autoload :TeamMentionFilter,     'html/pipeline/@team_mention_filter'
+    autoload :MentionFilter,         'html/pipeline/mention_filter'
+    autoload :TeamMentionFilter,     'html/pipeline/team_mention_filter'
     autoload :PlainTextInputFilter,  'html/pipeline/plain_text_input_filter'
     autoload :SanitizationFilter,    'html/pipeline/sanitization_filter'
     autoload :SyntaxHighlightFilter, 'html/pipeline/syntax_highlight_filter'
@@ -114,8 +114,8 @@ module HTML
       context = @default_context.merge(context)
       context = context.freeze
       result ||= @result_class.new
-      payload = default_payload ({filters: @filters.map(&:name),
-                                context: context, result: result})
+      payload = default_payload({ filters: @filters.map(&:name),
+                                  context: context, result: result })
       instrument 'call_pipeline.html_pipeline', payload do
         result[:output] =
           @filters.inject(html) do |doc, filter|
