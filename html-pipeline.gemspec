@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require File.expand_path('../lib/html/pipeline/version', __FILE__)
+require File.expand_path('lib/html/pipeline/version', __dir__)
 
 Gem::Specification.new do |gem|
   gem.name          = 'html-pipeline'
@@ -20,12 +20,12 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'activesupport', '~> 4'
   gem.add_dependency 'nokogiri', '~> 1.11'
 
-  gem.post_install_message = <<msg
--------------------------------------------------
-Thank you for installing html-pipeline!
-You must bundle Filter gem dependencies.
-See html-pipeline README.md for more details.
-https://github.com/jch/html-pipeline#dependencies
--------------------------------------------------
-msg
+  gem.post_install_message = <<~MSG
+    -------------------------------------------------
+    Thank you for installing html-pipeline!
+    You must bundle Filter gem dependencies.
+    See html-pipeline README.md for more details.
+    https://github.com/jch/html-pipeline#dependencies
+    -------------------------------------------------
+  MSG
 end

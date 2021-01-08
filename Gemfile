@@ -7,6 +7,10 @@ gemspec
 
 group :development, :test do
   gem 'awesome_print'
+
+  gem 'rubocop'
+  gem 'rubocop-performance'
+  gem 'rubocop-standard'
 end
 
 group :development do
