@@ -5,8 +5,11 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in html-pipeline.gemspec
 gemspec
 
+group :development, :test do
+  gem 'awesome_print'
+end
+
 group :development do
-  gem 'appraisal'
   gem 'bundler'
   gem 'rake'
 end
@@ -21,6 +24,6 @@ group :test do
   gem 'sanitize',           '~> 4.6', require: false
 
   gem 'escape_utils', '~> 1.0', require: false
-  gem 'rouge', '~> 3.1', require: false
   gem 'minitest-focus', '~> 1.1'
+  gem 'rouge', '~> 3.1', require: false
 end

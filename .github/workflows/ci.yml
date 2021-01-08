@@ -14,11 +14,6 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        gemfile:
-          - rails_6
-          - rails_5
-          - rails_4
-          - rails_3
         ruby-version:
           - 3.0.0
           - 2.7.2
@@ -32,9 +27,6 @@ jobs:
             experimental: true
 
     continue-on-error: ${{ matrix.experimental }}
-
-    env:
-      BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
 
     steps:
       - uses: actions/checkout@v2
