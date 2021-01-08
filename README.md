@@ -113,7 +113,6 @@ context = {
 SimplePipeline = Pipeline.new [
   SanitizationFilter,
   TableOfContentsFilter, # add 'name' anchors to all headers and generate toc list
-  CamoFilter,
   ImageMaxWidthFilter,
   SyntaxHighlightFilter,
   EmojiFilter,
@@ -124,7 +123,6 @@ SimplePipeline = Pipeline.new [
 MarkdownPipeline = Pipeline.new [
   MarkdownFilter,
   SanitizationFilter,
-  CamoFilter,
   ImageMaxWidthFilter,
   HttpsFilter,
   MentionFilter,
@@ -157,8 +155,6 @@ EmojiPipeline = Pipeline.new [
 * `TeamMentionFilter` - replace `@org/team` mentions with links
 * `AbsoluteSourceFilter` - replace relative image urls with fully qualified versions
 * `AutolinkFilter` - auto_linking urls in HTML
-* `CamoFilter` - replace http image urls with [camo-fied](https://github.com/atmos/camo) https versions
-* `EmailReplyFilter` - util filter for working with emails
 * `EmojiFilter` - everyone loves [emoji](http://www.emoji-cheat-sheet.com/)!
 * `HttpsFilter` - HTML Filter for replacing http github urls with https versions.
 * `ImageMaxWidthFilter` - link to full size image for large images
@@ -166,7 +162,6 @@ EmojiPipeline = Pipeline.new [
 * `PlainTextInputFilter` - html escape text and wrap the result in a div
 * `SanitizationFilter` - allow sanitize user markup
 * `SyntaxHighlightFilter` - code syntax highlighter
-* `TextileFilter` - convert textile to html
 * `TableOfContentsFilter` - anchor headings with name attributes and generate Table of Contents html unordered list linking headings
 
 ## Dependencies
@@ -182,14 +177,12 @@ gem 'rouge'
 ```
 
 * `AutolinkFilter` - `rinku`
-* `EmailReplyFilter` - `escape_utils`, `email_reply_parser`
 * `EmojiFilter` - `gemoji`
 * `MarkdownFilter` - `commonmarker`
 * `PlainTextInputFilter` - `escape_utils`
 * `SanitizationFilter` - `sanitize`
 * `SyntaxHighlightFilter` - `rouge`
 * `TableOfContentsFilter` - `escape_utils`
-* `TextileFilter` - `RedCloth`
 
 _Note:_ See [Gemfile](/Gemfile) `:test` block for version requirements.
 

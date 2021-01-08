@@ -6,23 +6,24 @@ require 'helpers/mocked_instrumentation_service'
 class HTML::PipelineTest < Minitest::Test
   Pipeline = HTML::Pipeline
   class TestFilter
-    def self.call(input, _context, _result)
+    def self.call(input, context: {}, result: {}) # rubocop:disable Lint/UnusedMethodArgument
       input.reverse
     end
   end
 
   def setup
-    @context = {}
+    @default_context = {}
     @result_class = Hash
-    @pipeline = Pipeline.new [TestFilter], @context, @result_class
+    @pipeline = Pipeline.new [TestFilter], default_context: @default_context, result_class: @result_class
   end
 
   def test_filter_instrumentation
     service = MockedInstrumentationService.new
     events = service.subscribe 'call_filter.html_pipeline'
     @pipeline.instrumentation_service = service
-    filter(body = 'hello')
-    event, payload, res = events.pop
+    body = 'hello'
+    @pipeline.call(body)
+    event, payload, = events.pop
     assert event, 'event expected'
     assert_equal 'call_filter.html_pipeline', event
     assert_equal TestFilter.name, payload[:filter]
@@ -34,8 +35,9 @@ class HTML::PipelineTest < Minitest::Test
     service = MockedInstrumentationService.new
     events = service.subscribe 'call_pipeline.html_pipeline'
     @pipeline.instrumentation_service = service
-    filter(body = 'hello')
-    event, payload, res = events.pop
+    body = 'hello'
+    @pipeline.call(body)
+    event, payload, = events.pop
     assert event, 'event expected'
     assert_equal 'call_pipeline.html_pipeline', event
     assert_equal @pipeline.filters.map(&:name), payload[:filters]
@@ -46,7 +48,7 @@ class HTML::PipelineTest < Minitest::Test
   def test_default_instrumentation_service
     service = 'default'
     Pipeline.default_instrumentation_service = service
-    pipeline = Pipeline.new [], @context, @result_class
+    pipeline = Pipeline.new [], default_context: @default_context, result_class: @result_class
     assert_equal service, pipeline.instrumentation_service
   ensure
     Pipeline.default_instrumentation_service = nil
@@ -57,20 +59,18 @@ class HTML::PipelineTest < Minitest::Test
 
     service = MockedInstrumentationService.new
     events = service.subscribe 'call_pipeline.html_pipeline'
-    @pipeline.setup_instrumentation name = 'foo', service
+    name = 'foo'
+    @pipeline.setup_instrumentation name, service: service
 
     assert_equal service, @pipeline.instrumentation_service
     assert_equal name, @pipeline.instrumentation_name
 
-    filter(body = 'foo')
+    body = 'foo'
+    @pipeline.call(body)
 
-    event, payload, res = events.pop
+    event, payload, = events.pop
     assert event, 'expected event'
     assert_equal name, payload[:pipeline]
     assert_equal body.reverse, payload[:result][:output]
-  end
-
-  def filter(input)
-    @pipeline.call(input)
   end
 end

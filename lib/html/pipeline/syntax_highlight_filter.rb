@@ -14,23 +14,23 @@ module HTML
     #
     # This filter does not write any additional information to the context hash.
     class SyntaxHighlightFilter < Filter
-      def initialize(*args)
-        super(*args)
+      def initialize(doc, context: {}, result: {})
+        super(doc, context: context, result: result)
         @formatter = Rouge::Formatters::HTML.new
       end
 
       def call
         doc.search('pre').each do |node|
-          default = context[:highlight] && context[:highlight].to_s
-          next unless lang = node['lang'] || default
-          next unless lexer = lexer_for(lang)
+          default = context[:highlight]&.to_s
+          next unless (lang = node['lang'] || default)
+          next unless (lexer = lexer_for(lang))
 
           text = node.inner_text
           html = highlight_with_timeout_handling(text, lexer)
           next if html.nil?
 
           node.inner_html = html
-          scope = context.fetch(:scope) { 'highlight' }
+          scope = context.fetch(:scope, 'highlight')
           node['class'] = "#{scope} #{scope}-#{lang}"
         end
         doc
@@ -38,7 +38,7 @@ module HTML
 
       def highlight_with_timeout_handling(text, lexer)
         Rouge.highlight(text, lexer, @formatter)
-      rescue Timeout::Error => _
+      rescue Timeout::Error => _e
         nil
       end
 

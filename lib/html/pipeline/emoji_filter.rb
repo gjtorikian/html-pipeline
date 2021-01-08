@@ -20,8 +20,10 @@ module HTML
           content = node.text
           next unless content.include?(':')
           next if has_ancestor?(node, ignored_ancestor_tags)
+
           html = emoji_image_filter(content)
           next if html == content
+
           node.replace(html)
         end
         doc
@@ -64,38 +66,19 @@ module HTML
         end
       end
 
-      private
-
       # Build an emoji image tag
-      def emoji_image_tag(name)
+      private def emoji_image_tag(name)
         html_attrs =
           default_img_attrs(name).transform_keys(&:to_sym)
-          .merge!(context[:img_attrs] || {}).transform_keys(&:to_sym)
-          .each_with_object([]) do |(attr, value), arr|
+                                 .merge!(context[:img_attrs] || {}).transform_keys(&:to_sym)
+                                 .each_with_object([]) do |(attr, value), arr|
             next if value.nil?
 
             value = value.respond_to?(:call) && value.call(name) || value
             arr << %(#{attr}="#{value}")
-          end.compact.join(' '.freeze)
+          end.compact.join(' ')
 
         "<img #{html_attrs}>"
-      end
-
-      # Default attributes for img tag
-      def default_img_attrs(name)
-        {
-          'class' => 'emoji'.freeze,
-          'title' => ":#{name}:",
-          'alt' => ":#{name}:",
-          'src' => emoji_url(name).to_s,
-          'height' => '20'.freeze,
-          'width' => '20'.freeze,
-          'align' => 'absmiddle'.freeze
-        }
-      end
-
-      def emoji_url(name)
-        File.join(asset_root, asset_path(name))
       end
 
       # Build a regexp that matches all valid :emoji: names.
@@ -103,22 +86,39 @@ module HTML
         @emoji_pattern ||= /:(#{emoji_names.map { |name| Regexp.escape(name) }.join('|')}):/
       end
 
-      def emoji_pattern
-        self.class.emoji_pattern
-      end
-
       def self.emoji_names
         Emoji.all.map(&:aliases).flatten.sort
       end
 
-      def emoji_filename(name)
+      # Default attributes for img tag
+      private def default_img_attrs(name)
+        {
+          'class' => 'emoji',
+          'title' => ":#{name}:",
+          'alt' => ":#{name}:",
+          'src' => emoji_url(name).to_s,
+          'height' => '20',
+          'width' => '20',
+          'align' => 'absmiddle'
+        }
+      end
+
+      private def emoji_url(name)
+        File.join(asset_root, asset_path(name))
+      end
+
+      private def emoji_pattern
+        self.class.emoji_pattern
+      end
+
+      private def emoji_filename(name)
         Emoji.find_by_alias(name).image_filename
       end
 
       # Return ancestor tags to stop the emojification.
       #
       # @return [Array<String>] Ancestor tags.
-      def ignored_ancestor_tags
+      private def ignored_ancestor_tags
         if context[:ignored_ancestor_tags]
           DEFAULT_IGNORED_ANCESTOR_TAGS | context[:ignored_ancestor_tags]
         else

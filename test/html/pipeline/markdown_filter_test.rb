@@ -30,30 +30,30 @@ class HTML::Pipeline::MarkdownFilterTest < Minitest::Test
       'end' \
       '```'
     @header = <<~DOC
-    # Words
+      # Words
 
-    Some words
+      Some words
 
-    ## Words
+      ## Words
 
-    More words?
+      More words?
     DOC
   end
 
   def test_fails_when_given_a_documentfragment
     body = '<p>heyo</p>'
     doc  = HTML::Pipeline.parse(body)
-    assert_raises(TypeError) { MarkdownFilter.call(doc, {}) }
+    assert_raises(TypeError) { MarkdownFilter.call(doc, context: {}) }
   end
 
   def test_gfm_enabled_by_default
-    doc = MarkdownFilter.to_document(@haiku, {})
+    doc = MarkdownFilter.to_document(@haiku)
     assert doc.is_a?(HTML::Pipeline::DocumentFragment)
     assert_equal 2, doc.search('br').size
   end
 
   def test_disabling_gfm
-    doc = MarkdownFilter.to_document(@haiku, gfm: false)
+    doc = MarkdownFilter.to_document(@haiku, context: { gfm: false })
     assert doc.is_a?(HTML::Pipeline::DocumentFragment)
     assert_equal 0, doc.search('br').size
   end
@@ -74,31 +74,31 @@ class HTML::Pipeline::MarkdownFilterTest < Minitest::Test
   def test_standard_extensions
     iframe = "<iframe src='http://www.google.com'></iframe>"
     iframe_escaped = "&lt;iframe src='http://www.google.com'>&lt;/iframe>"
-    doc = MarkdownFilter.new(iframe, unsafe: true).call
+    doc = MarkdownFilter.new(iframe, context: { unsafe: true }).call
     assert_equal(doc, iframe_escaped)
   end
 
   def test_changing_extensions
     iframe = "<iframe src='http://www.google.com'></iframe>"
-    doc = MarkdownFilter.new(iframe, commonmarker_extensions: [], unsafe: true).call
+    doc = MarkdownFilter.new(iframe, context: { commonmarker_extensions: [], unsafe: true }).call
     assert_equal(doc, iframe)
   end
 
   def test_bogus_renderer
     assert_raises ArgumentError do
-      MarkdownFilter.to_document(@haiku, commonmarker_renderer: 23)
+      MarkdownFilter.to_document(@haiku, context: { commonmarker_renderer: 23 })
     end
   end
 
   def test_legitimate_renderer
-    results = MarkdownFilter.new(@header, commonmarker_renderer: CustomRenderer).call
+    results = MarkdownFilter.new(@header, context: { commonmarker_renderer: CustomRenderer }).call
     expected = <<~DOC
-    {level: 1, text: Words}
-    <h1>Words</h1>
-    <p>Some words</p>
-    {level: 2, text: Words}
-    <h2>Words</h2>
-    <p>More words?</p>
+      {level: 1, text: Words}
+      <h1>Words</h1>
+      <p>Some words</p>
+      {level: 2, text: Words}
+      <h2>Words</h2>
+      <p>More words?</p>
     DOC
 
     assert_equal results, expected.chomp
@@ -107,7 +107,7 @@ class HTML::Pipeline::MarkdownFilterTest < Minitest::Test
   def test_without_tagfilter
     extensions = HTML::Pipeline::MarkdownFilter::DEFAULT_COMMONMARKER_EXTENSIONS - [:tagfilter]
     script = '<script>foobar</script>'
-    results = MarkdownFilter.new(script, unsafe: true, commonmarker_extensions: extensions).call
+    results = MarkdownFilter.new(script, context: { unsafe: true, commonmarker_extensions: extensions }).call
 
     assert_equal results, script
   end
@@ -115,63 +115,64 @@ class HTML::Pipeline::MarkdownFilterTest < Minitest::Test
   def test_legitimate_custom_renderer_without_tagfilter
     extensions = HTML::Pipeline::MarkdownFilter::DEFAULT_COMMONMARKER_EXTENSIONS - [:tagfilter]
     script = '<script>foobar</script>'
-    results = MarkdownFilter.new(script, unsafe: true, commonmarker_extensions: extensions, commonmarker_renderer: CustomRenderer).call
+    results = MarkdownFilter.new(script, context: { unsafe: true, commonmarker_extensions: extensions, commonmarker_renderer: CustomRenderer }).call
 
     assert_equal results, script
   end
 
   def test_unsafe_custom_renderer_fenced_code_blocks_with_language
-    doc = MarkdownFilter.to_document(@code.sub('```', '``` ruby'), unsafe: true, commonmarker_renderer: CustomRenderer)
+    doc = MarkdownFilter.to_document(@code.sub('```', '``` ruby'), context: { unsafe: true, commonmarker_renderer: CustomRenderer })
     assert_equal 'ruby', doc.search('pre').first['lang']
   end
 end
 
 class GFMTest < Minitest::Test
-  def gfm(text)
-    MarkdownFilter.call(text, gfm: true, unsafe: true)
+  def setup
+    @gfm = MarkdownFilter
+    @context = { gfm: true, unsafe: true }
   end
 
   def test_not_touch_single_underscores_inside_words
     assert_equal '<p>foo_bar</p>',
-                 gfm('foo_bar')
+                 @gfm.call('foo_bar', context: @context)
   end
 
   def test_not_touch_underscores_in_code_blocks
     assert_equal "<pre><code>foo_bar_baz\n</code></pre>",
-                 gfm('    foo_bar_baz')
+                 @gfm.call('    foo_bar_baz', context: @context)
   end
 
   def test_not_touch_underscores_in_pre_blocks
     assert_equal "<pre>\nfoo_bar_baz\n</pre>",
-                 gfm("<pre>\nfoo_bar_baz\n</pre>")
+                 @gfm.call("<pre>\nfoo_bar_baz\n</pre>", context: @context)
   end
 
   def test_not_touch_two_or_more_underscores_inside_words
     assert_equal '<p>foo_bar_baz</p>',
-                 gfm('foo_bar_baz')
+                 @gfm.call('foo_bar_baz', context: @context)
   end
 
   def test_turn_newlines_into_br_tags_in_simple_cases
     assert_equal "<p>foo<br />\nbar</p>",
-                 gfm("foo\nbar")
+                 @gfm.call("foo\nbar", context: @context)
   end
 
   def test_convert_newlines_in_all_groups
     assert_equal "<p>apple<br />\npear<br />\norange</p>\n" \
                  "<p>ruby<br />\npython<br />\nerlang</p>",
-                 gfm("apple\npear\norange\n\nruby\npython\nerlang")
+                 @gfm.call("apple\npear\norange\n\nruby\npython\nerlang", context: @context)
   end
 
   def test_convert_newlines_in_even_long_groups
     assert_equal "<p>apple<br />\npear<br />\norange<br />\nbanana</p>\n" \
                  "<p>ruby<br />\npython<br />\nerlang</p>",
-                 gfm("apple\npear\norange\nbanana\n\nruby\npython\nerlang")
+                 @gfm.call("apple\npear\norange\nbanana\n\nruby\npython\nerlang", context: @context)
   end
 
   def test_not_convert_newlines_in_lists
     assert_equal "<h1>foo</h1>\n<h1>bar</h1>",
-                 gfm("# foo\n# bar")
+                 @gfm.call("# foo\n# bar", context: @context)
     assert_equal "<ul>\n<li>foo</li>\n<li>bar</li>\n</ul>",
-                 gfm("* foo\n* bar")
+                 @gfm.call("* foo\n* bar", context: @context)
   end
 end

@@ -5,8 +5,6 @@ module HTML
     # Public: Runs a String of content through an HTML processing pipeline,
     # providing easy access to a generated DocumentFragment.
     class BodyContent
-      attr_reader :result
-
       # Public: Initialize a BodyContent.
       #
       # body     - A String body.

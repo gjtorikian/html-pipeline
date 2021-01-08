@@ -3,15 +3,15 @@
 require 'test_helper'
 
 class HTML::Pipeline::ImageMaxWidthFilterTest < Minitest::Test
-  def filter(html)
-    HTML::Pipeline::ImageMaxWidthFilter.call(html)
+  def setup
+    @filter = HTML::Pipeline::ImageMaxWidthFilter
   end
 
   def test_rewrites_image_style_tags
     body = "<p>Screenshot: <img src='screenshot.png'></p>"
     doc  = Nokogiri::HTML::DocumentFragment.parse(body)
 
-    res = filter(doc)
+    res = @filter.call(doc)
     assert_equal_html '<p>Screenshot: <a target="_blank" href="screenshot.png"><img src="screenshot.png" style="max-width:100%;"></a></p>',
                       res.to_html
   end
@@ -20,7 +20,7 @@ class HTML::Pipeline::ImageMaxWidthFilterTest < Minitest::Test
     body = "<p><img src='screenshot.png' style='width:100px;'></p>"
     doc  = Nokogiri::HTML::DocumentFragment.parse(body)
 
-    res = filter(doc)
+    res = @filter.call(doc)
     assert_equal_html '<p><img src="screenshot.png" style="width:100px;"></p>',
                       res.to_html
   end
@@ -29,7 +29,7 @@ class HTML::Pipeline::ImageMaxWidthFilterTest < Minitest::Test
     body = "<p>Screenshot: <img src='screenshot.png'></p>"
     doc  = Nokogiri::HTML::DocumentFragment.parse(body)
 
-    res = filter(doc)
+    res = @filter.call(doc)
     assert_equal_html '<p>Screenshot: <a target="_blank" href="screenshot.png"><img src="screenshot.png" style="max-width:100%;"></a></p>',
                       res.to_html
   end
@@ -38,7 +38,7 @@ class HTML::Pipeline::ImageMaxWidthFilterTest < Minitest::Test
     body = "<p>Screenshot: <a href='blah.png'><img src='screenshot.png'></a></p>"
     doc  = Nokogiri::HTML::DocumentFragment.parse(body)
 
-    res = filter(doc)
+    res = @filter.call(doc)
     assert_equal_html '<p>Screenshot: <a href="blah.png"><img src="screenshot.png" style="max-width:100%;"></a></p>',
                       res.to_html
   end
@@ -47,6 +47,6 @@ class HTML::Pipeline::ImageMaxWidthFilterTest < Minitest::Test
     body = "<p>Screenshot <img src='screenshot.png'>, yes, this is a <b>screenshot</b> indeed.</p>"
     doc  = Nokogiri::HTML::DocumentFragment.parse(body)
 
-    assert_equal_html '<p>Screenshot <a target="_blank" href="screenshot.png"><img src="screenshot.png" style="max-width:100%;"></a>, yes, this is a <b>screenshot</b> indeed.</p>', filter(doc).to_html
+    assert_equal_html '<p>Screenshot <a target="_blank" href="screenshot.png"><img src="screenshot.png" style="max-width:100%;"></a>, yes, this is a <b>screenshot</b> indeed.</p>', @filter.call(doc).to_html
   end
 end

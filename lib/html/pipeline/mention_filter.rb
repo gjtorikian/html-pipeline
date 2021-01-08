@@ -31,43 +31,34 @@ module HTML
       # the original text.
       #
       # Returns a String replaced with the return of the block.
-      def self.mentioned_logins_in(text, username_pattern = UsernamePattern)
-        text.gsub MentionPatterns[username_pattern] do |match|
+      def self.mentioned_logins_in(text, username_pattern = USERNAME_PATTERN)
+        text.gsub MENTION_PATTERNS[username_pattern] do |match|
           login = Regexp.last_match(1)
-          yield match, login, MentionLogins.include?(login.downcase)
+          yield match, login
         end
       end
 
       # Hash that contains all of the mention patterns used by the pipeline
-      MentionPatterns = Hash.new do |hash, key|
-        hash[key] = /
+      MENTION_PATTERNS = Hash.new do |hash, key|
+        hash[key] = %r{
           (?:^|\W)                    # beginning of string or non-word char
           @((?>#{key}))  # @username
-          (?!\/)                      # without a trailing slash
+          (?!/)                      # without a trailing slash
           (?=
             \.+[ \t\W]|               # dots followed by space or non-word character
             \.+$|                     # dots at end of line
             [^0-9a-zA-Z_.]|           # non-word character except dot
             $                         # end of line
           )
-        /ix
+        }ix
       end
 
       # Default pattern used to extract usernames from text. The value can be
       # overriden by providing the username_pattern variable in the context.
-      UsernamePattern = /[a-z0-9][a-z0-9-]*/
-
-      # List of username logins that, when mentioned, link to the blog post
-      # about @mentions instead of triggering a real mention.
-      MentionLogins = %w[
-        mention
-        mentions
-        mentioned
-        mentioning
-      ].freeze
+      USERNAME_PATTERN = /[a-z0-9][a-z0-9-]*/.freeze
 
       # Don't look for mentions in text nodes that are children of these elements
-      IGNORE_PARENTS = %w(pre code a style script).to_set
+      IGNORE_PARENTS = %w[pre code a style script].to_set
 
       def call
         result[:mentioned_usernames] ||= []
@@ -76,8 +67,10 @@ module HTML
           content = node.to_html
           next unless content.include?('@')
           next if has_ancestor?(node, IGNORE_PARENTS)
-          html = mention_link_filter(content, base_url, info_url, username_pattern)
+
+          html = mention_link_filter(content, base_url: base_url, username_pattern: username_pattern)
           next if html == content
+
           node.replace(html)
         end
         doc
@@ -90,7 +83,7 @@ module HTML
       end
 
       def username_pattern
-        context[:username_pattern] || UsernamePattern
+        context[:username_pattern] || USERNAME_PATTERN
       end
 
       # Replace user @mentions in text with links to the mentioned user's
@@ -105,31 +98,19 @@ module HTML
       #
       # Returns a string with @mentions replaced with links. All links have a
       # 'user-mention' class name attached for styling.
-      def mention_link_filter(text, _base_url = '/', info_url = nil, username_pattern = UsernamePattern)
-        self.class.mentioned_logins_in(text, username_pattern) do |match, login, is_mentioned|
-          link =
-            if is_mentioned
-              link_to_mention_info(login, info_url)
-            else
-              link_to_mentioned_user(login)
-            end
+      def mention_link_filter(text, base_url: '/', username_pattern: USERNAME_PATTERN)
+        self.class.mentioned_logins_in(text, username_pattern) do |match, login|
+          link = link_to_mentioned_user(base_url, login)
 
           link ? match.sub("@#{login}", link) : match
         end
       end
 
-      def link_to_mention_info(text, info_url = nil)
-        return "@#{text}" if info_url.nil?
-        "<a href='#{info_url}' class='user-mention'>" \
-          "@#{text}" \
-          '</a>'
-      end
-
-      def link_to_mentioned_user(login)
+      def link_to_mentioned_user(base_url, login)
         result[:mentioned_usernames] |= [login]
 
         url = base_url.dup
-        url << '/' unless url =~ /[\/~]\z/
+        url << '/' unless %r{[/~]\z}.match?(url)
 
         "<a href='#{url << login}' class='user-mention'>" \
           "@#{login}" \

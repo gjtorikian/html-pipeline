@@ -17,8 +17,8 @@ module HTML
     class MarkdownFilter < TextFilter
       DEFAULT_COMMONMARKER_EXTENSIONS = %i[table strikethrough tagfilter autolink].freeze
 
-      def initialize(text, context = nil, result = nil)
-        super text, context, result
+      def initialize(text, context: {}, result: {})
+        super text, context: context, result: result
         @text = @text.delete "\r"
       end
 
@@ -30,24 +30,23 @@ module HTML
           DEFAULT_COMMONMARKER_EXTENSIONS
         )
         html = if (renderer = context[:commonmarker_renderer])
-          unless renderer < CommonMarker::HtmlRenderer
-            raise ArgumentError, "`commonmark_renderer` must be derived from `CommonMarker::HtmlRenderer`"
-          end
-          parse_options = :DEFAULT
-          parse_options = [:UNSAFE] if context[:unsafe]
+                 raise ArgumentError, '`commonmark_renderer` must be derived from `CommonMarker::HtmlRenderer`' unless renderer < CommonMarker::HtmlRenderer
 
-          render_options = [:GITHUB_PRE_LANG]
-          render_options << :HARDBREAKS if context[:gfm] != false
-          render_options << :UNSAFE if context[:unsafe]
+                 parse_options = :DEFAULT
+                 parse_options = [:UNSAFE] if context[:unsafe]
 
-          doc = CommonMarker.render_doc(@text, parse_options, extensions)
-          renderer.new(options: render_options, extensions: extensions).render(doc)
-        else
-          options = [:GITHUB_PRE_LANG]
-          options << :HARDBREAKS if context[:gfm] != false
-          options << :UNSAFE if context[:unsafe]
-          CommonMarker.render_html(@text, options, extensions)
-        end
+                 render_options = [:GITHUB_PRE_LANG]
+                 render_options << :HARDBREAKS if context[:gfm] != false
+                 render_options << :UNSAFE if context[:unsafe]
+
+                 doc = CommonMarker.render_doc(@text, parse_options, extensions)
+                 renderer.new(options: render_options, extensions: extensions).render(doc)
+               else
+                 options = [:GITHUB_PRE_LANG]
+                 options << :HARDBREAKS if context[:gfm] != false
+                 options << :UNSAFE if context[:unsafe]
+                 CommonMarker.render_html(@text, options, extensions)
+               end
         html.rstrip!
         html
       end

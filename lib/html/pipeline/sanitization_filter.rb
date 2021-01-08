@@ -24,14 +24,14 @@ module HTML
     # This filter does not write additional information to the context.
     class SanitizationFilter < Filter
       LISTS     = Set.new(%w[ul ol].freeze)
-      LIST_ITEM = 'li'.freeze
+      LIST_ITEM = 'li'
 
       # List of table child elements. These must be contained by a <table> element
       # or they are not allowed through. Otherwise they can be used to break out
       # of places we're using tables to contain formatted user content (like pull
       # request review comments).
       TABLE_ITEMS = Set.new(%w[tr td th].freeze)
-      TABLE = 'table'.freeze
+      TABLE = 'table'
       TABLE_SECTIONS = Set.new(%w[thead tbody tfoot].freeze)
 
       # These schemes are the only ones allowed in <a href> attributes by default.
@@ -49,13 +49,13 @@ module HTML
         ].freeze,
         remove_contents: ['script'].freeze,
         attributes: {
-          'a'          => ['href'].freeze,
-          'img'        => %w[src longdesc].freeze,
-          'div'        => %w[itemscope itemtype].freeze,
+          'a' => ['href'].freeze,
+          'img' => %w[src longdesc].freeze,
+          'div' => %w[itemscope itemtype].freeze,
           'blockquote' => ['cite'].freeze,
-          'del'        => ['cite'].freeze,
-          'ins'        => ['cite'].freeze,
-          'q'          => ['cite'].freeze,
+          'del' => ['cite'].freeze,
+          'ins' => ['cite'].freeze,
+          'q' => ['cite'].freeze,
           all: %w[abbr accept accept-charset
                   accesskey action align alt
                   aria-describedby aria-hidden aria-label aria-labelledby
@@ -76,13 +76,13 @@ module HTML
                   vspace width itemprop].freeze
         }.freeze,
         protocols: {
-          'a'          => { 'href' => ANCHOR_SCHEMES }.freeze,
+          'a' => { 'href' => ANCHOR_SCHEMES }.freeze,
           'blockquote' => { 'cite' => ['http', 'https', :relative].freeze },
-          'del'        => { 'cite' => ['http', 'https', :relative].freeze },
-          'ins'        => { 'cite' => ['http', 'https', :relative].freeze },
-          'q'          => { 'cite' => ['http', 'https', :relative].freeze },
-          'img'        => {
-            'src'      => ['http', 'https', :relative].freeze,
+          'del' => { 'cite' => ['http', 'https', :relative].freeze },
+          'ins' => { 'cite' => ['http', 'https', :relative].freeze },
+          'q' => { 'cite' => ['http', 'https', :relative].freeze },
+          'img' => {
+            'src' => ['http', 'https', :relative].freeze,
             'longdesc' => ['http', 'https', :relative].freeze
           }.freeze
         },
@@ -92,18 +92,14 @@ module HTML
           lambda { |env|
             name = env[:node_name]
             node = env[:node]
-            if name == LIST_ITEM && node.ancestors.none? { |n| LISTS.include?(n.name) }
-              node.replace(node.children)
-            end
+            node.replace(node.children) if name == LIST_ITEM && node.ancestors.none? { |n| LISTS.include?(n.name) }
           },
 
           # Table child elements that are not contained by a <table> are removed.
           lambda { |env|
             name = env[:node_name]
             node = env[:node]
-            if (TABLE_SECTIONS.include?(name) || TABLE_ITEMS.include?(name)) && node.ancestors.none? { |n| n.name == TABLE }
-              node.replace(node.children)
-            end
+            node.replace(node.children) if (TABLE_SECTIONS.include?(name) || TABLE_ITEMS.include?(name)) && node.ancestors.none? { |n| n.name == TABLE }
           }
         ].freeze
       }.freeze
@@ -123,17 +119,13 @@ module HTML
         Sanitize.clean_node!(doc, allowlist)
       end
 
-      def whitelist
-        warn "[DEPRECATION] 'whitelist' is deprecated. Please use 'allowlist' instead."
-        allowlist
-      end
-
       # The allowlist to use when sanitizing. This can be passed in the context
       # hash to the filter but defaults to ALLOWLIST constant value above.
       def allowlist
-        allowlist = context[:allowlist] || context[:whitelist] || ALLOWLIST
+        allowlist = context[:allowlist] || ALLOWLIST
         anchor_schemes = context[:anchor_schemes]
         return allowlist unless anchor_schemes
+
         allowlist = allowlist.dup
         allowlist[:protocols] = (allowlist[:protocols] || {}).dup
         allowlist[:protocols]['a'] = (allowlist[:protocols]['a'] || {}).merge('href' => anchor_schemes)
