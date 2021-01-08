@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'cgi'
-HTML::Pipeline.require_dependency('gemoji', 'EmojiFilter')
+HTML::Pipeline.require_dependencies(%w[gemoji gemojione], 'EmojiFilter')
 
 module HTML
   class Pipeline

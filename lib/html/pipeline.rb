@@ -54,6 +54,29 @@ module HTML
             "Missing dependency '#{name}' for #{requirer}. See README.md for details.\n#{e.class.name}: #{e}"
     end
 
+    def self.require_dependencies(names, requirer)
+      dependency_list = names.dup
+      loaded = false
+      while !loaded && names.length > 1
+        name = names.shift
+        begin
+          require_dependency(name, requirer)
+          loaded = true # we got a dependency
+        # try the next dependency
+        rescue MissingDependencyError # rubocop:disable Lint/SuppressedException
+        end
+      end
+
+      return if loaded
+
+      begin
+        require names.shift
+      rescue LoadError => e
+        raise MissingDependencyError,
+              "Missing all dependencies '#{dependency_list.join(', ')}' for #{requirer}. See README.md for details.\n#{e.class.name}: #{e}"
+      end
+    end
+
     # Our DOM implementation.
     DocumentFragment = Nokogiri::HTML::DocumentFragment
 
