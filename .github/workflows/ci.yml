@@ -19,6 +19,7 @@ jobs:
           - 2.7.2
           - 2.6.6
           - 2.5.8
+          - truffleruby-head
         experimental: [false]
         include:
           - ruby-version: head
@@ -28,14 +29,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - run: sudo apt-get -yqq install libxml2-dev libxslt-dev
+        if: startsWith(matrix.ruby-version, 'truffleruby')
       - name: Set up Ruby ${{ matrix.ruby-version }}
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
-      - name: Install dependencies
-        run: |
-          bundle config set --local path '../../vendor/bundle'
-          bundle install
       - name: Run tests
         run: bundle exec rake
