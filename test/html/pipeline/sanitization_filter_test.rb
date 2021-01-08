@@ -8,27 +8,27 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
   def test_removing_script_tags
     orig = %(<p><img src="http://github.com/img.png" /><script></script></p>)
     html = SanitizationFilter.call(orig).to_s
-    refute_match /script/, html
+    refute_match(/script/, html)
   end
 
   def test_removing_style_tags
     orig = %(<p><style>hey now</style></p>)
     html = SanitizationFilter.call(orig).to_s
-    refute_match /style/, html
+    refute_match(/style/, html)
   end
 
   def test_removing_style_attributes
     orig = %(<p style='font-size:1000%'>YO DAWG</p>)
     html = SanitizationFilter.call(orig).to_s
-    refute_match /font-size/, html
-    refute_match /style/, html
+    refute_match(/font-size/, html)
+    refute_match(/style/, html)
   end
 
   def test_removing_script_event_handler_attributes
     orig = %(<a onclick='javascript:alert(0)'>YO DAWG</a>)
     html = SanitizationFilter.call(orig).to_s
-    refute_match /javscript/, html
-    refute_match /onclick/, html
+    refute_match(/javscript/, html)
+    refute_match(/onclick/, html)
   end
 
   def test_sanitizes_li_elements_not_contained_in_ul_or_ol
@@ -104,7 +104,7 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
   end
 
   def test_allowlist_contains_default_anchor_schemes
-    assert_equal SanitizationFilter::ALLOWLIST[:protocols]['a']['href'], ['http', 'https', 'mailto', 'xmpp', :relative, 'github-windows', 'github-mac', 'irc', 'ircs']
+    assert_equal(['http', 'https', 'mailto', 'xmpp', :relative, 'github-windows', 'github-mac', 'irc', 'ircs'], SanitizationFilter::ALLOWLIST[:protocols]['a']['href'])
   end
 
   def test_allowlist_from_full_constant
@@ -115,7 +115,7 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
   end
 
   def test_exports_default_anchor_schemes
-    assert_equal SanitizationFilter::ANCHOR_SCHEMES, ['http', 'https', 'mailto', 'xmpp', :relative, 'github-windows', 'github-mac', 'irc', 'ircs']
+    assert_equal(['http', 'https', 'mailto', 'xmpp', :relative, 'github-windows', 'github-mac', 'irc', 'ircs'], SanitizationFilter::ANCHOR_SCHEMES)
   end
 
   def test_script_contents_are_removed
@@ -175,7 +175,7 @@ class HTML::Pipeline::SanitizationFilterTest < Minitest::Test
 
   def test_deprecation_warning_whitelist
     orig = %(<p><style>hey now</style></p>)
-    _stdout, stderror  = capture_io do
+    _stdout, stderror = capture_io do
       SanitizationFilter.new(orig).whitelist
     end
     assert_match "[DEPRECATION] 'whitelist' is deprecated. Please use 'allowlist' instead.", stderror

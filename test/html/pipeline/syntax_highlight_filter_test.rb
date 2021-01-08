@@ -11,8 +11,8 @@ class HTML::Pipeline::SyntaxHighlightFilterTest < Minitest::Test
       '<pre>hello</pre>', highlight: 'coffeescript'
 
     doc = filter.call
-    assert !doc.css('.highlight').empty?
-    assert !doc.css('.highlight-coffeescript').empty?
+    refute_empty doc.css('.highlight')
+    refute_empty doc.css('.highlight-coffeescript')
   end
 
   def test_highlight_default_will_not_override
@@ -20,8 +20,8 @@ class HTML::Pipeline::SyntaxHighlightFilterTest < Minitest::Test
       "<pre lang='c'>hello</pre>", highlight: 'coffeescript'
 
     doc = filter.call
-    assert doc.css('.highlight-coffeescript').empty?
-    assert !doc.css('.highlight-c').empty?
+    assert_empty doc.css('.highlight-coffeescript')
+    refute_empty doc.css('.highlight-c')
   end
 
   def test_highlight_does_not_remove_pre_tag
@@ -30,7 +30,7 @@ class HTML::Pipeline::SyntaxHighlightFilterTest < Minitest::Test
 
     doc = filter.call
 
-    assert !doc.css('pre').empty?
+    refute_empty doc.css('pre')
   end
 
   def test_highlight_allows_optional_scope
@@ -39,7 +39,7 @@ class HTML::Pipeline::SyntaxHighlightFilterTest < Minitest::Test
 
     doc = filter.call
 
-    assert !doc.css('pre.test-scope').empty?
+    refute_empty doc.css('pre.test-scope')
   end
 
   def test_highlight_keeps_the_pre_tags_lang
@@ -48,7 +48,7 @@ class HTML::Pipeline::SyntaxHighlightFilterTest < Minitest::Test
 
     doc = filter.call
 
-    assert !doc.css('pre[lang=c]').empty?
+    refute_empty doc.css('pre[lang=c]')
   end
 
   def test_highlight_handles_nested_pre_tags

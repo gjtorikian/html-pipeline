@@ -73,8 +73,8 @@ class HTML::Pipeline::CamoFilterTest < Minitest::Test
     exception = assert_raises(ArgumentError) do
       CamoFilter.call('', {})
     end
-    assert_match /:asset_proxy[^_]/, exception.message
-    assert_match /:asset_proxy_secret_key/, exception.message
+    assert_match(/:asset_proxy[^_]/, exception.message)
+    assert_match(/:asset_proxy_secret_key/, exception.message)
   end
 
   def test_deprecated_asset_proxy_whitelist_context
@@ -89,7 +89,7 @@ class HTML::Pipeline::CamoFilterTest < Minitest::Test
 
   def test_deprecation_warning_asset_proxy_whitelist
     orig = %(<p><img></p>)
-    _stdout, stderror  = capture_io do
+    _stdout, stderror = capture_io do
       CamoFilter.new(orig, @options).asset_proxy_whitelist
     end
     assert_match "[DEPRECATION] 'asset_proxy_whitelist' is deprecated. Please use 'asset_proxy_allowlist' instead.", stderror
@@ -98,7 +98,7 @@ class HTML::Pipeline::CamoFilterTest < Minitest::Test
   def test_deprecation_warning_asset_host_whitelisted
     orig = %(<p><img></p>)
     host = 'https://facebook.com'
-    _stdout, stderror  = capture_io do
+    _stdout, stderror = capture_io do
       CamoFilter.new(orig, @options).asset_host_whitelisted?(host)
     end
     assert_match "[DEPRECATION] 'asset_host_whitelisted?' is deprecated. Please use 'asset_host_allowed?' instead.", stderror

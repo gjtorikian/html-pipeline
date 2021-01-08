@@ -20,8 +20,10 @@ module HTML
           content = node.text
           next unless content.include?(':')
           next if has_ancestor?(node, ignored_ancestor_tags)
+
           html = emoji_image_filter(content)
           next if html == content
+
           node.replace(html)
         end
         doc
@@ -70,13 +72,13 @@ module HTML
       def emoji_image_tag(name)
         html_attrs =
           default_img_attrs(name).transform_keys(&:to_sym)
-          .merge!(context[:img_attrs] || {}).transform_keys(&:to_sym)
-          .each_with_object([]) do |(attr, value), arr|
+                                 .merge!(context[:img_attrs] || {}).transform_keys(&:to_sym)
+                                 .each_with_object([]) do |(attr, value), arr|
             next if value.nil?
 
             value = value.respond_to?(:call) && value.call(name) || value
             arr << %(#{attr}="#{value}")
-          end.compact.join(' '.freeze)
+          end.compact.join(' ')
 
         "<img #{html_attrs}>"
       end
@@ -84,13 +86,13 @@ module HTML
       # Default attributes for img tag
       def default_img_attrs(name)
         {
-          'class' => 'emoji'.freeze,
+          'class' => 'emoji',
           'title' => ":#{name}:",
           'alt' => ":#{name}:",
           'src' => emoji_url(name).to_s,
-          'height' => '20'.freeze,
-          'width' => '20'.freeze,
-          'align' => 'absmiddle'.freeze
+          'height' => '20',
+          'width' => '20',
+          'align' => 'absmiddle'
         }
       end
 

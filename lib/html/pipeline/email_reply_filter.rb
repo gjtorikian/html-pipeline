@@ -15,13 +15,13 @@ module HTML
     class EmailReplyFilter < TextFilter
       include EscapeUtils
 
-      EMAIL_HIDDEN_HEADER    = %(<span class="email-hidden-toggle"><a href="#">&hellip;</a></span><div class="email-hidden-reply" style="display:none">).freeze
-      EMAIL_QUOTED_HEADER    = %(<div class="email-quoted-reply">).freeze
-      EMAIL_SIGNATURE_HEADER = %(<div class="email-signature-reply">).freeze
-      EMAIL_FRAGMENT_HEADER  = %(<div class="email-fragment">).freeze
-      EMAIL_HEADER_END       = '</div>'.freeze
-      EMAIL_REGEX            = /[^@\s.][^@\s]*@\[?[a-z0-9.-]+\]?/
-      HIDDEN_EMAIL_PATTERN   = '***@***.***'.freeze
+      EMAIL_HIDDEN_HEADER    = %(<span class="email-hidden-toggle"><a href="#">&hellip;</a></span><div class="email-hidden-reply" style="display:none">)
+      EMAIL_QUOTED_HEADER    = %(<div class="email-quoted-reply">)
+      EMAIL_SIGNATURE_HEADER = %(<div class="email-signature-reply">)
+      EMAIL_FRAGMENT_HEADER  = %(<div class="email-fragment">)
+      EMAIL_HEADER_END       = '</div>'
+      EMAIL_REGEX            = /[^@\s.][^@\s]*@\[?[a-z0-9.-]+\]?/.freeze
+      HIDDEN_EMAIL_PATTERN   = '***@***.***'
 
       # Scans an email body to determine which bits are quoted and which should
       # be hidden. EmailReplyParser is used to split the comment into an Array

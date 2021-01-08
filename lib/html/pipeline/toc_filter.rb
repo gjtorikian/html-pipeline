@@ -35,7 +35,7 @@ module HTML
       end
 
       def call
-        result[:toc] = String.new('')
+        result[:toc] = +''
 
         headers = Hash.new(0)
         doc.css('h1, h2, h3, h4, h5, h6').each do |node|
@@ -44,7 +44,7 @@ module HTML
           id.gsub!(PUNCTUATION_REGEXP, '') # remove punctuation
           id.tr!(' ', '-') # replace spaces with dash
 
-          uniq = headers[id] > 0 ? "-#{headers[id]}" : ''
+          uniq = (headers[id]).positive? ? "-#{headers[id]}" : ''
           headers[id] += 1
           if header_content = node.children.first
             result[:toc] << %(<li><a href="##{id}#{uniq}">#{EscapeUtils.escape_html(text)}</a></li>\n)

@@ -5,7 +5,7 @@ require 'test_helper'
 ImageFilter = HTML::Pipeline::ImageFilter
 
 class HTML::Pipeline::ImageFilterTest < Minitest::Test
-  def filter(html)
+  def test_filter(html)
     ImageFilter.to_html(html)
   end
 

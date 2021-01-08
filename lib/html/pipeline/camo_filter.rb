@@ -98,7 +98,7 @@ module HTML
       # Private: helper to hexencode a string. Each byte ends up encoded into
       # two characters, zero padded value in the range [0-9a-f].
       def hexencode(str)
-        str.unpack('H*').first
+        str.unpack1('H*')
       end
     end
   end

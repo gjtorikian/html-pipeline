@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class HTML::Pipeline::TeamMentionFilterTest < Minitest::Test
-  def filter(html, base_url = '/', team_pattern = nil)
+  def test_filter(html, base_url = '/', team_pattern = nil)
     HTML::Pipeline::TeamMentionFilter.call(html, base_url: base_url, team_pattern: team_pattern)
   end
 
@@ -78,7 +78,7 @@ class HTML::Pipeline::TeamMentionFilterTest < Minitest::Test
     body = '<p>Hi, @org/team!</p>'
     link = '<a href="www.github.com/org/team" class="team-mention">@org/team</a>'
     assert_equal "<p>Hi, #{link}!</p>",
-      filter(body, 'www.github.com').to_html
+                 filter(body, 'www.github.com').to_html
   end
 
   def test_base_url_slash_with_tilde
@@ -102,7 +102,7 @@ class HTML::Pipeline::TeamMentionFilterTest < Minitest::Test
       HTML::Pipeline::TeamMentionFilter
     ]
 
-  def mentioned_teams
+  def test_mentioned_teams
     result = {}
     MarkdownPipeline.call(@body, {}, result)
     result[:mentioned_teams]
@@ -187,7 +187,7 @@ class HTML::Pipeline::TeamMentionFilterTest < Minitest::Test
     body = '<p>@_abc/XYZ: test</p>'
     doc  = Nokogiri::HTML::DocumentFragment.parse(body)
 
-    res  = filter(doc, '/', /@(_[a-z]{3})\/([A-Z]{3})/)
+    res  = filter(doc, '/', %r{@(_[a-z]{3})/([A-Z]{3})})
 
     link = '<a href="/_abc/XYZ" class="team-mention">@_abc/XYZ</a>'
     assert_equal "<p>#{link}: test</p>",

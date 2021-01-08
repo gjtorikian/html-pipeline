@@ -70,7 +70,7 @@ class HTML::PipelineTest < Minitest::Test
     assert_equal body.reverse, payload[:result][:output]
   end
 
-  def filter(input)
+  def test_filter(input)
     @pipeline.call(input)
   end
 end

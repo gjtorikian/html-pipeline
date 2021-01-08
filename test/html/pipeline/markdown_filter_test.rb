@@ -30,13 +30,13 @@ class HTML::Pipeline::MarkdownFilterTest < Minitest::Test
       'end' \
       '```'
     @header = <<~DOC
-    # Words
+      # Words
 
-    Some words
+      Some words
 
-    ## Words
+      ## Words
 
-    More words?
+      More words?
     DOC
   end
 
@@ -93,12 +93,12 @@ class HTML::Pipeline::MarkdownFilterTest < Minitest::Test
   def test_legitimate_renderer
     results = MarkdownFilter.new(@header, commonmarker_renderer: CustomRenderer).call
     expected = <<~DOC
-    {level: 1, text: Words}
-    <h1>Words</h1>
-    <p>Some words</p>
-    {level: 2, text: Words}
-    <h2>Words</h2>
-    <p>More words?</p>
+      {level: 1, text: Words}
+      <h1>Words</h1>
+      <p>Some words</p>
+      {level: 2, text: Words}
+      <h2>Words</h2>
+      <p>More words?</p>
     DOC
 
     assert_equal results, expected.chomp
@@ -127,7 +127,7 @@ class HTML::Pipeline::MarkdownFilterTest < Minitest::Test
 end
 
 class GFMTest < Minitest::Test
-  def gfm(text)
+  def test_gfm(text)
     MarkdownFilter.call(text, gfm: true, unsafe: true)
   end
 

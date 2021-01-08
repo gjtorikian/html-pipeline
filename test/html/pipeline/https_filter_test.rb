@@ -5,7 +5,7 @@ require 'test_helper'
 HttpsFilter = HTML::Pipeline::HttpsFilter
 
 class HTML::Pipeline::AutolinkFilterTest < Minitest::Test
-  def filter(html)
+  def test_filter(html)
     HttpsFilter.to_html(html, @options)
   end
 

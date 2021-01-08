@@ -17,7 +17,7 @@ module HTML
 
           # Bail out if src doesn't look like a valid http url. trying to avoid weird
           # js injection via javascript: urls.
-          next if element['src'].to_s.strip =~ /\Ajavascript/i
+          next if /\Ajavascript/i.match?(element['src'].to_s.strip)
 
           element['style'] = 'max-width:100%;'
 

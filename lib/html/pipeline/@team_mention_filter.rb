@@ -29,8 +29,8 @@ module HTML
       # Returns a String replaced with the return of the block.
       def self.mentioned_teams_in(text, team_pattern = TeamPattern)
         text.gsub team_pattern do |match|
-          org = $1
-          team = $2
+          org = Regexp.last_match(1)
+          team = Regexp.last_match(2)
           yield match, org, team
         end
       end
@@ -38,13 +38,13 @@ module HTML
       # Default pattern used to extract team names from text. The value can be
       # overridden by providing the team_pattern variable in the context. To
       # properly link the mention, should be in the format of /@(1)\/(2)/.
-      TeamPattern = /
+      TeamPattern = %r{
         (?<=^|\W)                  # beginning of string or non-word char
         @([a-z0-9][a-z0-9-]*)      # @organization
-          \/                       # dividing slash
+          /                       # dividing slash
           ([a-z0-9][a-z0-9\-_]*)   # team
           \b
-      /ix
+      }ix.freeze
 
       # Don't look for mentions in text nodes that are children of these elements
       IGNORE_PARENTS = %w[pre code a style script].to_set
@@ -56,8 +56,10 @@ module HTML
           content = node.to_html
           next unless content.include?('@')
           next if has_ancestor?(node, IGNORE_PARENTS)
+
           html = mention_link_filter(content, base_url, team_pattern)
           next if html == content
+
           node.replace(html)
         end
         doc
@@ -88,8 +90,8 @@ module HTML
         result[:mentioned_teams] |= [team]
 
         url = base_url.dup
-        url << '/' unless url =~ /[\/~]\z/
-        
+        url << '/' unless %r{[/~]\z}.match?(url)
+
         "<a href='#{url << org}/#{team}' class='team-mention'>" \
           "@#{org}/#{team}" \
           '</a>'

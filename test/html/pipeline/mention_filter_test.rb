@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class HTML::Pipeline::MentionFilterTest < Minitest::Test
-  def filter(html, base_url = '/', info_url = nil, username_pattern = nil)
+  def test_filter(html, base_url = '/', info_url = nil, username_pattern = nil)
     HTML::Pipeline::MentionFilter.call(html, base_url: base_url, info_url: info_url, username_pattern: username_pattern)
   end
 
@@ -101,7 +101,7 @@ class HTML::Pipeline::MentionFilterTest < Minitest::Test
       HTML::Pipeline::MentionFilter
     ]
 
-  def mentioned_usernames
+  def test_mentioned_usernames
     result = {}
     MarkdownPipeline.call(@body, {}, result)
     result[:mentioned_usernames]

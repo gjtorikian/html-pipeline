@@ -15,4 +15,4 @@ module TestHelpers
   end
 end
 
-Minitest::Test.send(:include, TestHelpers)
+Minitest::Test.include TestHelpers

@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class HTML::Pipeline::ImageMaxWidthFilterTest < Minitest::Test
-  def filter(html)
+  def test_filter(html)
     HTML::Pipeline::ImageMaxWidthFilter.call(html)
   end
 

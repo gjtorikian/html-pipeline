@@ -10,7 +10,7 @@ class HTML::Pipeline::TableOfContentsFilterTest < Minitest::Test
       HTML::Pipeline::TableOfContentsFilter
     ]
 
-  def toc
+  def test_toc
     result = {}
     TocPipeline.call(@orig, {}, result)
     result[:toc]

@@ -46,6 +46,7 @@ module HTML
     autoload :TextFilter,            'html/pipeline/text_filter'
 
     class MissingDependencyError < RuntimeError; end
+
     def self.require_dependency(name, requirer)
       require name
     rescue LoadError => e
@@ -76,8 +77,10 @@ module HTML
 
     # Public: String name for this Pipeline. Defaults to Class name.
     attr_writer :instrumentation_name
+
     def instrumentation_name
       return @instrumentation_name if defined?(@instrumentation_name)
+
       @instrumentation_name = self.class.name
     end
 
@@ -88,6 +91,7 @@ module HTML
 
     def initialize(filters, default_context = {}, result_class = nil)
       raise ArgumentError, 'default_context cannot be nil' if default_context.nil?
+
       @filters = filters.flatten.freeze
       @default_context = default_context.freeze
       @result_class = result_class || Hash
@@ -166,12 +170,11 @@ module HTML
     # block, otherwise the block is ran without instrumentation.
     #
     # Returns the result of the provided block.
-    def instrument(event, payload = nil)
+    def instrument(event, payload = nil, &block)
       payload ||= default_payload
       return yield(payload) unless instrumentation_service
-      instrumentation_service.instrument event, payload do |payload|
-        yield payload
-      end
+
+      instrumentation_service.instrument event, payload, &block
     end
 
     # Internal: Default payload for instrumentation.
@@ -192,9 +195,7 @@ unless ''.respond_to?(:force_encoding)
     # ... some other shit when replacing text nodes. See 'utf-8 output 2' in
     # user_content_test.rb for details.
     def replace_with_encoding_fix(replacement)
-      if replacement.respond_to?(:to_str)
-        replacement = document.fragment("<div>#{replacement}</div>").children.first.children
-      end
+      replacement = document.fragment("<div>#{replacement}</div>").children.first.children if replacement.respond_to?(:to_str)
       replace_without_encoding_fix(replacement)
     end
 
