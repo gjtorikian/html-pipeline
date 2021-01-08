@@ -15,3 +15,7 @@ Rake::TestTask.new do |t|
 end
 
 task default: :test
+
+require 'rubocop/rake_task'
+
+RuboCop::RakeTask.new(:rubocop)

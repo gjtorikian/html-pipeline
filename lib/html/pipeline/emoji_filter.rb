@@ -68,12 +68,15 @@ module HTML
 
       # Build an emoji image tag
       def emoji_image_tag(name)
-        require 'active_support/core_ext/hash/indifferent_access'
         html_attrs =
-          default_img_attrs(name)
-          .merge!((context[:img_attrs] || {}).with_indifferent_access)
-          .map { |attr, value| !value.nil? && %(#{attr}="#{value.respond_to?(:call) && value.call(name) || value}") }
-          .reject(&:blank?).join(' '.freeze)
+          default_img_attrs(name).transform_keys(&:to_sym)
+          .merge!(context[:img_attrs] || {}).transform_keys(&:to_sym)
+          .each_with_object([]) do |(attr, value), arr|
+            next if value.nil?
+
+            value = value.respond_to?(:call) && value.call(name) || value
+            arr << %(#{attr}="#{value}")
+          end.compact.join(' '.freeze)
 
         "<img #{html_attrs}>"
       end

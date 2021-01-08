@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'nokogiri'
-require 'active_support/xml_mini/nokogiri' # convert Documents to hashes
 
 module HTML
   # GitHub HTML processing filters and utilities. This module includes a small
