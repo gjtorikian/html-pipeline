@@ -21,7 +21,6 @@ group :test do
   gem 'gemoji', '~> 3.0', require: false
   gem 'gemojione', '~> 4.3', require: false
   gem 'minitest'
-  gem 'minitest-stub_any_instance'
   gem 'rinku',              '~> 1.7', require: false
   gem 'sanitize',           '~> 5.2', require: false
 

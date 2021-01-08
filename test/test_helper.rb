@@ -6,7 +6,6 @@ require 'html/pipeline'
 require 'minitest/autorun'
 require 'minitest/pride'
 require 'minitest/focus'
-require 'minitest/stub_any_instance'
 
 require 'awesome_print'
 
