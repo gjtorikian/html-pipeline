@@ -19,7 +19,7 @@ class HTML::Pipeline::EmojiFilterTest < Minitest::Test
 
   def test_required_context_validation
     exception = assert_raises(ArgumentError) do
-      EmojiFilter.call('', {})
+      EmojiFilter.call('', context: {})
     end
     assert_match(/:asset_root/, exception.message)
   end

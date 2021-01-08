@@ -14,8 +14,8 @@ module HTML
     #
     # This filter does not write any additional information to the context hash.
     class SyntaxHighlightFilter < Filter
-      def initialize(*args)
-        super(*args)
+      def initialize(doc, context: {}, result: {})
+        super(doc, context: context, result: result)
         @formatter = Rouge::Formatters::HTML.new
       end
 
