@@ -34,6 +34,8 @@ jobs:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
       - name: Install dependencies
-        run: bundle install --path ../../vendor/bundle
+        run: |
+          bundle config set --local path '../../vendor/bundle'
+          bundle install
       - name: Run tests
         run: bundle exec rake
