@@ -23,8 +23,6 @@ jobs:
         include:
           - ruby-version: head
             experimental: true
-          - ruby-version: truffleruby-head
-            experimental: true
 
     continue-on-error: ${{ matrix.experimental }}
 
