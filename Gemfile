@@ -8,7 +8,6 @@ gemspec
 gem "awesome_print"
 
 gem "rubocop"
-gem "rubocop-performance"
 gem "rubocop-standard"
 
 group :development do

@@ -11,12 +11,17 @@ Gem::Specification.new do |gem|
   gem.email         = ["gjtorikian@gmail.com"]
   gem.description   = "HTML processing filters and utilities"
   gem.summary       = "Helpers for processing content through a chain of filters"
-  gem.homepage      = "https://github.com/jch/html-pipeline"
+  gem.homepage      = "https://github.com/gjtorikian/html-pipeline"
 
   gem.files         = %x(git ls-files -z).split("\x0").reject { |f| f =~ %r{^(test|gemfiles|script)/} }
   gem.require_paths = ["lib"]
 
-  gem.required_ruby_version = [">= 2.5.8", "< 4.0"]
+  gem.required_ruby_version = "~> 3.0"
+
+  gem.metadata = {
+    "funding_uri" => "https://github.com/sponsors/gjtorikian/",
+    "rubygems_mfa_required" => "true",
+  }
 
   gem.add_dependency("nokogiri", "~> 1.11")
   gem.add_dependency("zeitwerk", "~> 2.5")
