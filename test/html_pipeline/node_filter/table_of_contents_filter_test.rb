@@ -8,7 +8,7 @@ class HTMLPipeline
       TocFilter = HTMLPipeline::NodeFilter::TableOfContentsFilter
 
       TocPipeline =
-        HTMLPipeline.new([
+        HTMLPipeline.new(node_filters: [
           TocFilter,
         ])
 

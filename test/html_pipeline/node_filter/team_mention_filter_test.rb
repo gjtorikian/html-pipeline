@@ -8,8 +8,9 @@ class HTMLPipeline
       @filter = HTMLPipeline::NodeFilter::TeamMentionFilter
 
       @pipeline =
-        HTMLPipeline.new([
+        HTMLPipeline.new(text_filters: [
           HTMLPipeline::TextFilter::MarkdownFilter,
+        ], node_filters: [
           HTMLPipeline::NodeFilter::TeamMentionFilter,
         ])
     end

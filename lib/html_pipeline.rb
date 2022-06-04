@@ -33,6 +33,7 @@ class HTMLPipeline
   #                   calls.  Default: Hash.  Protip:  Pass in a Struct to get
   #                   some semblance of type safety.
   class MissingDependencyError < RuntimeError; end
+  class InvalidFilterError < ArgumentError; end
 
   def self.require_dependency(name, requirer)
     require name
@@ -89,7 +90,7 @@ class HTMLPipeline
   end
 
   # Public: Returns an Array of Filter objects for this Pipeline.
-  attr_reader :filters
+  attr_reader :text_filters, :node_filters
 
   # Public: Instrumentation service for the pipeline.
   # Set an ActiveSupport::Notifications compatible object to enable.
@@ -109,10 +110,15 @@ class HTMLPipeline
     attr_accessor :default_instrumentation_service
   end
 
-  def initialize(filters, default_context: {}, result_class: Hash)
+  def initialize(text_filters: [], node_filters: [], default_context: {}, result_class: Hash)
     raise ArgumentError, "default_context cannot be nil" if default_context.nil?
 
-    @filters = filters.flatten.freeze
+    @text_filters = text_filters.flatten.freeze
+    validate_filter(@text_filters, HTMLPipeline::TextFilter)
+
+    @node_filters = node_filters.flatten.freeze
+    validate_filter(@node_filters, HTMLPipeline::NodeFilter)
+
     @default_context = default_context.freeze
     @result_class = result_class
     @instrumentation_service = self.class.default_instrumentation_service
@@ -134,14 +140,25 @@ class HTMLPipeline
     context = @default_context.merge(context)
     context = context.freeze
     result ||= @result_class.new
-    payload = default_payload({ filters: @filters.map(&:name),
+
+    payload = default_payload({ text_filters: @text_filters.map(&:name),
                                 context: context, result: result, })
-    instrument("call_pipeline.html_pipeline", payload) do
+    instrument("call_text_filters.html_pipeline", payload) do
       result[:output] =
-        @filters.inject(html) do |doc, filter|
+        @text_filters.inject(html) do |doc, filter|
           perform_filter(filter, doc, context: context, result: result)
         end
     end
+
+    payload = default_payload({ node_filters: @node_filters.map(&:name),
+      context: context, result: result, })
+    instrument("call_node_filters.html_pipeline", payload) do
+      result[:output] =
+        @node_filters.inject(result[:output]) do |doc, filter|
+          perform_filter(filter, doc, context: context, result: result)
+        end
+    end
+
     result
   end
 
@@ -204,5 +221,16 @@ class HTMLPipeline
   # Returns a Hash.
   def default_payload(payload = {})
     { pipeline: instrumentation_name }.merge(payload)
+  end
+
+  private def validate_filter(filters, klass)
+    return if filters.nil? || filters.empty?
+
+    invalid_filters = filters.select { |f| !f.ancestors.include?(klass) }
+
+    unless invalid_filters.empty?
+      verb = invalid_filters.count == 1 ? "is" : "are"
+      raise InvalidFilterError, "All filters must be #{klass} objects; #{invalid_filters.join(", ")} #{verb} not"
+    end
   end
 end

@@ -1,4 +1,4 @@
-# HTMLPipeline [![Build Status](https://travis-ci.org/jch/html-pipeline.svg?branch=master)](https://travis-ci.org/jch/html-pipeline)
+# HTMLPipeline
 
 HTML processing filters and utilities. This module includes a small
 framework for defining DOM based content filters and applying them to user
@@ -13,7 +13,7 @@ provided content.
 - [Dependencies](#dependencies)
 - [Documentation](#documentation)
 - [Extending](#extending)
-  - [3rd Party Extensions](#3rd-party-extensions)
+  - [Third Party Extensions](#third-party-extensions)
 - [Instrumenting](#instrumenting)
 - [Contributing](#contributing)
   - [Contributors](#contributors)
@@ -42,29 +42,39 @@ $ gem install html-pipeline
 ## Usage
 
 This library provides a handful of chainable HTML filters to transform user
-content into markup. A filter takes an HTML string or
-`Nokogiri::HTML::DocumentFragment`, optionally manipulates it, and then
-outputs the result.
+content into markup. There are two kinds of filters:
+
+* Text filters, which take a regular string
+* Node filters, which operates on a `Nokogiri::HTML::DocumentFragment`
+
+You can choose to call filters individually, or as part of a sequence called a pipeline.
 
 For example, to transform Markdown source into Markdown HTML:
 
 ```ruby
 require 'html/pipeline'
 
-filter = HTMLPipeline::MarkdownFilter.new("Hi **world**!")
-filter.call
+filter = HTMLPipeline::NodeFilter::MarkdownFilter.new("Hi **world**!")
+filter.call # returns "Hi <strong>world</strong>!"
 ```
 
-Filters can be combined into a pipeline which causes each filter to hand its
-output to the next filter's input. So if you wanted to have content be
-filtered through Markdown and be syntax highlighted, you can create the
+Filters combine into a pipeline, and each filter hands its
+output to the next filter's input sequentially. Text filters are
+processed first—the last text filter should generate HTML—before handing
+off to the node filters.
+
+If you wanted to have text content
+filtered through Markdown and the resulting HTML syntax highlighted, you can create the
 following pipeline:
 
 ```ruby
-pipeline = HTMLPipeline.new [
-  HTMLPipeline::MarkdownFilter,
-  HTMLPipeline::SyntaxHighlightFilter
-]
+pipeline = HTMLPipeline.new
+  text_filters: [
+    HTMLPipeline::MarkdownFilter,
+  ],
+  node_filters: [
+    HTMLPipeline::SyntaxHighlightFilter
+  ]
 result = pipeline.call <<-CODE
 This is *great*:
 
@@ -87,25 +97,25 @@ To generate CSS for HTML formatted code, use the [Rouge CSS Theme](https://githu
 
 Some filters take an optional **context** and/or **result** hash. These are
 used to pass around arguments and metadata between filters in a pipeline. For
-example, if you don't want to use GitHub formatted Markdown, you can pass an
+example, if you don't want to use GitHub Formatted Markdown, you can pass an
 option in the context hash:
 
 ```ruby
-filter = HTMLPipeline::MarkdownFilter.new("Hi **world**!", :gfm => false)
+filter = HTMLPipeline::TextFilter::MarkdownFilter.new("Hi **world**!", gfm: false)
 filter.call
 ```
 
 ### Examples
 
-We define different pipelines for different parts of our app. Here are a few
+Different pipelines can be defined for different parts of an app. Here are a few
 paraphrased snippets to get you started:
 
 ```ruby
 # The context hash is how you pass options between different filters.
 # See individual filter source for explanation of options.
 context = {
-  :asset_root => "http://your-domain.com/where/your/images/live/icons",
-  :base_url   => "http://your-domain.com"
+  asset_root: "http://your-domain.com/where/your/images/live/icons",
+  base_url: "http://your-domain.com"
 }
 
 # Pipeline providing sanitization and image hijacking but no mention
@@ -128,12 +138,12 @@ MarkdownPipeline = Pipeline.new [
   MentionFilter,
   EmojiFilter,
   SyntaxHighlightFilter
-], context.merge(:gfm => true) # enable github formatted markdown
+], context.merge(gfm: true) # enable github formatted markdown
 
 
 # Define a pipeline based on another pipeline's filters
 NonGFMMarkdownPipeline = Pipeline.new(MarkdownPipeline.filters,
-  context.merge(:gfm => false))
+  context.merge(gfm: false))
 
 # Pipelines aren't limited to the web. You can use them for email
 # processing also.
@@ -151,18 +161,25 @@ EmojiPipeline = Pipeline.new [
 
 ## Filters
 
-* `MentionFilter` - replace `@user` mentions with links
-* `TeamMentionFilter` - replace `@org/team` mentions with links
-* `AbsoluteSourceFilter` - replace relative image urls with fully qualified versions
+### TextFilters
+
 * `AutolinkFilter` - auto_linking urls in HTML
-* `EmojiFilter` - everyone loves [emoji](http://www.emoji-cheat-sheet.com/)!
-* `HttpsFilter` - HTML Filter for replacing http github urls with https versions.
-* `ImageMaxWidthFilter` - link to full size image for large images
+* `ImageFilter` - converts image `url` into `<img>` tag
 * `MarkdownFilter` - convert markdown to html
-* `PlainTextInputFilter` - html escape text and wrap the result in a div
+* `PlainTextInputFilter` - html escape text and wrap the result in a `<div>`
+
+
+### NodeFilters
+
+* `AbsoluteSourceFilter` - replace relative image urls with fully qualified versions
+* `EmojiFilter` - converts `:<emoji>:` to [emoji](http://www.emoji-cheat-sheet.com/)!
+* `HttpsFilter` - Replacing http urls with https versions
+* `ImageMaxWidthFilter` - link to full size image for large images
+* `MentionFilter` - replace `@user` mentions with links
 * `SanitizationFilter` - allow sanitize user markup
 * `SyntaxHighlightFilter` - code syntax highlighter
 * `TableOfContentsFilter` - anchor headings with name attributes and generate Table of Contents html unordered list linking headings
+* `TeamMentionFilter` - replace `@org/team` mentions with links
 
 ## Dependencies
 
@@ -184,22 +201,23 @@ gem 'rouge'
 * `SyntaxHighlightFilter` - `rouge`
 * `TableOfContentsFilter` - `escape_utils`
 
-_Note:_ See [Gemfile](/Gemfile) `:test` block for version requirements.
+_Note:_ See the [Gemfile](/Gemfile) `:test` group for version requirements.
 
 ## Documentation
 
 Full reference documentation can be [found here](http://rubydoc.info/gems/html-pipeline/frames).
 
 ## Extending
+
 To write a custom filter, you need a class with a `call` method that inherits
-from `HTMLPipeline::Filter`.
+from either `HTMLPipeline::TextFilter` or  `HTMLPipeline::NodeFilter`.
 
 For example this filter adds a base url to images that are root relative:
 
 ```ruby
 require 'uri'
 
-class RootRelativeFilter < HTMLPipeline::Filter
+class RootRelativeFilter < HTMLPipeline::NodeFilter
 
   def call
     doc.search("img").each do |img|
@@ -218,13 +236,13 @@ end
 Now this filter can be used in a pipeline:
 
 ```ruby
-Pipeline.new [ RootRelativeFilter ], { :base_url => 'http://somehost.com' }
+Pipeline.new node_filters: [ RootRelativeFilter ], { :base_url => 'http://somehost.com' }
 ```
 
-### 3rd Party Extensions
+### Third Party Extensions
 
 If you have an idea for a filter, propose it as
-[an issue](https://github.com/jch/html-pipeline/issues) first. This allows us discuss
+[an issue](https://github.com/gjtorikian/html-pipeline/issues) first. This allows us discuss
 whether the filter is a common enough use case to belong in this gem, or should be
 built as an external gem.
 
@@ -273,8 +291,9 @@ pipeline.setup_instrumentation "MarkdownPipeline"
 ```
 
 Filters are instrumented when they are run through the pipeline. A
-`call_filter.html_pipeline` event is published once the filter finishes. The
-`payload` should include the `filter` name. Each filter will trigger its own
+`call_filter.html_pipeline` event is published once any filter finishes; `call_text_filters`
+and `call_node_filters` is published when all of the text and node filters are finished, respectively.
+The `payload` should include the `filter` name. Each filter will trigger its own
 instrumentation call.
 
 ``` ruby
@@ -290,7 +309,7 @@ end
 The full pipeline is also instrumented:
 
 ``` ruby
-service.subscribe "call_pipeline.html_pipeline" do |event, start, ending, transaction_id, payload|
+service.subscribe "call_text_filters.html_pipeline" do |event, start, ending, transaction_id, payload|
   payload[:pipeline] #=> "MarkdownPipeline", set with `setup_instrumentation`
   payload[:filters] #=> ["MarkdownFilter"]
   payload[:doc] #=> HTML String or Nokogiri::DocumentFragment
@@ -332,7 +351,7 @@ re-define your own constant and pass that in via the context.
 
 ## Contributing
 
-Please review the [Contributing Guide](https://github.com/jch/html-pipeline/blob/master/CONTRIBUTING.md).
+Please review the [Contributing Guide](https://github.com/gjtorikian/html-pipeline/blob/master/CONTRIBUTING.md).
 
 1. [Fork it](https://help.github.com/articles/fork-a-repo)
 2. Create your feature branch (`git checkout -b my-new-feature`)
@@ -340,15 +359,13 @@ Please review the [Contributing Guide](https://github.com/jch/html-pipeline/blob
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new [Pull Request](https://help.github.com/articles/using-pull-requests)
 
-To see what has changed in recent versions, see the [CHANGELOG](https://github.com/jch/html-pipeline/blob/master/CHANGELOG.md).
+To see what has changed in recent versions, see the [CHANGELOG](https://github.com/gjtorikian/html-pipeline/blob/master/CHANGELOG.md).
 
 ### Contributors
 
-Thanks to all of [these contributors](https://github.com/jch/html-pipeline/graphs/contributors).
+Thanks to all of [these contributors](https://github.com/gjtorikian/html-pipeline/graphs/contributors).
 
-Project is a member of the [OSS Manifesto](http://ossmanifesto.org/).
-
-The current maintainer is @gjtorikian
+This project is a member of the [OSS Manifesto](http://ossmanifesto.org/).
 
 ### Releasing A New Version
 

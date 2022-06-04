@@ -8,8 +8,9 @@ class HTMLPipeline
       @filter = HTMLPipeline::NodeFilter::MentionFilter
       @context = { base_url: "/", info_url: nil, username_pattern: nil }
 
-      @pipeline = HTMLPipeline.new([
+      @pipeline = HTMLPipeline.new(text_filters: [
         HTMLPipeline::TextFilter::MarkdownFilter,
+      ], node_filters: [
         HTMLPipeline::NodeFilter::MentionFilter,
       ])
     end
