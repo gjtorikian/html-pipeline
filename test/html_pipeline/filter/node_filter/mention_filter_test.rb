@@ -5,12 +5,12 @@ require "test_helper"
 class HTMLPipeline
   class MentionFilterTest < Minitest::Test
     def setup
-      @filter = HTMLPipeline::MentionFilter
+      @filter = HTMLPipeline::NodeFilter::MentionFilter
       @context = { base_url: "/", info_url: nil, username_pattern: nil }
 
       @pipeline = HTMLPipeline.new([
-        HTMLPipeline::MarkdownFilter,
-        HTMLPipeline::MentionFilter,
+        HTMLPipeline::TextFilter::MarkdownFilter,
+        HTMLPipeline::NodeFilter::MentionFilter,
       ])
     end
 
@@ -186,16 +186,16 @@ class HTMLPipeline
       doc = Nokogiri::HTML::DocumentFragment.parse(body)
 
       @filter.call(doc.clone)
-      pattern_count = HTMLPipeline::MentionFilter::MENTION_PATTERNS.length
+      pattern_count = HTMLPipeline::NodeFilter::MentionFilter::MENTION_PATTERNS.length
       @filter.call(doc.clone)
 
-      assert_equal(pattern_count, HTMLPipeline::MentionFilter::MENTION_PATTERNS.length)
+      assert_equal(pattern_count, HTMLPipeline::NodeFilter::MentionFilter::MENTION_PATTERNS.length)
       @filter.call(doc.clone, context: { username_pattern: /test/ })
-      assert_equal(pattern_count + 1, HTMLPipeline::MentionFilter::MENTION_PATTERNS.length)
+      assert_equal(pattern_count + 1, HTMLPipeline::NodeFilter::MentionFilter::MENTION_PATTERNS.length)
     end
 
     def test_mention_link_filter
-      filter = HTMLPipeline::MentionFilter.new(nil)
+      filter = HTMLPipeline::NodeFilter::MentionFilter.new(nil)
       expected = "<a href='/hubot' class='user-mention'>@hubot</a>"
       assert_equal(expected, filter.mention_link_filter("@hubot"))
     end

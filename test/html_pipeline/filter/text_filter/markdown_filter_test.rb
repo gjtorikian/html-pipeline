@@ -2,7 +2,7 @@
 
 require "test_helper"
 
-MarkdownFilter = HTMLPipeline::MarkdownFilter
+MarkdownFilter = HTMLPipeline::TextFilter::MarkdownFilter
 
 class HTMLPipeline
   class MarkdownFilterTest < Minitest::Test
@@ -106,7 +106,7 @@ class HTMLPipeline
     end
 
     def test_without_tagfilter
-      extensions = HTMLPipeline::MarkdownFilter::DEFAULT_COMMONMARKER_EXTENSIONS - [:tagfilter]
+      extensions = HTMLPipeline::TextFilter::MarkdownFilter::DEFAULT_COMMONMARKER_EXTENSIONS - [:tagfilter]
       script = "<script>foobar</script>"
       results = MarkdownFilter.new(script, context: { unsafe: true, commonmarker_extensions: extensions }).call
 
@@ -114,7 +114,7 @@ class HTMLPipeline
     end
 
     def test_legitimate_custom_renderer_without_tagfilter
-      extensions = HTMLPipeline::MarkdownFilter::DEFAULT_COMMONMARKER_EXTENSIONS - [:tagfilter]
+      extensions = HTMLPipeline::TextFilter::MarkdownFilter::DEFAULT_COMMONMARKER_EXTENSIONS - [:tagfilter]
       script = "<script>foobar</script>"
       results = MarkdownFilter.new(script, context: { unsafe: true, commonmarker_extensions: extensions, commonmarker_renderer: CustomRenderer }).call
 

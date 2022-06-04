@@ -5,7 +5,7 @@ require "test_helper"
 class HTMLPipeline
   class EmojiFilterTest < Minitest::Test
     def setup
-      @emoji_filter = HTMLPipeline::EmojiFilter
+      @emoji_filter = HTMLPipeline::NodeFilter::EmojiFilter
     end
 
     def test_emojify
@@ -100,9 +100,9 @@ class HTMLPipeline
     def test_works_with_gemoji
       require "gemojione"
 
-      HTMLPipeline::EmojiFilter.stub(:gemoji_loaded?, false) do
+      HTMLPipeline::NodeFilter::EmojiFilter.stub(:gemoji_loaded?, false) do
         body = ":flag_ar:"
-        filter = HTMLPipeline::EmojiFilter.new(body, context: { asset_root: "https://foo.com" })
+        filter = HTMLPipeline::NodeFilter::EmojiFilter.new(body, context: { asset_root: "https://foo.com" })
         doc = filter.call
         assert_equal(%(<img class="emoji" title=":flag_ar:" alt=":flag_ar:" src="https://foo.com/emoji/1f1e6-1f1f7.png" height="20" width="20" align="absmiddle">), doc.to_html)
       end
@@ -110,9 +110,9 @@ class HTMLPipeline
 
     def test_gemoji_can_accept_symbolized_keys
       require "gemojione"
-      HTMLPipeline::EmojiFilter.stub(:gemoji_loaded?, false) do
+      HTMLPipeline::NodeFilter::EmojiFilter.stub(:gemoji_loaded?, false) do
         body = ":flag_ar:"
-        filter = HTMLPipeline::EmojiFilter.new(body, context: { asset_root: "https://coolwebsite.com", img_attrs: Hash(draggable: false, height: nil, width: nil, align: nil) })
+        filter = HTMLPipeline::NodeFilter::EmojiFilter.new(body, context: { asset_root: "https://coolwebsite.com", img_attrs: Hash(draggable: false, height: nil, width: nil, align: nil) })
         doc = filter.call
         assert_equal(%(<img class="emoji" title=":flag_ar:" alt=":flag_ar:" src="https://coolwebsite.com/emoji/1f1e6-1f1f7.png" draggable="false">), doc.to_html)
       end

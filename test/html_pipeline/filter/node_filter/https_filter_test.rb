@@ -2,7 +2,7 @@
 
 require "test_helper"
 
-HttpsFilter = HTMLPipeline::HttpsFilter
+HttpsFilter = HTMLPipeline::NodeFilter::HttpsFilter
 
 class HTMLPipeline
   class HttpsFilterTest < Minitest::Test
@@ -47,7 +47,7 @@ class HTMLPipeline
 
     def test_validates_http_url
       exception = assert_raises(ArgumentError) { @filter.to_html("") }
-      assert_match("HTMLPipeline::HttpsFilter: :http_url", exception.message)
+      assert_match("HTMLPipeline::NodeFilter::HttpsFilter: :http_url", exception.message)
     end
   end
 end

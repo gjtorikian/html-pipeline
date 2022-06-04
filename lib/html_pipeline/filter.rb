@@ -9,7 +9,7 @@ class HTMLPipeline
   #
   # Example filter that replaces all images with trollface:
   #
-  #   class FuuuFilter < HTMLPipeline::Filter
+  #   class TrollFilter < HTMLPipeline::Filter
   #     def call
   #       doc.search('img').each do |img|
   #         img['src'] = "http://paradoxdgn.com/junk/avatars/trollface.jpg"
@@ -30,14 +30,7 @@ class HTMLPipeline
   class Filter
     class InvalidDocumentException < StandardError; end
 
-    def initialize(doc, context: {}, result: {})
-      if doc.is_a?(String)
-        @html = doc.to_str
-        @doc = nil
-      else
-        @doc = doc
-        @html = nil
-      end
+    def initialize(context: {}, result: {})
       @context = context
       @result = result
       validate
@@ -53,22 +46,6 @@ class HTMLPipeline
     # #mentioned_users, for example.
     attr_reader :result
 
-    # The Nokogiri::HTML::DocumentFragment to be manipulated. If the filter was
-    # provided a String, parse into a DocumentFragment the first time this
-    # method is called.
-    def doc
-      @doc ||= parse_html(html)
-    end
-
-    # The String representation of the document. If a DocumentFragment was
-    # provided to the Filter, it is serialized into a String when this method is
-    # called.
-    def html
-      raise InvalidDocumentException if @html.nil? && @doc.nil?
-
-      @html || doc.to_html
-    end
-
     # The main filter entry point. The doc attribute is guaranteed to be a
     # Nokogiri::HTML::DocumentFragment when invoked. Subclasses should modify
     # this document in place or extract information and add it to the context
@@ -77,35 +54,28 @@ class HTMLPipeline
       raise NotImplementedError
     end
 
+    # Perform a filter on doc with the given context.
+    #
+    # Returns a HTMLPipeline::DocumentFragment or a String containing HTML
+    # markup.
+    def self.call(input, context: {}, result: {})
+      new(input, context: context, result: result).call
+    end
+
+    # Like call but guarantees that a DocumentFragment is returned, even when
+    # the last filter returns a String.
+    def self.to_document(input, context: {})
+      html = call(input, context: context)
+      HTMLPipeline.parse(html)
+    end
+
     # Make sure the context has everything we need. Noop: Subclasses can override.
     def validate; end
-
-    # The Repository object provided in the context hash, or nil when no
-    # :repository was specified.
-    #
-    # It's assumed that the repository context has already been checked
-    # for permissions
-    def repository
-      context[:repository]
-    end
-
-    # The User object provided in the context hash, or nil when no user
-    # was specified
-    def current_user
-      context[:current_user]
-    end
 
     # The site's base URL provided in the context hash, or '/' when no
     # base URL was specified.
     def base_url
       context[:base_url] || "/"
-    end
-
-    # Ensure the passed argument is a DocumentFragment. When a string is
-    # provided, it is parsed and returned; otherwise, the DocumentFragment is
-    # returned unmodified.
-    def parse_html(html)
-      HTMLPipeline.parse(html)
     end
 
     # Helper method for filter subclasses used to determine if any of a node's
@@ -118,31 +88,6 @@ class HTMLPipeline
     def has_ancestor?(node, tags)
       while (node = node.parent)
         break true if tags.include?(node.name.downcase)
-      end
-    end
-
-    # Perform a filter on doc with the given context.
-    #
-    # Returns a HTMLPipeline::DocumentFragment or a String containing HTML
-    # markup.
-    def self.call(doc, context: {}, result: {})
-      new(doc, context: context, result: result).call
-    end
-
-    # Like call but guarantees that a DocumentFragment is returned, even when
-    # the last filter returns a String.
-    def self.to_document(input, context: {})
-      html = call(input, context: context)
-      HTMLPipeline.parse(html)
-    end
-
-    # Like call but guarantees that a string of HTML markup is returned.
-    def self.to_html(input, context: {})
-      output = call(input, context: context)
-      if output.respond_to?(:to_html)
-        output.to_html
-      else
-        output.to_s
       end
     end
 

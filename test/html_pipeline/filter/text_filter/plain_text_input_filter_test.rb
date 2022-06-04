@@ -4,7 +4,7 @@ require "test_helper"
 
 class HTMLPipeline
   class PlainTextInputFilterTest < Minitest::Test
-    PlainTextInputFilter = HTMLPipeline::PlainTextInputFilter
+    PlainTextInputFilter = HTMLPipeline::TextFilter::PlainTextInputFilter
 
     def test_fails_when_given_a_documentfragment
       body = "<p>heyo</p>"

@@ -3,7 +3,7 @@
 require "test_helper"
 require "escape_utils"
 
-SyntaxHighlightFilter = HTMLPipeline::SyntaxHighlightFilter
+SyntaxHighlightFilter = HTMLPipeline::NodeFilter::SyntaxHighlightFilter
 
 class HTMLPipeline
   class SyntaxHighlightFilterTest < Minitest::Test

@@ -5,7 +5,7 @@ require "test_helper"
 class HTMLPipeline
   class ImageMaxWidthFilterTest < Minitest::Test
     def setup
-      @filter = HTMLPipeline::ImageMaxWidthFilter
+      @filter = HTMLPipeline::NodeFilter::ImageMaxWidthFilter
     end
 
     def test_rewrites_image_style_tags

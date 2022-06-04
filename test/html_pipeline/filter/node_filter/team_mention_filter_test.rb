@@ -5,12 +5,12 @@ require "test_helper"
 class HTMLPipeline
   class TeamMentionFilterTest < Minitest::Test
     def setup
-      @filter = HTMLPipeline::TeamMentionFilter
+      @filter = HTMLPipeline::NodeFilter::TeamMentionFilter
 
       @pipeline =
         HTMLPipeline.new([
-          HTMLPipeline::MarkdownFilter,
-          HTMLPipeline::TeamMentionFilter,
+          HTMLPipeline::TextFilter::MarkdownFilter,
+          HTMLPipeline::NodeFilter::TeamMentionFilter,
         ])
     end
 
@@ -196,7 +196,7 @@ class HTMLPipeline
     end
 
     def test_mention_link_filter
-      filter = HTMLPipeline::TeamMentionFilter.new(nil)
+      filter = HTMLPipeline::NodeFilter::TeamMentionFilter.new(nil)
       expected = "<a href='/bot/hubot' class='team-mention'>@bot/hubot</a>"
       assert_equal(expected, filter.mention_link_filter("@bot/hubot"))
     end

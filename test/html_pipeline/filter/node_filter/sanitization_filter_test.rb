@@ -4,7 +4,7 @@ require "test_helper"
 
 class HTMLPipeline
   class SanitizationFilterTest < Minitest::Test
-    SanitizationFilter = HTMLPipeline::SanitizationFilter
+    SanitizationFilter = HTMLPipeline::NodeFilter::SanitizationFilter
 
     def test_removing_script_tags
       orig = %(<p><img src="http://github.com/img.png" /><script></script></p>)
