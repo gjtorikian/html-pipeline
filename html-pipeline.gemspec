@@ -1,23 +1,25 @@
 # frozen_string_literal: true
 
-require File.expand_path('lib/html/pipeline/version', __dir__)
+$LOAD_PATH.push(File.expand_path("lib", __dir__))
+require "html_pipeline/version"
 
 Gem::Specification.new do |gem|
-  gem.name          = 'html-pipeline'
-  gem.version       = HTML::Pipeline::VERSION
-  gem.license       = 'MIT'
-  gem.authors       = ['Ryan Tomayko', 'Jerry Cheung', 'Garen J. Torikian']
-  gem.email         = ['ryan@github.com', 'jerry@github.com', 'gjtorikian@gmail.com']
-  gem.description   = 'HTML processing filters and utilities'
-  gem.summary       = 'Helpers for processing content through a chain of filters'
-  gem.homepage      = 'https://github.com/jch/html-pipeline'
+  gem.name          = "html-pipeline"
+  gem.version       = HTMLPipeline::VERSION
+  gem.license       = "MIT"
+  gem.authors       = ["Garen J. Torikian"]
+  gem.email         = ["gjtorikian@gmail.com"]
+  gem.description   = "HTML processing filters and utilities"
+  gem.summary       = "Helpers for processing content through a chain of filters"
+  gem.homepage      = "https://github.com/jch/html-pipeline"
 
-  gem.files         = `git ls-files -z`.split("\x0").reject { |f| f =~ %r{^(test|gemfiles|script)/} }
-  gem.require_paths = ['lib']
+  gem.files         = %x(git ls-files -z).split("\x0").reject { |f| f =~ %r{^(test|gemfiles|script)/} }
+  gem.require_paths = ["lib"]
 
-  gem.required_ruby_version = ['>= 2.5.8', '< 4.0']
+  gem.required_ruby_version = [">= 2.5.8", "< 4.0"]
 
-  gem.add_dependency 'nokogiri', '~> 1.11'
+  gem.add_dependency("nokogiri", "~> 1.11")
+  gem.add_dependency("zeitwerk", "~> 2.5")
 
   gem.post_install_message = <<~MSG
     -------------------------------------------------

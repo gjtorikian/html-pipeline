@@ -1,4 +1,4 @@
-# HTML::Pipeline [![Build Status](https://travis-ci.org/jch/html-pipeline.svg?branch=master)](https://travis-ci.org/jch/html-pipeline)
+# HTMLPipeline [![Build Status](https://travis-ci.org/jch/html-pipeline.svg?branch=master)](https://travis-ci.org/jch/html-pipeline)
 
 HTML processing filters and utilities. This module includes a small
 framework for defining DOM based content filters and applying them to user
@@ -51,7 +51,7 @@ For example, to transform Markdown source into Markdown HTML:
 ```ruby
 require 'html/pipeline'
 
-filter = HTML::Pipeline::MarkdownFilter.new("Hi **world**!")
+filter = HTMLPipeline::MarkdownFilter.new("Hi **world**!")
 filter.call
 ```
 
@@ -61,9 +61,9 @@ filtered through Markdown and be syntax highlighted, you can create the
 following pipeline:
 
 ```ruby
-pipeline = HTML::Pipeline.new [
-  HTML::Pipeline::MarkdownFilter,
-  HTML::Pipeline::SyntaxHighlightFilter
+pipeline = HTMLPipeline.new [
+  HTMLPipeline::MarkdownFilter,
+  HTMLPipeline::SyntaxHighlightFilter
 ]
 result = pipeline.call <<-CODE
 This is *great*:
@@ -91,7 +91,7 @@ example, if you don't want to use GitHub formatted Markdown, you can pass an
 option in the context hash:
 
 ```ruby
-filter = HTML::Pipeline::MarkdownFilter.new("Hi **world**!", :gfm => false)
+filter = HTMLPipeline::MarkdownFilter.new("Hi **world**!", :gfm => false)
 filter.call
 ```
 
@@ -192,14 +192,14 @@ Full reference documentation can be [found here](http://rubydoc.info/gems/html-p
 
 ## Extending
 To write a custom filter, you need a class with a `call` method that inherits
-from `HTML::Pipeline::Filter`.
+from `HTMLPipeline::Filter`.
 
 For example this filter adds a base url to images that are root relative:
 
 ```ruby
 require 'uri'
 
-class RootRelativeFilter < HTML::Pipeline::Filter
+class RootRelativeFilter < HTMLPipeline::Filter
 
   def call
     doc.search("img").each do |img|
@@ -238,16 +238,16 @@ Here are some extensions people have built:
 * [tilt-html-pipeline](https://github.com/bradgessler/tilt-html-pipeline)
 * [html-pipeline-wiki-link'](https://github.com/lifted-studios/html-pipeline-wiki-link) - WikiMedia-style wiki links
 * [task_list](https://github.com/github/task_list) - GitHub flavor Markdown Task List
-* [html-pipeline-nico_link](https://github.com/rutan/html-pipeline-nico_link) - An HTML::Pipeline filter for [niconico](http://www.nicovideo.jp) description links
+* [html-pipeline-nico_link](https://github.com/rutan/html-pipeline-nico_link) - An HTMLPipeline filter for [niconico](http://www.nicovideo.jp) description links
 * [html-pipeline-gitlab](https://gitlab.com/gitlab-org/html-pipeline-gitlab) - This gem implements various filters for html-pipeline used by GitLab
-* [html-pipeline-youtube](https://github.com/st0012/html-pipeline-youtube) - An HTML::Pipeline filter for YouTube links
-* [html-pipeline-flickr](https://github.com/st0012/html-pipeline-flickr) - An HTML::Pipeline filter for Flickr links
-* [html-pipeline-vimeo](https://github.com/dlackty/html-pipeline-vimeo) - An HTML::Pipeline filter for Vimeo links
-* [html-pipeline-hashtag](https://github.com/mr-dxdy/html-pipeline-hashtag) - An HTML::Pipeline filter for hashtags
-* [html-pipeline-linkify_github](https://github.com/jollygoodcode/html-pipeline-linkify_github) - An HTML::Pipeline filter to autolink GitHub urls
+* [html-pipeline-youtube](https://github.com/st0012/html-pipeline-youtube) - An HTMLPipeline filter for YouTube links
+* [html-pipeline-flickr](https://github.com/st0012/html-pipeline-flickr) - An HTMLPipeline filter for Flickr links
+* [html-pipeline-vimeo](https://github.com/dlackty/html-pipeline-vimeo) - An HTMLPipeline filter for Vimeo links
+* [html-pipeline-hashtag](https://github.com/mr-dxdy/html-pipeline-hashtag) - An HTMLPipeline filter for hashtags
+* [html-pipeline-linkify_github](https://github.com/jollygoodcode/html-pipeline-linkify_github) - An HTMLPipeline filter to autolink GitHub urls
 * [html-pipeline-redcarpet_filter](https://github.com/bmikol/html-pipeline-redcarpet_filter) - Render Markdown source text into Markdown HTML using Redcarpet
-* [html-pipeline-typogruby_filter](https://github.com/bmikol/html-pipeline-typogruby_filter) - Add Typogruby text filters to your HTML::Pipeline
-* [korgi](https://github.com/jodeci/korgi) - HTML::Pipeline filters for links to Rails resources
+* [html-pipeline-typogruby_filter](https://github.com/bmikol/html-pipeline-typogruby_filter) - Add Typogruby text filters to your HTMLPipeline
+* [korgi](https://github.com/jodeci/korgi) - HTMLPipeline filters for links to Rails resources
 
 
 ## Instrumenting
@@ -256,19 +256,19 @@ Filters and Pipelines can be set up to be instrumented when called. The pipeline
 must be setup with an
 [ActiveSupport::Notifications](http://api.rubyonrails.org/classes/ActiveSupport/Notifications.html)
 compatible service object and a name. New pipeline objects will default to the
-`HTML::Pipeline.default_instrumentation_service` object.
+`HTMLPipeline.default_instrumentation_service` object.
 
 ``` ruby
 # the AS::Notifications-compatible service object
 service = ActiveSupport::Notifications
 
 # instrument a specific pipeline
-pipeline = HTML::Pipeline.new [MarkdownFilter], context
+pipeline = HTMLPipeline.new [MarkdownFilter], context
 pipeline.setup_instrumentation "MarkdownPipeline", service
 
 # or set default instrumentation service for all new pipelines
-HTML::Pipeline.default_instrumentation_service = service
-pipeline = HTML::Pipeline.new [MarkdownFilter], context
+HTMLPipeline.default_instrumentation_service = service
+pipeline = HTMLPipeline.new [MarkdownFilter], context
 pipeline.setup_instrumentation "MarkdownPipeline"
 ```
 

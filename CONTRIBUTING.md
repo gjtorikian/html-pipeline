@@ -1,19 +1,19 @@
 # Contributing
 
-Thanks for using and improving `HTML::Pipeline`!
+Thanks for using and improving `HTMLPipeline`!
 
 - [Submitting a New Issue](#submitting-a-new-issue)
 - [Sending a Pull Request](#sending-a-pull-request)
 
 ## Submitting a New Issue
 
-If there's an idea you'd like to propose, or a design change, feel free to file a new issue. 
+If there's an idea you'd like to propose, or a design change, feel free to file a new issue.
 
 If you have an implementation question or believe you've found a bug, please provide as many details as possible:
 
 - Input document
 - Output HTML document
-- the exact `HTML::Pipeline` code you are using
+- the exact `HTMLPipeline` code you are using
 - output of the following from your project
 
 ```
@@ -41,17 +41,17 @@ To run a specific test file:
 
 To run a specific test:
 
-  `bundle exec ruby -Itest test/html/pipeline/markdown_filter_test.rb -n test_disabling_gfm`  
+  `bundle exec ruby -Itest test/html/pipeline/markdown_filter_test.rb -n test_disabling_gfm`
 
 To run the full suite with all [supported rubies][travisyaml] in bash:
 
 ```bash
 rubies=(ree-1.8.7-2011.03 1.9.2-p290 1.9.3-p429 2.0.0-p247)
-for r in ${rubies[*]} 
-do 
+for r in ${rubies[*]}
+do
   rbenv local $r # switch to your version manager of choice
-  bundle install 
-  bundle exec rake 
+  bundle install
+  bundle exec rake
 done
 ```
 

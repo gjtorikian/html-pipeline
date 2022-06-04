@@ -16,7 +16,7 @@ onParser.new do |opts|
  opts.separator 'Options:'
 
   opts.on('-f', '--filters', 'List the available filters') do
-    filters = HTML::Pipeline.constants.grep(/\w+Filter$/)
+    filters = HTMLPipeline.constants.grep(/\w+Filter$/)
                             .map { |f| f.to_s.gsub(/Filter$/, '') }
 
     # Text filter doesn't work, no call method
@@ -33,18 +33,18 @@ end.parse!
 if ARGV.empty?
 
   filters = [
-    HTML::Pipeline::MarkdownFilter,
-    HTML::Pipeline::SanitizationFilter,
-    HTML::Pipeline::ImageMaxWidthFilter,
-    HTML::Pipeline::EmojiFilter,
-    HTML::Pipeline::AutolinkFilter,
-    HTML::Pipeline::TableOfContentsFilter
+    HTMLPipeline::MarkdownFilter,
+    HTMLPipeline::SanitizationFilter,
+    HTMLPipeline::ImageMaxWidthFilter,
+    HTMLPipeline::EmojiFilter,
+    HTMLPipeline::AutolinkFilter,
+    HTMLPipeline::TableOfContentsFilter
   ]
 
   # Add syntax highlighting if rouge is present
   begin
     require 'rouge'
-    filters << HTML::Pipeline::SyntaxHighlightFilter
+    filters << HTMLPipeline::SyntaxHighlightFilter
   rescue LoadError
   end
 
@@ -56,7 +56,7 @@ else
       raise NameError # Text filter doesn't work, no call method
     end
 
-    HTML::Pipeline.const_get("#{name}Filter")
+    HTMLPipeline.const_get("#{name}Filter")
   rescue NameError => e
     abort "Unknown filter '#{name}'. List filters with the -f option."
   end
@@ -75,4 +75,4 @@ context = {
   gfm: true
 }
 
-puts HTML::Pipeline.new(filters, context).call(ARGF.read)[:output]
+puts HTMLPipeline.new(filters, context).call(ARGF.read)[:output]
