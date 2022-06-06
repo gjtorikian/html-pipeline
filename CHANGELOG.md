@@ -48,7 +48,7 @@
 
 ## 2.8.4
 
-  * Freeze all elements in HTML::Pipeline::SanitizationFilter [#299](https://github.com/jch/html-pipeline/pull/299)
+  * Freeze all elements in HTMLPipeline::SanitizationFilter [#299](https://github.com/jch/html-pipeline/pull/299)
 
 ## 2.8.3
 

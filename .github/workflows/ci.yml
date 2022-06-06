@@ -15,26 +15,27 @@ jobs:
       fail-fast: true
       matrix:
         ruby-version:
+          - 3.1.0
           - 3.0.0
-          - 2.7.2
-          - 2.6.6
-          - 2.5.8
-          - truffleruby-head
-        experimental: [false]
-        include:
-          - ruby-version: head
-            experimental: true
+          - ruby-head
 
     continue-on-error: ${{ matrix.experimental }}
 
     steps:
       - uses: actions/checkout@v2
-      - run: sudo apt-get -yqq install libxml2-dev libxslt-dev
-        if: startsWith(matrix.ruby-version, 'truffleruby')
+
+      - name: Install libxslt and libxml2
+        run: sudo apt-get install libxslt-dev libxml2-dev
+
       - name: Set up Ruby ${{ matrix.ruby-version }}
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
+
+      - name: Install dependencies
+        run: bundle install
+
       - name: Run tests
         run: bundle exec rake
+        continue-on-error: ${{ matrix.ruby == 'ruby-head' }}
