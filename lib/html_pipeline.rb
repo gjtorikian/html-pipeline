@@ -11,6 +11,8 @@ gem_loader.inflector.inflect(
 gem_loader.ignore(File.join(lib_dir, "html-pipeline.rb"))
 gem_loader.setup
 
+# require "debug"
+
 class HTMLPipeline
   # HTML processing filters and utilities. This module includes a small
   # framework for defining DOM based content filters and applying them to user
@@ -92,6 +94,9 @@ class HTMLPipeline
   # Public: Returns an Array of Filter objects for this Pipeline.
   attr_reader :text_filters, :node_filters
 
+  # Public: A hash representing the sanitization configuration settings
+  attr_reader :sanitization_config
+
   # Public: Instrumentation service for the pipeline.
   # Set an ActiveSupport::Notifications compatible object to enable.
   attr_accessor :instrumentation_service
@@ -110,7 +115,7 @@ class HTMLPipeline
     attr_accessor :default_instrumentation_service
   end
 
-  def initialize(text_filters: [], node_filters: [], default_context: {}, result_class: Hash)
+  def initialize(text_filters: [], sanitization_config: {}, node_filters: [], default_context: {}, result_class: Hash)
     raise ArgumentError, "default_context cannot be nil" if default_context.nil?
 
     @text_filters = text_filters.flatten.freeze
@@ -118,6 +123,14 @@ class HTMLPipeline
 
     @node_filters = node_filters.flatten.freeze
     validate_filter(@node_filters, HTMLPipeline::NodeFilter)
+
+    @sanitization_config = unless sanitization_config.nil?
+      if sanitization_config.empty?
+        SanitizationFilter::DEFAULT_CONFIG
+      else
+        sanitization_config
+      end
+    end
 
     @default_context = default_context.freeze
     @result_class = result_class
@@ -136,7 +149,7 @@ class HTMLPipeline
   # Returns the result Hash after being filtered by this Pipeline.  Contains an
   # :output key with the DocumentFragment or String HTML markup based on the
   # output of the last filter in the pipeline.
-  def call(html, context: {}, result: {})
+  def call(text, context: {}, result: {})
     context = @default_context.merge(context)
     context = context.freeze
     result ||= @result_class.new
@@ -145,16 +158,22 @@ class HTMLPipeline
                                 context: context, result: result, })
     instrument("call_text_filters.html_pipeline", payload) do
       result[:output] =
-        @text_filters.inject(html) do |doc, filter|
+        @text_filters.inject(text) do |doc, filter|
           perform_filter(filter, doc, context: context, result: result)
         end
+    end
+
+    html = HTMLPipeline.parse(result[:output])
+
+    unless @sanitization_config.nil?
+      html = SanitizationFilter.new(html, @sanitization_config).call.to_s
     end
 
     payload = default_payload({ node_filters: @node_filters.map(&:name),
       context: context, result: result, })
     instrument("call_node_filters.html_pipeline", payload) do
       result[:output] =
-        @node_filters.inject(result[:output]) do |doc, filter|
+        @node_filters.inject(html) do |doc, filter|
           perform_filter(filter, doc, context: context, result: result)
         end
     end

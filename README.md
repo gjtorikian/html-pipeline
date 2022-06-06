@@ -10,6 +10,7 @@ provided content.
 - [Usage](#usage)
   - [Examples](#examples)
 - [Filters](#filters)
+- [Sanitization](#sanitization)
 - [Dependencies](#dependencies)
 - [Documentation](#documentation)
 - [Extending](#extending)
@@ -54,7 +55,7 @@ For example, to transform Markdown source into Markdown HTML:
 ```ruby
 require 'html/pipeline'
 
-filter = HTMLPipeline::NodeFilter::MarkdownFilter.new("Hi **world**!")
+filter = HTMLPipeline::TextFilter::MarkdownFilter.new("Hi **world**!")
 filter.call # returns "Hi <strong>world</strong>!"
 ```
 
@@ -68,12 +69,12 @@ filtered through Markdown and the resulting HTML syntax highlighted, you can cre
 following pipeline:
 
 ```ruby
-pipeline = HTMLPipeline.new
+pipeline = HTMLPipeline.new \
   text_filters: [
-    HTMLPipeline::MarkdownFilter,
+    HTMLPipeline::TextFilter::MarkdownFilter,
   ],
   node_filters: [
-    HTMLPipeline::SyntaxHighlightFilter
+    HTMLPipeline::NodeFilter::SyntaxHighlightFilter
   ]
 result = pipeline.call <<-CODE
 This is *great*:
@@ -180,6 +181,61 @@ EmojiPipeline = Pipeline.new [
 * `SyntaxHighlightFilter` - code syntax highlighter
 * `TableOfContentsFilter` - anchor headings with name attributes and generate Table of Contents html unordered list linking headings
 * `TeamMentionFilter` - replace `@org/team` mentions with links
+
+## Sanitization
+
+Because the web is a scary place, HTML is automatically sanitized after the text filters
+are processed and before the node filters are processed. This is to prevent malicious or
+unexpected input from entering the pipeline.
+
+The sanitization process takes a hash configuration of settings. See the [selma]
+documentation for more information.
+
+A sample custom sanitization allowlist might look like this:
+
+```ruby
+ALLOWLIST = {
+  elements: ["p", "pre", "code"]
+}
+
+pipeline = HTMLPipeline.new \
+  text_filters: [
+    HTMLPipeline::MarkdownFilter,
+  ],
+  sanitization_config: ALLOWLIST,
+  node_filters: [
+    HTMLPipeline::SyntaxHighlightFilter
+  ]
+result = pipeline.call <<-CODE
+This is *great*:
+
+    some_code(:first)
+
+CODE
+result[:output].to_s
+```
+
+This would print:
+
+```html
+<p>This is great:</p>
+<pre><code>some_code(:first)
+</code></pre>
+```
+
+Sanitization can be disabled if and only if `nil` is explicitly passed as
+the config:
+
+```ruby
+pipeline = HTMLPipeline.new \
+  text_filters: [
+    HTMLPipeline::MarkdownFilter,
+  ],
+  sanitization_config: nil, # disable sanitization
+  node_filters: [
+    HTMLPipeline::SyntaxHighlightFilter
+  ]
+```
 
 ## Dependencies
 

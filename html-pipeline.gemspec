@@ -26,12 +26,14 @@ Gem::Specification.new do |gem|
   gem.add_dependency("nokogiri", "~> 1.11")
   gem.add_dependency("zeitwerk", "~> 2.5")
 
+  gem.add_development_dependency("debug") if "#{RbConfig::CONFIG["MAJOR"]}.#{RbConfig::CONFIG["MINOR"]}".to_f >= 3.1
+
   gem.post_install_message = <<~MSG
     -------------------------------------------------
     Thank you for installing html-pipeline!
     You must bundle Filter gem dependencies.
     See html-pipeline README.md for more details.
-    https://github.com/jch/html-pipeline#dependencies
+    https://github.com/gjtorikian/html-pipeline#dependencies
     -------------------------------------------------
   MSG
 end
