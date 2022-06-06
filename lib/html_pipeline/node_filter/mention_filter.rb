@@ -55,7 +55,7 @@ class HTMLPipeline
 
       # Default pattern used to extract usernames from text. The value can be
       # overriden by providing the username_pattern variable in the context.
-      USERNAME_PATTERN = /[a-z0-9][a-z0-9-]*/.freeze
+      USERNAME_PATTERN = /[a-z0-9][a-z0-9-]*/
 
       # Don't look for mentions in text nodes that are children of these elements
       IGNORE_PARENTS = ["pre", "code", "a", "style", "script"].to_set

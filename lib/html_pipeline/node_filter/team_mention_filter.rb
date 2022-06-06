@@ -44,7 +44,7 @@ class HTMLPipeline
           /                       # dividing slash
           ([a-z0-9][a-z0-9\-_]*)   # team
           \b
-      }ix.freeze
+      }ix
 
       # Don't look for mentions in text nodes that are children of these elements
       IGNORE_PARENTS = ["pre", "code", "a", "style", "script"].to_set
