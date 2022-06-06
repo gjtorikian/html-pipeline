@@ -14,7 +14,10 @@ jobs:
           - 3.1.0
           - 3.0.0
           - 2.7.6
-          - ruby-head
+        experimental: [false]
+        include:
+          - ruby-version: head
+            experimental: true
 
     continue-on-error: ${{ matrix.experimental }}
 
