@@ -1,11 +1,7 @@
 name: Ruby CI
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
   push:
-    branches:
-      - main
 
 jobs:
   test:
@@ -17,6 +13,7 @@ jobs:
         ruby-version:
           - 3.1.0
           - 3.0.0
+          - 2.7.6
           - ruby-head
 
     continue-on-error: ${{ matrix.experimental }}
