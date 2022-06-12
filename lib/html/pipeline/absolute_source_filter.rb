@@ -28,7 +28,12 @@ module HTML
                  else
                    image_subpage_url
                  end
-          element['src'] = URI.join(base, src).to_s
+
+          begin
+            element['src'] = URI.join(base, src).to_s
+          rescue Exception
+            next
+          end
         end
         doc
       end

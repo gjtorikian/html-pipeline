@@ -53,4 +53,12 @@ class HTML::Pipeline::AbsoluteSourceFilterTest < Minitest::Test
     end
     assert_match 'HTML::Pipeline::AbsoluteSourceFilter', exception.message
   end
+
+  def test_ignores_data_urls
+    orig = %(<p><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 696 391'%3E%3Crect x='0' y='0' width='696' height='391' fill='%23f2f2f2'%3E%3C/rect%3E%3C/svg%3E"></p>)
+    result = AbsoluteSourceFilter.call(orig, @options).to_s
+
+    expected = %(<p><img src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20696%20391'%3E%3Crect%20x='0'%20y='0'%20width='696'%20height='391'%20fill='%23f2f2f2'%3E%3C/rect%3E%3C/svg%3E"></p>)
+    assert_equal expected, result
+  end
 end
