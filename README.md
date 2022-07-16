@@ -1,4 +1,4 @@
-# HTML::Pipeline [![Build Status](https://travis-ci.org/jch/html-pipeline.svg?branch=master)](https://travis-ci.org/jch/html-pipeline)
+# HTML::Pipeline ![Build Status](../../workflows/build/badge.svg)
 
 HTML processing filters and utilities. This module includes a small
 framework for defining DOM based content filters and applying them to user
