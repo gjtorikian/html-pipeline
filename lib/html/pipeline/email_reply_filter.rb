@@ -38,7 +38,8 @@ module HTML
       def call
         found_hidden = nil
         paragraphs = EmailReplyParser.read(text.dup).fragments.map do |fragment|
-          pieces = [escape_html(fragment.to_s.strip).gsub(/^\s*(>|&gt;)/, '')]
+          pieces = [CGI.escapeHTML(fragment.to_s.strip).gsub(/^\s*(>|&gt;)/, '')]
+
           if fragment.quoted?
             if context[:hide_quoted_email_addresses]
               pieces.map! do |piece|
