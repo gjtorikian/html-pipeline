@@ -8,7 +8,7 @@ module HTML
     # in a div.
     class PlainTextInputFilter < TextFilter
       def call
-        "<div>#{EscapeUtils.escape_html(@text, false)}</div>"
+        "<div>#{CGI.escape_html(@text)}</div>"
       end
     end
   end

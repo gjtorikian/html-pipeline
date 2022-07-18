@@ -53,13 +53,13 @@ class HTML::Pipeline::SyntaxHighlightFilterTest < Minitest::Test
 
   def test_highlight_handles_nested_pre_tags
     inner_code = "<pre>console.log('i am nested!')</pre>"
-    escaped = EscapeUtils.escape_html(inner_code)
+    escaped = CGI.escape_html(inner_code)
     html = "<pre lang='html'>#{escaped}</pre>"
     filter = SyntaxHighlightFilter.new html, highlight: 'html'
 
     doc = filter.call
 
     assert_equal 2, doc.css('span[class=nt]').length
-    assert_equal EscapeUtils.unescape_html(escaped), doc.inner_text
+    assert_equal CGI.unescape_html(escaped), doc.inner_text
   end
 end

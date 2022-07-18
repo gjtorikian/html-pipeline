@@ -59,7 +59,7 @@ EMAIL
 <div class="email-quoted-reply">  *  Do you need -DCMAKE_SYSTEM_PROCESSOR=x86?</div>
 <div class="email-fragment">Yes, this is a bit dumb, but vc checks for that (or amd) to determine that it&#39;s not being built on ARM.</div>
 <span class="email-hidden-toggle"><a href="#">&hellip;</a></span><div class="email-hidden-reply" style="display:none"><div class="email-signature-reply">--
-Boaty McBoatface | http:&#47;&#47;example.org</div>
+Boaty McBoatface | http://example.org</div>
 </div>
 EXPECTED
 
