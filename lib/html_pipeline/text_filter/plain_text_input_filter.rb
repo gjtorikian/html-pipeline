@@ -8,7 +8,7 @@ class HTMLPipeline
     # in a div.
     class PlainTextInputFilter < TextFilter
       def call
-        "<div>#{EscapeUtils.escape_html(@text, false)}</div>"
+        "<div>#{CGI.escapeHTML(@text)}</div>"
       end
     end
   end

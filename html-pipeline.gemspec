@@ -16,17 +16,15 @@ Gem::Specification.new do |gem|
   gem.files         = %x(git ls-files -z).split("\x0").reject { |f| f =~ %r{^(test|gemfiles|script)/} }
   gem.require_paths = ["lib"]
 
-  gem.required_ruby_version = "~> 3.0"
+  gem.required_ruby_version = "~> 3.1"
 
   gem.metadata = {
     "funding_uri" => "https://github.com/sponsors/gjtorikian/",
     "rubygems_mfa_required" => "true",
   }
 
-  gem.add_dependency("nokogiri", "~> 1.11")
+  gem.add_dependency("selma", "~> 0.0.1")
   gem.add_dependency("zeitwerk", "~> 2.5")
-
-  gem.add_development_dependency("debug") if "#{RbConfig::CONFIG["MAJOR"]}.#{RbConfig::CONFIG["MINOR"]}".to_f >= 3.1
 
   gem.post_install_message = <<~MSG
     -------------------------------------------------

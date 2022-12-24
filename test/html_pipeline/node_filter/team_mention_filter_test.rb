@@ -8,16 +8,15 @@ class HTMLPipeline
       @filter = HTMLPipeline::NodeFilter::TeamMentionFilter
 
       @pipeline =
-        HTMLPipeline.new(text_filters: [
-          HTMLPipeline::TextFilter::MarkdownFilter,
-        ], node_filters: [
-          HTMLPipeline::NodeFilter::TeamMentionFilter,
+        HTMLPipeline.new(convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
+        node_filters: [
+          HTMLPipeline::NodeFilter::TeamMentionFilter.new,
         ])
     end
 
     def mentioned_teams(body)
       result = {}
-      @pipeline.call(body, result: result)
+      result = @pipeline.call(body, result: result)
       result[:mentioned_teams]
     end
 
@@ -27,79 +26,67 @@ class HTMLPipeline
 
       link = '<a href="/github/team" class="team-mention">@github/team</a>'
       assert_equal("<p>#{link}: check it out.</p>",
-        res.to_html)
-    end
-
-    def test_filtering_a_documentfragment
-      body = "<p>@github/team: check it out.</p>"
-      doc  = Nokogiri::HTML::DocumentFragment.parse(body)
-
-      res  = @filter.call(doc, context: { base_url: "/" })
-      assert_same(doc, res)
-
-      link = '<a href="/github/team" class="team-mention">@github/team</a>'
-      assert_equal("<p>#{link}: check it out.</p>",
-        res.to_html)
+        res)
     end
 
     def test_not_replacing_mentions_in_pre_tags
       body = "<pre>@github/team: okay</pre>"
-      assert_equal(body, @filter.call(body).to_html)
+      assert_equal(body, @filter.call(body))
     end
 
     def test_not_replacing_mentions_in_code_tags
       body = "<p><code>@github/team:</code> okay</p>"
-      assert_equal(body, @filter.call(body).to_html)
+      assert_equal(body, @filter.call(body))
     end
 
     def test_not_replacing_mentions_in_style_tags
       body = "<style>@github/team (min-width: 768px) { color: red; }</style>"
-      assert_equal(body, @filter.call(body).to_html)
+      assert_equal(body, @filter.call(body))
     end
 
     def test_not_replacing_mentions_in_links
       body = "<p><a>@github/team</a> okay</p>"
-      assert_equal(body, @filter.call(body).to_html)
+      assert_equal(body, @filter.call(body))
     end
 
     def test_entity_encoding_and_whatnot
       body = "<p>@github&#47team what's up</p>"
       link = '<a href="/github/team" class="team-mention">@github/team</a>'
-      assert_equal("<p>#{link} what's up</p>", @filter.call(body, context: { base_url: "/" }).to_html)
+      assert_equal("<p>#{link} what's up</p>", @filter.call(body, context: { base_url: "/" }))
     end
 
     def test_html_injection
       body = "<p>@github/team &lt;script>alert(0)&lt;/script></p>"
       link = '<a href="/github/team" class="team-mention">@github/team</a>'
-      assert_equal("<p>#{link} &lt;script&gt;alert(0)&lt;/script&gt;</p>",
-        @filter.call(body, context: { base_url: "/" }).to_html)
+      assert_equal("<p>#{link} &lt;script>alert(0)&lt;/script></p>",
+        @filter.call(body, context: { base_url: "/" }))
     end
 
     def test_links_to_nothing_with_user_mention
       body = "<p>Hi, @kneath</p>"
       assert_equal("<p>Hi, @kneath</p>",
-        @filter.call(body, context: { base_url: "/" }).to_html)
+        @filter.call(body, context: { base_url: "/" }))
     end
 
     def test_base_url_slash
       body = "<p>Hi, @github/team!</p>"
       link = '<a href="/github/team" class="team-mention">@github/team</a>'
       assert_equal("<p>Hi, #{link}!</p>",
-        @filter.call(body, context: { base_url: "/" }).to_html)
+        @filter.call(body, context: { base_url: "/" }))
     end
 
     def test_base_url_under_custom_route
       body = "<p>Hi, @org/team!</p>"
       link = '<a href="www.github.com/org/team" class="team-mention">@org/team</a>'
       assert_equal("<p>Hi, #{link}!</p>",
-        @filter.call(body, context: { base_url: "www.github.com" }).to_html)
+        @filter.call(body, context: { base_url: "www.github.com" }))
     end
 
     def test_base_url_slash_with_tilde
       body = "<p>Hi, @github/team!</p>"
       link = '<a href="/~github/team" class="team-mention">@github/team</a>'
       assert_equal("<p>Hi, #{link}!</p>",
-        @filter.call(body, context: { base_url: "/~" }).to_html)
+        @filter.call(body, context: { base_url: "/~" }))
     end
 
     def test_multiple_team_mentions
@@ -107,7 +94,7 @@ class HTMLPipeline
       link_whale = '<a href="/github/whale" class="team-mention">@github/whale</a>'
       link_donut = '<a href="/github/donut" class="team-mention">@github/donut</a>'
       assert_equal("<p>Hi, #{link_whale} and #{link_donut}!</p>",
-        @filter.call(body).to_html)
+        @filter.call(body))
     end
 
     def test_matches_teams_in_body
@@ -187,19 +174,18 @@ class HTMLPipeline
 
     def test_team_pattern_can_be_customized
       body = "<p>@_abc/XYZ: test</p>"
-      doc  = Nokogiri::HTML::DocumentFragment.parse(body)
 
-      res  = @filter.call(doc, context: { team_pattern: %r{@(_[a-z]{3})/([A-Z]{3})} })
+      res  = @filter.call(body, context: { team_pattern: %r{@(_[a-z]{3})/([A-Z]{3})} })
 
       link = '<a href="/_abc/XYZ" class="team-mention">@_abc/XYZ</a>'
       assert_equal("<p>#{link}: test</p>",
-        res.to_html)
+        res)
     end
 
     def test_mention_link_filter
-      filter = HTMLPipeline::NodeFilter::TeamMentionFilter.new(nil)
-      expected = "<a href='/bot/hubot' class='team-mention'>@bot/hubot</a>"
-      assert_equal(expected, filter.mention_link_filter("@bot/hubot"))
+      result = HTMLPipeline::NodeFilter::TeamMentionFilter.call("<p>@bot/hubot</p>")
+      expected = "<p><a href=\"/bot/hubot\" class=\"team-mention\">@bot/hubot</a></p>"
+      assert_equal(expected, result)
     end
   end
 end

@@ -11,15 +11,7 @@ jobs:
       fail-fast: true
       matrix:
         ruby-version:
-          - 3.1.0
-          - 3.0.0
-          - 2.7.6
-        experimental: [false]
-        include:
-          - ruby-version: head
-            experimental: true
-
-    continue-on-error: ${{ matrix.experimental }}
+          - 3.1
 
     steps:
       - uses: actions/checkout@v2
@@ -38,4 +30,3 @@ jobs:
 
       - name: Run tests
         run: bundle exec rake
-        continue-on-error: ${{ matrix.ruby == 'ruby-head' }}

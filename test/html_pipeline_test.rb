@@ -12,8 +12,7 @@ class HTMLPipelineTest < Minitest::Test
 
   def setup
     @default_context = {}
-    @result_class = Hash
-    @pipeline = HTMLPipeline.new(text_filters: [TestFilter], default_context: @default_context, result_class: @result_class)
+    @pipeline = HTMLPipeline.new(text_filters: [TestFilter], default_context: @default_context)
   end
 
   def test_filter_instrumentation
@@ -47,7 +46,7 @@ class HTMLPipelineTest < Minitest::Test
   def test_default_instrumentation_service
     service = "default"
     HTMLPipeline.default_instrumentation_service = service
-    pipeline = HTMLPipeline.new(text_filters: [], default_context: @default_context, result_class: @result_class)
+    pipeline = HTMLPipeline.new(text_filters: [], default_context: @default_context)
     assert_equal(service, pipeline.instrumentation_service)
   ensure
     HTMLPipeline.default_instrumentation_service = nil
@@ -75,13 +74,19 @@ class HTMLPipelineTest < Minitest::Test
 
   def test_incorrect_text_filters
     assert_raises(HTMLPipeline::InvalidFilterError) do
-      HTMLPipeline.new(text_filters: [HTMLPipeline::NodeFilter::SyntaxHighlightFilter], default_context: @default_context, result_class: @result_class)
+      HTMLPipeline.new(text_filters: [HTMLPipeline::NodeFilter::SyntaxHighlightFilter], default_context: @default_context)
+    end
+  end
+
+  def test_incorrect_convert_filter
+    assert_raises(HTMLPipeline::InvalidFilterError) do
+      HTMLPipeline.new(convert_filter: HTMLPipeline::TextFilter::AutolinkFilter, default_context: @default_context)
     end
   end
 
   def test_incorrect_node_filters
     assert_raises(HTMLPipeline::InvalidFilterError) do
-      HTMLPipeline.new(node_filters: [HTMLPipeline::TextFilter::MarkdownFilter], default_context: @default_context, result_class: @result_class)
+      HTMLPipeline.new(node_filters: [HTMLPipeline::ConvertFilter::MarkdownFilter], default_context: @default_context)
     end
   end
 end

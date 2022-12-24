@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class HTMLPipeline
-  # Public: Runs a String of content through an HTML processing pipeline,
-  # providing easy access to a generated DocumentFragment.
+  # Public: Runs a String of content through an HTML processing pipeline.
   class BodyContent
     # Public: Initialize a BodyContent.
     #
@@ -25,16 +24,9 @@ class HTMLPipeline
 
     # Public: Gets the updated body from the Pipeline result.
     #
-    # Returns a String or DocumentFragment.
+    # Returns a String.
     def output
       @output ||= result[:output]
-    end
-
-    # Public: Parses the output into a DocumentFragment.
-    #
-    # Returns a DocumentFragment.
-    def document
-      @document ||= HTMLPipeline.parse(output)
     end
   end
 end

@@ -2,24 +2,12 @@
 
 class HTMLPipeline
   # Base class for user content HTML filters. Each filter takes an
-  # HTML string or Nokogiri::HTML::DocumentFragment, performs
-  # modifications and/or writes information to the result hash. Filters must
-  # return a DocumentFragment (typically the same instance provided to the call
-  # method) or a String with HTML markup.
+  # HTML string, performs modifications on it, and/or writes information to a result hash.
+  # Filters must return a String with HTML markup.
   #
-  # Example filter that replaces all images with trollface:
-  #
-  #   class TrollFilter < HTMLPipeline::Filter
-  #     def call
-  #       doc.search('img').each do |img|
-  #         img['src'] = "http://paradoxdgn.com/junk/avatars/trollface.jpg"
-  #       end
-  #     end
-  #   end
-  #
-  # The context Hash passes options to filters and should not be changed in
-  # place.  A Result Hash allows filters to make extracted information
-  # available to the caller and is mutable.
+  # The `context` Hash passes options to filters and should not be changed in
+  # place. A `result` Hash allows filters to make extracted information
+  # available to the caller, and is mutable.
   #
   # Common context options:
   #   :base_url   - The site's base URL
@@ -47,26 +35,18 @@ class HTMLPipeline
     attr_reader :result
 
     # The main filter entry point. The doc attribute is guaranteed to be a
-    # Nokogiri::HTML::DocumentFragment when invoked. Subclasses should modify
-    # this document in place or extract information and add it to the context
+    # string when invoked. Subclasses should modify
+    # this text in place or extract information and add it to the context
     # hash.
     def call
-      raise NotImplementedError
+      raise NoMethodError
     end
 
     # Perform a filter on doc with the given context.
     #
-    # Returns a HTMLPipeline::DocumentFragment or a String containing HTML
-    # markup.
-    def self.call(input, context: {}, result: {})
-      new(input, context: context, result: result).call
-    end
-
-    # Like call but guarantees that a DocumentFragment is returned, even when
-    # the last filter returns a String.
-    def self.to_document(input, context: {})
-      html = call(input, context: context)
-      HTMLPipeline.parse(html)
+    # Returns a String comprised of HTML markup.
+    def self.call(input, context: {})
+      raise NoMethodError
     end
 
     # Make sure the context has everything we need. Noop: Subclasses can override.
@@ -85,10 +65,9 @@ class HTMLPipeline
     # tags - An array of tag name strings to check. These should be downcase.
     #
     # Returns true when the node has a matching ancestor.
-    def has_ancestor?(node, tags)
-      while (node = node.parent)
-        break true if tags.include?(node.name.downcase)
-      end
+    def has_ancestor?(element, ancestor)
+      ancestors = element.ancestors
+      ancestors.include?(ancestor)
     end
 
     # Validator for required context. This will check that anything passed in
