@@ -1,0 +1,70 @@
+name: Tag and Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "lib/html_pipeline/version.rb"
+
+jobs:
+  release:
+    env:
+      GEM_NAME: html-pipeline
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_API_BOT_KEY }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Ruby 3.1
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1
+          bundler-cache: true
+
+      - name: Configure Git
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "Actions Auto Build"
+
+      - name: Get current version
+        id: version-label
+        run: |
+          VERSION=$(grep VERSION lib/html_pipeline/version.rb | head -n 1 | cut -d'"' -f2)
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
+      - name: Create tag
+        run: |
+          git tag -a v${{ steps.version-label.outputs.version }} -m "Release v${{ steps.version-label.outputs.version }}"
+          git push origin --tags
+
+      - name: Generate CHANGELOG.md
+        id: changelog
+        run: script/generate_changelog
+
+      - name: Commit & Push Changelog
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "Actions Auto Build"
+          git add -f CHANGELOG.md
+          git commit -m "docs: update changelog" || true
+          git push
+
+      - name: Publish release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create v${{ steps.version-label.outputs.version }} --generate-notes
+
+      - name: Publish to RubyGems
+        run: |
+          mkdir -p $HOME/.gem
+          touch $HOME/.gem/credentials
+          chmod 0600 $HOME/.gem/credentials
+          printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
+          bundle exec rake package
+          for gem in pkg/html_pipeline-${{ steps.version-label.outputs.version }}*.gem ; do
+            gem push "$gem" --host https://rubygems.org
+          done

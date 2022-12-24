@@ -71,12 +71,14 @@ class HTMLPipeline
       ].freeze,
     }.freeze
 
-    def self.call(html, config)
-      raise ArgumentError, "html must be a String, not #{html.class}" unless html.is_a?(String)
-      raise ArgumentError, "config must be a Hash, not #{config.class}" unless config.is_a?(Hash)
+    class << self
+      def call(html, config)
+        raise ArgumentError, "html must be a String, not #{html.class}" unless html.is_a?(String)
+        raise ArgumentError, "config must be a Hash, not #{config.class}" unless config.is_a?(Hash)
 
-      sanitization_config = Selma::Sanitizer.new(config)
-      Selma::Rewriter.new(sanitizer: sanitization_config).rewrite(html)
-    end
+        sanitization_config = Selma::Sanitizer.new(config)
+        Selma::Rewriter.new(sanitizer: sanitization_config).rewrite(html)
+      end
+  end
   end
 end

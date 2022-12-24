@@ -27,7 +27,7 @@ class HTMLPipeline
     #  # => "<h1>\n<a id=\"ice-cube\" class=\"anchor\" href=\"#ice-cube\">..."
     class TableOfContentsFilter < NodeFilter
       SELECTOR = Selma::Selector.new(match_element: "h1 a[href], h2 a[href], h3 a[href], h4 a[href], h5 a[href], h6 a[href]",
-                                     match_text_within: "h1, h2, h3, h4, h5, h6")
+        match_text_within: "h1, h2, h3, h4, h5, h6")
 
       def selector
         SELECTOR
@@ -51,6 +51,7 @@ class HTMLPipeline
         header_href = element["href"]
 
         return unless header_href.start_with?("#")
+
         header_id = header_href[1..-1]
 
         element["id"] = header_id
@@ -62,7 +63,7 @@ class HTMLPipeline
       end
 
       def handle_text(text)
-        result[:toc].last.merge!(text: text)
+        result[:toc].last[:text] = text
 
         text
       end

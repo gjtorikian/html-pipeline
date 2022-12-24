@@ -11,6 +11,7 @@ class HTMLPipeline
     def test_rewrites_image_style_tags
       body = '<p>Screenshot: <img src="screenshot.png"></p>'
       res = @filter.call(body)
+
       assert_equal('<p>Screenshot: <a target="_blank" href="screenshot.png"><img src="screenshot.png" style="max-width:100%;"></a></p>',
         res)
     end
@@ -19,6 +20,7 @@ class HTMLPipeline
       body = '<p><img src="screenshot.png" style="width:100px;"></p>'
 
       res = @filter.call(body)
+
       assert_equal('<p><img src="screenshot.png" style="width:100px;"></p>',
         res)
     end
@@ -27,6 +29,7 @@ class HTMLPipeline
       body = '<p>Screenshot: <img src="screenshot.png"></p>'
 
       res = @filter.call(body)
+
       assert_equal('<p>Screenshot: <a target="_blank" href="screenshot.png"><img src="screenshot.png" style="max-width:100%;"></a></p>',
         res)
     end
@@ -35,6 +38,7 @@ class HTMLPipeline
       body = '<p>Screenshot: <a href="blah.png"><img src="screenshot.png"></a></p>'
 
       res = @filter.call(body)
+
       assert_equal('<p>Screenshot: <a href="blah.png"><img src="screenshot.png" style="max-width:100%;"></a></p>',
         res)
     end
@@ -43,6 +47,7 @@ class HTMLPipeline
       body = '<p>Screenshot <img src="screenshot.png">, yes, this is a <b>screenshot</b> indeed.</p>'
 
       res = @filter.call(body)
+
       assert_equal('<p>Screenshot <a target="_blank" href="screenshot.png"><img src="screenshot.png" style="max-width:100%;"></a>, yes, this is a <b>screenshot</b> indeed.</p>', res)
     end
   end

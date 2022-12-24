@@ -38,6 +38,7 @@ class HTMLPipeline
       def handle_text(text)
         return text if @lang.nil?
         return text if (lexer = lexer_for(@lang)).nil?
+
         highlight_with_timeout_handling(text, lexer)
       end
 

@@ -10,8 +10,6 @@ require "minitest/focus"
 require "awesome_print"
 
 module TestHelpers
-
-
 end
 
 Minitest::Test.include(TestHelpers)

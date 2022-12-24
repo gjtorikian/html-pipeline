@@ -12,7 +12,7 @@ class HTMLPipeline
 
     def test_http
       assert_equal(%(<a href="https://github.com">github.com</a>),
-      HttpsFilter.call(%(<a href="http://github.com">github.com</a>), context: @options))
+        HttpsFilter.call(%(<a href="http://github.com">github.com</a>), context: @options))
     end
 
     def test_https

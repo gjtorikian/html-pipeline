@@ -17,27 +17,28 @@ class HTMLPipeline
     #                       identify usernames
     #
     class MentionFilter < NodeFilter
-      # Public: Find user @mentions in text.  See
-      # MentionFilter#mention_link_filter.
-      #
-      #   MentionFilter.mentioned_logins_in(text) do |match, login, is_mentioned|
-      #     "<a href=...>#{login}</a>"
-      #   end
-      #
-      # text - String text to search.
-      #
-      # Yields the String match, the String login name, and a Boolean determining
-      # if the match = "@mention[ed]".  The yield's return replaces the match in
-      # the original text.
-      #
-      # Returns a String replaced with the return of the block.
-      def self.mentioned_logins_in(text, username_pattern = USERNAME_PATTERN)
-        text.gsub(MENTION_PATTERNS[username_pattern]) do |match|
-          login = Regexp.last_match(1)
-          yield match, login
+      class << self
+        # Public: Find user @mentions in text.  See
+        # MentionFilter#mention_link_filter.
+        #
+        #   MentionFilter.mentioned_logins_in(text) do |match, login, is_mentioned|
+        #     "<a href=...>#{login}</a>"
+        #   end
+        #
+        # text - String text to search.
+        #
+        # Yields the String match, the String login name, and a Boolean determining
+        # if the match = "@mention[ed]".  The yield's return replaces the match in
+        # the original text.
+        #
+        # Returns a String replaced with the return of the block.
+        def mentioned_logins_in(text, username_pattern = USERNAME_PATTERN)
+          text.gsub(MENTION_PATTERNS[username_pattern]) do |match|
+            login = Regexp.last_match(1)
+            yield match, login
+          end
         end
-      end
-
+    end
       # Hash that contains all of the mention patterns used by the pipeline
       MENTION_PATTERNS = Hash.new do |hash, key|
         hash[key] = %r{

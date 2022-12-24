@@ -13,6 +13,7 @@ class HTMLPipeline
       )
 
       doc = Nokogiri.parse(result)
+
       refute_empty(doc.css(".highlight"))
       refute_empty(doc.css(".highlight-coffeescript"))
     end
@@ -23,6 +24,7 @@ class HTMLPipeline
       )
 
       doc = Nokogiri.parse(result)
+
       assert_empty(doc.css(".highlight-coffeescript"))
       refute_empty(doc.css(".highlight-c"))
     end

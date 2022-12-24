@@ -17,13 +17,15 @@ class HTMLPipeline
     end
 
     def reset!
-      result = {}
+      result = {} # rubocop:disable Lint/UselessAssignment
       send(:after_initialize) if respond_to?(:after_initialize)
     end
 
-    def self.call(html, context: {}, result: {})
-      node_filter = new(context: context, result: result)
-      Selma::Rewriter.new(sanitizer: nil, handlers: [node_filter]).rewrite(html)
-    end
+    class << self
+      def call(html, context: {}, result: {})
+        node_filter = new(context: context, result: result)
+        Selma::Rewriter.new(sanitizer: nil, handlers: [node_filter]).rewrite(html)
+      end
+  end
   end
 end
