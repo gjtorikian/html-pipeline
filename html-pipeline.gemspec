@@ -17,6 +17,8 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.required_ruby_version = "~> 3.1"
+  # https://github.com/rubygems/rubygems/pull/5852#issuecomment-1231118509
+  gem.required_rubygems_version = ">= 3.3.22"
 
   gem.metadata = {
     "funding_uri" => "https://github.com/sponsors/gjtorikian/",
