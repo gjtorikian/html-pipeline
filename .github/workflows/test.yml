@@ -1,7 +1,10 @@
-name: Ruby CI
+name: Tests
 
 on:
-  push:
+  pull_request:
+
+permissions:
+  contents: read
 
 jobs:
   test:
@@ -11,13 +14,10 @@ jobs:
       fail-fast: true
       matrix:
         ruby-version:
-          - 3.1
+          - 3.1.0
 
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Install libxslt and libxml2
-        run: sudo apt-get install libxslt-dev libxml2-dev
+      - uses: actions/checkout@v3
 
       - name: Set up Ruby ${{ matrix.ruby-version }}
         uses: ruby/setup-ruby@v1
@@ -29,4 +29,4 @@ jobs:
         run: bundle install
 
       - name: Run tests
-        run: bundle exec rake
+        run: bundle exec rake test

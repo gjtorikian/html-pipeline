@@ -2,20 +2,20 @@ name: Linting
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
-  push:
-    branches:
-      - main
+    paths:
+      - "**/*.rb"
+
+permissions:
+  contents: read
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.1
+          ruby-version: 3.0
           bundler-cache: true
       - run: bundle install
       - name: Rubocop
