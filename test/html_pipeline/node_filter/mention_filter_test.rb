@@ -8,92 +8,79 @@ class HTMLPipeline
       @filter = HTMLPipeline::NodeFilter::MentionFilter
       @context = { base_url: "/", info_url: nil, username_pattern: nil }
 
-      @pipeline = HTMLPipeline.new(text_filters: [
-        HTMLPipeline::TextFilter::MarkdownFilter,
-      ], node_filters: [
-        HTMLPipeline::NodeFilter::MentionFilter,
+      @pipeline = HTMLPipeline.new(convert_filter:
+        HTMLPipeline::ConvertFilter::MarkdownFilter.new,
+      node_filters: [
+        HTMLPipeline::NodeFilter::MentionFilter.new,
       ])
     end
 
     def mentioned_usernames(body)
       result = {}
-      @pipeline.call(body, result: result)
+      result = @pipeline.call(body, result: result)
       result[:mentioned_usernames]
     end
-
-    def test_filtering_a_documentfragment
-      body = "<p>@kneath: check it out.</p>"
-      doc  = Nokogiri::HTML::DocumentFragment.parse(body)
-
-      res  = @filter.call(doc, context: @context)
-      assert_same(doc, res)
-
-      link = '<a href="/kneath" class="user-mention">@kneath</a>'
-      assert_equal("<p>#{link}: check it out.</p>",
-        res.to_html)
-    end
-
+    @pipeline =
     def test_filtering_plain_text
       body = "<p>@kneath: check it out.</p>"
       res  = @filter.call(body, context: @context)
 
       link = '<a href="/kneath" class="user-mention">@kneath</a>'
       assert_equal("<p>#{link}: check it out.</p>",
-        res.to_html)
+        res)
     end
 
     def test_not_replacing_mentions_in_pre_tags
       body = "<pre>@kneath: okay</pre>"
-      assert_equal(body, @filter.call(body, context: @context).to_html)
+      assert_equal(body, @filter.call(body, context: @context))
     end
 
     def test_not_replacing_mentions_in_code_tags
       body = "<p><code>@kneath:</code> okay</p>"
-      assert_equal(body, @filter.call(body, context: @context).to_html)
+      assert_equal(body, @filter.call(body, context: @context))
     end
 
     def test_not_replacing_mentions_in_style_tags
       body = "<style>@media (min-width: 768px) { color: red; }</style>"
-      assert_equal(body, @filter.call(body, context: @context).to_html)
+      assert_equal(body, @filter.call(body, context: @context))
     end
 
     def test_not_replacing_mentions_in_links
       body = "<p><a>@kneath</a> okay</p>"
-      assert_equal(body, @filter.call(body, context: @context).to_html)
+      assert_equal(body, @filter.call(body, context: @context))
     end
 
     def test_entity_encoding_and_whatnot
       body = "<p>@&#x6b;neath what's up</p>"
-      link = '<a href="/kneath" class="user-mention">@kneath</a>'
-      assert_equal("<p>#{link} what's up</p>", @filter.call(body, context: @context).to_html)
+      assert_equal(body, @filter.call(body, context: @context))
     end
 
     def test_html_injection
       body = "<p>@kneath &lt;script>alert(0)&lt;/script></p>"
       link = '<a href="/kneath" class="user-mention">@kneath</a>'
-      assert_equal("<p>#{link} &lt;script&gt;alert(0)&lt;/script&gt;</p>",
-        @filter.call(body, context: @context).to_html)
+      assert_equal("<p>#{link} &lt;script>alert(0)&lt;/script></p>",
+        @filter.call(body, context: @context))
     end
 
     def test_base_url_slash
       body = "<p>Hi, @jch!</p>"
       link = '<a href="/jch" class="user-mention">@jch</a>'
       assert_equal("<p>Hi, #{link}!</p>",
-        @filter.call(body, context: { base_url: "/" }).to_html)
+        @filter.call(body, context: { base_url: "/" }))
     end
 
     def test_base_url_under_custom_route
       body = "<p>Hi, @jch!</p>"
       link = '<a href="/userprofile/jch" class="user-mention">@jch</a>'
       assert_equal("<p>Hi, #{link}!</p>",
-        @filter.call(body, context: @context.merge({ base_url: "/userprofile" })).to_html)
+        @filter.call(body, context: @context.merge({ base_url: "/userprofile" })))
     end
 
     def test_base_url_slash_with_tilde
       body = "<p>Hi, @jch!</p>"
       link = '<a href="/~jch" class="user-mention">@jch</a>'
       assert_equal("<p>Hi, #{link}!</p>",
-        @filter.call(body, context: @context.merge({ base_url: "/~" })).to_html)
+        @filter.call(body, context: @context.merge({ base_url: "/~" })))
     end
 
     def test_matches_usernames_in_body
@@ -173,32 +160,31 @@ class HTMLPipeline
 
     def test_username_pattern_can_be_customized
       body = "<p>@_abc: test.</p>"
-      doc  = Nokogiri::HTML::DocumentFragment.parse(body)
 
-      res  = @filter.call(doc, context: { base_url: "/", username_pattern: /(_[a-z]{3})/ })
+      res  = @filter.call(body, context: { base_url: "/", username_pattern: /(_[a-z]{3})/ })
 
       link = '<a href="/_abc" class="user-mention">@_abc</a>'
       assert_equal("<p>#{link}: test.</p>",
-        res.to_html)
+        res)
     end
 
     def test_filter_does_not_create_a_new_object_for_default_username_pattern
       body = "<div>@test</div>"
-      doc = Nokogiri::HTML::DocumentFragment.parse(body)
 
-      @filter.call(doc.clone)
+      @filter.call(body.dup)
       pattern_count = HTMLPipeline::NodeFilter::MentionFilter::MENTION_PATTERNS.length
-      @filter.call(doc.clone)
 
+      @filter.call(body.dup)
       assert_equal(pattern_count, HTMLPipeline::NodeFilter::MentionFilter::MENTION_PATTERNS.length)
-      @filter.call(doc.clone, context: { username_pattern: /test/ })
+
+      @filter.call(body.clone, context: { username_pattern: /test/ })
       assert_equal(pattern_count + 1, HTMLPipeline::NodeFilter::MentionFilter::MENTION_PATTERNS.length)
     end
 
     def test_mention_link_filter
-      filter = HTMLPipeline::NodeFilter::MentionFilter.new(nil)
-      expected = "<a href='/hubot' class='user-mention'>@hubot</a>"
-      assert_equal(expected, filter.mention_link_filter("@hubot"))
+      result = HTMLPipeline::NodeFilter::MentionFilter.call("<p>@hubot</p>")
+      expected = '<p><a href="/hubot" class="user-mention">@hubot</a></p>'
+      assert_equal(expected, result)
     end
   end
 end

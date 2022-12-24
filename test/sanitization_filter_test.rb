@@ -35,7 +35,7 @@ class HTMLPipeline
 
     def test_sanitizes_li_elements_not_contained_in_ul_or_ol
       stuff = "a\n<li>b</li>\nc"
-      html  = SanitizationFilter.call(stuff, DEFAULT_CONFIG).to_s
+      html  = SanitizationFilter.call(stuff, { elements: {}}).to_s
       assert_equal("a\nb\nc", html)
     end
 
@@ -70,16 +70,14 @@ class HTMLPipeline
     def test_standard_schemes_are_removed_if_not_specified_in_anchor_schemes
       config = DEFAULT_CONFIG.merge(protocols: { "a" => { "href" => [] } })
       stuff  = '<a href="http://www.example.com/">No href for you</a>'
-      filter = SanitizationFilter.new(stuff, config)
-      html   = filter.call.to_s
+      html = SanitizationFilter.call(stuff, config)
       assert_equal("<a>No href for you</a>", html)
     end
 
     def test_custom_anchor_schemes_are_not_removed
       config = DEFAULT_CONFIG.merge(protocols: { "a" => { "href" => ["something-weird"] } })
       stuff  = '<a href="something-weird://heyyy">Wat</a> is this'
-      filter = SanitizationFilter.new(stuff, config)
-      html   = filter.call.to_s
+      html = SanitizationFilter.call(stuff, config)
       assert_equal(stuff, html)
     end
 
@@ -87,11 +85,10 @@ class HTMLPipeline
       stuff = '<a href="something-weird://heyyy" ping="more-weird://hiii">Wat</a> is this'
       allowlist = {
         elements: ["a"],
-        attributes: { "a" => ["href", "ping"] },
-        protocols: { "a" => { "ping" => ["http"] } },
+        attributes: { "a" => ["href"] },
+        protocols: { "a" => { "href" => ["something-weird"] } },
       }
-      filter = SanitizationFilter.new(stuff, allowlist)
-      html   = filter.call.to_s
+      html = SanitizationFilter.call(stuff, allowlist)
       assert_equal('<a href="something-weird://heyyy">Wat</a> is this', html)
     end
 
@@ -102,8 +99,7 @@ class HTMLPipeline
         attributes: { "a" => ["href"] },
         protocols: { "a" => { "href" => ["something-weird"] } },
       }
-      filter = SanitizationFilter.new(stuff, allowlist)
-      html   = filter.call.to_s
+      html = SanitizationFilter.call(stuff, allowlist)
       assert_equal(stuff, html)
     end
 
@@ -122,12 +118,12 @@ class HTMLPipeline
 
     def test_table_rows_and_cells_removed_if_not_in_table
       orig = %(<tr><td>Foo</td></tr><td>Bar</td>)
-      assert_equal("FooBar", SanitizationFilter.call(orig, DEFAULT_CONFIG).to_s)
+      assert_equal("FooBar", SanitizationFilter.call(orig, { elements: {}}))
     end
 
     def test_table_sections_removed_if_not_in_table
       orig = %(<thead><tr><td>Foo</td></tr></thead>)
-      assert_equal("Foo", SanitizationFilter.call(orig, DEFAULT_CONFIG).to_s)
+      assert_equal("Foo", SanitizationFilter.call(orig, { elements: {}}).to_s)
     end
 
     def test_table_sections_are_not_removed
@@ -169,12 +165,11 @@ class HTMLPipeline
       }
 
       pipeline = HTMLPipeline.new(\
-        text_filters: [
-          HTMLPipeline::TextFilter::MarkdownFilter,
-        ],
+        convert_filter:
+          HTMLPipeline::ConvertFilter::MarkdownFilter.new,
         sanitization_config: config,
         node_filters: [
-          HTMLPipeline::NodeFilter::SyntaxHighlightFilter,
+          HTMLPipeline::NodeFilter::SyntaxHighlightFilter.new,
         ]
       )
 
@@ -195,12 +190,10 @@ class HTMLPipeline
 
     def test_sanitization_pipeline_can_be_removed
       pipeline = HTMLPipeline.new(\
-        text_filters: [
-          HTMLPipeline::TextFilter::MarkdownFilter,
-        ],
+        convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
         sanitization_config: nil,
         node_filters: [
-          HTMLPipeline::NodeFilter::SyntaxHighlightFilter,
+          HTMLPipeline::NodeFilter::SyntaxHighlightFilter.new,
         ]
       )
 

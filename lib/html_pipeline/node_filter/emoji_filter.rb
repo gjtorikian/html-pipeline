@@ -15,18 +15,25 @@ class HTMLPipeline
     class EmojiFilter < NodeFilter
       DEFAULT_IGNORED_ANCESTOR_TAGS = ["pre", "code", "tt"].freeze
 
-      def call
-        doc.search(".//text()").each do |node|
-          content = node.text
-          next unless content.include?(":")
-          next if has_ancestor?(node, ignored_ancestor_tags)
+      # Build a regexp that matches all valid :emoji: names.
+      def after_initialize
+        @emoji_pattern ||= /:(#{emoji_names.map { |name| Regexp.escape(name) }.join('|')}):/
+      end
 
-          html = emoji_image_filter(content)
-          next if html == content
+      def selector
+        Selma::Selector.new(match_text_within: "*", ignore_text_within: ignored_ancestor_tags)
+      end
 
-          node.replace(html)
+      def handle_text(text)
+        return text unless text.include?(":")
+
+        emoji_image_filter(text)
+      end
+
+      def emoji_image_filter(text)
+        text.gsub(emoji_pattern) do
+          emoji_image_tag(Regexp.last_match(1))
         end
-        doc
       end
 
       # Implementation of validate hook.
@@ -41,7 +48,7 @@ class HTMLPipeline
       #
       # Returns a String with :emoji: replaced with images.
       def emoji_image_filter(text)
-        text.gsub(emoji_pattern) do
+        text.gsub(@emoji_pattern) do
           emoji_image_tag(Regexp.last_match(1))
         end
       end
@@ -79,11 +86,6 @@ class HTMLPipeline
           end.compact.join(" ")
 
         "<img #{html_attrs}>"
-      end
-
-      # Build a regexp that matches all valid :emoji: names.
-      def emoji_pattern
-        @emoji_pattern ||= /:(#{emoji_names.map { |name| Regexp.escape(name) }.join('|')}):/
       end
 
       def emoji_names

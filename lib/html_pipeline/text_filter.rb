@@ -5,21 +5,15 @@ class HTMLPipeline
     attr_reader :text
 
     def initialize(text, context: {}, result: {})
-      raise TypeError, "text cannot be HTML" if text.is_a?(DocumentFragment)
+      raise TypeError, "text must be a String" unless text.is_a?(String)
 
       # Ensure that this is always a string
       @text = text.respond_to?(:to_str) ? text.to_str : text.to_s
       super(context: context, result: result)
     end
 
-    # Like call but guarantees that a string of HTML markup is returned.
-    def self.process(input, context: {})
-      output = call(input, context: context)
-      if output.respond_to?(:to_html)
-        output.to_html
-      else
-        output.to_s
-      end
+    def self.call(input, context: {}, result: {})
+      new(input, context: context, result: result).call
     end
   end
 end

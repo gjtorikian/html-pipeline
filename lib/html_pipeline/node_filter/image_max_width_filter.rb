@@ -9,28 +9,30 @@ class HTMLPipeline
     # The max-width inline styles are especially useful in HTML email which
     # don't use a global stylesheets.
     class ImageMaxWidthFilter < NodeFilter
-      def call
-        doc.search("img").each do |element|
-          # Skip if there's already a style attribute. Not sure how this
-          # would happen but we can reconsider it in the future.
-          next if element["style"]
+      SELECTOR = Selma::Selector.new(match_element: "img")
 
-          # Bail out if src doesn't look like a valid http url. trying to avoid weird
-          # js injection via javascript: urls.
-          next if /\Ajavascript/i.match?(element["src"].to_s.strip)
+      def selector
+        SELECTOR
+      end
 
-          element["style"] = "max-width:100%;"
+      def handle_element(element)
+        # Skip if there's already a style attribute. Not sure how this
+        # would happen but we can reconsider it in the future.
+        return if element["style"]
 
-          link_image(element) unless has_ancestor?(element, ["a"])
-        end
+        # Bail out if src doesn't look like a valid http url. trying to avoid weird
+        # js injection via javascript: urls.
+        return if /\Ajavascript/i.match?(element["src"].to_s.strip)
 
-        doc
+        element["style"] = "max-width:100%;"
+
+        link_image(element) unless has_ancestor?(element, "a")
       end
 
       def link_image(element)
-        link = doc.document.create_element("a", href: element["src"], target: "_blank")
-        link.add_child(element.dup)
-        element.replace(link)
+        link_start = %Q(<a target="_blank" href="#{element["src"]}">)
+        link_end = "</a>"
+        element.wrap(link_start, link_end, :as_html)
       end
     end
   end

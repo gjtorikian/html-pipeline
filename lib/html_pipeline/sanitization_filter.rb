@@ -7,9 +7,9 @@ class HTMLPipeline
   # what HTML is allowed in user provided content and fixes up issues with
   # unbalanced tags and whatnot.
   #
-  # See the Sanitize docs for more information on the underlying library:
+  # See the Selma docs for more information on the underlying library:
   #
-  # https://github.com/rgrove/sanitize/#readme
+  # https://github.com/gjtorikian/selma/#readme
   #
   # This filter does not write additional information to the context.
   class SanitizationFilter
@@ -71,18 +71,12 @@ class HTMLPipeline
       ].freeze,
     }.freeze
 
-    def initialize(doc, config)
-      @doc = HTMLPipeline.parse(doc)
-      @config = config
-    end
+    def self.call(html, config)
+      raise ArgumentError, "html must be a String, not #{html.class}" unless html.is_a?(String)
+      raise ArgumentError, "config must be a Hash, not #{config.class}" unless config.is_a?(Hash)
 
-    # Sanitize markup using the Sanitize library.
-    def call
-      Sanitize.clean_node!(@doc, @config)
-    end
-
-    def self.call(doc, config)
-      new(doc, config).call.to_s
+      sanitization_config = Selma::Sanitizer.new(config)
+      Selma::Rewriter.new(sanitizer: sanitization_config).rewrite(html)
     end
   end
 end

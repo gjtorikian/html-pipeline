@@ -8,21 +8,14 @@ class HTMLPipeline
     # Context options:
     #   :http_url - The HTTP url to force HTTPS. Falls back to :base_url
     class HttpsFilter < NodeFilter
-      def call
-        doc.css(%(a[href^="#{http_url}"])).each do |element|
-          element["href"] = element["href"].sub(/^http:/, "https:")
-        end
-        doc
+      SELECTOR = Selma::Selector.new(match_element: %(a[href^="http:"]))
+
+      def selector
+        SELECTOR
       end
 
-      # HTTP url to replace. Falls back to :base_url
-      def http_url
-        context[:http_url] || context[:base_url]
-      end
-
-      # Raise error if :http_url undefined
-      def validate
-        needs(:http_url) unless http_url
+      def handle_element(element)
+        element["href"] = element["href"].sub(/^http:/, "https:")
       end
     end
   end

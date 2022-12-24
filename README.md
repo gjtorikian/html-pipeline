@@ -45,8 +45,8 @@ $ gem install html-pipeline
 This library provides a handful of chainable HTML filters to transform user
 content into markup. There are two kinds of filters:
 
-* Text filters, which take a regular string
-* Node filters, which operates on a `Nokogiri::HTML::DocumentFragment`
+- Text filters, which operate a UTF-8 string
+- Node filters, which operates on a UTF-8 HTML document
 
 You can choose to call filters individually, or as part of a sequence called a pipeline.
 
@@ -164,23 +164,22 @@ EmojiPipeline = Pipeline.new [
 
 ### TextFilters
 
-* `AutolinkFilter` - auto_linking urls in HTML
-* `ImageFilter` - converts image `url` into `<img>` tag
-* `MarkdownFilter` - convert markdown to html
-* `PlainTextInputFilter` - html escape text and wrap the result in a `<div>`
-
+- `AutolinkFilter` - auto_linking urls in HTML
+- `ImageFilter` - converts image `url` into `<img>` tag
+- `MarkdownFilter` - convert markdown to html
+- `PlainTextInputFilter` - html escape text and wrap the result in a `<div>`
 
 ### NodeFilters
 
-* `AbsoluteSourceFilter` - replace relative image urls with fully qualified versions
-* `EmojiFilter` - converts `:<emoji>:` to [emoji](http://www.emoji-cheat-sheet.com/)!
-* `HttpsFilter` - Replacing http urls with https versions
-* `ImageMaxWidthFilter` - link to full size image for large images
-* `MentionFilter` - replace `@user` mentions with links
-* `SanitizationFilter` - allow sanitize user markup
-* `SyntaxHighlightFilter` - code syntax highlighter
-* `TableOfContentsFilter` - anchor headings with name attributes and generate Table of Contents html unordered list linking headings
-* `TeamMentionFilter` - replace `@org/team` mentions with links
+- `AbsoluteSourceFilter` - replace relative image urls with fully qualified versions
+- `EmojiFilter` - converts `:<emoji>:` to [emoji](http://www.emoji-cheat-sheet.com/)!
+- `HttpsFilter` - Replacing http urls with https versions
+- `ImageMaxWidthFilter` - link to full size image for large images
+- `MentionFilter` - replace `@user` mentions with links
+- `SanitizationFilter` - allow sanitize user markup
+- `SyntaxHighlightFilter` - code syntax highlighter
+- `TableOfContentsFilter` - anchor headings with name attributes and generate Table of Contents html unordered list linking headings
+- `TeamMentionFilter` - replace `@org/team` mentions with links
 
 ## Sanitization
 
@@ -249,13 +248,13 @@ add the following to your Gemfile:
 gem 'rouge'
 ```
 
-* `AutolinkFilter` - `rinku`
-* `EmojiFilter` - `gemoji`
-* `MarkdownFilter` - `commonmarker`
-* `PlainTextInputFilter` - `escape_utils`
-* `SanitizationFilter` - `sanitize`
-* `SyntaxHighlightFilter` - `rouge`
-* `TableOfContentsFilter` - `escape_utils`
+- `AutolinkFilter` - `rinku`
+- `EmojiFilter` - `gemoji`
+- `MarkdownFilter` - `commonmarker`
+- `PlainTextInputFilter` - `escape_utils`
+- `SanitizationFilter` - `sanitize`
+- `SyntaxHighlightFilter` - `rouge`
+- `TableOfContentsFilter` - `escape_utils`
 
 _Note:_ See the [Gemfile](/Gemfile) `:test` group for version requirements.
 
@@ -266,7 +265,7 @@ Full reference documentation can be [found here](http://rubydoc.info/gems/html-p
 ## Extending
 
 To write a custom filter, you need a class with a `call` method that inherits
-from either `HTMLPipeline::TextFilter` or  `HTMLPipeline::NodeFilter`.
+from either `HTMLPipeline::TextFilter` or `HTMLPipeline::NodeFilter`.
 
 For example this filter adds a base url to images that are root relative:
 
@@ -304,25 +303,24 @@ built as an external gem.
 
 Here are some extensions people have built:
 
-* [html-pipeline-asciidoc_filter](https://github.com/asciidoctor/html-pipeline-asciidoc_filter)
-* [jekyll-html-pipeline](https://github.com/gjtorikian/jekyll-html-pipeline)
-* [nanoc-html-pipeline](https://github.com/burnto/nanoc-html-pipeline)
-* [html-pipeline-bitly](https://github.com/dewski/html-pipeline-bitly)
-* [html-pipeline-cite](https://github.com/lifted-studios/html-pipeline-cite)
-* [tilt-html-pipeline](https://github.com/bradgessler/tilt-html-pipeline)
-* [html-pipeline-wiki-link'](https://github.com/lifted-studios/html-pipeline-wiki-link) - WikiMedia-style wiki links
-* [task_list](https://github.com/github/task_list) - GitHub flavor Markdown Task List
-* [html-pipeline-nico_link](https://github.com/rutan/html-pipeline-nico_link) - An HTMLPipeline filter for [niconico](http://www.nicovideo.jp) description links
-* [html-pipeline-gitlab](https://gitlab.com/gitlab-org/html-pipeline-gitlab) - This gem implements various filters for html-pipeline used by GitLab
-* [html-pipeline-youtube](https://github.com/st0012/html-pipeline-youtube) - An HTMLPipeline filter for YouTube links
-* [html-pipeline-flickr](https://github.com/st0012/html-pipeline-flickr) - An HTMLPipeline filter for Flickr links
-* [html-pipeline-vimeo](https://github.com/dlackty/html-pipeline-vimeo) - An HTMLPipeline filter for Vimeo links
-* [html-pipeline-hashtag](https://github.com/mr-dxdy/html-pipeline-hashtag) - An HTMLPipeline filter for hashtags
-* [html-pipeline-linkify_github](https://github.com/jollygoodcode/html-pipeline-linkify_github) - An HTMLPipeline filter to autolink GitHub urls
-* [html-pipeline-redcarpet_filter](https://github.com/bmikol/html-pipeline-redcarpet_filter) - Render Markdown source text into Markdown HTML using Redcarpet
-* [html-pipeline-typogruby_filter](https://github.com/bmikol/html-pipeline-typogruby_filter) - Add Typogruby text filters to your HTMLPipeline
-* [korgi](https://github.com/jodeci/korgi) - HTMLPipeline filters for links to Rails resources
-
+- [html-pipeline-asciidoc_filter](https://github.com/asciidoctor/html-pipeline-asciidoc_filter)
+- [jekyll-html-pipeline](https://github.com/gjtorikian/jekyll-html-pipeline)
+- [nanoc-html-pipeline](https://github.com/burnto/nanoc-html-pipeline)
+- [html-pipeline-bitly](https://github.com/dewski/html-pipeline-bitly)
+- [html-pipeline-cite](https://github.com/lifted-studios/html-pipeline-cite)
+- [tilt-html-pipeline](https://github.com/bradgessler/tilt-html-pipeline)
+- [html-pipeline-wiki-link'](https://github.com/lifted-studios/html-pipeline-wiki-link) - WikiMedia-style wiki links
+- [task_list](https://github.com/github/task_list) - GitHub flavor Markdown Task List
+- [html-pipeline-nico_link](https://github.com/rutan/html-pipeline-nico_link) - An HTMLPipeline filter for [niconico](http://www.nicovideo.jp) description links
+- [html-pipeline-gitlab](https://gitlab.com/gitlab-org/html-pipeline-gitlab) - This gem implements various filters for html-pipeline used by GitLab
+- [html-pipeline-youtube](https://github.com/st0012/html-pipeline-youtube) - An HTMLPipeline filter for YouTube links
+- [html-pipeline-flickr](https://github.com/st0012/html-pipeline-flickr) - An HTMLPipeline filter for Flickr links
+- [html-pipeline-vimeo](https://github.com/dlackty/html-pipeline-vimeo) - An HTMLPipeline filter for Vimeo links
+- [html-pipeline-hashtag](https://github.com/mr-dxdy/html-pipeline-hashtag) - An HTMLPipeline filter for hashtags
+- [html-pipeline-linkify_github](https://github.com/jollygoodcode/html-pipeline-linkify_github) - An HTMLPipeline filter to autolink GitHub urls
+- [html-pipeline-redcarpet_filter](https://github.com/bmikol/html-pipeline-redcarpet_filter) - Render Markdown source text into Markdown HTML using Redcarpet
+- [html-pipeline-typogruby_filter](https://github.com/bmikol/html-pipeline-typogruby_filter) - Add Typogruby text filters to your HTMLPipeline
+- [korgi](https://github.com/jodeci/korgi) - HTMLPipeline filters for links to Rails resources
 
 ## Instrumenting
 
@@ -332,7 +330,7 @@ must be setup with an
 compatible service object and a name. New pipeline objects will default to the
 `HTMLPipeline.default_instrumentation_service` object.
 
-``` ruby
+```ruby
 # the AS::Notifications-compatible service object
 service = ActiveSupport::Notifications
 
@@ -352,26 +350,26 @@ and `call_node_filters` is published when all of the text and node filters are f
 The `payload` should include the `filter` name. Each filter will trigger its own
 instrumentation call.
 
-``` ruby
+```ruby
 service.subscribe "call_filter.html_pipeline" do |event, start, ending, transaction_id, payload|
   payload[:pipeline] #=> "MarkdownPipeline", set with `setup_instrumentation`
   payload[:filter] #=> "MarkdownFilter"
   payload[:context] #=> context Hash
   payload[:result] #=> instance of result class
-  payload[:result][:output] #=> output HTML String or Nokogiri::DocumentFragment
+  payload[:result][:output] #=> output HTML String
 end
 ```
 
 The full pipeline is also instrumented:
 
-``` ruby
+```ruby
 service.subscribe "call_text_filters.html_pipeline" do |event, start, ending, transaction_id, payload|
   payload[:pipeline] #=> "MarkdownPipeline", set with `setup_instrumentation`
   payload[:filters] #=> ["MarkdownFilter"]
-  payload[:doc] #=> HTML String or Nokogiri::DocumentFragment
+  payload[:doc] #=> HTML String
   payload[:context] #=> context Hash
   payload[:result] #=> instance of result class
-  payload[:result][:output] #=> output HTML String or Nokogiri::DocumentFragment
+  payload[:result][:output] #=> output HTML String
 end
 ```
 
@@ -427,9 +425,9 @@ This project is a member of the [OSS Manifesto](http://ossmanifesto.org/).
 
 This section is for gem maintainers to cut a new version of the gem.
 
-* create a new branch named `release-x.y.z` where `x.y.z` follows [semver](http://semver.org)
-* update lib/html/pipeline/version.rb to next version number X.X.X
-* update CHANGELOG.md. Prepare a draft with `script/changelog`
-* push branch and create a new pull request
-* after tests are green, merge to master
-* on the master branch, run `script/release`
+- create a new branch named `release-x.y.z` where `x.y.z` follows [semver](http://semver.org)
+- update lib/html/pipeline/version.rb to next version number X.X.X
+- update CHANGELOG.md. Prepare a draft with `script/changelog`
+- push branch and create a new pull request
+- after tests are green, merge to master
+- on the master branch, run `script/release`

@@ -14,36 +14,45 @@ class HTMLPipeline
     #
     # This filter does not write any additional information to the context hash.
     class SyntaxHighlightFilter < NodeFilter
-      def initialize(doc, context: {}, result: {})
-        super(doc, context: context, result: result)
-        @formatter = Rouge::Formatters::HTML.new
+      def initialize(context: {}, result: {})
+        super(context: context, result: result)
+        # TODO: test the optionality of this
+        @formatter = context[:formatter] || Rouge::Formatters::HTML.new
       end
 
-      def call
-        doc.search("pre").each do |node|
-          default = context[:highlight]&.to_s
-          next unless (lang = node["lang"] || default)
-          next unless (lexer = lexer_for(lang))
+      SELECTOR = Selma::Selector.new(match_element: "pre", match_text_within: "pre")
 
-          text = node.inner_text
-          html = highlight_with_timeout_handling(text, lexer)
-          next if html.nil?
+      def selector
+        SELECTOR
+      end
 
-          node.inner_html = html
-          scope = context.fetch(:scope, "highlight")
-          node["class"] = "#{scope} #{scope}-#{lang}"
-        end
-        doc
+      def handle_element(element)
+        default = context[:highlight]&.to_s
+        @lang = element["lang"] || default
+
+        scope = context.fetch(:scope, "highlight")
+
+        element["class"] = "#{scope} #{scope}-#{@lang}" if include_lang?
+      end
+
+      def handle_text(text)
+        return text if @lang.nil?
+        return text if (lexer = lexer_for(@lang)).nil?
+        highlight_with_timeout_handling(text, lexer)
       end
 
       def highlight_with_timeout_handling(text, lexer)
         Rouge.highlight(text, lexer, @formatter)
       rescue Timeout::Error => _e
-        nil
+        text
       end
 
       def lexer_for(lang)
         Rouge::Lexer.find(lang)
+      end
+
+      def include_lang?
+        !@lang.nil? && !@lang.empty?
       end
     end
   end

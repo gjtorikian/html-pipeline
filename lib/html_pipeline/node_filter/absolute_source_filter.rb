@@ -5,6 +5,12 @@ require "uri"
 class HTMLPipeline
   class NodeFilter
     class AbsoluteSourceFilter < NodeFilter
+      SELECTOR = Selma::Selector.new(match_element: "img")
+
+      def selector
+        SELECTOR
+      end
+
       # HTML Filter for replacing relative and root relative image URLs with
       # fully qualified URLs
       #
@@ -18,21 +24,20 @@ class HTMLPipeline
       #
       # This filter does not write additional information to the context.
       # This filter would need to be run before CamoFilter.
-      def call
-        doc.search("img").each do |element|
-          next if element["src"].nil? || element["src"].empty?
+      def handle_element(element)
+        src = element["src"]
+        return if src.nil? || src.empty?
 
-          src = element["src"].strip
-          next if src.start_with?("http")
+        src = src.strip
+        return if src.start_with?("http")
 
-          base = if src.start_with?("/")
-            image_base_url
-          else
-            image_subpage_url
-          end
-          element["src"] = URI.join(base, src).to_s
+        base = if src.start_with?("/")
+          image_base_url
+        else
+          image_subpage_url
         end
-        doc
+
+        element["src"] = URI.join(base, src).to_s
       end
 
       # Private: the base url you want to use

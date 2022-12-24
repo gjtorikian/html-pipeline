@@ -58,22 +58,26 @@ class HTMLPipeline
       USERNAME_PATTERN = /[a-z0-9][a-z0-9-]*/
 
       # Don't look for mentions in text nodes that are children of these elements
-      IGNORE_PARENTS = ["pre", "code", "a", "style", "script"].to_set
+      IGNORE_PARENTS = ["pre", "code", "a", "style", "script"]
 
-      def call
+      SELECTOR = Selma::Selector.new(match_text_within: "*", ignore_text_within: IGNORE_PARENTS)
+
+      # TODO: document this
+      def after_initialize
         result[:mentioned_usernames] ||= []
+      end
 
-        doc.search(".//text()").each do |node|
-          content = node.to_html
-          next unless content.include?("@")
-          next if has_ancestor?(node, IGNORE_PARENTS)
+      def selector
+        SELECTOR
+      end
 
-          html = mention_link_filter(content, base_url: base_url, username_pattern: username_pattern)
-          next if html == content
+      def handle_text(text)
+        return text unless text.include?("@")
 
-          node.replace(html)
-        end
-        doc
+        html = mention_link_filter(text, base_url: base_url, username_pattern: username_pattern)
+        return text if html == text
+
+        html
       end
 
       # The URL to provide when someone @mentions a "mention" name, such
@@ -112,7 +116,7 @@ class HTMLPipeline
         url = base_url.dup
         url << "/" unless %r{[/~]\z}.match?(url)
 
-        "<a href='#{url << login}' class='user-mention'>" \
+        "<a href=\"#{url << login}\" class=\"user-mention\">" \
           "@#{login}" \
           "</a>"
       end

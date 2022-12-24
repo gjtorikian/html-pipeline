@@ -4,11 +4,10 @@ HTMLPipeline.require_dependency("escape_utils", "TableOfContentsFilter")
 
 class HTMLPipeline
   class NodeFilter
-    # HTML filter that adds an 'id' attribute to all headers
-    # in a document, so they can be accessed from a table of contents.
-    #
-    # Generates the Table of Contents, with links to each header.
-    #
+    # Generates a Table of Contents: an array of hashes containing:
+    # * `href`: the relative link to the header
+    # * `text`: the text of the header
+
     # Examples
     #
     #  TocPipeline =
@@ -23,46 +22,49 @@ class HTMLPipeline
     #  TocPipeline.call(orig, {}, result)
     #  # => {:toc=> ...}
     #  result[:toc]
-    #  # => "<ul class=\"section-nav\">\n<li><a href=\"#ice-cube\">...</li><ul>"
+    #  # => "{:href=>"#ice-cube", :text=>"Ice cube"}"
     #  result[:output].to_s
     #  # => "<h1>\n<a id=\"ice-cube\" class=\"anchor\" href=\"#ice-cube\">..."
     class TableOfContentsFilter < NodeFilter
-      PUNCTUATION_REGEXP = /[^\p{Word}\- ]/u
+      SELECTOR = Selma::Selector.new(match_element: "h1 a[href], h2 a[href], h3 a[href], h4 a[href], h5 a[href], h6 a[href]",
+                                     match_text_within: "h1, h2, h3, h4, h5, h6")
+
+      def selector
+        SELECTOR
+      end
 
       # The icon that will be placed next to an anchored rendered markdown header
-      def anchor_icon
-        context[:anchor_icon] || '<span aria-hidden="true" class="octicon octicon-link"></span>'
+      def anchor_html
+        @context[:anchor_html] || %(<span aria-hidden="true" class="anchor"></span>)
       end
 
-      def call
-        result[:toc] = +""
-
-        headers = Hash.new(0)
-        doc.css("h1, h2, h3, h4, h5, h6").each do |node|
-          text = node.text
-          id = ascii_downcase(text)
-          id.gsub!(PUNCTUATION_REGEXP, "") # remove punctuation
-          id.tr!(" ", "-") # replace spaces with dash
-
-          uniq = (headers[id]).positive? ? "-#{headers[id]}" : ""
-          headers[id] += 1
-          if (header_content = node.children.first)
-            result[:toc] << %(<li><a href="##{id}#{uniq}">#{EscapeUtils.escape_html(text)}</a></li>\n)
-            header_content.add_previous_sibling(%(<a id="#{id}#{uniq}" class="anchor" href="##{id}#{uniq}" aria-hidden="true">#{anchor_icon}</a>))
-          end
-        end
-        result[:toc] = %(<ul class="section-nav">\n#{result[:toc]}</ul>) unless result[:toc].empty?
-        doc
+      # The class that will be attached on the anchored rendered markdown header
+      def classes
+        context[:classes] || "anchor"
       end
 
-      if RUBY_VERSION >= "2.4"
-        def ascii_downcase(str)
-          str.downcase(:ascii)
-        end
-      else
-        def ascii_downcase(str)
-          str.downcase
-        end
+      def after_initialize
+        result[:toc] = []
+      end
+
+      def handle_element(element)
+        header_href = element["href"]
+
+        return unless header_href.start_with?("#")
+        header_id = header_href[1..-1]
+
+        element["id"] = header_id
+        element["class"] = classes
+
+        element.set_inner_content(anchor_html, :as_html)
+
+        result[:toc] << { href: header_href }
+      end
+
+      def handle_text(text)
+        result[:toc].last.merge!(text: text)
+
+        text
       end
     end
   end

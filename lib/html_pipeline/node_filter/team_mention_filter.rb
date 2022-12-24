@@ -41,28 +41,29 @@ class HTMLPipeline
       TEAM_PATTERN = %r{
         (?<=^|\W)                  # beginning of string or non-word char
         @([a-z0-9][a-z0-9-]*)      # @organization
-          /                       # dividing slash
+          (?:/|&\#47;?)             # dividing slash
           ([a-z0-9][a-z0-9\-_]*)   # team
           \b
       }ix
 
       # Don't look for mentions in text nodes that are children of these elements
-      IGNORE_PARENTS = ["pre", "code", "a", "style", "script"].to_set
+      IGNORE_PARENTS = ["pre", "code", "a", "style", "script"]
 
-      def call
-        result[:mentioned_teams] ||= []
+      SELECTOR = Selma::Selector.new(match_text_within: "*", ignore_text_within: IGNORE_PARENTS)
 
-        doc.search(".//text()").each do |node|
-          content = node.to_html
-          next unless content.include?("@")
-          next if has_ancestor?(node, IGNORE_PARENTS)
+      # TODO: document this
+      def after_initialize
+        result[:mentioned_teams] = []
+      end
 
-          html = mention_link_filter(content, base_url: base_url, team_pattern: team_pattern)
-          next if html == content
+      def selector
+        SELECTOR
+      end
 
-          node.replace(html)
-        end
-        doc
+      def handle_text(text)
+        return text unless text.include?("@")
+
+        mention_link_filter(text, base_url: base_url, team_pattern: team_pattern)
       end
 
       def team_pattern
@@ -81,8 +82,9 @@ class HTMLPipeline
       def mention_link_filter(text, base_url: "/", team_pattern: TEAM_PATTERN)
         self.class.mentioned_teams_in(text, team_pattern) do |match, org, team|
           link = link_to_mentioned_team(base_url, org, team)
+          seperator = %r{/|&\#47;?}
 
-          link ? match.sub("@#{org}/#{team}", link) : match
+          link ? match.sub(%r{@#{org}#{seperator}#{team}}, link) : match
         end
       end
 
@@ -92,7 +94,7 @@ class HTMLPipeline
         url = base_url.dup
         url << "/" unless %r{[/~]\z}.match?(url)
 
-        "<a href='#{url << org}/#{team}' class='team-mention'>" \
+        "<a href=\"#{url << org}/#{team}\" class=\"team-mention\">" \
           "@#{org}/#{team}" \
           "</a>"
       end
