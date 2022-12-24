@@ -30,12 +30,6 @@ class HTMLPipeline
         emoji_image_filter(text)
       end
 
-      def emoji_image_filter(text)
-        text.gsub(emoji_pattern) do
-          emoji_image_tag(Regexp.last_match(1))
-        end
-      end
-
       # Implementation of validate hook.
       # Errors should raise exceptions or use an existing validator.
       def validate

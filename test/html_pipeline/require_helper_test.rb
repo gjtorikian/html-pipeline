@@ -10,6 +10,7 @@ class HTMLPipeline
 
     def test_works_with_existing_dependencies
       HTMLPipeline.require_dependencies(["old_sql", "nokogiri"], "SomeClass")
+
       assert_predicate(HTMLPipeline, :nokogiri_loaded?)
       refute_predicate(HTMLPipeline, :old_sql_loaded?)
     end
@@ -30,6 +31,7 @@ class HTMLPipeline
       error = assert_raises(HTMLPipeline::MissingDependencyError) do
         HTMLPipeline.require_dependency("non-existant", "SomeClass")
       end
+
       assert_includes(error.message, "Missing dependency 'non-existant' for SomeClass. See README.md for details.")
     end
 
@@ -37,6 +39,7 @@ class HTMLPipeline
       error = assert_raises(HTMLPipeline::MissingDependencyError) do
         HTMLPipeline.require_dependencies(["non-existant", "something"], "SomeClass")
       end
+
       assert_includes(error.message, "Missing all dependencies 'non-existant, something' for SomeClass. See README.md for details.")
     end
 
@@ -44,6 +47,7 @@ class HTMLPipeline
       error = assert_raises(HTMLPipeline::MissingDependencyError) do
         HTMLPipeline.require_dependency("non-existant", "SomeClass")
       end
+
       assert_includes(error.message, "LoadError: cannot load such file")
     end
   end

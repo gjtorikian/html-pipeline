@@ -42,13 +42,14 @@ class HTMLPipeline
       raise NoMethodError
     end
 
-    # Perform a filter on doc with the given context.
-    #
-    # Returns a String comprised of HTML markup.
-    def self.call(input, context: {})
-      raise NoMethodError
-    end
-
+    class << self
+      # Perform a filter on doc with the given context.
+      #
+      # Returns a String comprised of HTML markup.
+      def call(input, context: {})
+        raise NoMethodError
+      end
+  end
     # Make sure the context has everything we need. Noop: Subclasses can override.
     def validate; end
 

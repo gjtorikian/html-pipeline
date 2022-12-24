@@ -4,7 +4,7 @@ require "zeitwerk"
 lib_dir = File.join(File.dirname(__dir__), "lib")
 gem_loader = Zeitwerk::Loader.for_gem
 gem_loader.inflector.inflect(
-  "html_pipeline" => "HTMLPipeline"
+  "html_pipeline" => "HTMLPipeline",
 )
 gem_loader.ignore(File.join(lib_dir, "html-pipeline.rb"))
 gem_loader.setup
@@ -36,51 +36,52 @@ class HTMLPipeline
   class MissingDependencyError < RuntimeError; end
   class InvalidFilterError < ArgumentError; end
 
-  def self.optional_dependency(name, requirer)
-    require name
-  rescue LoadError
-  end
+  class << self
+    def optional_dependency(name, requirer)
+      require name
+    rescue LoadError # rubocop:disable Lint/SuppressedException:
+    end
 
-  def self.require_dependency(name, requirer)
-    require name
-  rescue LoadError => e
-    raise MissingDependencyError,
-      "Missing dependency '#{name}' for #{requirer}. See README.md for details.\n#{e.class.name}: #{e}"
-  end
+    def require_dependency(name, requirer)
+      require name
+    rescue LoadError => e
+      raise MissingDependencyError,
+        "Missing dependency '#{name}' for #{requirer}. See README.md for details.\n#{e.class.name}: #{e}"
+    end
 
-  def self.require_dependencies(names, requirer)
-    dependency_list = names.dup
-    loaded = false
+    def require_dependencies(names, requirer)
+      dependency_list = names.dup
+      loaded = false
 
-    while !loaded && names.length > 1
-      name = names.shift
+      while !loaded && names.length > 1
+        name = names.shift
+
+        begin
+          require_dependency(name, requirer)
+          loaded = true # we got a dependency
+          define_dependency_loaded_method(name, true)
+        # try the next dependency
+        rescue MissingDependencyError
+          define_dependency_loaded_method(name, false)
+        end
+      end
+
+      return if loaded
 
       begin
-        require_dependency(name, requirer)
-        loaded = true # we got a dependency
+        name = names.shift
+        require name
         define_dependency_loaded_method(name, true)
-      # try the next dependency
-      rescue MissingDependencyError
-        define_dependency_loaded_method(name, false)
+      rescue LoadError => e
+        raise MissingDependencyError,
+          "Missing all dependencies '#{dependency_list.join(", ")}' for #{requirer}. See README.md for details.\n#{e.class.name}: #{e}"
       end
     end
 
-    return if loaded
-
-    begin
-      name = names.shift
-      require name
-      define_dependency_loaded_method(name, true)
-    rescue LoadError => e
-      raise MissingDependencyError,
-        "Missing all dependencies '#{dependency_list.join(", ")}' for #{requirer}. See README.md for details.\n#{e.class.name}: #{e}"
+    def define_dependency_loaded_method(name, value)
+      self.class.define_method(:"#{name}_loaded?", -> { value })
     end
-  end
-
-  def self.define_dependency_loaded_method(name, value)
-    self.class.define_method(:"#{name}_loaded?", -> { value })
-  end
-
+end
   # Public: Returns an Array of Filter objects for this Pipeline.
   attr_reader :text_filters, :node_filters
 
@@ -158,15 +159,15 @@ class HTMLPipeline
     html = @convert_filter.call(text) unless @convert_filter.nil?
 
     unless @node_filters.empty?
-      payload = default_payload({ node_filters: @node_filters.map{ |f| f.class.name },
+      payload = default_payload({ node_filters: @node_filters.map { |f| f.class.name },
         context: context, result: result, })
       instrument("call_node_filters.html_pipeline", payload) do
         result[:output] = Selma::Rewriter.new(sanitizer: @sanitization_config, handlers: @node_filters).rewrite(html)
       end
     end
 
-    result = result.merge(Hash[ *@node_filters.collect { |f| f.result }.flatten ])
-    @node_filters.each { |f| f.reset! }
+    result = result.merge(Hash[*@node_filters.collect(&:result).flatten])
+    @node_filters.each(&:reset!)
 
     result
   end
@@ -225,7 +226,7 @@ class HTMLPipeline
   end
 
   private def validate_filter(filter, klass)
-    if !correctly_ancestored?(filter, klass)
+    unless correctly_ancestored?(filter, klass)
       raise InvalidFilterError, "Filter must inherit from `#{klass}`; #{filter} does not"
     end
   end

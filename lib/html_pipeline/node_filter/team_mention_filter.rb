@@ -14,26 +14,28 @@ class HTMLPipeline
     #                       identify team names
     #
     class TeamMentionFilter < NodeFilter
-      # Public: Find @org/team mentions in text.  See
-      # TeamMentionFilter#team_mention_link_filter.
-      #
-      #   TeamMentionFilter.mentioned_teams_in(text) do |match, org, team|
-      #     "<a href=...>#{team}</a>"
-      #   end
-      #
-      # text - String text to search.
-      #
-      # Yields the String match, org name, and team name.  The yield's
-      # return replaces the match in the original text.
-      #
-      # Returns a String replaced with the return of the block.
-      def self.mentioned_teams_in(text, team_pattern = TEAM_PATTERN)
-        text.gsub(team_pattern) do |match|
-          org = Regexp.last_match(1)
-          team = Regexp.last_match(2)
-          yield match, org, team
+      class << self
+        # Public: Find @org/team mentions in text.  See
+        # TeamMentionFilter#team_mention_link_filter.
+        #
+        #   TeamMentionFilter.mentioned_teams_in(text) do |match, org, team|
+        #     "<a href=...>#{team}</a>"
+        #   end
+        #
+        # text - String text to search.
+        #
+        # Yields the String match, org name, and team name.  The yield's
+        # return replaces the match in the original text.
+        #
+        # Returns a String replaced with the return of the block.
+        def mentioned_teams_in(text, team_pattern = TEAM_PATTERN)
+          text.gsub(team_pattern) do |match|
+            org = Regexp.last_match(1)
+            team = Regexp.last_match(2)
+            yield match, org, team
+          end
         end
-      end
+    end
 
       # Default pattern used to extract team names from text. The value can be
       # overridden by providing the team_pattern variable in the context. To
@@ -84,7 +86,7 @@ class HTMLPipeline
           link = link_to_mentioned_team(base_url, org, team)
           seperator = %r{/|&\#47;?}
 
-          link ? match.sub(%r{@#{org}#{seperator}#{team}}, link) : match
+          link ? match.sub(/@#{org}#{seperator}#{team}/, link) : match
         end
       end
 

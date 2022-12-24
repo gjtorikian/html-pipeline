@@ -8,8 +8,10 @@ class HTMLPipeline
       super(context: context, result: result)
     end
 
-    def self.call(text, context: {}, result: {})
-      new(context: context, result: result).call(text)
-    end
+    class << self
+      def call(text, context: {}, result: {})
+        new(context: context, result: result).call(text)
+      end
+  end
   end
 end

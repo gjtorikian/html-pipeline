@@ -5,8 +5,10 @@ require "helpers/mocked_instrumentation_service"
 
 class HTMLPipelineTest < Minitest::Test
   class TestFilter < HTMLPipeline::TextFilter
-    def self.call(input, context: {}, result: {})
-      input.reverse
+    class << self
+      def call(input, context: {}, result: {})
+        input.reverse
+      end
     end
   end
 
@@ -22,6 +24,7 @@ class HTMLPipelineTest < Minitest::Test
     body = "hello"
     @pipeline.call(body)
     event, payload, = events.pop
+
     assert(event, "event expected")
     assert_equal("call_filter.html_pipeline", event)
     assert_equal(TestFilter.name, payload[:filter])
@@ -36,6 +39,7 @@ class HTMLPipelineTest < Minitest::Test
     body = "hello"
     @pipeline.call(body)
     event, payload, = events.pop
+
     assert(event, "event expected")
     assert_equal("call_text_filters.html_pipeline", event)
     assert_equal(@pipeline.text_filters.map(&:name), payload[:text_filters])
@@ -47,6 +51,7 @@ class HTMLPipelineTest < Minitest::Test
     service = "default"
     HTMLPipeline.default_instrumentation_service = service
     pipeline = HTMLPipeline.new(text_filters: [], default_context: @default_context)
+
     assert_equal(service, pipeline.instrumentation_service)
   ensure
     HTMLPipeline.default_instrumentation_service = nil
@@ -67,6 +72,7 @@ class HTMLPipelineTest < Minitest::Test
     @pipeline.call(body)
 
     event, payload, = events.pop
+
     assert(event, "expected event")
     assert_equal(name, payload[:pipeline])
     assert_equal(body.reverse, payload[:result][:output])

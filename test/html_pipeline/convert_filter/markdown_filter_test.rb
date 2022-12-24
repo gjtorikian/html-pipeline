@@ -36,21 +36,25 @@ class HTMLPipeline
 
     def test_gfm_enabled_by_default
       doc = MarkdownFilter.call(@haiku)
+
       assert_equal(2, Nokogiri.parse(doc).search("br").size)
     end
 
     def test_disabling_hardbreaks
-      doc = MarkdownFilter.call(@haiku, context: { markdown: { render: {hardbreaks: false } }} )
+      doc = MarkdownFilter.call(@haiku, context: { markdown: { render: { hardbreaks: false } } })
+
       assert_equal(0, Nokogiri.parse(doc).search("br").size)
     end
 
     def test_fenced_code_blocks
       doc = MarkdownFilter.call(@code)
+
       assert_equal(1, Nokogiri.parse(doc).search("pre").size)
     end
 
     def test_fenced_code_blocks_with_language
       doc = MarkdownFilter.call(@code.sub("```", "``` ruby"))
+
       assert_equal(1, Nokogiri.parse(doc).search("pre").size)
       assert_equal("ruby", Nokogiri.parse(doc).search("pre").first["lang"])
     end
@@ -59,12 +63,14 @@ class HTMLPipeline
       iframe = "<iframe src='http://www.google.com'></iframe>"
       iframe_escaped = "&lt;iframe src='http://www.google.com'>&lt;/iframe>"
       doc = MarkdownFilter.call(iframe, context: { markdown: { render: { unsafe_: true } } })
+
       assert_equal(doc, iframe_escaped)
     end
 
     def test_changing_extensions
       iframe = "<iframe src='http://www.google.com'></iframe>"
-      doc = MarkdownFilter.call(iframe, context: { markdown: { extension: { tagfilter: false }, render: { unsafe_: true }}})
+      doc = MarkdownFilter.call(iframe, context: { markdown: { extension: { tagfilter: false }, render: { unsafe_: true } } })
+
       assert_equal(doc, iframe)
     end
 
@@ -124,6 +130,7 @@ class GFMTest < Minitest::Test
   def test_not_convert_newlines_in_lists
     options = Commonmarker::Config.merged_with_defaults({})
     options[:extension].delete(:header_ids)
+
     assert_equal("<h1>foo</h1>\n<h1>bar</h1>",
       @gfm.call("# foo\n# bar", context: { markdown: options }))
     assert_equal("<ul>\n<li>foo</li>\n<li>bar</li>\n</ul>",
