@@ -38,6 +38,7 @@ class HTMLPipeline
       def handle_text_chunk(text)
         return if @lang.nil?
         return if (lexer = lexer_for(@lang)).nil?
+
         content = text.to_s
 
         text.replace(highlight_with_timeout_handling(content, lexer), as: :html)
