@@ -118,11 +118,11 @@ class HTMLPipeline
     end
 
     def test_allowlist_contains_default_anchor_schemes
-      assert_equal(["http", "https", "mailto", "xmpp", :relative, "irc", "ircs"], SanitizationFilter::DEFAULT_CONFIG[:protocols]["a"]["href"])
+      assert_equal(["http", "https", "mailto", :relative], SanitizationFilter::DEFAULT_CONFIG[:protocols]["a"]["href"])
     end
 
     def test_exports_default_anchor_schemes
-      assert_equal(["http", "https", "mailto", "xmpp", :relative, "irc", "ircs"], SanitizationFilter::PROTOCOLS)
+      assert_equal(["http", "https", "mailto", :relative], SanitizationFilter::VALID_PROTOCOLS)
     end
 
     def test_script_contents_are_removed
