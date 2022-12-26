@@ -62,10 +62,11 @@ class HTMLPipeline
         SELECTOR
       end
 
-      def handle_text(text)
-        return text unless text.include?("@")
+      def handle_text_chunk(text)
+        content = text.to_s
+        return unless content.include?("@")
 
-        mention_link_filter(text, base_url: base_url, team_pattern: team_pattern)
+        text.replace(mention_link_filter(content, base_url: base_url, team_pattern: team_pattern), as: :html)
       end
 
       def team_pattern

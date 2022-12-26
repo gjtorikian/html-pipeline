@@ -72,13 +72,14 @@ class HTMLPipeline
         SELECTOR
       end
 
-      def handle_text(text)
-        return text unless text.include?("@")
+      def handle_text_chunk(text)
+        content = text.to_s
+        return unless content.include?("@")
 
-        html = mention_link_filter(text, base_url: base_url, username_pattern: username_pattern)
-        return text if html == text
+        html = mention_link_filter(content, base_url: base_url, username_pattern: username_pattern)
+        return if html == content
 
-        html
+        text.replace(html, as: :html)
       end
 
       # The URL to provide when someone @mentions a "mention" name, such
