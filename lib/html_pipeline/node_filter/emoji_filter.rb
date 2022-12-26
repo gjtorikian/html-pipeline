@@ -24,10 +24,10 @@ class HTMLPipeline
         Selma::Selector.new(match_text_within: "*", ignore_text_within: ignored_ancestor_tags)
       end
 
-      def handle_text(text)
-        return text unless text.include?(":")
+      def handle_text_chunk(text)
+        return unless text.to_s.include?(":")
 
-        emoji_image_filter(text)
+        text.replace(emoji_image_filter(text.to_s), as: :html)
       end
 
       # Implementation of validate hook.

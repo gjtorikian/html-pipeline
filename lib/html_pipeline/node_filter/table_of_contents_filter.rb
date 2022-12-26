@@ -57,15 +57,13 @@ class HTMLPipeline
         element["id"] = header_id
         element["class"] = classes
 
-        element.set_inner_content(anchor_html, :as_html)
+        element.set_inner_content(anchor_html, as: :html)
 
         result[:toc] << { href: header_href }
       end
 
-      def handle_text(text)
-        result[:toc].last[:text] = text
-
-        text
+      def handle_text_chunk(text)
+        result[:toc].last[:text] = text.to_s
       end
     end
   end

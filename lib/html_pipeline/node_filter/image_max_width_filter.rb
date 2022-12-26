@@ -31,8 +31,9 @@ class HTMLPipeline
 
       def link_image(element)
         link_start = %(<a target="_blank" href="#{element["src"]}">)
+        element.before(link_start, as: :html)
         link_end = "</a>"
-        element.wrap(link_start, link_end, :as_html)
+        element.after(link_end, as: :html)
       end
     end
   end

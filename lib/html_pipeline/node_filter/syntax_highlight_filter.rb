@@ -35,11 +35,13 @@ class HTMLPipeline
         element["class"] = "#{scope} #{scope}-#{@lang}" if include_lang?
       end
 
-      def handle_text(text)
-        return text if @lang.nil?
-        return text if (lexer = lexer_for(@lang)).nil?
+      def handle_text_chunk(text)
+        return if @lang.nil?
+        return if (lexer = lexer_for(@lang)).nil?
 
-        highlight_with_timeout_handling(text, lexer)
+        content = text.to_s
+
+        text.replace(highlight_with_timeout_handling(content, lexer), as: :html)
       end
 
       def highlight_with_timeout_handling(text, lexer)
