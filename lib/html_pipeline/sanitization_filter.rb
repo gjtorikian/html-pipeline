@@ -26,7 +26,7 @@ class HTMLPipeline
 
       attributes: {
         "a" => ["href"],
-        "img" => ["src", "longdesc"],
+        "img" => ["src", "longdesc", "loading", "alt"],
         "div" => ["itemscope", "itemtype"],
         "blockquote" => ["cite"],
         "del" => ["cite"],
