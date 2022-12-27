@@ -9,6 +9,8 @@ require "minitest/focus"
 
 require "awesome_print"
 
+require "nokogiri"
+
 module TestHelpers
 end
 

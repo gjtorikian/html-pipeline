@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-HTMLPipeline.require_dependency("sanitize", "SanitizationFilter")
-
 class HTMLPipeline
   # A special filter with sanization routines and allowlists. This module defines
   # what HTML is allowed in user provided content and fixes up issues with

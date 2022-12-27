@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-HTMLPipeline.require_dependency("escape_utils", "TableOfContentsFilter")
-
 class HTMLPipeline
   class NodeFilter
     # Generates a Table of Contents: an array of hashes containing:

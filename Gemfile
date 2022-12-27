@@ -34,10 +34,10 @@ group :test do
 
   gem "minitest-bisect", "~> 1.6"
 
-  gem "rinku",              "~> 1.7", require: false
-  gem "sanitize",           "~> 5.2", require: false
+  gem "nokogiri", "~> 1.13"
 
-  gem "escape_utils", "~> 1.0", require: false
+  gem "rinku",              "~> 1.7", require: false
+
   gem "minitest-focus", "~> 1.1"
   gem "rouge", "~> 3.1", require: false
 end
