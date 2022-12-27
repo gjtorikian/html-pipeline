@@ -93,6 +93,33 @@ class HTMLPipeline
       assert_equal(stuff, html)
     end
 
+    def test_allow_svg_elements_to_be_added
+      config = DEFAULT_CONFIG.dup
+      frag  = <<~FRAG
+      <svg height="100" width="100">
+      <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
+      </svg>
+      FRAG
+
+      html = SanitizationFilter.call(frag, config)
+
+      assert_equal("\n", html)
+
+      config = { elements: ["svg", "circle"],
+      attributes: { "svg" => ["width"],
+                    "circle" => ["cx", "cy", "r"], }, }
+
+      result = <<~FRAG
+      <svg width="100">
+      <circle cx="50" cy="50" r="40" />
+      </svg>
+      FRAG
+
+      html = SanitizationFilter.call(frag, config)
+
+      assert_equal(result, html)
+    end
+
     def test_anchor_schemes_are_merged_with_other_anchor_restrictions
       stuff = '<a href="something-weird://heyyy" ping="more-weird://hiii">Wat</a> is this'
       allowlist = {

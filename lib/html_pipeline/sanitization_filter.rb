@@ -17,7 +17,7 @@ class HTMLPipeline
 
     # The main sanitization allowlist. Only these elements and attributes are
     # allowed through by default.
-    DEFAULT_CONFIG = {
+    DEFAULT_CONFIG = Selma::Sanitizer::Config.freeze_config({
       elements: ["h1", "h2", "h3", "h4", "h5", "h6", "br", "b", "i", "strong", "em", "a", "pre", "code",
                  "img", "tt", "div", "ins", "del", "sup", "sub", "p", "ol", "ul", "table", "thead", "tbody", "tfoot",
                  "blockquote", "dl", "dt", "dd", "kbd", "q", "samp", "var", "hr", "ruby", "rt", "rp", "li", "tr", "td", "th",
@@ -33,8 +33,8 @@ class HTMLPipeline
         "ins" => ["cite"],
         "q" => ["cite"],
         all: ["abbr", "accept", "accept-charset", "accesskey", "action", "align", "alt", "aria-describedby",
-              "aria-hidden", "aria-label", "aria-labelledby", "axis", "border", "cellpadding", "cellspacing", "char",
-              "charoff", "charset", "checked", "clear", "cols", "colspan", "color", "compact", "coords", "datetime", "dir",
+              "aria-hidden", "aria-label", "aria-labelledby", "axis", "border", "char",
+              "charoff", "charset", "checked", "clear", "cols", "colspan", "compact", "coords", "datetime", "dir",
               "disabled", "enctype", "for", "frame", "headers", "height", "hreflang", "hspace", "id", "ismap", "label", "lang",
               "maxlength", "media", "method", "multiple", "name", "nohref", "noshade", "nowrap", "open", "progress",
               "prompt", "readonly", "rel", "rev", "role", "rows", "rowspan", "rules", "scope", "selected", "shape",
@@ -49,9 +49,9 @@ class HTMLPipeline
         "img" => {
           "src" => ["http", "https", :relative].freeze,
           "longdesc" => ["http", "https", :relative].freeze,
-        }.freeze,
+        },
       },
-    }
+    })
 
     class << self
       def call(html, config)
