@@ -87,7 +87,7 @@ end
 class GFMTest < Minitest::Test
   def setup
     @gfm = MarkdownFilter
-    @context = { markdown: { render: { unsafe_: true } } }
+    @context = { markdown: { render: { unsafe_: true }, plugins: { syntax_highlighter: nil } } }
   end
 
   def test_not_touch_single_underscores_inside_words

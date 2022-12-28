@@ -80,7 +80,7 @@ class HTMLPipelineTest < Minitest::Test
 
   def test_incorrect_text_filters
     assert_raises(HTMLPipeline::InvalidFilterError) do
-      HTMLPipeline.new(text_filters: [HTMLPipeline::NodeFilter::SyntaxHighlightFilter], default_context: @default_context)
+      HTMLPipeline.new(text_filters: [HTMLPipeline::NodeFilter::MentionFilter], default_context: @default_context)
     end
   end
 
