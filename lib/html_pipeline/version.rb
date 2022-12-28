@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 class HTMLPipeline
-  VERSION = "2.13.2"
+  VERSION = "3.0.0.pre1"
 end

@@ -216,18 +216,18 @@ class HTMLPipeline
           HTMLPipeline::ConvertFilter::MarkdownFilter.new,
         sanitization_config: config,
         node_filters: [
-          HTMLPipeline::NodeFilter::SyntaxHighlightFilter.new,
+          HTMLPipeline::NodeFilter::MentionFilter.new,
         ],
       )
 
       result = pipeline.call(<<~CODE)
-        This is *great*:
+        This is *great*, @balevine:
 
             some_code(:first)
       CODE
 
       expected = <<~HTML
-        <p>This is great:</p>
+        <p>This is great, <a href="/balevine" class="user-mention">@balevine</a>:</p>
         <pre><code>some_code(:first)
         </code></pre>
       HTML
@@ -237,21 +237,21 @@ class HTMLPipeline
 
     def test_sanitization_pipeline_can_be_removed
       pipeline = HTMLPipeline.new(\
-        convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
+        convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new(context: { markdown: { plugins: { syntax_highlighter: nil } } }),
         sanitization_config: nil,
         node_filters: [
-          HTMLPipeline::NodeFilter::SyntaxHighlightFilter.new,
+          HTMLPipeline::NodeFilter::MentionFilter.new,
         ],
       )
 
       result = pipeline.call(<<~CODE)
-        This is *great*:
+        This is *great*, @balevine:
 
             some_code(:first)
       CODE
 
       expected = <<~HTML
-        <p>This is <em>great</em>:</p>
+        <p>This is <em>great</em>, <a href="/balevine" class="user-mention">@balevine</a>:</p>
         <pre><code>some_code(:first)
         </code></pre>
       HTML

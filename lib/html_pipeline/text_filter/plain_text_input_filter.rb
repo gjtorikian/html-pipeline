@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-HTMLPipeline.require_dependency("escape_utils", "PlainTextInputFilter")
-
 class HTMLPipeline
   class TextFilter
     # Simple filter for plain text input. HTML escapes the text input and wraps it

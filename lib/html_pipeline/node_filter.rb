@@ -26,6 +26,6 @@ class HTMLPipeline
         node_filter = new(context: context, result: result)
         Selma::Rewriter.new(sanitizer: nil, handlers: [node_filter]).rewrite(html)
       end
-  end
+    end
   end
 end
