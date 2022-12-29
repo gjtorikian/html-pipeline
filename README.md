@@ -1,5 +1,8 @@
 # HTMLPipeline
 
+> **Note**
+> This README refers to the behavior in the new 3.0.0.pre1 gem.
+
 HTML processing filters and utilities. This module is a small
 framework for defining CSS-based content filters and applying them to user
 provided content.
