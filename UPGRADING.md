@@ -6,7 +6,7 @@ HTMLPipeline v3 is a massive improvement over this still much loved (and woefull
 
 ### Changed namespace
 
-This project is now under a module called `HTMLProofer`, not `HTML::Proofer`.
+This project is now under a module called `HTMLPipeline`, not `HTML::Pipeline`.
 
 ### Removed filters
 
