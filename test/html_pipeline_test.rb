@@ -86,7 +86,7 @@ class HTMLPipelineTest < Minitest::Test
 
   def test_incorrect_convert_filter
     assert_raises(HTMLPipeline::InvalidFilterError) do
-      HTMLPipeline.new(convert_filter: HTMLPipeline::TextFilter::AutolinkFilter, default_context: @default_context)
+      HTMLPipeline.new(convert_filter: HTMLPipeline::NodeFilter::ImageMaxWidthFilter, default_context: @default_context)
     end
   end
 
