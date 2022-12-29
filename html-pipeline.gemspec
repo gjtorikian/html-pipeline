@@ -31,8 +31,8 @@ Gem::Specification.new do |gem|
   gem.post_install_message = <<~MSG
     -------------------------------------------------
     Thank you for installing html-pipeline!
-    You must bundle Filter gem dependencies.
-    See html-pipeline README.md for more details.
+    You must bundle filter gem dependencies.
+    See the html-pipeline README.md for more details:
     https://github.com/gjtorikian/html-pipeline#dependencies
     -------------------------------------------------
   MSG
