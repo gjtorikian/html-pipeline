@@ -1,8 +1,34 @@
 # Changelog
 
-## [Unreleased](https://github.com/gjtorikian/html-pipeline/tree/HEAD)
+## [v3.0.0.pre1](https://github.com/gjtorikian/html-pipeline/tree/v3.0.0.pre1) (2022-12-30)
 
-[Full Changelog](https://github.com/gjtorikian/html-pipeline/compare/v2.14.2...HEAD)
+[Full Changelog](https://github.com/gjtorikian/html-pipeline/compare/v2.14.3...v3.0.0.pre1)
+
+**Closed issues:**
+
+- Allow `loading` attribute on images [\#359](https://github.com/gjtorikian/html-pipeline/issues/359)
+- Allow picture tag in sanitation [\#352](https://github.com/gjtorikian/html-pipeline/issues/352)
+- V3 ideas [\#350](https://github.com/gjtorikian/html-pipeline/issues/350)
+- Invalid and missing HTML elements in the sanatizer [\#342](https://github.com/gjtorikian/html-pipeline/issues/342)
+- Cellpadding & Cellspacing are not supported in HTML5. [\#303](https://github.com/gjtorikian/html-pipeline/issues/303)
+
+**Merged pull requests:**
+
+- Drop SyntaxHighlightFilter [\#372](https://github.com/gjtorikian/html-pipeline/pull/372) ([gjtorikian](https://github.com/gjtorikian))
+- Close sanitization-related issues [\#371](https://github.com/gjtorikian/html-pipeline/pull/371) ([gjtorikian](https://github.com/gjtorikian))
+- Update Selma signatures [\#370](https://github.com/gjtorikian/html-pipeline/pull/370) ([gjtorikian](https://github.com/gjtorikian))
+- You shall pass [\#369](https://github.com/gjtorikian/html-pipeline/pull/369) ([gjtorikian](https://github.com/gjtorikian))
+- Migrate from Nokogiri to Selma [\#368](https://github.com/gjtorikian/html-pipeline/pull/368) ([gjtorikian](https://github.com/gjtorikian))
+- Split filters up [\#360](https://github.com/gjtorikian/html-pipeline/pull/360) ([gjtorikian](https://github.com/gjtorikian))
+- Support multiple dependencies per filter [\#351](https://github.com/gjtorikian/html-pipeline/pull/351) ([gjtorikian](https://github.com/gjtorikian))
+- Add Rubocop [\#349](https://github.com/gjtorikian/html-pipeline/pull/349) ([gjtorikian](https://github.com/gjtorikian))
+- add truffleruby-head [\#348](https://github.com/gjtorikian/html-pipeline/pull/348) ([gogainda](https://github.com/gogainda))
+- V3 Release [\#347](https://github.com/gjtorikian/html-pipeline/pull/347) ([gjtorikian](https://github.com/gjtorikian))
+- Switch to GitHub Actions [\#346](https://github.com/gjtorikian/html-pipeline/pull/346) ([gjtorikian](https://github.com/gjtorikian))
+
+## [v2.14.3](https://github.com/gjtorikian/html-pipeline/tree/v2.14.3) (2022-10-14)
+
+[Full Changelog](https://github.com/gjtorikian/html-pipeline/compare/v2.14.2...v2.14.3)
 
 **Closed issues:**
 
@@ -56,7 +82,10 @@
 
 **Merged pull requests:**
 
-  * Freeze all elements in HTML::Pipeline::SanitizationFilter [#299](https://github.com/jch/html-pipeline/pull/299)
+- Replace whitelist with more neutral language [\#339](https://github.com/gjtorikian/html-pipeline/pull/339) ([tancnle](https://github.com/tancnle))
+- allows progress tags to be used [\#338](https://github.com/gjtorikian/html-pipeline/pull/338) ([pedrozath](https://github.com/pedrozath))
+- Updated English [\#337](https://github.com/gjtorikian/html-pipeline/pull/337) ([BhuvnendraPratapSingh](https://github.com/BhuvnendraPratapSingh))
+- Make AutolinkFilter configurable [\#335](https://github.com/gjtorikian/html-pipeline/pull/335) ([mnishiguchi](https://github.com/mnishiguchi))
 
 ## [v2.14.0](https://github.com/gjtorikian/html-pipeline/tree/v2.14.0) (2020-08-11)
 
