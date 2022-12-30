@@ -21,7 +21,7 @@ class HTMLPipeline
       end
     end
 
-    def test_raises_mising_dependenccies_error
+    def test_raises_mising_dependencies_error
       assert_raises(HTMLPipeline::MissingDependencyError) do
         HTMLPipeline.require_dependencies(["non-existant", "something"], "SomeClass")
       end
