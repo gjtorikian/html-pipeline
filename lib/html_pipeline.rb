@@ -129,7 +129,7 @@ end
   end
 
   # Apply all filters in the pipeline to the given HTML.
-  # TODO: test UTF-8
+  #
   # html    - A UTF-8 String comprised of HTML.
   # context - The context hash passed to each filter. See the Filter docs
   #           for more info on possible values. This object MUST NOT be modified
