@@ -1,26 +1,40 @@
 # frozen_string_literal: true
 
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
 # Specify your gem's dependencies in html-pipeline.gemspec
 gemspec
 
+gem "awesome_print"
+
+gem "rubocop"
+gem "rubocop-standard"
+
+gem "github_changelog_generator", "~> 1.16"
+
+gem "sorbet-runtime"
+
+group :development, :test do
+  gem "amazing_print"
+  gem "debug"
+end
+
 group :development do
-  gem 'appraisal'
-  gem 'bundler'
-  gem 'rake'
+  gem "tapioca", require: false
+  gem "sorbet"
+  gem "bundler"
+  gem "rake"
 end
 
 group :test do
-  gem 'commonmarker', '~> 0.16', require: false
-  gem 'email_reply_parser', '~> 0.5', require: false
-  gem 'gemoji', '~> 2.0', require: false
-  gem 'minitest'
-  gem 'RedCloth',           '~> 4.2.9', require: false
-  gem 'rinku',              '~> 1.7',   require: false
-  gem 'sanitize',           '~> 4.6', require: false
+  gem "commonmarker", "~> 1.0.0.pre4", require: false
+  gem "gemoji", "~> 3.0", require: false
+  gem "gemojione", "~> 4.3", require: false
+  gem "minitest"
 
-  gem 'escape_utils', '~> 1.0', require: false
-  gem 'rouge', '~> 3.1', require: false
-  gem 'minitest-focus', '~> 1.1'
+  gem "minitest-bisect", "~> 1.6"
+
+  gem "nokogiri", "~> 1.13"
+
+  gem "minitest-focus", "~> 1.1"
 end

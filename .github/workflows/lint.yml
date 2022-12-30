@@ -1,0 +1,23 @@
+name: Linting
+
+on:
+  pull_request:
+    paths:
+      - "**/*.rb"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1.0
+          rubygems: latest
+          bundler-cache: true
+      - run: bundle install
+      - name: Rubocop
+        run: bundle exec rake rubocop

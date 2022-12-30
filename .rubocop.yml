@@ -1,0 +1,17 @@
+inherit_gem:
+  rubocop-standard:
+    - config/default.yml
+    - config/minitest.yml
+
+inherit_mode:
+  merge:
+    - Exclude
+
+AllCops:
+  Exclude:
+    - test/progit/**/*
+    - "pkg/**/*"
+    - "ext/**/*"
+    - "vendor/**/*"
+    - "tmp/**/*"
+    - "test/progit/**/*"

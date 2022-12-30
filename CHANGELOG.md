@@ -56,10 +56,7 @@
 
 **Merged pull requests:**
 
-- Replace whitelist with more neutral language [\#339](https://github.com/gjtorikian/html-pipeline/pull/339) ([tancnle](https://github.com/tancnle))
-- allows progress tags to be used [\#338](https://github.com/gjtorikian/html-pipeline/pull/338) ([pedrozath](https://github.com/pedrozath))
-- Updated English [\#337](https://github.com/gjtorikian/html-pipeline/pull/337) ([BhuvnendraPratapSingh](https://github.com/BhuvnendraPratapSingh))
-- Make AutolinkFilter configurable [\#335](https://github.com/gjtorikian/html-pipeline/pull/335) ([mnishiguchi](https://github.com/mnishiguchi))
+  * Freeze all elements in HTML::Pipeline::SanitizationFilter [#299](https://github.com/jch/html-pipeline/pull/299)
 
 ## [v2.14.0](https://github.com/gjtorikian/html-pipeline/tree/v2.14.0) (2020-08-11)
 

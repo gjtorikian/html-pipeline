@@ -1,29 +1,39 @@
 # frozen_string_literal: true
 
-require File.expand_path('../lib/html/pipeline/version', __FILE__)
+$LOAD_PATH.push(File.expand_path("lib", __dir__))
+require "html_pipeline/version"
 
 Gem::Specification.new do |gem|
-  gem.name          = 'html-pipeline'
-  gem.version       = HTML::Pipeline::VERSION
-  gem.license       = 'MIT'
-  gem.authors       = ['Ryan Tomayko', 'Jerry Cheung', 'Garen J. Torikian']
-  gem.email         = ['ryan@github.com', 'jerry@github.com', 'gjtorikian@gmail.com']
-  gem.description   = 'GitHub HTML processing filters and utilities'
-  gem.summary       = 'Helpers for processing content through a chain of filters'
-  gem.homepage      = 'https://github.com/jch/html-pipeline'
+  gem.name          = "html-pipeline"
+  gem.version       = HTMLPipeline::VERSION
+  gem.license       = "MIT"
+  gem.authors       = ["Garen J. Torikian"]
+  gem.email         = ["gjtorikian@gmail.com"]
+  gem.description   = "HTML processing filters and utilities"
+  gem.summary       = "Helpers for processing content through a chain of filters"
+  gem.homepage      = "https://github.com/gjtorikian/html-pipeline"
 
-  gem.files         = `git ls-files -z`.split("\x0").reject { |f| f =~ %r{^(test|gemfiles|script)/} }
-  gem.require_paths = ['lib']
+  gem.files         = %x(git ls-files -z).split("\x0").reject { |f| f =~ %r{^(test|gemfiles|script)/} }
+  gem.require_paths = ["lib"]
 
-  gem.add_dependency 'activesupport', '>= 2'
-  gem.add_dependency 'nokogiri', '>= 1.4'
+  gem.required_ruby_version = "~> 3.1"
+  # https://github.com/rubygems/rubygems/pull/5852#issuecomment-1231118509
+  gem.required_rubygems_version = ">= 3.3.22"
 
-  gem.post_install_message = <<msg
--------------------------------------------------
-Thank you for installing html-pipeline!
-You must bundle Filter gem dependencies.
-See html-pipeline README.md for more details.
-https://github.com/jch/html-pipeline#dependencies
--------------------------------------------------
-msg
+  gem.metadata = {
+    "funding_uri" => "https://github.com/sponsors/gjtorikian/",
+    "rubygems_mfa_required" => "true",
+  }
+
+  gem.add_dependency("selma", "~> 0.0.1")
+  gem.add_dependency("zeitwerk", "~> 2.5")
+
+  gem.post_install_message = <<~MSG
+    -------------------------------------------------
+    Thank you for installing html-pipeline!
+    You must bundle filter gem dependencies.
+    See the html-pipeline README.md for more details:
+    https://github.com/gjtorikian/html-pipeline#dependencies
+    -------------------------------------------------
+  MSG
 end
