@@ -197,6 +197,8 @@ pipeline = HTMLPipeline.new \
   sanitization_config: nil
 ```
 
+For more examples of customizing the sanitization process to include the tags you want, check out [the tests](test/sanitization_filter_test.rb).
+
 ### NodeFilters
 
 `NodeFilters`s can operate either on HTML elements or text nodes using CSS selectors. Each `NodeFilter` must define a method named `selector` which provides an instance of `Selma::Selector`. If elements are being manipulated, `handle_element` must be defined, taking one argument, `element`; if text nodes are being manipulated, `handle_text_chunk` must be defined, taking one argument, `text_chunk`. `@config`, and `@result` are available to use, and any changes made to these ivars are passed on to the next filter.
