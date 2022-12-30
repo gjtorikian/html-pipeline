@@ -29,7 +29,7 @@ HTMLPipeline.new(
     text_filters: [], # array of instantiated (`.new`ed) `HTMLPipeline::TextFilter`
     convert_filter:, # a filter that runs to turn text into HTML
     sanitization_config: {}, # an allowlist of elements/attributes/protocols to keep
-    node_filters:[]) # array of instantiated (`.new`ed) `HTMLPipeline::NodeFilter`
+    node_filters: []) # array of instantiated (`.new`ed) `HTMLPipeline::NodeFilter`
 ```
 
 Please refer to the README for more information on constructing filters. In most cases, the underlying filter needs only a few changes, primarily to make use of [Selma](https://www.github.com/gjtorikian/selma) rather than Nokogiri.
