@@ -197,7 +197,7 @@ pipeline = HTMLPipeline.new \
   sanitization_config: nil
 ```
 
-For more examples of customizing the sanitization process to include the tags you want, check out [the tests](test/sanitization_filter_test.rb).
+For more examples of customizing the sanitization process to include the tags you want, check out [the tests](test/sanitization_filter_test.rb) and [the FAQ](#faq).
 
 ### NodeFilters
 
