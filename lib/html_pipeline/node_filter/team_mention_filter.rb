@@ -53,7 +53,6 @@ class HTMLPipeline
 
       SELECTOR = Selma::Selector.new(match_text_within: "*", ignore_text_within: IGNORE_PARENTS)
 
-      # TODO: document this
       def after_initialize
         result[:mentioned_teams] = []
       end
