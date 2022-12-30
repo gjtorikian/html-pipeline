@@ -244,7 +244,10 @@ For more information on how to write effective `NodeFilter`s, refer to the provi
 Since filters can be customized to your heart's content, gem dependencies are _not_ bundled; this project doesn't know which of the default filters you might use, and as such, you must bundle each filter's gem
 dependencies yourself.
 
-_Note:_ See the [Gemfile](/Gemfile) `:test` group for any version requirements.
+> **Note**
+> See the [Gemfile](/Gemfile) `:test` group for any version requirements.
+
+When developing a custom filter, call `HTMLPipeline.require_dependency` at the start to ensure that the local machine has the necessary dependency. You can also use `HTMLPipeline.require_dependencies` to provide a list of dependencies to check.
 
 ## Documentation
 
