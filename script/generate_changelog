@@ -1,3 +1,3 @@
 #!/bin/sh
 
- CHANGELOG_GITHUB_TOKEN="$GITHUB_TOKEN" bundle exec github_changelog_generator -u gjtorikian -p html-pipeline
+bundle exec github_changelog_generator -u gjtorikian -p html-pipeline --token $GITHUB_TOKEN
