@@ -230,20 +230,28 @@ end
 
 For more information on how to write effective `NodeFilter`s, refer to the provided filters, and see the underlying lib, [Selma](https://www.github.com/gjtorikian/selma) for more information.
 
-- `AbsoluteSourceFilter` - replace relative image urls with fully qualified versions
-- `EmojiFilter` - converts `:<emoji>:` to [emoji](http://www.emoji-cheat-sheet.com/).
-  - (Note: the included `MarkdownFilter` will already convert emoji for you)
-- `HttpsFilter` - Replacing http urls with https versions
-- `ImageMaxWidthFilter` - link to full size image for large images
-- `MentionFilter` - replace `@user` mentions with links
-- `SanitizationFilter` - allow sanitize user markup
-- `TableOfContentsFilter` - anchor headings with name attributes and generate Table of Contents html unordered list linking headings
-- `TeamMentionFilter` - replace `@org/team` mentions with links
+- `AbsoluteSourceFilter`: replace relative image urls with fully qualified versions
+- `EmojiFilter`: converts `:<emoji>:` to [emoji](http://www.emoji-cheat-sheet.com/)
+  - (Note: the included `MarkdownFilter` will already convert emoji)
+- `HttpsFilter`: Replacing http urls with https versions
+- `ImageMaxWidthFilter`: link to full size image for large images
+- `MentionFilter`: replace `@user` mentions with links
+- `SanitizationFilter`: allow sanitize user markup
+- `SyntaxHighlightFilter`: applies syntax highlighting to `pre` blocks
+  - (Note: the included `MarkdownFilter` will already apply highlighting)
+- `TableOfContentsFilter`: anchor headings with name attributes and generate Table of Contents html unordered list linking headings
+- `TeamMentionFilter`: replace `@org/team` mentions with links
 
 ## Dependencies
 
-Since filters can be customized to your heart's content, gem dependencies are _not_ bundled; this project doesn't know which of the default filters you might use, and as such, you must bundle each filter's gem
-dependencies yourself.
+Since filters can be customized to your heart's content, gem dependencies are _not_ bundled; this project doesn't know which of the default filters you might use, and as such, you must bundle each filter's gem dependencies yourself.
+
+For example, `SyntaxHighlightFilter` uses [rouge](https://github.com/jneen/rouge)
+to detect and highlight languages; to use the `SyntaxHighlightFilter`, you must add the following to your Gemfile:
+
+```ruby
+gem "rouge"
+```
 
 > **Note**
 > See the [Gemfile](/Gemfile) `:test` group for any version requirements.

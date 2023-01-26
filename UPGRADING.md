@@ -13,7 +13,6 @@ This project is now under a module called `HTMLPipeline`, not `HTML::Pipeline`.
 The following filters were removed:
 
 - `AutolinkFilter`: this is handled by [Commonmarker](https://www.github.com/gjtorikian/commonmarker) and can be disabled/enabled through the `MarkdownFilter`'s `context` hash
-- `SyntaxHighlightFilter`: this is handled by [Commonmarker](https://www.github.com/gjtorikian/commonmarker) and can be disabled/enabled through the `MarkdownFilter`'s `context` hash
 - `SanitizationFilter`: this is handled by [Selma](https://www.github.com/gjtorikian/selma); configuration can be done through the `sanitization_config` hash
 
 - `EmailReplyFilter`
