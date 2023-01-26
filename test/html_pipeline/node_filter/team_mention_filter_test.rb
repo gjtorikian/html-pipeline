@@ -8,10 +8,12 @@ class HTMLPipeline
       @filter = HTMLPipeline::NodeFilter::TeamMentionFilter
 
       @pipeline =
-        HTMLPipeline.new(convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
+        HTMLPipeline.new(
+          convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
           node_filters: [
             HTMLPipeline::NodeFilter::TeamMentionFilter.new,
-          ])
+          ],
+        )
     end
 
     def mentioned_teams(body)
@@ -26,8 +28,10 @@ class HTMLPipeline
 
       link = '<a href="/github/team" class="team-mention">@github/team</a>'
 
-      assert_equal("<p>#{link}: check it out.</p>",
-        res)
+      assert_equal(
+        "<p>#{link}: check it out.</p>",
+        res,
+      )
     end
 
     def test_not_replacing_mentions_in_pre_tags
@@ -65,39 +69,49 @@ class HTMLPipeline
       body = "<p>@github/team &lt;script>alert(0)&lt;/script></p>"
       link = '<a href="/github/team" class="team-mention">@github/team</a>'
 
-      assert_equal("<p>#{link} &lt;script>alert(0)&lt;/script></p>",
-        @filter.call(body, context: { base_url: "/" }))
+      assert_equal(
+        "<p>#{link} &lt;script>alert(0)&lt;/script></p>",
+        @filter.call(body, context: { base_url: "/" }),
+      )
     end
 
     def test_links_to_nothing_with_user_mention
       body = "<p>Hi, @kneath</p>"
 
-      assert_equal("<p>Hi, @kneath</p>",
-        @filter.call(body, context: { base_url: "/" }))
+      assert_equal(
+        "<p>Hi, @kneath</p>",
+        @filter.call(body, context: { base_url: "/" }),
+      )
     end
 
     def test_base_url_slash
       body = "<p>Hi, @github/team!</p>"
       link = '<a href="/github/team" class="team-mention">@github/team</a>'
 
-      assert_equal("<p>Hi, #{link}!</p>",
-        @filter.call(body, context: { base_url: "/" }))
+      assert_equal(
+        "<p>Hi, #{link}!</p>",
+        @filter.call(body, context: { base_url: "/" }),
+      )
     end
 
     def test_base_url_under_custom_route
       body = "<p>Hi, @org/team!</p>"
       link = '<a href="www.github.com/org/team" class="team-mention">@org/team</a>'
 
-      assert_equal("<p>Hi, #{link}!</p>",
-        @filter.call(body, context: { base_url: "www.github.com" }))
+      assert_equal(
+        "<p>Hi, #{link}!</p>",
+        @filter.call(body, context: { base_url: "www.github.com" }),
+      )
     end
 
     def test_base_url_slash_with_tilde
       body = "<p>Hi, @github/team!</p>"
       link = '<a href="/~github/team" class="team-mention">@github/team</a>'
 
-      assert_equal("<p>Hi, #{link}!</p>",
-        @filter.call(body, context: { base_url: "/~" }))
+      assert_equal(
+        "<p>Hi, #{link}!</p>",
+        @filter.call(body, context: { base_url: "/~" }),
+      )
     end
 
     def test_multiple_team_mentions
@@ -105,8 +119,10 @@ class HTMLPipeline
       link_whale = '<a href="/github/whale" class="team-mention">@github/whale</a>'
       link_donut = '<a href="/github/donut" class="team-mention">@github/donut</a>'
 
-      assert_equal("<p>Hi, #{link_whale} and #{link_donut}!</p>",
-        @filter.call(body))
+      assert_equal(
+        "<p>Hi, #{link_whale} and #{link_donut}!</p>",
+        @filter.call(body),
+      )
     end
 
     def test_matches_teams_in_body
@@ -206,8 +222,10 @@ class HTMLPipeline
 
       link = '<a href="/_abc/XYZ" class="team-mention">@_abc/XYZ</a>'
 
-      assert_equal("<p>#{link}: test</p>",
-        res)
+      assert_equal(
+        "<p>#{link}: test</p>",
+        res,
+      )
     end
 
     def test_mention_link_filter

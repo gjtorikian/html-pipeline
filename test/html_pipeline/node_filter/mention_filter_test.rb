@@ -8,11 +8,13 @@ class HTMLPipeline
       @filter = HTMLPipeline::NodeFilter::MentionFilter
       @context = { base_url: "/", info_url: nil, username_pattern: nil }
 
-      @pipeline = HTMLPipeline.new(convert_filter:
-        HTMLPipeline::ConvertFilter::MarkdownFilter.new,
+      @pipeline = HTMLPipeline.new(
+        convert_filter:
+                HTMLPipeline::ConvertFilter::MarkdownFilter.new,
         node_filters: [
           HTMLPipeline::NodeFilter::MentionFilter.new,
-        ])
+        ],
+      )
     end
 
     def mentioned_usernames(body)
@@ -27,8 +29,10 @@ class HTMLPipeline
 
         link = '<a href="/kneath" class="user-mention">@kneath</a>'
 
-        assert_equal("<p>#{link}: check it out.</p>",
-          res)
+        assert_equal(
+          "<p>#{link}: check it out.</p>",
+          res,
+        )
       end
 
     def test_not_replacing_mentions_in_pre_tags
@@ -65,32 +69,40 @@ class HTMLPipeline
       body = "<p>@kneath &lt;script>alert(0)&lt;/script></p>"
       link = '<a href="/kneath" class="user-mention">@kneath</a>'
 
-      assert_equal("<p>#{link} &lt;script>alert(0)&lt;/script></p>",
-        @filter.call(body, context: @context))
+      assert_equal(
+        "<p>#{link} &lt;script>alert(0)&lt;/script></p>",
+        @filter.call(body, context: @context),
+      )
     end
 
     def test_base_url_slash
       body = "<p>Hi, @jch!</p>"
       link = '<a href="/jch" class="user-mention">@jch</a>'
 
-      assert_equal("<p>Hi, #{link}!</p>",
-        @filter.call(body, context: { base_url: "/" }))
+      assert_equal(
+        "<p>Hi, #{link}!</p>",
+        @filter.call(body, context: { base_url: "/" }),
+      )
     end
 
     def test_base_url_under_custom_route
       body = "<p>Hi, @jch!</p>"
       link = '<a href="/userprofile/jch" class="user-mention">@jch</a>'
 
-      assert_equal("<p>Hi, #{link}!</p>",
-        @filter.call(body, context: @context.merge({ base_url: "/userprofile" })))
+      assert_equal(
+        "<p>Hi, #{link}!</p>",
+        @filter.call(body, context: @context.merge({ base_url: "/userprofile" })),
+      )
     end
 
     def test_base_url_slash_with_tilde
       body = "<p>Hi, @jch!</p>"
       link = '<a href="/~jch" class="user-mention">@jch</a>'
 
-      assert_equal("<p>Hi, #{link}!</p>",
-        @filter.call(body, context: @context.merge({ base_url: "/~" })))
+      assert_equal(
+        "<p>Hi, #{link}!</p>",
+        @filter.call(body, context: @context.merge({ base_url: "/~" })),
+      )
     end
 
     def test_matches_usernames_in_body
@@ -190,8 +202,10 @@ class HTMLPipeline
 
       link = '<a href="/_abc" class="user-mention">@_abc</a>'
 
-      assert_equal("<p>#{link}: test.</p>",
-        res)
+      assert_equal(
+        "<p>#{link}: test.</p>",
+        res,
+      )
     end
 
     def test_filter_does_not_create_a_new_object_for_default_username_pattern

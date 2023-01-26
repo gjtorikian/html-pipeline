@@ -11,23 +11,31 @@ class HTMLPipeline
     end
 
     def test_http
-      assert_equal(%(<a href="https://github.com">github.com</a>),
-        HttpsFilter.call(%(<a href="http://github.com">github.com</a>), context: @options))
+      assert_equal(
+        %(<a href="https://github.com">github.com</a>),
+        HttpsFilter.call(%(<a href="http://github.com">github.com</a>), context: @options),
+      )
     end
 
     def test_https
-      assert_equal(%(<a href="https://github.com">github.com</a>),
-        HttpsFilter.call(%(<a href="https://github.com">github.com</a>), context: @options))
+      assert_equal(
+        %(<a href="https://github.com">github.com</a>),
+        HttpsFilter.call(%(<a href="https://github.com">github.com</a>), context: @options),
+      )
     end
 
     def test_subdomain
-      assert_equal(%(<a href="https://help.github.com">github.com</a>),
-        HttpsFilter.call(%(<a href="http://help.github.com">github.com</a>), context: @options))
+      assert_equal(
+        %(<a href="https://help.github.com">github.com</a>),
+        HttpsFilter.call(%(<a href="http://help.github.com">github.com</a>), context: @options),
+      )
     end
 
     def test_other
-      assert_equal(%(<a href="https://github.io">github.io</a>),
-        HttpsFilter.call(%(<a href="http://github.io">github.io</a>), context: @options))
+      assert_equal(
+        %(<a href="https://github.io">github.io</a>),
+        HttpsFilter.call(%(<a href="http://github.io">github.io</a>), context: @options),
+      )
     end
   end
 end

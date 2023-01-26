@@ -145,8 +145,11 @@ end
     context = context.freeze
     result ||= {}
 
-    payload = default_payload({ text_filters: @text_filters.map(&:name),
-                                context: context, result: result, })
+    payload = default_payload({
+      text_filters: @text_filters.map(&:name),
+      context: context,
+      result: result,
+    })
     instrument("call_text_filters.html_pipeline", payload) do
       result[:output] =
         @text_filters.inject(text) do |doc, filter|
@@ -159,8 +162,11 @@ end
     html = @convert_filter.call(text) unless @convert_filter.nil?
 
     unless @node_filters.empty?
-      payload = default_payload({ node_filters: @node_filters.map { |f| f.class.name },
-        context: context, result: result, })
+      payload = default_payload({
+        node_filters: @node_filters.map { |f| f.class.name },
+        context: context,
+        result: result,
+      })
       instrument("call_node_filters.html_pipeline", payload) do
         result[:output] = Selma::Rewriter.new(sanitizer: @sanitization_config, handlers: @node_filters).rewrite(html)
       end
@@ -178,8 +184,11 @@ end
   #
   # Returns the result of the filter.
   def perform_filter(filter, doc, context: {}, result: {})
-    payload = default_payload({ filter: filter.name,
-                                context: context, result: result, })
+    payload = default_payload({
+      filter: filter.name,
+      context: context,
+      result: result,
+    })
     instrument("call_filter.html_pipeline", payload) do
       filter.call(doc, context: context, result: result)
     end

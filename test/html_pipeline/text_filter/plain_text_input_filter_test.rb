@@ -21,8 +21,10 @@ class HTMLPipeline
     def test_html_escapes_plain_text_input
       doc = PlainTextInputFilter.call("See: <http://example.org>", context: {})
 
-      assert_equal("<div>See: &lt;http://example.org&gt;</div>",
-        doc.to_s)
+      assert_equal(
+        "<div>See: &lt;http://example.org&gt;</div>",
+        doc.to_s,
+      )
     end
   end
 end
