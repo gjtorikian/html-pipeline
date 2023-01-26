@@ -105,9 +105,13 @@ class HTMLPipeline
 
       assert_equal("\n", html)
 
-      config = { elements: ["svg", "circle"],
-                 attributes: { "svg" => ["width"],
-                               "circle" => ["cx", "cy", "r"], }, }
+      config = {
+        elements: ["svg", "circle"],
+        attributes: {
+          "svg" => ["width"],
+          "circle" => ["cx", "cy", "r"],
+        },
+      }
 
       result = <<~FRAG
         <svg width="100">

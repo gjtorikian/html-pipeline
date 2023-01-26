@@ -18,15 +18,19 @@ class HTMLPipeline
       def test_rewrites_root_urls
         orig = %(<p><img src="/img.png"></p>)
 
-        assert_equal("<p><img src=\"#{@image_base_url}/img.png\"></p>",
-          AbsoluteSourceFilter.call(orig, context: @options).to_s)
+        assert_equal(
+          "<p><img src=\"#{@image_base_url}/img.png\"></p>",
+          AbsoluteSourceFilter.call(orig, context: @options).to_s,
+        )
       end
 
       def test_rewrites_relative_urls
         orig = %(<p><img src="post/img.png"></p>)
 
-        assert_equal("<p><img src=\"#{@image_subpage_url}/img.png\"></p>",
-          AbsoluteSourceFilter.call(orig, context: @options).to_s)
+        assert_equal(
+          "<p><img src=\"#{@image_subpage_url}/img.png\"></p>",
+          AbsoluteSourceFilter.call(orig, context: @options).to_s,
+        )
       end
 
       def test_does_not_rewrite_absolute_urls

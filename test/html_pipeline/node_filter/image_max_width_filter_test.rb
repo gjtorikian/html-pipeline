@@ -12,8 +12,10 @@ class HTMLPipeline
       body = '<p>Screenshot: <img src="screenshot.png"></p>'
       res = @filter.call(body)
 
-      assert_equal('<p>Screenshot: <a target="_blank" href="screenshot.png"><img src="screenshot.png" style="max-width:100%;"></a></p>',
-        res)
+      assert_equal(
+        '<p>Screenshot: <a target="_blank" href="screenshot.png"><img src="screenshot.png" style="max-width:100%;"></a></p>',
+        res,
+      )
     end
 
     def test_leaves_existing_image_style_tags_alone
@@ -21,8 +23,10 @@ class HTMLPipeline
 
       res = @filter.call(body)
 
-      assert_equal('<p><img src="screenshot.png" style="width:100px;"></p>',
-        res)
+      assert_equal(
+        '<p><img src="screenshot.png" style="width:100px;"></p>',
+        res,
+      )
     end
 
     def test_links_to_image
@@ -30,8 +34,10 @@ class HTMLPipeline
 
       res = @filter.call(body)
 
-      assert_equal('<p>Screenshot: <a target="_blank" href="screenshot.png"><img src="screenshot.png" style="max-width:100%;"></a></p>',
-        res)
+      assert_equal(
+        '<p>Screenshot: <a target="_blank" href="screenshot.png"><img src="screenshot.png" style="max-width:100%;"></a></p>',
+        res,
+      )
     end
 
     def test_doesnt_link_to_image_when_already_linked
@@ -39,8 +45,10 @@ class HTMLPipeline
 
       res = @filter.call(body)
 
-      assert_equal('<p>Screenshot: <a href="blah.png"><img src="screenshot.png" style="max-width:100%;"></a></p>',
-        res)
+      assert_equal(
+        '<p>Screenshot: <a href="blah.png"><img src="screenshot.png" style="max-width:100%;"></a></p>',
+        res,
+      )
     end
 
     def test_doesnt_screw_up_inlined_images

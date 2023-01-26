@@ -24,8 +24,10 @@ class HTMLPipeline
     #  result[:output].to_s
     #  # => "<h1>\n<a id=\"ice-cube\" class=\"anchor\" href=\"#ice-cube\">..."
     class TableOfContentsFilter < NodeFilter
-      SELECTOR = Selma::Selector.new(match_element: "h1 a[href], h2 a[href], h3 a[href], h4 a[href], h5 a[href], h6 a[href]",
-        match_text_within: "h1, h2, h3, h4, h5, h6")
+      SELECTOR = Selma::Selector.new(
+        match_element: "h1 a[href], h2 a[href], h3 a[href], h4 a[href], h5 a[href], h6 a[href]",
+        match_text_within: "h1, h2, h3, h4, h5, h6",
+      )
 
       def selector
         SELECTOR
