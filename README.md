@@ -231,7 +231,8 @@ end
 For more information on how to write effective `NodeFilter`s, refer to the provided filters, and see the underlying lib, [Selma](https://www.github.com/gjtorikian/selma) for more information.
 
 - `AbsoluteSourceFilter` - replace relative image urls with fully qualified versions
-- `EmojiFilter` - converts `:<emoji>:` to [emoji](http://www.emoji-cheat-sheet.com/)!
+- `EmojiFilter` - converts `:<emoji>:` to [emoji](http://www.emoji-cheat-sheet.com/).
+  - (Note: the included `MarkdownFilter` will already convert emoji for you)
 - `HttpsFilter` - Replacing http urls with https versions
 - `ImageMaxWidthFilter` - link to full size image for large images
 - `MentionFilter` - replace `@user` mentions with links

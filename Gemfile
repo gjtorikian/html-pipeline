@@ -27,9 +27,10 @@ group :development do
 end
 
 group :test do
-  gem "commonmarker", "~> 1.0.0.pre4", require: false
+  gem "commonmarker", "~> 1.0.0.pre7", require: false
   gem "gemoji", "~> 3.0", require: false
   gem "gemojione", "~> 4.3", require: false
+
   gem "minitest"
 
   gem "minitest-bisect", "~> 1.6"
