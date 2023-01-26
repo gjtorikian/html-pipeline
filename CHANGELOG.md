@@ -1,5 +1,27 @@
 # Changelog
 
+## [v3.0.0.pre2](https://github.com/gjtorikian/html-pipeline/tree/v3.0.0.pre2) (2023-01-26)
+
+[Full Changelog](https://github.com/gjtorikian/html-pipeline/compare/v3.0.0.pre1...v3.0.0.pre2)
+
+**Closed issues:**
+
+- Indicate a version for activesupport that has support/receives security patches \(\>= 6?\) [\#367](https://github.com/gjtorikian/html-pipeline/issues/367)
+- Add MathML elements to whitelist [\#336](https://github.com/gjtorikian/html-pipeline/issues/336)
+- Feature request: add safe semantic HTML tags to default whitelist [\#312](https://github.com/gjtorikian/html-pipeline/issues/312)
+- Allow float: left|right and clear: left|right|both in sanitation [\#302](https://github.com/gjtorikian/html-pipeline/issues/302)
+- Open link in new tab option [\#266](https://github.com/gjtorikian/html-pipeline/issues/266)
+- Consider allowing LINK and META elements in HTML [\#261](https://github.com/gjtorikian/html-pipeline/issues/261)
+- Allow SVG elements in whitelist [\#251](https://github.com/gjtorikian/html-pipeline/issues/251)
+- Allow RDFa 1.1 \(Lite\) attributes [\#249](https://github.com/gjtorikian/html-pipeline/issues/249)
+- What’s the point of allowing the accept-charset attribute in the sanitization filter ? [\#218](https://github.com/gjtorikian/html-pipeline/issues/218)
+- Use gemojione instead of gemoji [\#200](https://github.com/gjtorikian/html-pipeline/issues/200)
+- Link schema not used with \<a\> markup : print them directly [\#194](https://github.com/gjtorikian/html-pipeline/issues/194)
+
+**Merged pull requests:**
+
+- Use emoji from commonmarker [\#373](https://github.com/gjtorikian/html-pipeline/pull/373) ([gjtorikian](https://github.com/gjtorikian))
+
 ## [v3.0.0.pre1](https://github.com/gjtorikian/html-pipeline/tree/v3.0.0.pre1) (2022-12-30)
 
 [Full Changelog](https://github.com/gjtorikian/html-pipeline/compare/v2.14.3...v3.0.0.pre1)
