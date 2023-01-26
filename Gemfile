@@ -38,4 +38,5 @@ group :test do
   gem "nokogiri", "~> 1.13"
 
   gem "minitest-focus", "~> 1.1"
+  gem "rouge", "~> 3.1", require: false
 end
