@@ -80,7 +80,7 @@ class HTMLPipeline
     def needs(*keys)
       missing = keys.reject { |key| context.include?(key) }
 
-      return unless missing.any?
+      return if missing.none?
 
       raise ArgumentError,
         "Missing context keys for #{self.class.name}: #{missing.map(&:inspect).join(", ")}"

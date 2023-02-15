@@ -84,9 +84,13 @@ class HTMLPipelineTest < Minitest::Test
 
   def test_convert_filter_needed_for_text_and_html_filters
     assert_raises(HTMLPipeline::InvalidFilterError) do
-      HTMLPipeline.new(text_filters:[TestTextFilter], node_filters: [
-        HTMLPipeline::NodeFilter::MentionFilter.new,
-      ], default_context: @default_context)
+      HTMLPipeline.new(
+        text_filters: [TestTextFilter],
+        node_filters: [
+          HTMLPipeline::NodeFilter::MentionFilter.new,
+        ],
+        default_context: @default_context,
+      )
     end
   end
 
