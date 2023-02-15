@@ -1,5 +1,21 @@
 # Changelog
 
+## [Unreleased](https://github.com/gjtorikian/html-pipeline/tree/HEAD)
+
+[Full Changelog](https://github.com/gjtorikian/html-pipeline/compare/v3.0.0.pre3...HEAD)
+
+**Closed issues:**
+
+- v3: Question regarding requiring a ConvertFilter if there are NodeFilters [\#374](https://github.com/gjtorikian/html-pipeline/issues/374)
+
+## [v3.0.0.pre3](https://github.com/gjtorikian/html-pipeline/tree/v3.0.0.pre3) (2023-02-15)
+
+[Full Changelog](https://github.com/gjtorikian/html-pipeline/compare/v3.0.0.pre2...v3.0.0.pre3)
+
+**Merged pull requests:**
+
+- req convert\_filter if `text/node`filter present [\#375](https://github.com/gjtorikian/html-pipeline/pull/375) ([gjtorikian](https://github.com/gjtorikian))
+
 ## [v3.0.0.pre2](https://github.com/gjtorikian/html-pipeline/tree/v3.0.0.pre2) (2023-01-26)
 
 [Full Changelog](https://github.com/gjtorikian/html-pipeline/compare/v3.0.0.pre1...v3.0.0.pre2)
