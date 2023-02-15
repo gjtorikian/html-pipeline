@@ -15,3 +15,11 @@ module TestHelpers
 end
 
 Minitest::Test.include(TestHelpers)
+
+class TestTextFilter < HTMLPipeline::TextFilter
+  class << self
+    def call(input, context: {}, result: {})
+      input.reverse
+    end
+  end
+end

@@ -4,17 +4,9 @@ require "test_helper"
 require "helpers/mocked_instrumentation_service"
 
 class HTMLPipelineTest < Minitest::Test
-  class TestFilter < HTMLPipeline::TextFilter
-    class << self
-      def call(input, context: {}, result: {})
-        input.reverse
-      end
-    end
-  end
-
   def setup
     @default_context = {}
-    @pipeline = HTMLPipeline.new(text_filters: [TestFilter], default_context: @default_context)
+    @pipeline = HTMLPipeline.new(text_filters: [TestTextFilter], default_context: @default_context)
   end
 
   def test_filter_instrumentation
@@ -27,7 +19,7 @@ class HTMLPipelineTest < Minitest::Test
 
     assert(event, "event expected")
     assert_equal("call_filter.html_pipeline", event)
-    assert_equal(TestFilter.name, payload[:filter])
+    assert_equal(TestTextFilter.name, payload[:filter])
     assert_equal(@pipeline.class.name, payload[:pipeline])
     assert_equal(body.reverse, payload[:result][:output])
   end
@@ -87,6 +79,14 @@ class HTMLPipelineTest < Minitest::Test
   def test_incorrect_convert_filter
     assert_raises(HTMLPipeline::InvalidFilterError) do
       HTMLPipeline.new(convert_filter: HTMLPipeline::NodeFilter::ImageMaxWidthFilter, default_context: @default_context)
+    end
+  end
+
+  def test_convert_filter_needed_for_text_and_html_filters
+    assert_raises(HTMLPipeline::InvalidFilterError) do
+      HTMLPipeline.new(text_filters:[TestTextFilter], node_filters: [
+        HTMLPipeline::NodeFilter::MentionFilter.new,
+      ], default_context: @default_context)
     end
   end
 
