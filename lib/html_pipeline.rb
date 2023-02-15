@@ -116,8 +116,9 @@ end
     validate_filters(@node_filters, HTMLPipeline::NodeFilter)
 
     @convert_filter = convert_filter
-    if @convert_filter.nil? && !@node_filters.empty?
-      raise InvalidFilterError, "Must provide `convert_filter` if `node_filter`s is also provided"
+
+    if @convert_filter.nil? && (!@text_filters.empty? && !@node_filters.empty?)
+      raise InvalidFilterError, "Must provide `convert_filter` if `text_filters` and `node_filters` are also provided"
     elsif !@convert_filter.nil?
       validate_filter(@convert_filter, HTMLPipeline::ConvertFilter)
     end
