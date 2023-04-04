@@ -1,23 +1,31 @@
-# HTMLPipeline
+# HTML-Pipeline
 
 > **Note**
-> This README refers to the behavior in the new 3.0.0.pre1 gem.
+> This README refers to the behavior in the new 3.0.0.pre gem.
 
 HTML processing filters and utilities. This module is a small
 framework for defining CSS-based content filters and applying them to user
 provided content.
 
-[Although this project was started at GitHub](https://github.com/blog/1311-html-pipeline-chainable-content-filters), they no longer do. This gem must be considered standalone and independent from GitHub.
+[Although this project was started at GitHub](https://github.com/blog/1311-html-pipeline-chainable-content-filters), they no longer use it. This gem must be considered standalone and independent from GitHub.
 
-- [Installation](#installation)
-- [Usage](#usage)
-  - [More Examples](#more-examples)
-- [Filters](#filters)
-- [Dependencies](#dependencies)
-- [Documentation](#documentation)
-- [Instrumenting](#instrumenting)
-- [Third Party Extensions](#third-party-extensions)
-- [FAQ](#faq)
+- [HTML-Pipeline](#html-pipeline)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [More Examples](#more-examples)
+  - [Filters](#filters)
+    - [TextFilters](#textfilters)
+    - [ConvertFilter](#convertfilter)
+    - [Sanitization](#sanitization)
+    - [NodeFilters](#nodefilters)
+  - [Dependencies](#dependencies)
+  - [Documentation](#documentation)
+  - [Instrumenting](#instrumenting)
+  - [Third Party Extensions](#third-party-extensions)
+  - [FAQ](#faq)
+    - [1. Why doesn't my pipeline work when there's no root element in the document?](#1-why-doesnt-my-pipeline-work-when-theres-no-root-element-in-the-document)
+    - [2. How do I customize an allowlist for `SanitizationFilter`s?](#2-how-do-i-customize-an-allowlist-for-sanitizationfilters)
+    - [Contributors](#contributors)
 
 ## Installation
 
