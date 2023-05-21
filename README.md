@@ -239,7 +239,7 @@ end
 For more information on how to write effective `NodeFilter`s, refer to the provided filters, and see the underlying lib, [Selma](https://www.github.com/gjtorikian/selma) for more information.
 
 - `AbsoluteSourceFilter`: replace relative image urls with fully qualified versions
-- `AssetProxyFilter`: replace image links with an encoding link to an asset server
+- `AssetProxyFilter`: replace image links with an encoded link to an asset server
 - `EmojiFilter`: converts `:<emoji>:` to [emoji](http://www.emoji-cheat-sheet.com/)
   - (Note: the included `MarkdownFilter` will already convert emoji)
 - `HttpsFilter`: Replacing http urls with https versions
