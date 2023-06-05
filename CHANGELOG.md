@@ -1,12 +1,26 @@
 # Changelog
 
-## [Unreleased](https://github.com/gjtorikian/html-pipeline/tree/HEAD)
+## [v3.0.0.pre5](https://github.com/gjtorikian/html-pipeline/tree/v3.0.0.pre5) (2023-06-05)
 
-[Full Changelog](https://github.com/gjtorikian/html-pipeline/compare/v3.0.0.pre3...HEAD)
+[Full Changelog](https://github.com/gjtorikian/html-pipeline/compare/v3.0.0.pre4...v3.0.0.pre5)
+
+## [v3.0.0.pre4](https://github.com/gjtorikian/html-pipeline/tree/v3.0.0.pre4) (2023-06-05)
+
+[Full Changelog](https://github.com/gjtorikian/html-pipeline/compare/v3.0.0.pre3...v3.0.0.pre4)
 
 **Closed issues:**
 
+- Suggestion: add more tags to the sanitization filter [\#378](https://github.com/gjtorikian/html-pipeline/issues/378)
+- v3 gemoji, gemojione seem required - is there a way to not require at puma startup? [\#376](https://github.com/gjtorikian/html-pipeline/issues/376)
 - v3: Question regarding requiring a ConvertFilter if there are NodeFilters [\#374](https://github.com/gjtorikian/html-pipeline/issues/374)
+- alt Attribute for Emoji Images Should Use Unicode [\#272](https://github.com/gjtorikian/html-pipeline/issues/272)
+
+**Merged pull requests:**
+
+- Update gemoji requirement from ~\> 3.0 to ~\> 4.1 [\#382](https://github.com/gjtorikian/html-pipeline/pull/382) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update rouge requirement from ~\> 3.1 to ~\> 4.1 [\#381](https://github.com/gjtorikian/html-pipeline/pull/381) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Add the AssetProxyFilter [\#379](https://github.com/gjtorikian/html-pipeline/pull/379) ([digitalmoksha](https://github.com/digitalmoksha))
+- Update selma requirement from ~\> 0.0.1 to \>= 0.0.1, \< 0.2.0 [\#377](https://github.com/gjtorikian/html-pipeline/pull/377) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [v3.0.0.pre3](https://github.com/gjtorikian/html-pipeline/tree/v3.0.0.pre3) (2023-02-15)
 
