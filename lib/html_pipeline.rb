@@ -81,7 +81,7 @@ class HTMLPipeline
     def define_dependency_loaded_method(name, value)
       self.class.define_method(:"#{name}_loaded?", -> { value })
     end
-end
+  end
   # Public: Returns an Array of Filter objects for this Pipeline.
   attr_reader :text_filters, :node_filters
 

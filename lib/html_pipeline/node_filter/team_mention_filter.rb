@@ -35,7 +35,7 @@ class HTMLPipeline
             yield match, org, team
           end
         end
-    end
+      end
 
       # Default pattern used to extract team names from text. The value can be
       # overridden by providing the team_pattern variable in the context. To

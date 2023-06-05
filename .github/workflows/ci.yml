@@ -1,9 +1,7 @@
-name: Linting
+name: CI
 
 on:
   pull_request:
-    paths:
-      - "**/*.rb"
 
 permissions:
   contents: read
@@ -11,6 +9,7 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
 
@@ -19,5 +18,5 @@ jobs:
         with:
           ruby: true
 
-      - name: Rubocop
-        run: bundle exec rake rubocop
+      - name: Run tests
+        run: bundle exec rake test

@@ -38,7 +38,7 @@ class HTMLPipeline
             yield match, login
           end
         end
-    end
+      end
       # Hash that contains all of the mention patterns used by the pipeline
       MENTION_PATTERNS = Hash.new do |hash, key|
         hash[key] = %r{

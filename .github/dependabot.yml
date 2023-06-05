@@ -15,6 +15,3 @@ updates:
       time: "09:00"
       timezone: "Etc/UTC"
     open-pull-requests-limit: 10
-    allow:
-      - dependency-name: "*"
-        dependency-type: "production"

@@ -16,6 +16,6 @@ class HTMLPipeline
       def call(input, context: {}, result: {})
         new(input, context: context, result: result).call
       end
-  end
+    end
   end
 end

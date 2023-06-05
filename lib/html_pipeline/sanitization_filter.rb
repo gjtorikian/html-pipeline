@@ -183,6 +183,6 @@ class HTMLPipeline
         sanitization_config = Selma::Sanitizer.new(config)
         Selma::Rewriter.new(sanitizer: sanitization_config).rewrite(html)
       end
-  end
+    end
   end
 end
