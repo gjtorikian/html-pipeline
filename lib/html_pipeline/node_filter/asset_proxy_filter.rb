@@ -37,7 +37,7 @@ class HTMLPipeline
       end
 
       def validate
-        needs(:asset_proxy, :asset_proxy_secret_key) if asset_proxy_enabled?
+        needs(:asset_proxy, :asset_proxy_secret_key)
       end
 
       def asset_host_allowed?(host)
@@ -74,11 +74,11 @@ class HTMLPipeline
         "#{context[:asset_proxy]}/#{asset_url_hash(url)}/#{hexencode(url)}"
       end
 
-      def asset_url_hash(url)
+      private def asset_url_hash(url)
         OpenSSL::HMAC.hexdigest("sha1", context[:asset_proxy_secret_key], url)
       end
 
-      def hexencode(str)
+      private def hexencode(str)
         str.unpack1("H*")
       end
     end

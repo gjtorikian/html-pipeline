@@ -49,7 +49,7 @@ class HTMLPipeline
       def call(input, context: {})
         raise NoMethodError
       end
-  end
+    end
     # Make sure the context has everything we need. Noop: Subclasses can override.
     def validate; end
 

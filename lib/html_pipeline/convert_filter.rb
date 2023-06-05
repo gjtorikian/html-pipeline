@@ -12,6 +12,6 @@ class HTMLPipeline
       def call(text, context: {}, result: {})
         new(context: context, result: result).call(text)
       end
-  end
+    end
   end
 end
