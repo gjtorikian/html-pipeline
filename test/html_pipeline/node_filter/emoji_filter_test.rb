@@ -10,10 +10,10 @@ class HTMLPipeline
     end
 
     def test_emojify
-      orig = "<p>:shipit:</p>"
+      orig = "<p>:armenia:</p>"
       result = @emoji_filter.call(orig, context: { asset_root: "https://foo.com" })
 
-      assert_match("https://foo.com/emoji/shipit.png", result)
+      assert_match("https://foo.com/emoji/unicode/1f1e6-1f1f2.png", result)
     end
 
     def test_uri_encoding
@@ -58,46 +58,46 @@ class HTMLPipeline
     end
 
     def test_not_emojify_in_custom_single_tag_foo
-      body = "<foo>:shipit:</foo>"
+      body = "<foo>:armenia:</foo>"
       result = @emoji_filter.call(body, context: { asset_root: "https://foo.com", ignored_ancestor_tags: ["foo"] })
 
       assert_equal(body, result)
     end
 
     def test_not_emojify_in_custom_multiple_tags_foo_and_bar
-      body = "<bar>:shipit:</bar>"
+      body = "<bar>:armenia:</bar>"
       result = @emoji_filter.call(body, context: { asset_root: "https://foo.com", ignored_ancestor_tags: ["foo", "bar"] })
 
       assert_equal(body, result)
     end
 
     def test_img_tag_attributes
-      body = "<p>:shipit:</p>"
+      body = "<p>:armenia:</p>"
       result = @emoji_filter.call(body, context: { asset_root: "https://foo.com" })
 
-      assert_match(%(<img class="emoji" title=":shipit:" alt=":shipit:" src="https://foo.com/emoji/shipit.png" height="20" width="20" align="absmiddle">), result)
+      assert_match(%(<img class="emoji" title=":armenia:" alt=":armenia:" src="https://foo.com/emoji/unicode/1f1e6-1f1f2.png" height="20" width="20" align="absmiddle">), result)
     end
 
     def test_img_tag_attributes_can_be_customized
-      body = "<p>:shipit:</p>"
+      body = "<p>:armenia:</p>"
       result = @emoji_filter.call(body, context: { asset_root: "https://foo.com", img_attrs: Hash("draggable" => "false", "height" => nil, "width" => nil, "align" => nil) })
 
-      assert_match(%(<img class="emoji" title=":shipit:" alt=":shipit:" src="https://foo.com/emoji/shipit.png" draggable="false">), result)
+      assert_match(%(<img class="emoji" title=":armenia:" alt=":armenia:" src="https://foo.com/emoji/unicode/1f1e6-1f1f2.png" draggable="false">), result)
     end
 
     def test_img_attrs_value_can_accept_proclike_object
       remove_colons = ->(name) { name.delete(":") }
-      body = "<p>:shipit:</p>"
+      body = "<p>:armenia:</p>"
       result = @emoji_filter.call(body, context: { asset_root: "https://foo.com", img_attrs: Hash("title" => remove_colons) })
 
-      assert_match(%(<img class="emoji" title="shipit" alt=":shipit:" src="https://foo.com/emoji/shipit.png" height="20" width="20" align="absmiddle">), result)
+      assert_match(%(<img class="emoji" title="armenia" alt=":armenia:" src="https://foo.com/emoji/unicode/1f1e6-1f1f2.png" height="20" width="20" align="absmiddle">), result)
     end
 
     def test_img_attrs_can_accept_symbolized_keys
-      body = "<p>:shipit:</p>"
+      body = "<p>:armenia:</p>"
       result = @emoji_filter.call(body, context: { asset_root: "https://foo.com", img_attrs: Hash(draggable: false, height: nil, width: nil, align: nil) })
 
-      assert_match(%(<img class="emoji" title=":shipit:" alt=":shipit:" src="https://foo.com/emoji/shipit.png" draggable="false">), result)
+      assert_match(%(<img class="emoji" title=":armenia:" alt=":armenia:" src="https://foo.com/emoji/unicode/1f1e6-1f1f2.png" draggable="false">), result)
     end
 
     def test_works_with_gemoji

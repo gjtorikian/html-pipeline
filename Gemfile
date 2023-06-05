@@ -28,7 +28,7 @@ end
 
 group :test do
   gem "commonmarker", "~> 1.0.0.pre7", require: false
-  gem "gemoji", "~> 3.0", require: false
+  gem "gemoji", "~> 4.1", require: false
   gem "gemojione", "~> 4.3", require: false
 
   gem "minitest"
