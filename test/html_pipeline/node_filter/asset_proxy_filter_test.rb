@@ -14,21 +14,6 @@ class HTMLPipeline
       %(<img src="#{path}" />)
     end
 
-    it "does not replace if disabled" do
-      settings = {
-        enabled: false,
-        secret_key: "shared-secret",
-        url: "https://assets.example.com",
-        allowlist: ["somewhere.com", "*.mydomain.com"],
-      }
-
-      context = DESCRIBED_CLASS.transform_context({}, settings)
-      src = "http://example.com/test.png"
-      res = @filter.call(image(src), context: context)
-
-      assert_equal(image(src), res)
-    end
-
     describe "setting up the context" do
       it "#transform_context" do
         settings = {
@@ -40,7 +25,6 @@ class HTMLPipeline
 
         context = DESCRIBED_CLASS.transform_context({}, settings)
 
-        assert(context[:asset_proxy_enabled])
         assert_equal("shared-secret", context[:asset_proxy_secret_key])
         assert_equal("https://assets.example.com", context[:asset_proxy])
         assert_equal(/^(somewhere\.com|.*?\.mydomain\.com)$/i, context[:asset_proxy_domain_regexp])

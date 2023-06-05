@@ -20,8 +20,6 @@ class HTMLPipeline
       end
 
       def handle_element(element)
-        return unless asset_proxy_enabled?
-
         original_src = element["src"]
         return unless original_src
 
@@ -51,9 +49,6 @@ class HTMLPipeline
         # all the necessary keys in the context. One example would be to override
         # this and pull the settings from a set of global application settings.
         def transform_context(context, proxy_settings = {})
-          context[:asset_proxy_enabled] = proxy_settings.fetch(:enabled, true)
-          return context unless context[:asset_proxy_enabled]
-
           context[:asset_proxy] = proxy_settings[:url] if proxy_settings[:url]
           context[:asset_proxy_secret_key] = proxy_settings[:secret_key] if proxy_settings[:secret_key]
 
@@ -75,13 +70,7 @@ class HTMLPipeline
         end
       end
 
-      private
-
-      def asset_proxy_enabled?
-        context[:asset_proxy_enabled]
-      end
-
-      def asset_proxy_url(url)
+      private def asset_proxy_url(url)
         "#{context[:asset_proxy]}/#{asset_url_hash(url)}/#{hexencode(url)}"
       end
 
