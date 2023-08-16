@@ -2,6 +2,7 @@
 
 require "test_helper"
 require "helpers/mocked_instrumentation_service"
+require "html_pipeline/node_filter/image_max_width_filter"
 
 class HTMLPipelineTest < Minitest::Test
   def setup

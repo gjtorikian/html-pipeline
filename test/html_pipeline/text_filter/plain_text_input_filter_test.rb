@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "test_helper"
+require "html_pipeline/text_filter/plain_text_input_filter"
 
 class HTMLPipeline
   class PlainTextInputFilterTest < Minitest::Test

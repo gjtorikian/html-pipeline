@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "test_helper"
+require "html_pipeline/node_filter/syntax_highlight_filter"
 
 SyntaxHighlightFilter = HTMLPipeline::NodeFilter::SyntaxHighlightFilter
 

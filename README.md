@@ -267,6 +267,14 @@ gem "rouge"
 
 When developing a custom filter, call `HTMLPipeline.require_dependency` at the start to ensure that the local machine has the necessary dependency. You can also use `HTMLPipeline.require_dependencies` to provide a list of dependencies to check.
 
+On a similar note, you must manually require whichever filters you desire:
+
+```ruby
+require "html_pipeline" # must be included
+require "html_pipeline/convert_filter/markdown_filter" # included because you want to use this filter
+require "html_pipeline/node_filter/mention_filter" # included because you want to use this filter
+```
+
 ## Documentation
 
 Full reference documentation can be [found here](http://rubydoc.info/gems/html-pipeline/frames).

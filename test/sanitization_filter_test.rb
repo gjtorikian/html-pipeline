@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "test_helper"
+require "html_pipeline/node_filter/mention_filter"
 
 class HTMLPipeline
   class SanitizationFilterTest < Minitest::Test

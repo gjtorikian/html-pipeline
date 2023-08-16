@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "test_helper"
+require "html_pipeline/convert_filter/markdown_filter"
 
 MarkdownFilter = HTMLPipeline::ConvertFilter::MarkdownFilter
 

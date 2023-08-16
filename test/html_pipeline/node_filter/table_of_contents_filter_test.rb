@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "test_helper"
+require "html_pipeline/node_filter/table_of_contents_filter"
 
 class HTMLPipeline
   class NodeFilter
