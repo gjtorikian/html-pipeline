@@ -2,10 +2,15 @@
 
 require "zeitwerk"
 lib_dir = File.join(File.dirname(__dir__), "lib")
+lib_html_pipeline_dir = File.join(File.dirname(__dir__), "lib", "html_pipeline")
 gem_loader = Zeitwerk::Loader.for_gem
 gem_loader.inflector.inflect(
   "html_pipeline" => "HTMLPipeline",
 )
+
+gem_loader.ignore(File.join(lib_html_pipeline_dir, "convert_filter"))
+gem_loader.ignore(File.join(lib_html_pipeline_dir, "node_filter"))
+gem_loader.ignore(File.join(lib_html_pipeline_dir, "text_filter"))
 gem_loader.ignore(File.join(lib_dir, "html-pipeline.rb"))
 gem_loader.setup
 
