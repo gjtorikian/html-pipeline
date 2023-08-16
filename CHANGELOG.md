@@ -1,3 +1,5 @@
+## [v3.0.0.pre6] - 16-08-2023
+null
 # Changelog
 
 ## [v3.0.0.pre5](https://github.com/gjtorikian/html-pipeline/tree/v3.0.0.pre5) (2023-06-05)
