@@ -79,7 +79,7 @@ end
 
 pipeline = HTMLPipeline.new(
   text_filters: [HelloJohnnyFilter.new]
-  convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new),
+  convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
     # note: next line is not needed as sanitization occurs by default;
     # see below for more info
   sanitization_config: HTMLPipeline::SanitizationFilter::DEFAULT_CONFIG,
@@ -126,8 +126,8 @@ context = {
 
 # Pipeline used for user provided content on the web
 MarkdownPipeline = HTMLPipeline.new (
-  text_filters: [HTMLPipeline::TextFilter::ImageMaxWidthFilter.new],
-  convert_filter: [HTMLPipeline::ConvertFilter::MarkdownFilter.new],
+  text_filters: [HTMLPipeline::TextFilter::ImageFilter.new],
+  convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
   node_filters: [
     HTMLPipeline::NodeFilter::HttpsFilter.new,HTMLPipeline::NodeFilter::MentionFilter.new,
   ], context: context)
@@ -137,7 +137,7 @@ MarkdownPipeline = HTMLPipeline.new (
 HtmlEmailPipeline = HTMLPipeline.new(
   text_filters: [
     PlainTextInputFilter.new,
-    ImageMaxWidthFilter.new
+    ImageFilter.new
   ], {})
 ```
 
@@ -173,7 +173,7 @@ pipeline = HTMLPipeline.new \
   text_filters: [
     HTMLPipeline::MarkdownFilter,
   ],
-  convert_filter: [HTMLPipeline::ConvertFilter::MarkdownFilter.new],
+  convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
   sanitization_config: ALLOWLIST
 
 result = pipeline.call <<-CODE
@@ -201,7 +201,7 @@ pipeline = HTMLPipeline.new \
   text_filters: [
     HTMLPipeline::MarkdownFilter,
   ],
-  convert_filter: [HTMLPipeline::ConvertFilter::MarkdownFilter.new],
+  convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
   sanitization_config: nil
 ```
 
@@ -266,6 +266,14 @@ gem "rouge"
 > See the [Gemfile](/Gemfile) `:test` group for any version requirements.
 
 When developing a custom filter, call `HTMLPipeline.require_dependency` at the start to ensure that the local machine has the necessary dependency. You can also use `HTMLPipeline.require_dependencies` to provide a list of dependencies to check.
+
+On a similar note, you must manually require whichever filters you desire:
+
+```ruby
+require "html_pipeline" # must be included
+require "html_pipeline/convert_filter/markdown_filter" # included because you want to use this filter
+require "html_pipeline/node_filter/mention_filter" # included because you want to use this filter
+```
 
 ## Documentation
 

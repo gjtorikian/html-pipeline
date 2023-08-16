@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "test_helper"
+require "html_pipeline/node_filter/asset_proxy_filter"
 
 class HTMLPipeline
   class AssetProxyFilterTest < Minitest::Spec

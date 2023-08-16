@@ -17,7 +17,7 @@ class HTMLPipeline
 
       # Build a regexp that matches all valid :emoji: names.
       def after_initialize
-        @emoji_pattern ||= /:(#{emoji_names.map { |name| Regexp.escape(name) }.join('|')}):/
+        @emoji_pattern ||= /:(#{emoji_names.map { |name| Regexp.escape(name) }.join("|")}):/
       end
 
       def selector
