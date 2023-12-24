@@ -1,3 +1,32 @@
+## [v3.0.0] - 24-12-2023
+## What's Changed
+* Switch to GitHub Actions by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/346
+* add truffleruby-head by @gogainda in https://github.com/gjtorikian/html-pipeline/pull/348
+* Add Rubocop by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/349
+* Support multiple dependencies per filter by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/351
+* Split filters up by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/360
+* Migrate from Nokogiri to Selma by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/368
+* You shall pass by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/369
+* Update Selma signatures by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/370
+* Close sanitization-related issues by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/371
+* Drop SyntaxHighlightFilter by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/372
+* V3 Release by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/347
+* Use emoji from commonmarker by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/373
+* req convert_filter if filter present by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/375
+* Update selma requirement from ~> 0.0.1 to >= 0.0.1, < 0.2.0 by @dependabot in https://github.com/gjtorikian/html-pipeline/pull/377
+* Add the AssetProxyFilter by @digitalmoksha in https://github.com/gjtorikian/html-pipeline/pull/379
+* Update rouge requirement from ~> 3.1 to ~> 4.1 by @dependabot in https://github.com/gjtorikian/html-pipeline/pull/381
+* Update gemoji requirement from ~> 3.0 to ~> 4.1 by @dependabot in https://github.com/gjtorikian/html-pipeline/pull/382
+* Have Zeitwerk not automatically load filters by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/383
+* Bump the github-actions group with 1 update by @dependabot in https://github.com/gjtorikian/html-pipeline/pull/384
+* :gem: 3.0.0 by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/386
+
+## New Contributors
+* @gogainda made their first contribution in https://github.com/gjtorikian/html-pipeline/pull/348
+* @dependabot made their first contribution in https://github.com/gjtorikian/html-pipeline/pull/377
+* @digitalmoksha made their first contribution in https://github.com/gjtorikian/html-pipeline/pull/379
+
+**Full Changelog**: https://github.com/gjtorikian/html-pipeline/compare/v2.14.3...v3.0.0
 ## [v3.0.0.pre6] - 16-08-2023
 null
 # Changelog
