@@ -8,7 +8,7 @@ SyntaxHighlightFilter = HTMLPipeline::NodeFilter::SyntaxHighlightFilter
 class HTMLPipeline
   class SyntaxHighlightFilterTest < Minitest::Test
     def test_highlight_default
-      result = SyntaxHighlightFilter.call(\
+      result = SyntaxHighlightFilter.call(
         "<pre>hello</pre>", context: { highlight: "coffeescript" }
       )
 
@@ -19,7 +19,7 @@ class HTMLPipeline
     end
 
     def test_highlight_default_will_not_override
-      result = SyntaxHighlightFilter.call(\
+      result = SyntaxHighlightFilter.call(
         "<pre lang='c'>hello</pre>",  context: { highlight: "coffeescript" }
       )
 
@@ -30,7 +30,7 @@ class HTMLPipeline
     end
 
     def test_highlight_does_not_remove_pre_tag
-      result = SyntaxHighlightFilter.call(\
+      result = SyntaxHighlightFilter.call(
         "<pre lang='c'>hello</pre>",  context: { highlight: "coffeescript" }
       )
 
@@ -40,7 +40,7 @@ class HTMLPipeline
     end
 
     def test_highlight_allows_optional_scope
-      result = SyntaxHighlightFilter.call(\
+      result = SyntaxHighlightFilter.call(
         "<pre lang='c'>hello</pre>",  context: { highlight: "coffeescript", scope: "test-scope" }
       )
 
@@ -50,7 +50,7 @@ class HTMLPipeline
     end
 
     def test_highlight_keeps_the_pre_tags_lang
-      result = SyntaxHighlightFilter.call(\
+      result = SyntaxHighlightFilter.call(
         "<pre lang='c'>hello</pre>",  context: { highlight: "coffeescript" }
       )
 

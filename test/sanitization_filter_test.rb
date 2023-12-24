@@ -216,7 +216,7 @@ class HTMLPipeline
         elements: ["p", "pre", "code"],
       }
 
-      pipeline = HTMLPipeline.new(\
+      pipeline = HTMLPipeline.new(
         convert_filter:
           HTMLPipeline::ConvertFilter::MarkdownFilter.new,
         sanitization_config: config,
@@ -241,7 +241,7 @@ class HTMLPipeline
     end
 
     def test_sanitization_pipeline_can_be_removed
-      pipeline = HTMLPipeline.new(\
+      pipeline = HTMLPipeline.new(
         convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new(context: { markdown: { plugins: { syntax_highlighter: nil } } }),
         sanitization_config: nil,
         node_filters: [
