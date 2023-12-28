@@ -178,7 +178,7 @@ class HTMLPipeline
       end
     end
 
-    result = result.merge(Hash[*@node_filters.collect(&:result).flatten])
+    result = result.merge(@node_filters.collect(&:result).reduce({}, :merge))
     @node_filters.each(&:reset!)
 
     result
