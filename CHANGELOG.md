@@ -1,3 +1,11 @@
+## [v3.0.1] - 28-12-2023
+## What's Changed
+* Handle odd numbers of NodeFilters to be configured by @stevehill1981 in https://github.com/gjtorikian/html-pipeline/pull/389
+
+## New Contributors
+* @stevehill1981 made their first contribution in https://github.com/gjtorikian/html-pipeline/pull/389
+
+**Full Changelog**: https://github.com/gjtorikian/html-pipeline/compare/v3.0.0...v3.0.1
 ## [v3.0.0] - 24-12-2023
 ## What's Changed
 * Switch to GitHub Actions by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/346
