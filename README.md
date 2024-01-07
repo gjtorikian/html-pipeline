@@ -91,8 +91,8 @@ pipeline.call(user_supplied_text) # recommended: can call pipeline over and over
 Filters can be custom ones you create (like `HelloJohnnyFilter`), and `HTMLPipeline` additionally provides several helpful ones (detailed below). If you only need a single filter, you can call one individually, too:
 
 ```ruby
-filter = HTMLPipeline::ConvertFilter::MarkdownFilter.new(text)
-filter.call
+filter = HTMLPipeline::ConvertFilter::MarkdownFilter.new
+filter.call(text)
 ```
 
 Filters combine into a sequential pipeline, and each filter hands its
@@ -104,9 +104,9 @@ used to pass around arguments and metadata between filters in a pipeline. For
 example, if you want to disable footnotes in the `MarkdownFilter`, you can pass an option in the context hash:
 
 ```ruby
-context =  { markdown: extensions: { footnotes: false } }
-filter = HTMLPipeline::ConvertFilter::MarkdownFilter.new("Hi **world**!", context: context)
-filter.call
+context =  { markdown: { extensions: { footnotes: false } } }
+filter = HTMLPipeline::ConvertFilter::MarkdownFilter.new(context: context)
+filter.call("Hi **world**!")
 ```
 
 Please refer to the documentation for each filter to understand what configuration options are available.
