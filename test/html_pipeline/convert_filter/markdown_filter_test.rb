@@ -162,4 +162,11 @@ class GFMTest < Minitest::Test
       @gfm.call("* foo\n* bar", context: { markdown: options }),
     )
   end
+
+  def test_works_without_node_filters
+    markdown = "1. Foo\n2. Bar"
+    result = HTMLPipeline.new(convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new).call(markdown)[:output]
+
+    assert_equal("<ol>\n<li>Foo</li>\n<li>Bar</li>\n</ol>", result)
+  end
 end
