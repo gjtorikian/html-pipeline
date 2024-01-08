@@ -1,3 +1,12 @@
+## [v3.0.2] - 08-01-2024
+## What's Changed
+* README.md: Fix example code by @grekko in https://github.com/gjtorikian/html-pipeline/pull/390
+* Allow pipeline to run without node filters by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/392
+
+## New Contributors
+* @grekko made their first contribution in https://github.com/gjtorikian/html-pipeline/pull/390
+
+**Full Changelog**: https://github.com/gjtorikian/html-pipeline/compare/v3.0.1...v3.0.2
 ## [v3.0.1] - 28-12-2023
 ## What's Changed
 * Handle odd numbers of NodeFilters to be configured by @stevehill1981 in https://github.com/gjtorikian/html-pipeline/pull/389
