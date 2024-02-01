@@ -78,7 +78,7 @@ class HelloJohnnyFilter < HTMLPipelineFilter
 end
 
 pipeline = HTMLPipeline.new(
-  text_filters: [HelloJohnnyFilter.new]
+  text_filters: [HelloJohnnyFilter]
   convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
     # note: next line is not needed as sanitization occurs by default;
     # see below for more info
@@ -126,7 +126,7 @@ context = {
 
 # Pipeline used for user provided content on the web
 MarkdownPipeline = HTMLPipeline.new (
-  text_filters: [HTMLPipeline::TextFilter::ImageFilter.new],
+  text_filters: [HTMLPipeline::TextFilter::ImageFilter],
   convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
   node_filters: [
     HTMLPipeline::NodeFilter::HttpsFilter.new,HTMLPipeline::NodeFilter::MentionFilter.new,
@@ -136,8 +136,8 @@ MarkdownPipeline = HTMLPipeline.new (
 # processing also.
 HtmlEmailPipeline = HTMLPipeline.new(
   text_filters: [
-    PlainTextInputFilter.new,
-    ImageFilter.new
+    PlainTextInputFilter,
+    ImageFilter
   ], {})
 ```
 
