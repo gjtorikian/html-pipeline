@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'selma'
 
 class HTMLPipeline
   # A special filter with sanization routines and allowlists. This module defines
