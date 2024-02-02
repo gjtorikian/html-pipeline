@@ -1,3 +1,13 @@
+## [v3.0.3] - 02-02-2024
+## What's Changed
+* Fix typo in README by @ppworks in https://github.com/gjtorikian/html-pipeline/pull/394
+* Prevent exception by @ppworks in https://github.com/gjtorikian/html-pipeline/pull/395
+* Cut 3.0.3 by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/396
+
+## New Contributors
+* @ppworks made their first contribution in https://github.com/gjtorikian/html-pipeline/pull/394
+
+**Full Changelog**: https://github.com/gjtorikian/html-pipeline/compare/v3.0.2...v3.0.3
 ## [v3.0.2] - 08-01-2024
 ## What's Changed
 * README.md: Fix example code by @grekko in https://github.com/gjtorikian/html-pipeline/pull/390
