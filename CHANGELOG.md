@@ -1,3 +1,12 @@
+## [v3.1.0] - 28-02-2024
+## What's Changed
+* UPGRADING:  not removed by @dentarg in https://github.com/gjtorikian/html-pipeline/pull/397
+* [BREAKING]  now requires instantiation by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/398
+
+## New Contributors
+* @dentarg made their first contribution in https://github.com/gjtorikian/html-pipeline/pull/397
+
+**Full Changelog**: https://github.com/gjtorikian/html-pipeline/compare/v3.0.3...v3.1.0
 ## [v3.0.3] - 02-02-2024
 
 ## What's Changed
