@@ -9,7 +9,7 @@ require "html_pipeline/convert_filter/markdown_filter"
 class HTMLPipelineTest < Minitest::Test
   def setup
     @default_context = {}
-    @pipeline = HTMLPipeline.new(text_filters: [TestTextFilter.new], default_context: @default_context)
+    @pipeline = HTMLPipeline.new(text_filters: [TestReverseFilter.new], default_context: @default_context)
   end
 
   def test_filter_instrumentation
@@ -22,7 +22,7 @@ class HTMLPipelineTest < Minitest::Test
 
     assert(event, "event expected")
     assert_equal("call_filter.html_pipeline", event)
-    assert_equal(TestTextFilter.name, payload[:filter])
+    assert_equal(TestReverseFilter.name, payload[:filter])
     assert_equal(@pipeline.class.name, payload[:pipeline])
     assert_equal(body.reverse, payload[:result][:output])
   end
@@ -89,7 +89,7 @@ class HTMLPipelineTest < Minitest::Test
   def test_convert_filter_needed_for_text_and_html_filters
     assert_raises(HTMLPipeline::InvalidFilterError) do
       HTMLPipeline.new(
-        text_filters: [TestTextFilter.new],
+        text_filters: [TestReverseFilter.new],
         node_filters: [
           HTMLPipeline::NodeFilter::MentionFilter.new,
         ],
@@ -102,5 +102,18 @@ class HTMLPipelineTest < Minitest::Test
     assert_raises(HTMLPipeline::InvalidFilterError) do
       HTMLPipeline.new(node_filters: [HTMLPipeline::ConvertFilter::MarkdownFilter], default_context: @default_context)
     end
+  end
+
+  def test_kitchen_sink
+    text = "Hey there, @billy. Love to see <marquee>yah</marquee>!"
+
+    pipeline = HTMLPipeline.new(
+      text_filters: [TestReverseFilter.new, YehBolderFilter.new],
+      convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
+      node_filters: [HTMLPipeline::NodeFilter::MentionFilter.new],
+    )
+    result = pipeline.call(text)[:output]
+
+    assert_equal("<p>!&gt;eeuqram/eeuqram&lt; ees ot evoL .yllib@ ,ereht <strong>yeH</strong></p>", result)
   end
 end
