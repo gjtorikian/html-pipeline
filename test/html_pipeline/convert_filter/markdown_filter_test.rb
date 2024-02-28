@@ -16,8 +16,8 @@ class HTMLPipeline
         "See http://example.org/ for more info"
       @code =
         "```\n" \
-          "def hello()" \
-          "  'world'" \
+          "def hello()  " \
+          "'world'" \
           "end" \
           "```"
       @header = <<~DOC
