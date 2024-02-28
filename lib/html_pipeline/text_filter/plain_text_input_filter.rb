@@ -5,8 +5,8 @@ class HTMLPipeline
     # Simple filter for plain text input. HTML escapes the text input and wraps it
     # in a div.
     class PlainTextInputFilter < TextFilter
-      def call
-        "<div>#{CGI.escapeHTML(@text)}</div>"
+      def call(text)
+        "<div>#{CGI.escapeHTML(text)}</div>"
       end
     end
   end

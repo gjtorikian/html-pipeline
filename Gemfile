@@ -10,8 +10,6 @@ gem "awesome_print"
 gem "rubocop"
 gem "rubocop-standard"
 
-gem "github_changelog_generator", "~> 1.16"
-
 gem "sorbet-runtime"
 
 group :development, :test do

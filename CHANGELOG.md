@@ -1,61 +1,79 @@
 ## [v3.0.3] - 02-02-2024
+
 ## What's Changed
-* Fix typo in README by @ppworks in https://github.com/gjtorikian/html-pipeline/pull/394
-* Prevent exception by @ppworks in https://github.com/gjtorikian/html-pipeline/pull/395
-* Cut 3.0.3 by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/396
+
+- Fix typo in README by @ppworks in https://github.com/gjtorikian/html-pipeline/pull/394
+- Prevent exception by @ppworks in https://github.com/gjtorikian/html-pipeline/pull/395
+- Cut 3.0.3 by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/396
 
 ## New Contributors
-* @ppworks made their first contribution in https://github.com/gjtorikian/html-pipeline/pull/394
+
+- @ppworks made their first contribution in https://github.com/gjtorikian/html-pipeline/pull/394
 
 **Full Changelog**: https://github.com/gjtorikian/html-pipeline/compare/v3.0.2...v3.0.3
+
 ## [v3.0.2] - 08-01-2024
+
 ## What's Changed
-* README.md: Fix example code by @grekko in https://github.com/gjtorikian/html-pipeline/pull/390
-* Allow pipeline to run without node filters by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/392
+
+- README.md: Fix example code by @grekko in https://github.com/gjtorikian/html-pipeline/pull/390
+- Allow pipeline to run without node filters by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/392
 
 ## New Contributors
-* @grekko made their first contribution in https://github.com/gjtorikian/html-pipeline/pull/390
+
+- @grekko made their first contribution in https://github.com/gjtorikian/html-pipeline/pull/390
 
 **Full Changelog**: https://github.com/gjtorikian/html-pipeline/compare/v3.0.1...v3.0.2
+
 ## [v3.0.1] - 28-12-2023
+
 ## What's Changed
-* Handle odd numbers of NodeFilters to be configured by @stevehill1981 in https://github.com/gjtorikian/html-pipeline/pull/389
+
+- Handle odd numbers of NodeFilters to be configured by @stevehill1981 in https://github.com/gjtorikian/html-pipeline/pull/389
 
 ## New Contributors
-* @stevehill1981 made their first contribution in https://github.com/gjtorikian/html-pipeline/pull/389
+
+- @stevehill1981 made their first contribution in https://github.com/gjtorikian/html-pipeline/pull/389
 
 **Full Changelog**: https://github.com/gjtorikian/html-pipeline/compare/v3.0.0...v3.0.1
+
 ## [v3.0.0] - 24-12-2023
+
 ## What's Changed
-* Switch to GitHub Actions by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/346
-* add truffleruby-head by @gogainda in https://github.com/gjtorikian/html-pipeline/pull/348
-* Add Rubocop by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/349
-* Support multiple dependencies per filter by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/351
-* Split filters up by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/360
-* Migrate from Nokogiri to Selma by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/368
-* You shall pass by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/369
-* Update Selma signatures by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/370
-* Close sanitization-related issues by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/371
-* Drop SyntaxHighlightFilter by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/372
-* V3 Release by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/347
-* Use emoji from commonmarker by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/373
-* req convert_filter if filter present by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/375
-* Update selma requirement from ~> 0.0.1 to >= 0.0.1, < 0.2.0 by @dependabot in https://github.com/gjtorikian/html-pipeline/pull/377
-* Add the AssetProxyFilter by @digitalmoksha in https://github.com/gjtorikian/html-pipeline/pull/379
-* Update rouge requirement from ~> 3.1 to ~> 4.1 by @dependabot in https://github.com/gjtorikian/html-pipeline/pull/381
-* Update gemoji requirement from ~> 3.0 to ~> 4.1 by @dependabot in https://github.com/gjtorikian/html-pipeline/pull/382
-* Have Zeitwerk not automatically load filters by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/383
-* Bump the github-actions group with 1 update by @dependabot in https://github.com/gjtorikian/html-pipeline/pull/384
-* :gem: 3.0.0 by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/386
+
+- Switch to GitHub Actions by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/346
+- add truffleruby-head by @gogainda in https://github.com/gjtorikian/html-pipeline/pull/348
+- Add Rubocop by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/349
+- Support multiple dependencies per filter by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/351
+- Split filters up by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/360
+- Migrate from Nokogiri to Selma by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/368
+- You shall pass by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/369
+- Update Selma signatures by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/370
+- Close sanitization-related issues by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/371
+- Drop SyntaxHighlightFilter by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/372
+- V3 Release by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/347
+- Use emoji from commonmarker by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/373
+- req convert_filter if filter present by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/375
+- Update selma requirement from ~> 0.0.1 to >= 0.0.1, < 0.2.0 by @dependabot in https://github.com/gjtorikian/html-pipeline/pull/377
+- Add the AssetProxyFilter by @digitalmoksha in https://github.com/gjtorikian/html-pipeline/pull/379
+- Update rouge requirement from ~> 3.1 to ~> 4.1 by @dependabot in https://github.com/gjtorikian/html-pipeline/pull/381
+- Update gemoji requirement from ~> 3.0 to ~> 4.1 by @dependabot in https://github.com/gjtorikian/html-pipeline/pull/382
+- Have Zeitwerk not automatically load filters by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/383
+- Bump the github-actions group with 1 update by @dependabot in https://github.com/gjtorikian/html-pipeline/pull/384
+- :gem: 3.0.0 by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/386
 
 ## New Contributors
-* @gogainda made their first contribution in https://github.com/gjtorikian/html-pipeline/pull/348
-* @dependabot made their first contribution in https://github.com/gjtorikian/html-pipeline/pull/377
-* @digitalmoksha made their first contribution in https://github.com/gjtorikian/html-pipeline/pull/379
+
+- @gogainda made their first contribution in https://github.com/gjtorikian/html-pipeline/pull/348
+- @dependabot made their first contribution in https://github.com/gjtorikian/html-pipeline/pull/377
+- @digitalmoksha made their first contribution in https://github.com/gjtorikian/html-pipeline/pull/379
 
 **Full Changelog**: https://github.com/gjtorikian/html-pipeline/compare/v2.14.3...v3.0.0
+
 ## [v3.0.0.pre6] - 16-08-2023
+
 null
+
 # Changelog
 
 ## [v3.0.0.pre5](https://github.com/gjtorikian/html-pipeline/tree/v3.0.0.pre5) (2023-06-05)
@@ -86,7 +104,7 @@ null
 
 **Merged pull requests:**
 
-- req convert\_filter if `text/node`filter present [\#375](https://github.com/gjtorikian/html-pipeline/pull/375) ([gjtorikian](https://github.com/gjtorikian))
+- req convert_filter if `text/node`filter present [\#375](https://github.com/gjtorikian/html-pipeline/pull/375) ([gjtorikian](https://github.com/gjtorikian))
 
 ## [v3.0.0.pre2](https://github.com/gjtorikian/html-pipeline/tree/v3.0.0.pre2) (2023-01-26)
 
@@ -147,7 +165,7 @@ null
 
 **Merged pull requests:**
 
-- Replace EscapeUtils.escape\_html with CGI.escape\_html [\#365](https://github.com/gjtorikian/html-pipeline/pull/365) ([ramhoj](https://github.com/ramhoj))
+- Replace EscapeUtils.escape_html with CGI.escape_html [\#365](https://github.com/gjtorikian/html-pipeline/pull/365) ([ramhoj](https://github.com/ramhoj))
 
 ## [v2.14.2](https://github.com/gjtorikian/html-pipeline/tree/v2.14.2) (2022-06-12)
 
@@ -319,7 +337,7 @@ null
 
 **Closed issues:**
 
-- New feature request for hashtags \# filter  [\#301](https://github.com/gjtorikian/html-pipeline/issues/301)
+- New feature request for hashtags \# filter [\#301](https://github.com/gjtorikian/html-pipeline/issues/301)
 - Whitelist srcset for responsive images [\#233](https://github.com/gjtorikian/html-pipeline/issues/233)
 
 **Merged pull requests:**
@@ -422,7 +440,7 @@ null
 
 - Set instrumentation name [\#275](https://github.com/gjtorikian/html-pipeline/pull/275) ([gjtorikian](https://github.com/gjtorikian))
 - Switch to CommonMark [\#274](https://github.com/gjtorikian/html-pipeline/pull/274) ([kivikakk](https://github.com/kivikakk))
--   add korgi to 3rd party extensions \[ci skip\] [\#271](https://github.com/gjtorikian/html-pipeline/pull/271) ([jodeci](https://github.com/jodeci))
+- add korgi to 3rd party extensions \[ci skip\] [\#271](https://github.com/gjtorikian/html-pipeline/pull/271) ([jodeci](https://github.com/jodeci))
 
 ## [v2.5.0](https://github.com/gjtorikian/html-pipeline/tree/v2.5.0) (2017-01-13)
 
@@ -431,7 +449,7 @@ null
 **Closed issues:**
 
 - Add `<wbr>` to whitelist [\#265](https://github.com/gjtorikian/html-pipeline/issues/265)
-- Missing context keys for HTML::Pipeline::EmojiFilter: :asset\_root [\#262](https://github.com/gjtorikian/html-pipeline/issues/262)
+- Missing context keys for HTML::Pipeline::EmojiFilter: :asset_root [\#262](https://github.com/gjtorikian/html-pipeline/issues/262)
 - Emoji \<img\> tags does not pass W3C validationg [\#234](https://github.com/gjtorikian/html-pipeline/issues/234)
 - Incompatible character encodings: ASCII-8BIT and UTF-8 in EmailReplyFilter [\#229](https://github.com/gjtorikian/html-pipeline/issues/229)
 
@@ -514,8 +532,8 @@ null
 **Merged pull requests:**
 
 - Release 2.2.2 [\#231](https://github.com/gjtorikian/html-pipeline/pull/231) ([jch](https://github.com/jch))
-- Fix for calling mention\_link\_filter with only one argument [\#230](https://github.com/gjtorikian/html-pipeline/pull/230) ([benbalter](https://github.com/benbalter))
-- Add html-pipeline-linkify\_github to 3rd Party Extensions \[ci skip\] [\#228](https://github.com/gjtorikian/html-pipeline/pull/228) ([JuanitoFatas](https://github.com/JuanitoFatas))
+- Fix for calling mention_link_filter with only one argument [\#230](https://github.com/gjtorikian/html-pipeline/pull/230) ([benbalter](https://github.com/benbalter))
+- Add html-pipeline-linkify_github to 3rd Party Extensions \[ci skip\] [\#228](https://github.com/gjtorikian/html-pipeline/pull/228) ([JuanitoFatas](https://github.com/JuanitoFatas))
 
 ## [v2.2.1](https://github.com/gjtorikian/html-pipeline/tree/v2.2.1) (2015-10-01)
 
@@ -571,7 +589,7 @@ null
 - Question - Can this work with Rouge? [\#166](https://github.com/gjtorikian/html-pipeline/issues/166)
 - Question about github markdown filter \(low priority!\) [\#165](https://github.com/gjtorikian/html-pipeline/issues/165)
 - Do not mention or emojify in a codeblock [\#163](https://github.com/gjtorikian/html-pipeline/issues/163)
-- MentionFilter base\_url config question [\#161](https://github.com/gjtorikian/html-pipeline/issues/161)
+- MentionFilter base_url config question [\#161](https://github.com/gjtorikian/html-pipeline/issues/161)
 - Feature Request: Add "details" tag to whitelist [\#138](https://github.com/gjtorikian/html-pipeline/issues/138)
 
 **Merged pull requests:**
@@ -583,10 +601,10 @@ null
 - \[ci skip\] Fix CHANGELOG.md rendering. [\#177](https://github.com/gjtorikian/html-pipeline/pull/177) ([JuanitoFatas](https://github.com/JuanitoFatas))
 - Restrict nokogiri to specific versions [\#176](https://github.com/gjtorikian/html-pipeline/pull/176) ([simeonwillbanks](https://github.com/simeonwillbanks))
 - Use svg build badge. \[ci skip\] [\#175](https://github.com/gjtorikian/html-pipeline/pull/175) ([JuanitoFatas](https://github.com/JuanitoFatas))
-- Add 3rd party gem: html-pipeline-rouge\_filter. [\#174](https://github.com/gjtorikian/html-pipeline/pull/174) ([JuanitoFatas](https://github.com/JuanitoFatas))
-- MentionFilter\#link\_to\_mentioned\_user: Replace String introspection with Regexp match [\#172](https://github.com/gjtorikian/html-pipeline/pull/172) ([simeonwillbanks](https://github.com/simeonwillbanks))
+- Add 3rd party gem: html-pipeline-rouge_filter. [\#174](https://github.com/gjtorikian/html-pipeline/pull/174) ([JuanitoFatas](https://github.com/JuanitoFatas))
+- MentionFilter\#link_to_mentioned_user: Replace String introspection with Regexp match [\#172](https://github.com/gjtorikian/html-pipeline/pull/172) ([simeonwillbanks](https://github.com/simeonwillbanks))
 - Whitelist summary and details element. [\#171](https://github.com/gjtorikian/html-pipeline/pull/171) ([JuanitoFatas](https://github.com/JuanitoFatas))
-- Implement new context option: ignored\_ancestor\_tags to accept more ignored tags. [\#170](https://github.com/gjtorikian/html-pipeline/pull/170) ([JuanitoFatas](https://github.com/JuanitoFatas))
+- Implement new context option: ignored_ancestor_tags to accept more ignored tags. [\#170](https://github.com/gjtorikian/html-pipeline/pull/170) ([JuanitoFatas](https://github.com/JuanitoFatas))
 - Support ~login for MentionFilter. [\#167](https://github.com/gjtorikian/html-pipeline/pull/167) ([JuanitoFatas](https://github.com/JuanitoFatas))
 - Add GitHub flavor Markdown Task List extension [\#162](https://github.com/gjtorikian/html-pipeline/pull/162) ([simeonwillbanks](https://github.com/simeonwillbanks))
 - Drop support for gemoji ~\> 1.0 [\#159](https://github.com/gjtorikian/html-pipeline/pull/159) ([jch](https://github.com/jch))
@@ -603,14 +621,14 @@ null
 
 **Closed issues:**
 
-- @mention\_filter should not replace mentions in style blocks. [\#143](https://github.com/gjtorikian/html-pipeline/issues/143)
+- @mention_filter should not replace mentions in style blocks. [\#143](https://github.com/gjtorikian/html-pipeline/issues/143)
 - EmojiFilter doesn't work on strings that don't contain HTML [\#133](https://github.com/gjtorikian/html-pipeline/issues/133)
 
 **Merged pull requests:**
 
 - Search for text nodes on DocumentFragments without root tags [\#146](https://github.com/gjtorikian/html-pipeline/pull/146) ([Razer6](https://github.com/Razer6))
 - Don't filter @mentions in \<style\> tags [\#145](https://github.com/gjtorikian/html-pipeline/pull/145) ([jch](https://github.com/jch))
-- Prefer http\_url in HttpsFilter [\#142](https://github.com/gjtorikian/html-pipeline/pull/142) ([bkeepers](https://github.com/bkeepers))
+- Prefer http_url in HttpsFilter [\#142](https://github.com/gjtorikian/html-pipeline/pull/142) ([bkeepers](https://github.com/bkeepers))
 - Don't check twice if there is a ':' in content \(EmojiFilter\) [\#141](https://github.com/gjtorikian/html-pipeline/pull/141) ([Razer6](https://github.com/Razer6))
 
 ## [v1.10.0](https://github.com/gjtorikian/html-pipeline/tree/v1.10.0) (2014-09-05)
@@ -642,7 +660,7 @@ null
 **Merged pull requests:**
 
 - Generalize https filter take 2 [\#131](https://github.com/gjtorikian/html-pipeline/pull/131) ([simeonwillbanks](https://github.com/simeonwillbanks))
-- Remove RUBY\_VERSION conditionals from gemspec [\#130](https://github.com/gjtorikian/html-pipeline/pull/130) ([mislav](https://github.com/mislav))
+- Remove RUBY_VERSION conditionals from gemspec [\#130](https://github.com/gjtorikian/html-pipeline/pull/130) ([mislav](https://github.com/mislav))
 - Add compatibility with gemoji v2 [\#129](https://github.com/gjtorikian/html-pipeline/pull/129) ([mislav](https://github.com/mislav))
 
 ## [v1.8.0](https://github.com/gjtorikian/html-pipeline/tree/v1.8.0) (2014-04-04)
@@ -669,7 +687,7 @@ null
 **Closed issues:**
 
 - cut a 1.6.0 release [\#116](https://github.com/gjtorikian/html-pipeline/issues/116)
-- AutolinkFilter link\_attr doesn't seem to work [\#114](https://github.com/gjtorikian/html-pipeline/issues/114)
+- AutolinkFilter link_attr doesn't seem to work [\#114](https://github.com/gjtorikian/html-pipeline/issues/114)
 - Spaces inserted into code [\#109](https://github.com/gjtorikian/html-pipeline/issues/109)
 
 **Merged pull requests:**
@@ -757,9 +775,9 @@ null
 
 **Merged pull requests:**
 
-- Add link\_attr option to Autolink filter [\#89](https://github.com/gjtorikian/html-pipeline/pull/89) ([excid3](https://github.com/excid3))
+- Add link_attr option to Autolink filter [\#89](https://github.com/gjtorikian/html-pipeline/pull/89) ([excid3](https://github.com/excid3))
 - Update readme with link to asciidoc filter [\#87](https://github.com/gjtorikian/html-pipeline/pull/87) ([jch](https://github.com/jch))
-- use xml\_mini extracted from activesupport [\#85](https://github.com/gjtorikian/html-pipeline/pull/85) ([mojavelinux](https://github.com/mojavelinux))
+- use xml_mini extracted from activesupport [\#85](https://github.com/gjtorikian/html-pipeline/pull/85) ([mojavelinux](https://github.com/mojavelinux))
 - Filters Manage Dependencies [\#80](https://github.com/gjtorikian/html-pipeline/pull/80) ([simeonwillbanks](https://github.com/simeonwillbanks))
 
 ## [v0.3.1](https://github.com/gjtorikian/html-pipeline/tree/v0.3.1) (2013-09-16)
@@ -827,7 +845,7 @@ null
 - Improve to describe gem 'github-linguist' [\#69](https://github.com/gjtorikian/html-pipeline/pull/69) ([tricknotes](https://github.com/tricknotes))
 - Bump version to 0.1.0. Follow semver. [\#68](https://github.com/gjtorikian/html-pipeline/pull/68) ([jch](https://github.com/jch))
 - Scope gem versions for Travis CI [\#67](https://github.com/gjtorikian/html-pipeline/pull/67) ([jch](https://github.com/jch))
-- Allow passing skip\_tags in autolink filter context [\#65](https://github.com/gjtorikian/html-pipeline/pull/65) ([pengwynn](https://github.com/pengwynn))
+- Allow passing skip_tags in autolink filter context [\#65](https://github.com/gjtorikian/html-pipeline/pull/65) ([pengwynn](https://github.com/pengwynn))
 - Support non-English characters in anchor names [\#64](https://github.com/gjtorikian/html-pipeline/pull/64) ([jakedouglas](https://github.com/jakedouglas))
 - Fix the `AutolinkFilter` constant name. [\#57](https://github.com/gjtorikian/html-pipeline/pull/57) ([envygeeks](https://github.com/envygeeks))
 - resolves \#54 allow table section elements \(thead, tfoot, tbody\) [\#55](https://github.com/gjtorikian/html-pipeline/pull/55) ([mojavelinux](https://github.com/mojavelinux))
@@ -880,7 +898,7 @@ null
 **Merged pull requests:**
 
 - Add an html-pipeline executable to the gem [\#44](https://github.com/gjtorikian/html-pipeline/pull/44) ([indirect](https://github.com/indirect))
-- add result\[:mentioned\_usernames\] for MentionFilter [\#42](https://github.com/gjtorikian/html-pipeline/pull/42) ([fahchen](https://github.com/fahchen))
+- add result\[:mentioned_usernames\] for MentionFilter [\#42](https://github.com/gjtorikian/html-pipeline/pull/42) ([fahchen](https://github.com/fahchen))
 
 ## [v0.0.8.1](https://github.com/gjtorikian/html-pipeline/tree/v0.0.8.1) (2013-03-03)
 
@@ -896,7 +914,7 @@ null
 
 **Merged pull requests:**
 
-- Bump escape\_utils [\#41](https://github.com/gjtorikian/html-pipeline/pull/41) ([brianmario](https://github.com/brianmario))
+- Bump escape_utils [\#41](https://github.com/gjtorikian/html-pipeline/pull/41) ([brianmario](https://github.com/brianmario))
 - Don't monkeypatch Nokogiri in 1.9 [\#40](https://github.com/gjtorikian/html-pipeline/pull/40) ([defunkt](https://github.com/defunkt))
 
 ## [v0.0.8](https://github.com/gjtorikian/html-pipeline/tree/v0.0.8) (2013-02-07)
@@ -988,7 +1006,3 @@ null
 - Ensure required context values are present [\#9](https://github.com/gjtorikian/html-pipeline/pull/9) ([juliamae](https://github.com/juliamae))
 - emoji filter requires the emoji gem [\#8](https://github.com/gjtorikian/html-pipeline/pull/8) ([atmos](https://github.com/atmos))
 - De-Github and opensource [\#6](https://github.com/gjtorikian/html-pipeline/pull/6) ([jch](https://github.com/jch))
-
-
-
-\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*

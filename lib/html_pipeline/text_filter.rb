@@ -4,17 +4,17 @@ class HTMLPipeline
   class TextFilter < Filter
     attr_reader :text
 
-    def initialize(text, context: {}, result: {})
-      raise TypeError, "text must be a String" unless text.is_a?(String)
-
-      # Ensure that this is always a string
-      @text = text.respond_to?(:to_str) ? text.to_str : text.to_s
+    def initialize(context: {}, result: {})
       super(context: context, result: result)
     end
 
     class << self
-      def call(input, context: {}, result: {})
-        new(input, context: context, result: result).call
+      def call(text, context: {}, result: {})
+        raise TypeError, "text must be a String" unless text.is_a?(String)
+
+        # Ensure that this is always a string
+        text = text.respond_to?(:to_str) ? text.to_str : text.to_s
+        new(context: context, result: result).call(text)
       end
     end
   end
