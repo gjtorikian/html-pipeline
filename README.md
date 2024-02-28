@@ -171,7 +171,7 @@ ALLOWLIST = {
 
 pipeline = HTMLPipeline.new \
   text_filters: [
-    HTMLPipeline::MarkdownFilter,
+    HTMLPipeline::TextFilter::ImageFilter.new,
   ],
   convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
   sanitization_config: ALLOWLIST
@@ -199,7 +199,7 @@ the config:
 ```ruby
 pipeline = HTMLPipeline.new \
   text_filters: [
-    HTMLPipeline::MarkdownFilter,
+    HTMLPipeline::TextFilter::ImageFilter.new,
   ],
   convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
   sanitization_config: nil

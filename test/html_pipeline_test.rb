@@ -3,11 +3,13 @@
 require "test_helper"
 require "helpers/mocked_instrumentation_service"
 require "html_pipeline/node_filter/image_max_width_filter"
+require "html_pipeline/node_filter/mention_filter"
+require "html_pipeline/convert_filter/markdown_filter"
 
 class HTMLPipelineTest < Minitest::Test
   def setup
     @default_context = {}
-    @pipeline = HTMLPipeline.new(text_filters: [TestTextFilter], default_context: @default_context)
+    @pipeline = HTMLPipeline.new(text_filters: [TestTextFilter.new], default_context: @default_context)
   end
 
   def test_filter_instrumentation
@@ -35,7 +37,8 @@ class HTMLPipelineTest < Minitest::Test
 
     assert(event, "event expected")
     assert_equal("call_text_filters.html_pipeline", event)
-    assert_equal(@pipeline.text_filters.map(&:name), payload[:text_filters])
+
+    assert_equal(@pipeline.text_filters.map { |x| x.class.name }, payload[:text_filters])
     assert_equal(@pipeline.class.name, payload[:pipeline])
     assert_equal(body.reverse, payload[:result][:output])
   end
@@ -73,7 +76,7 @@ class HTMLPipelineTest < Minitest::Test
 
   def test_incorrect_text_filters
     assert_raises(HTMLPipeline::InvalidFilterError) do
-      HTMLPipeline.new(text_filters: [HTMLPipeline::NodeFilter::MentionFilter], default_context: @default_context)
+      HTMLPipeline.new(text_filters: [HTMLPipeline::NodeFilter::MentionFilter.new], default_context: @default_context)
     end
   end
 
@@ -86,7 +89,7 @@ class HTMLPipelineTest < Minitest::Test
   def test_convert_filter_needed_for_text_and_html_filters
     assert_raises(HTMLPipeline::InvalidFilterError) do
       HTMLPipeline.new(
-        text_filters: [TestTextFilter],
+        text_filters: [TestTextFilter.new],
         node_filters: [
           HTMLPipeline::NodeFilter::MentionFilter.new,
         ],

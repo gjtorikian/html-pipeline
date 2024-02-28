@@ -153,7 +153,7 @@ class HTMLPipeline
 
     if @text_filters.any?
       payload = default_payload({
-        text_filters: @text_filters.map(&:name),
+        text_filters: @text_filters.map { |f| f.class.name },
         context: context,
         result: result,
       })
@@ -204,7 +204,7 @@ class HTMLPipeline
   # Returns the result of the filter.
   def perform_filter(filter, doc, context: {}, result: {})
     payload = default_payload({
-      filter: filter.name,
+      filter: filter.class.name,
       context: context,
       result: result,
     })
