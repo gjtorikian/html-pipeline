@@ -375,7 +375,7 @@ you to add additional elements. You can either modify the constant's value, or
 re-define your own config and pass that in, such as:
 
 ```ruby
-config = HTMLPipeline::SanitizationFilter::DEFAULT_CONFIG.dup
+config = HTMLPipeline::SanitizationFilter::DEFAULT_CONFIG.deep_dup
 config[:elements] << "iframe" # sure, whatever you want
 ```
 
