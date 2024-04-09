@@ -27,5 +27,15 @@ class HTMLPipeline
         doc.to_s,
       )
     end
+
+    def test_works_within_complete_pipeline
+      pipeline = HTMLPipeline.new(text_filters: [HTMLPipeline::TextFilter::PlainTextInputFilter.new])
+      result = pipeline.call("See: <http://example.org>")
+
+      assert_equal(
+        "<div>See: &lt;http://example.org&gt;</div>",
+        result[:output],
+      )
+    end
   end
 end

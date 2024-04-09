@@ -9,7 +9,7 @@ class HTMLPipeline
     #   <img src="http://example.com/test.jpg" alt=""/>.
 
     class ImageFilter < TextFilter
-      def call(text)
+      def call(text, context: {}, result: {})
         text.gsub(%r{(https|http)?://.+\.(jpg|jpeg|bmp|gif|png)(\?\S+)?}i) do |match|
           %(<img src="#{match}" alt=""/>)
         end
