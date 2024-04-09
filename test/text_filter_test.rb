@@ -1,0 +1,56 @@
+# frozen_string_literal: true
+
+require "test_helper"
+require "html_pipeline/text_filter/image_filter"
+
+ImageFilter = HTMLPipeline::TextFilter::ImageFilter
+
+class HTMLPipeline
+  class ImageFilterTest < Minitest::Test
+    def setup
+      @filter = ImageFilter
+    end
+
+    def test_jpg
+      assert_equal(
+        %(<img src="http://example.com/test.jpg" alt=""/>),
+        @filter.call(%(http://example.com/test.jpg)),
+      )
+    end
+
+    def test_jpeg
+      assert_equal(
+        %(<img src="http://example.com/test.jpeg" alt=""/>),
+        @filter.call(%(http://example.com/test.jpeg)),
+      )
+    end
+
+    def test_bmp
+      assert_equal(
+        %(<img src="http://example.com/test.bmp" alt=""/>),
+        @filter.call(%(http://example.com/test.bmp)),
+      )
+    end
+
+    def test_gif
+      assert_equal(
+        %(<img src="http://example.com/test.gif" alt=""/>),
+        @filter.call(%(http://example.com/test.gif)),
+      )
+    end
+
+    def test_png
+      assert_equal(
+        %(<img src="http://example.com/test.png" alt=""/>),
+        @filter.call(%(http://example.com/test.png)),
+      )
+    end
+
+    def test_https_url
+      assert_equal(
+        %(<img src="https://example.com/test.png" alt=""/>),
+        @filter.call(%(https://example.com/test.png)),
+      )
+    end
+  end
+end
