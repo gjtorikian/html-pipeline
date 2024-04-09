@@ -1,3 +1,9 @@
+## [v3.1.1] - 09-04-2024
+## What's Changed
+* Correct missing method implementation by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/401
+
+
+**Full Changelog**: https://github.com/gjtorikian/html-pipeline/compare/v3.1.0...v3.1.1
 ## [v3.1.0] - 28-02-2024
 ## What's Changed
 * UPGRADING:  not removed by @dentarg in https://github.com/gjtorikian/html-pipeline/pull/397
