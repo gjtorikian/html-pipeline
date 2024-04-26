@@ -25,6 +25,6 @@ end
 # bolds any instance of the word yeH
 class YehBolderFilter < HTMLPipeline::TextFilter
   def call(input, context: {}, result: {})
-    input.gsub("yeH", "**yeH**")
+    input.gsub("yeH", "**yeH**") unless context[:no_bolding] == false
   end
 end

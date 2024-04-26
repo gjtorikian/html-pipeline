@@ -171,12 +171,13 @@ class HTMLPipeline
       text
     else
       instrument("call_convert_filter.html_pipeline", payload) do
-        html = @convert_filter.call(text)
+        html = @convert_filter.call(text, context: context)
       end
     end
 
     unless @node_filters.empty?
       instrument("call_node_filters.html_pipeline", payload) do
+        @node_filters.each { |filter| filter.context = (filter.context || {}).merge(context) }
         result[:output] = Selma::Rewriter.new(sanitizer: @sanitization_config, handlers: @node_filters).rewrite(html)
         html = result[:output]
         payload = default_payload({

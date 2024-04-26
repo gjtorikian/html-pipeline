@@ -116,4 +116,34 @@ class HTMLPipelineTest < Minitest::Test
 
     assert_equal("<p>!&gt;eeuqram/eeuqram&lt; ees ot evoL .yllib@ ,ereht <strong>yeH</strong></p>", result)
   end
+
+  def test_context_is_carried_over_in_call
+    text = "yeH! I _think_ <marquee>@gjtorikian is ~great~</marquee>!"
+
+    pipeline = HTMLPipeline.new(
+      text_filters: [YehBolderFilter.new],
+      convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
+      node_filters: [HTMLPipeline::NodeFilter::MentionFilter.new],
+    )
+    result = pipeline.call(text)[:output]
+
+    # note:
+    # - yeH is bolded
+    # - strikethroughs are rendered
+    # - mentions are not linked
+    assert_equal("<p><strong>yeH</strong>! I <em>think</em> <a href=\"/gjtorikian\">@gjtorikian</a> is <del>great</del>!</p>", result)
+
+    context = {
+      no_bolding: false,
+      markdown: { extension: { strikethrough: false } },
+      base_url: "http://your-domain.com",
+    }
+    result_with_context = pipeline.call(text, context: context)[:output]
+
+    # note:
+    # - yeH is not bolded
+    # - strikethroughs are not rendered
+    # - mentions are linked
+    assert_equal("<p>yeH! I <em>think</em> <a href=\"http://your-domain.com/gjtorikian\">@gjtorikian</a> is ~great~!</p>", result_with_context)
+  end
 end

@@ -16,8 +16,8 @@ class HTMLPipeline
       end
 
       # Convert Commonmark to HTML using the best available implementation.
-      def call(text)
-        options = @context.fetch(:markdown, {})
+      def call(text, context: @context)
+        options = context.fetch(:markdown, {})
         plugins = options.fetch(:plugins, {})
         Commonmarker.to_html(text, options: options, plugins: plugins).rstrip!
       end
