@@ -187,7 +187,7 @@ class HTMLPipeline
       end
     end
 
-    instrument("html_pipeline.sanitization", payload) do
+    instrument("sanitization.html_pipeline", payload) do
       result[:output] = Selma::Rewriter.new(sanitizer: @sanitization_config, handlers: @node_filters).rewrite(html)
     end
 
