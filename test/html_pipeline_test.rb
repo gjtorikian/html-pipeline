@@ -116,4 +116,82 @@ class HTMLPipelineTest < Minitest::Test
 
     assert_equal("<p>!&gt;eeuqram/eeuqram&lt; ees ot evoL .yllib@ ,ereht <strong>yeH</strong></p>", result)
   end
+
+  def test_context_is_carried_over_in_call
+    text = "yeH! I _think_ <marquee>@gjtorikian is ~great~</marquee>!"
+
+    pipeline = HTMLPipeline.new(
+      text_filters: [YehBolderFilter.new],
+      convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
+      node_filters: [HTMLPipeline::NodeFilter::MentionFilter.new],
+    )
+    result = pipeline.call(text)[:output]
+
+    # note:
+    # - yeH is bolded
+    # - strikethroughs are rendered
+    # - mentions are not linked
+    assert_equal("<p><strong>yeH</strong>! I <em>think</em> <a href=\"/gjtorikian\">@gjtorikian</a> is <del>great</del>!</p>", result)
+
+    context = {
+      bolded: false,
+      markdown: { extension: { strikethrough: false } },
+      base_url: "http://your-domain.com",
+    }
+    result_with_context = pipeline.call(text, context: context)[:output]
+
+    # note:
+    # - yeH is not bolded
+    # - strikethroughs are not rendered
+    # - mentions are linked
+    assert_equal("<p>yeH! I <em>think</em> <a href=\"http://your-domain.com/gjtorikian\">@gjtorikian</a> is ~great~!</p>", result_with_context)
+  end
+
+  def test_text_filter_instance_context_is_carried_over_in_call
+    text = "yeH! I _think_ <marquee>@gjtorikian is ~great~</marquee>!"
+
+    pipeline = HTMLPipeline.new(
+      text_filters: [YehBolderFilter.new(context: { bolded: false })],
+      convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
+      node_filters: [HTMLPipeline::NodeFilter::MentionFilter.new],
+    )
+
+    result = pipeline.call(text)[:output]
+
+    # note:
+    # - yeH is not bolded due to previous context
+    assert_equal("<p>yeH! I <em>think</em> <a href=\"/gjtorikian\">@gjtorikian</a> is <del>great</del>!</p>", result)
+  end
+
+  def test_convert_filter_instance_context_is_carried_over_in_call
+    text = "yeH! I _think_ <marquee>@gjtorikian is ~great~</marquee>!"
+
+    pipeline = HTMLPipeline.new(
+      text_filters: [YehBolderFilter.new],
+      convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new(context: { extension: { strikethrough: false } }),
+      node_filters: [HTMLPipeline::NodeFilter::MentionFilter.new],
+    )
+
+    result = pipeline.call(text)[:output]
+
+    # note:
+    # - strikethroughs are not rendered due to previous context
+    assert_equal("<p><strong>yeH</strong>! I <em>think</em> <a href=\"/gjtorikian\">@gjtorikian</a> is <del>great</del>!</p>", result)
+  end
+
+  def test_node_filter_instance_context_is_carried_over_in_call
+    text = "yeH! I _think_ <marquee>@gjtorikian is ~great~</marquee>!"
+
+    pipeline = HTMLPipeline.new(
+      text_filters: [YehBolderFilter.new],
+      convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
+      node_filters: [HTMLPipeline::NodeFilter::MentionFilter.new(context: { base_url: "http://your-domain.com" })],
+    )
+
+    result = pipeline.call(text)[:output]
+
+    # note:
+    # - mentions are linked
+    assert_equal("<p><strong>yeH</strong>! I <em>think</em> <a href=\"http://your-domain.com/gjtorikian\">@gjtorikian</a> is <del>great</del>!</p>", result)
+  end
 end

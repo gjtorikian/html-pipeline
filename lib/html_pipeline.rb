@@ -160,7 +160,7 @@ class HTMLPipeline
       instrument("call_text_filters.html_pipeline", payload) do
         result[:output] =
           @text_filters.inject(text) do |doc, filter|
-            perform_filter(filter, doc, context: context, result: result)
+            perform_filter(filter, doc, context: (filter.context || {}).merge(context), result: result)
           end
       end
     end
@@ -171,12 +171,13 @@ class HTMLPipeline
       text
     else
       instrument("call_convert_filter.html_pipeline", payload) do
-        html = @convert_filter.call(text)
+        html = @convert_filter.call(text, context: (@convert_filter.context || {}).merge(context))
       end
     end
 
     unless @node_filters.empty?
       instrument("call_node_filters.html_pipeline", payload) do
+        @node_filters.each { |filter| filter.context = (filter.context || {}).merge(context) }
         result[:output] = Selma::Rewriter.new(sanitizer: @sanitization_config, handlers: @node_filters).rewrite(html)
         html = result[:output]
         payload = default_payload({
@@ -187,7 +188,7 @@ class HTMLPipeline
       end
     end
 
-    instrument("html_pipeline.sanitization", payload) do
+    instrument("sanitization.html_pipeline", payload) do
       result[:output] = Selma::Rewriter.new(sanitizer: @sanitization_config, handlers: @node_filters).rewrite(html)
     end
 

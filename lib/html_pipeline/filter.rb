@@ -27,7 +27,7 @@ class HTMLPipeline
     # Public: Returns a simple Hash used to pass extra information into filters
     # and also to allow filters to make extracted information available to the
     # caller.
-    attr_reader :context
+    attr_accessor :context
 
     # Public: Returns a Hash used to allow filters to pass back information
     # to callers of the various Pipelines.  This can be used for

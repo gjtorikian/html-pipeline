@@ -28,7 +28,7 @@ class HTMLPipeline
       def test_custom_anchor_html_added_properly
         orig = %(# Ice cube)
         expected = %(<h1><a href="#ice-cube" aria-hidden="true" id="ice-cube" class="anchor">#</a>Ice cube</h1>)
-        pipeline = HTMLPipeline.new(convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter, node_filters: [
+        pipeline = HTMLPipeline.new(convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new, node_filters: [
           TocFilter.new(context: { anchor_html: "#" }),
         ])
         result = pipeline.call(orig)

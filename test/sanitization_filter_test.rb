@@ -263,5 +263,31 @@ class HTMLPipeline
 
       assert_equal(result[:output].to_s, expected.chomp)
     end
+
+    def test_sanitization_pipeline_does_not_need_node_filters
+      config = {
+        elements: ["p", "pre", "code"],
+      }
+
+      pipeline = HTMLPipeline.new(
+        convert_filter:
+          HTMLPipeline::ConvertFilter::MarkdownFilter.new,
+        sanitization_config: config,
+      )
+
+      result = pipeline.call(<<~CODE)
+        This is *great*, @birdcar:
+
+            some_code(:first)
+      CODE
+
+      expected = <<~HTML
+        <p>This is great, @birdcar:</p>
+        <pre><code>some_code(:first)
+        </code></pre>
+      HTML
+
+      assert_equal(result[:output].to_s, expected.chomp)
+    end
   end
 end

@@ -1,8 +1,5 @@
 # HTML-Pipeline
 
-> **Note**
-> This README refers to the behavior in the new 3.0.0.pre gem.
-
 HTML processing filters and utilities. This module is a small
 framework for defining CSS-based content filters and applying them to user
 provided content.
@@ -60,9 +57,15 @@ results tothe next filter. A pipeline has several kinds of filters available to 
 
 You can assemble each sequence into a single pipeline, or choose to call each filter individually.
 
-As an example, suppose we want to transform Commonmark source text into Markdown HTML. With the content, we also want to:
+As an example, suppose we want to transform Commonmark source text into Markdown HTML:
 
-- change every instance of `$NAME` to "`Johnny"
+```
+Hey there, @gjtorikian
+```
+
+With the content, we also want to:
+
+- change every instance of `Hey` to `Hello`
 - strip undesired HTML
 - linkify @mention
 
@@ -73,7 +76,7 @@ require 'html_pipeline'
 
 class HelloJohnnyFilter < HTMLPipelineFilter
   def call
-    text.gsub("$NAME", "Johnny")
+    text.gsub("Hey", "Hello")
   end
 end
 
@@ -104,9 +107,19 @@ used to pass around arguments and metadata between filters in a pipeline. For
 example, if you want to disable footnotes in the `MarkdownFilter`, you can pass an option in the context hash:
 
 ```ruby
-context =  { markdown: { extensions: { footnotes: false } } }
+context = { markdown: { extensions: { footnotes: false } } }
 filter = HTMLPipeline::ConvertFilter::MarkdownFilter.new(context: context)
 filter.call("Hi **world**!")
+```
+
+Alternatively, you can construct a pipeline, and pass in a context during the call:
+
+```ruby
+pipeline = HTMLPipeline.new(
+  convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
+  node_filters: [HTMLPipeline::NodeFilter::MentionFilter.new]
+)
+pipeline.call(user_supplied_text, context: { markdown: { extensions: { footnotes: false } } })
 ```
 
 Please refer to the documentation for each filter to understand what configuration options are available.
