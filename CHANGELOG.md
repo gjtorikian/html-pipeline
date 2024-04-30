@@ -1,3 +1,9 @@
+## [v3.2.0] - 30-04-2024
+## What's Changed
+* Pass context along to every part of the pipeline by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/403
+
+
+**Full Changelog**: https://github.com/gjtorikian/html-pipeline/compare/v3.1.1...v3.2.0
 ## [v3.1.1] - 09-04-2024
 ## What's Changed
 * Correct missing method implementation by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/401
