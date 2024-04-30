@@ -4,8 +4,6 @@ require "selma"
 
 class HTMLPipeline
   class NodeFilter < Filter
-    attr_accessor :context
-
     def initialize(context: {}, result: {})
       super(context: context, result: {})
       send(:after_initialize) if respond_to?(:after_initialize)

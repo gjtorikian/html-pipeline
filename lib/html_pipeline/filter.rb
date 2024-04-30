@@ -16,6 +16,8 @@ class HTMLPipeline
   # Each filter may define additional options and output values. See the class
   # docs for more info.
   class Filter
+    attr_accessor :context
+
     class InvalidDocumentException < StandardError; end
 
     def initialize(context: {}, result: {})

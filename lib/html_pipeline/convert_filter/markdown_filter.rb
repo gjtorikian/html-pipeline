@@ -3,7 +3,7 @@
 HTMLPipeline.require_dependency("commonmarker", "MarkdownFilter")
 
 class HTMLPipeline
-  class ConvertFilter
+  class ConvertFilter < Filter
     # HTML Filter that converts Markdown text into HTML.
     #
     # Context options:
