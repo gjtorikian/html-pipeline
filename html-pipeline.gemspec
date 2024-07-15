@@ -25,7 +25,7 @@ Gem::Specification.new do |gem|
     "rubygems_mfa_required" => "true",
   }
 
-  gem.add_dependency("selma", "~> 0.1")
+  gem.add_dependency("selma", "~> 0.4")
   gem.add_dependency("zeitwerk", "~> 2.5")
 
   gem.post_install_message = <<~MSG
