@@ -232,7 +232,7 @@ class HTMLPipeline
       CODE
 
       expected = <<~HTML
-        <p>This is great, <a href="/balevine" class="user-mention">@balevine</a>:</p>
+        <p>This is great, <a>@balevine</a>:</p>
         <pre><code>some_code(:first)
         </code></pre>
       HTML
