@@ -1,3 +1,10 @@
+# [v3.2.1] - 16-07-2024
+## What's Changed
+* Update commonmarker requirement from ~> 1.0.0.pre7 to ~> 1.1.2 in the bundler-dependencies group by @dependabot in https://github.com/gjtorikian/html-pipeline/pull/404
+* Remove superfluous sanitization by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/408
+
+
+**Full Changelog**: https://github.com/gjtorikian/html-pipeline/compare/v3.2.0...v3.2.1
 ## [v3.2.0] - 30-04-2024
 ## What's Changed
 * Pass context along to every part of the pipeline by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/403
