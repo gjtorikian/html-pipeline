@@ -131,7 +131,7 @@ class HTMLPipelineTest < Minitest::Test
     # - yeH is bolded
     # - strikethroughs are rendered
     # - mentions are not linked
-    assert_equal("<p><strong>yeH</strong>! I <em>think</em> <a href=\"/gjtorikian\">@gjtorikian</a> is <del>great</del>!</p>", result)
+    assert_equal("<p><strong>yeH</strong>! I <em>think</em> <a href=\"/gjtorikian\" class=\"user-mention\">@gjtorikian</a> is <del>great</del>!</p>", result)
 
     context = {
       bolded: false,
@@ -144,7 +144,7 @@ class HTMLPipelineTest < Minitest::Test
     # - yeH is not bolded
     # - strikethroughs are not rendered
     # - mentions are linked
-    assert_equal("<p>yeH! I <em>think</em> <a href=\"http://your-domain.com/gjtorikian\">@gjtorikian</a> is ~great~!</p>", result_with_context)
+    assert_equal("<p>yeH! I <em>think</em> <a href=\"http://your-domain.com/gjtorikian\" class=\"user-mention\">@gjtorikian</a> is ~great~!</p>", result_with_context)
   end
 
   def test_text_filter_instance_context_is_carried_over_in_call
@@ -160,7 +160,7 @@ class HTMLPipelineTest < Minitest::Test
 
     # note:
     # - yeH is not bolded due to previous context
-    assert_equal("<p>yeH! I <em>think</em> <a href=\"/gjtorikian\">@gjtorikian</a> is <del>great</del>!</p>", result)
+    assert_equal("<p>yeH! I <em>think</em> <a href=\"/gjtorikian\" class=\"user-mention\">@gjtorikian</a> is <del>great</del>!</p>", result)
   end
 
   def test_convert_filter_instance_context_is_carried_over_in_call
@@ -176,7 +176,7 @@ class HTMLPipelineTest < Minitest::Test
 
     # note:
     # - strikethroughs are not rendered due to previous context
-    assert_equal("<p><strong>yeH</strong>! I <em>think</em> <a href=\"/gjtorikian\">@gjtorikian</a> is <del>great</del>!</p>", result)
+    assert_equal("<p><strong>yeH</strong>! I <em>think</em> <a href=\"/gjtorikian\" class=\"user-mention\">@gjtorikian</a> is <del>great</del>!</p>", result)
   end
 
   def test_node_filter_instance_context_is_carried_over_in_call
@@ -192,6 +192,6 @@ class HTMLPipelineTest < Minitest::Test
 
     # note:
     # - mentions are linked
-    assert_equal("<p><strong>yeH</strong>! I <em>think</em> <a href=\"http://your-domain.com/gjtorikian\">@gjtorikian</a> is <del>great</del>!</p>", result)
+    assert_equal("<p><strong>yeH</strong>! I <em>think</em> <a href=\"http://your-domain.com/gjtorikian\" class=\"user-mention\">@gjtorikian</a> is <del>great</del>!</p>", result)
   end
 end

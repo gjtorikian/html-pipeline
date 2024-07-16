@@ -171,9 +171,9 @@ The `ConvertFilter` takes text and turns it into HTML. `@text`, `@config`, and `
 
 ### Sanitization
 
-Because the web can be a scary place, HTML is automatically sanitized after the `ConvertFilter` runs and before the `NodeFilter`s are processed. This is to prevent malicious or unexpected input from entering the pipeline.
+Because the web can be a scary place, **HTML is automatically sanitized** after the `ConvertFilter` runs and before the `NodeFilter`s are processed. This is to prevent malicious or unexpected input from entering the pipeline.
 
-The sanitization process takes a hash configuration of settings. See the [Selma](https://www.github.com/gjtorikian/selma) documentation for more information on how to configure these settings.
+The sanitization process takes a hash configuration of settings. See the [Selma](https://www.github.com/gjtorikian/selma) documentation for more information on how to configure these settings. Note that users must correctly configure the sanitization configuration if they expect to use it correctly in conjunction with handlers which manipulate HTML.
 
 A default sanitization config is provided by this library (`HTMLPipeline::SanitizationFilter::DEFAULT_CONFIG`). A sample custom sanitization allowlist might look like this:
 
@@ -224,7 +224,7 @@ For more examples of customizing the sanitization process to include the tags yo
 
 `NodeFilters`s can operate either on HTML elements or text nodes using CSS selectors. Each `NodeFilter` must define a method named `selector` which provides an instance of `Selma::Selector`. If elements are being manipulated, `handle_element` must be defined, taking one argument, `element`; if text nodes are being manipulated, `handle_text_chunk` must be defined, taking one argument, `text_chunk`. `@config`, and `@result` are available to use, and any changes made to these ivars are passed on to the next filter.
 
-`NodeFilter` also has an optional method, `after_initialize`, which is run after the filter initializes. This can be useful in setting up a custom state for `result` to take advantage of.
+`NodeFilter` also has an optional method, `after_initialize`, which is run after the filter initializes. This can be useful in setting up a fresh custom state for `result` to start from each time the pipeline is called.
 
 Here's an example `NodeFilter` that adds a base url to images that are root relative:
 
