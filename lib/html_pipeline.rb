@@ -175,21 +175,26 @@ class HTMLPipeline
       end
     end
 
-    unless @node_filters.empty?
+    rewriter_options = {
+      memory: {
+        max_allowed_memory_usage: 5242880, # arbitrary limit of 5MB
+      },
+    }
+
+    if @node_filters.empty?
+      instrument("sanitization.html_pipeline", payload) do
+        result[:output] = Selma::Rewriter.new(sanitizer: @sanitization_config, handlers: @node_filters, options: rewriter_options).rewrite(html)
+      end unless @convert_filter.nil? # no html, so no sanitization
+    else
       instrument("call_node_filters.html_pipeline", payload) do
         @node_filters.each { |filter| filter.context = (filter.context || {}).merge(context) }
-        result[:output] = Selma::Rewriter.new(sanitizer: @sanitization_config, handlers: @node_filters).rewrite(html)
-        html = result[:output]
+        result[:output] = Selma::Rewriter.new(sanitizer: @sanitization_config, handlers: @node_filters, options: rewriter_options).rewrite(html)
         payload = default_payload({
           node_filters: @node_filters.map { |f| f.class.name },
           context: context,
           result: result,
         })
       end
-    end
-
-    instrument("sanitization.html_pipeline", payload) do
-      result[:output] = Selma::Rewriter.new(sanitizer: @sanitization_config, handlers: @node_filters).rewrite(html)
     end
 
     result = result.merge(@node_filters.collect(&:result).reduce({}, :merge))

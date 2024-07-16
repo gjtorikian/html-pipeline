@@ -171,9 +171,9 @@ The `ConvertFilter` takes text and turns it into HTML. `@text`, `@config`, and `
 
 ### Sanitization
 
-Because the web can be a scary place, HTML is automatically sanitized after the `ConvertFilter` runs and before the `NodeFilter`s are processed. This is to prevent malicious or unexpected input from entering the pipeline.
+Because the web can be a scary place, **HTML is automatically sanitized** after the `ConvertFilter` runs and before the `NodeFilter`s are processed. This is to prevent malicious or unexpected input from entering the pipeline.
 
-The sanitization process takes a hash configuration of settings. See the [Selma](https://www.github.com/gjtorikian/selma) documentation for more information on how to configure these settings.
+The sanitization process takes a hash configuration of settings. See the [Selma](https://www.github.com/gjtorikian/selma) documentation for more information on how to configure these settings. Note that users must correctly configure the sanitization configuration if they expect to use it correctly in conjunction with handlers which manipulate HTML.
 
 A default sanitization config is provided by this library (`HTMLPipeline::SanitizationFilter::DEFAULT_CONFIG`). A sample custom sanitization allowlist might look like this:
 
