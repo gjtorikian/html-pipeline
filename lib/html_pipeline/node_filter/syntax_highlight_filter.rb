@@ -15,7 +15,7 @@ class HTMLPipeline
     # This filter does not write any additional information to the context hash.
     class SyntaxHighlightFilter < NodeFilter
       def initialize(context: {}, result: {})
-        super(context: context, result: result)
+        super
         # TODO: test the optionality of this
         @formatter = context[:formatter] || Rouge::Formatters::HTML.new
       end

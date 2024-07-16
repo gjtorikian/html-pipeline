@@ -12,7 +12,7 @@ class HTMLPipeline
     #   :markdown[:extensions] => Commonmarker extensions options
     class MarkdownFilter < ConvertFilter
       def initialize(context: {}, result: {})
-        super(context: context, result: result)
+        super
       end
 
       # Convert Commonmark to HTML using the best available implementation.

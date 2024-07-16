@@ -5,7 +5,7 @@ class HTMLPipeline
     attr_reader :text
 
     def initialize(context: {}, result: {})
-      super(context: context, result: result)
+      super
     end
 
     class << self
