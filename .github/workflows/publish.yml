@@ -18,7 +18,7 @@ jobs:
       rubygems_api_key: ${{ secrets.RUBYGEMS_API_BOT_KEY }}
       gh_token: ${{ secrets.GITHUB_TOKEN }}
     with:
-      gem_name: html_pipeline
+      gem_name: html-pipeline
       version_filepath: lib/html_pipeline/version.rb
       prepare: ${{ github.event_name == 'push' }}
       release: ${{ github.event_name == 'workflow_dispatch' || ((github.event.pull_request.merged == true) && (contains(github.event.pull_request.labels.*.name, 'release'))) }}
