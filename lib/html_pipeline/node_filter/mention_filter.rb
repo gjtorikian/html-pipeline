@@ -115,7 +115,8 @@ class HTMLPipeline
         result[:mentioned_usernames] |= [login]
 
         url = base_url.dup
-        url << "/" unless %r{[/~]\z}.match?(url)
+        excluded_prefixes = [%r{[/~]\z}, %r{[/@]\z}]
+        url << "/" unless excluded_prefixes.any? { |excluded_prefix| excluded_prefix.match?(url) }
 
         "<a href=\"#{url << login}\" class=\"user-mention\">" \
           "@#{login}" \
