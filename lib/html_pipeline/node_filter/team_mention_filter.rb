@@ -94,7 +94,8 @@ class HTMLPipeline
         result[:mentioned_teams] |= [team]
 
         url = base_url.dup
-        url << "/" unless %r{[/~]\z}.match?(url)
+        excluded_prefixes = %r{[/(?:~|@]\z}
+        url << "/" unless excluded_prefixes.match?(url)
 
         "<a href=\"#{url << org}/#{team}\" class=\"team-mention\">" \
           "@#{org}/#{team}" \

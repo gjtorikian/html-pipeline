@@ -105,6 +105,16 @@ class HTMLPipeline
       )
     end
 
+    def test_base_url_slash_with_at
+      body = "<p>Hi, @jch!</p>"
+      link = '<a href="/@jch" class="user-mention">@jch</a>'
+
+      assert_equal(
+        "<p>Hi, #{link}!</p>",
+        @filter.call(body, context: @context.merge({ base_url: "/@" })),
+      )
+    end
+
     def test_matches_usernames_in_body
       body = "@test how are you?"
 

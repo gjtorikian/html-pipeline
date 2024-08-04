@@ -115,6 +115,16 @@ class HTMLPipeline
       )
     end
 
+    def test_base_url_slash_with_at
+      body = "<p>Hi, @github/team!</p>"
+      link = '<a href="/@github/team" class="team-mention">@github/team</a>'
+
+      assert_equal(
+        "<p>Hi, #{link}!</p>",
+        @filter.call(body, context: { base_url: "/@" }),
+      )
+    end
+
     def test_multiple_team_mentions
       body = "<p>Hi, @github/whale and @github/donut!</p>"
       link_whale = '<a href="/github/whale" class="team-mention">@github/whale</a>'
