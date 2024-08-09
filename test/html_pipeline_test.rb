@@ -194,4 +194,19 @@ class HTMLPipelineTest < Minitest::Test
     # - mentions are linked
     assert_equal("<p><strong>yeH</strong>! I <em>think</em> <a href=\"http://your-domain.com/gjtorikian\" class=\"user-mention\">@gjtorikian</a> is <del>great</del>!</p>", result)
   end
+
+  def test_mention_and_team_mention_node_filters_are_applied
+    text = "Hey there, @billy. This one goes out to the @cool/dev team!"
+
+    pipeline = HTMLPipeline.new(
+      convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
+      node_filters: [
+        HTMLPipeline::NodeFilter::MentionFilter.new,
+        HTMLPipeline::NodeFilter::TeamMentionFilter.new
+      ],
+    )
+    result = pipeline.call(text)[:output]
+
+    assert_equal("<p>Hey there, <a href=\"/billy\" class=\"user-mention\">@billy</a>. This one goes out to the <a href=\"/cool/dev\" class=\"team-mention\">@cool/dev</a> team!</p>", result)
+  end
 end
