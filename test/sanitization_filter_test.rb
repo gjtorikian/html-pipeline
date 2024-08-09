@@ -289,5 +289,23 @@ class HTMLPipeline
 
       assert_equal(result[:output].to_s, expected.chomp)
     end
+
+    def test_a_sanitization_only_pipeline_works
+      config = Selma::Sanitizer::Config.freeze_config({
+        elements: [
+          "strong",
+        ],
+      })
+
+      pipeline = HTMLPipeline.new(
+        sanitization_config: config,
+      )
+
+      text = "<p>Some <strong>plain</strong> text</p>"
+      result = pipeline.call(text)
+      expected = "Some <strong>plain</strong> text"
+
+      assert_equal(result[:output].to_s, expected)
+    end
   end
 end

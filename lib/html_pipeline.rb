@@ -183,8 +183,8 @@ class HTMLPipeline
 
     if @node_filters.empty?
       instrument("sanitization.html_pipeline", payload) do
-        result[:output] = Selma::Rewriter.new(sanitizer: @sanitization_config, handlers: @node_filters, options: rewriter_options).rewrite(html)
-      end unless @convert_filter.nil? # no html, so no sanitization
+        result[:output] = Selma::Rewriter.new(sanitizer: @sanitization_config, options: rewriter_options).rewrite(html)
+      end
     else
       instrument("call_node_filters.html_pipeline", payload) do
         @node_filters.each { |filter| filter.context = (filter.context || {}).merge(context) }
