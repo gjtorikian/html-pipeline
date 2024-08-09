@@ -1,3 +1,12 @@
+# [v3.2.2] - 09-08-2024
+## What's Changed
+* Add support for @ prefix on MentionFilter base_url by @jeremysmithco in https://github.com/gjtorikian/html-pipeline/pull/411
+* Bugfix: sanitization-only filters should still work by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/414
+
+## New Contributors
+* @jeremysmithco made their first contribution in https://github.com/gjtorikian/html-pipeline/pull/411
+
+**Full Changelog**: https://github.com/gjtorikian/html-pipeline/compare/v3.2.1...v3.2.2
 # [v3.2.1] - 16-07-2024
 ## What's Changed
 * Update commonmarker requirement from ~> 1.0.0.pre7 to ~> 1.1.2 in the bundler-dependencies group by @dependabot in https://github.com/gjtorikian/html-pipeline/pull/404
