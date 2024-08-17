@@ -202,7 +202,7 @@ class HTMLPipelineTest < Minitest::Test
       convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
       node_filters: [
         HTMLPipeline::NodeFilter::MentionFilter.new,
-        HTMLPipeline::NodeFilter::TeamMentionFilter.new
+        HTMLPipeline::NodeFilter::TeamMentionFilter.new,
       ],
     )
     result = pipeline.call(text)[:output]
