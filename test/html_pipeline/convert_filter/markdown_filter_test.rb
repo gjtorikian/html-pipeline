@@ -150,8 +150,7 @@ class GFMTest < Minitest::Test
   end
 
   def test_not_convert_newlines_in_lists
-    options = Commonmarker::Config.merged_with_defaults({})
-    options[:extension].delete(:header_ids)
+    options = { extension: { header_ids: nil } }
 
     assert_equal(
       "<h1>foo</h1>\n<h1>bar</h1>",
