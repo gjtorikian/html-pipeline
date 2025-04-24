@@ -181,11 +181,11 @@ class HTMLPipeline
       },
     }
 
-    if @node_filters.empty?
+    if @node_filters.empty? && !@sanitization_config.nil?
       instrument("sanitization.html_pipeline", payload) do
         result[:output] = Selma::Rewriter.new(sanitizer: @sanitization_config, options: rewriter_options).rewrite(html)
       end
-    else
+    elsif @node_filters.any?
       instrument("call_node_filters.html_pipeline", payload) do
         @node_filters.each { |filter| filter.context = (filter.context || {}).merge(context) }
         result[:output] = Selma::Rewriter.new(sanitizer: @sanitization_config, handlers: @node_filters, options: rewriter_options).rewrite(html)
