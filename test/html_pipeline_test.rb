@@ -104,6 +104,18 @@ class HTMLPipelineTest < Minitest::Test
     end
   end
 
+  def test_just_text_filters
+    text = "Hey there, @billy."
+
+    pipeline = HTMLPipeline.new(
+      text_filters: [TestReverseFilter.new],
+      convert_filter: nil,
+    )
+    result = pipeline.call(text)[:output]
+
+    assert_equal(".yllib@ ,ereht yeH", result)
+  end
+
   def test_kitchen_sink
     text = "Hey there, @billy. Love to see <marquee>yah</marquee>!"
 
