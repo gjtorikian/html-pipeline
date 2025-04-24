@@ -1,3 +1,9 @@
+# [v3.2.3] - 24-04-2025
+## What's Changed
+* Allow for just text pipelines by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/418
+
+
+**Full Changelog**: https://github.com/gjtorikian/html-pipeline/compare/v3.2.2...v3.2.3
 # [v3.2.2] - 09-08-2024
 ## What's Changed
 * Add support for @ prefix on MentionFilter base_url by @jeremysmithco in https://github.com/gjtorikian/html-pipeline/pull/411
