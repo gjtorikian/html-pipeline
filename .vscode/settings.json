@@ -4,5 +4,8 @@
     },
     "[ruby]": {
         "editor.defaultFormatter": "Shopify.ruby-lsp"
+    },
+    "[github-actions-workflow]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
     }
 }
