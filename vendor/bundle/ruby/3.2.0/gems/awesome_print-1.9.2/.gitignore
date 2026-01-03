@@ -1,0 +1,36 @@
+## MAC OS
+.DS_Store
+
+## TEXTMATE
+*.tmproj
+tmtags
+
+## EMACS
+*~
+\#*
+.\#*
+
+## VIM
+*.swp
+
+## RUBYMINE
+.idea
+
+## PROJECT::GENERAL
+coverage
+rdoc
+pkg
+.ruby-version
+gemfiles/*.gemfile.lock
+Gemfile.lock
+/tmp
+/.bundle
+/gemfiles/.bundle
+/gemfiles/vendor/bundle
+
+## PROJECT::RVM
+.rvmrc
+
+# PROJECT::RBENV
+.ruby-gemset
+.awesome-print/

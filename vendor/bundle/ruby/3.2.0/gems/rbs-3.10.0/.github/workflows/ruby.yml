@@ -1,0 +1,119 @@
+name: Ruby
+
+on:
+  push:
+    branches:
+      - master
+  pull_request: {}
+  merge_group: {}
+
+jobs:
+  test:
+    runs-on: "ubuntu-latest"
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ['3.2', '3.3', '3.4', '4.0.0-preview3', head]
+        rubyopt: [""]
+        job:
+          - test
+        include:
+          - ruby: head
+            job: stdlib_test rubocop
+          - ruby: "4.0.0-preview3"
+            job: stdlib_test
+          - ruby: "4.0.0-preview3"
+            job: test
+            rubyopt: "--enable-frozen-string-literal"
+          - ruby: "4.0.0-preview3"
+            job: stdlib_test
+            rubyopt: "--enable-frozen-string-literal"
+          - ruby: "4.0.0-preview3"
+            job: rubocop validate test_doc build test_generate_stdlib raap
+          - ruby: "4.0.0-preview3"
+            job: typecheck_test
+    env:
+      RANDOMIZE_STDLIB_TEST_ORDER: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler: none
+      - name: Set working directory as safe
+        run: git config --global --add safe.directory $(pwd)
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libdb-dev curl autoconf automake m4 libtool python3
+      - name: Update rubygems & bundler
+        run: |
+          ruby -v
+          gem update --system
+      - name: bundle config set with
+        run: |
+          echo "NO_MINITEST=true" >> $GITHUB_ENV
+          bundle config set --local without 'minitest'
+        if: ${{ contains(matrix.ruby, 'head') }}
+      - name: Skip installing type checkers
+        if: ${{ ! contains(matrix.job, 'typecheck_test') }}
+        run: |
+          bundle config set without 'typecheck_test'
+      - name: bin/setup
+        run: |
+          bin/setup
+      - name: Run test
+        run: |
+          bundle exec rake ${{ matrix.job }}
+  valgrind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+          bundler-cache: none
+      - name: Set working directory as safe
+        run: git config --global --add safe.directory $(pwd)
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libdb-dev curl autoconf automake m4 libtool python3 valgrind
+      - name: Update rubygems & bundler
+        run: |
+          ruby -v
+          gem update --system
+      - name: bin/setup
+        run: |
+          bin/setup
+      - run: bundle exec rake test:valgrind
+        env:
+          RUBY_FREE_AT_EXIT: 1
+  C99_compile:
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ['4.0.0-preview3', head]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: |
+          brew install ruby-build
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler: none
+      - name: Set working directory as safe
+        run: git config --global --add safe.directory $(pwd)
+      - name: Update rubygems & bundler
+        run: |
+          ruby -v
+          gem update --system
+      - name: clang version
+        run: clang --version
+      - name: bin/setup
+        run: |
+          bin/setup
+      - run: bundle exec rake clean compile_c99
+

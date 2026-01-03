@@ -1,0 +1,7 @@
+#! /usr/bin/env ruby
+# typed: strict
+# frozen_string_literal: true
+
+require_relative "../lib/spoom"
+
+Spoom::Cli::Main.start(ARGV)

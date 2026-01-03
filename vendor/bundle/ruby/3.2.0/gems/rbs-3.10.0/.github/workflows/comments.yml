@@ -1,0 +1,35 @@
+name: RBS Comments
+
+on:
+  push:
+    branches:
+      - master
+  pull_request: {}
+  merge_group: {}
+
+jobs:
+  comments:
+    runs-on: "ubuntu-latest"
+    env:
+      RUBY_COMMIT: v4.0.0-preview3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0.0-preview3"
+          bundler: none
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libdb-dev curl
+      - name: Update rubygems & bundler
+        run: |
+          ruby -v
+          gem update --system
+      - name: bin/setup
+        run: |
+          bin/setup
+      - name: Check if `rake annotate` has been executed
+        run: |
+          git config --global --add safe.directory `pwd`
+          bundle exec rake annotate confirm_annotation

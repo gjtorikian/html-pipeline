@@ -1,0 +1,74 @@
+---
+Language: Cpp
+
+# Indentation
+UseTab: Never
+IndentWidth: 4
+BreakBeforeBraces: Attach
+IndentCaseLabels: false
+NamespaceIndentation: None
+ContinuationIndentWidth: 4
+IndentPPDirectives: None
+IndentWrappedFunctionNames: false
+AccessModifierOffset: -2
+
+# Alignment
+AlignAfterOpenBracket: BlockIndent
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+AlignConsecutiveMacros: false
+AlignEscapedNewlines: Left
+AlignOperands: false
+AlignTrailingComments: true
+DerivePointerAlignment: false
+PointerAlignment: Right
+
+# Function calls formatting
+BinPackArguments: false
+BinPackParameters: false
+AllowAllArgumentsOnNextLine: false
+ExperimentalAutoDetectBinPacking: false
+PenaltyBreakBeforeFirstCallParameter: 1
+AlwaysBreakAfterDefinitionReturnType: None
+
+# Wrapping and Breaking
+ColumnLimit: 0
+AllowShortBlocksOnASingleLine: Never
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: Always
+AllowShortLoopsOnASingleLine: false
+AlwaysBreakAfterReturnType: None
+AlwaysBreakBeforeMultilineStrings: false
+AlwaysBreakTemplateDeclarations: No
+BreakBeforeBinaryOperators: None
+BreakBeforeTernaryOperators: false
+BreakConstructorInitializers: BeforeColon
+BreakInheritanceList: BeforeColon
+BreakStringLiterals: false
+CompactNamespaces: false
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+Cpp11BracedListStyle: false
+ReflowComments: false
+SortIncludes: Never
+
+# Spaces
+SpaceAfterCStyleCast: true
+SpaceAfterLogicalNot: false
+SpaceAfterTemplateKeyword: true
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeCpp11BracedList: true
+SpaceBeforeCtorInitializerColon: true
+SpaceBeforeInheritanceColon: true
+SpaceBeforeParens: ControlStatements
+SpaceBeforeRangeBasedForLoopColon: true
+SpaceBeforeSquareBrackets: false
+SpaceInEmptyBlock: false
+SpaceInEmptyParentheses: false
+SpacesBeforeTrailingComments: 1
+SpacesInAngles: false
+SpacesInCStyleCastParentheses: false
+SpacesInConditionalStatement: false
+SpacesInContainerLiterals: true
+SpacesInParentheses: false
+SpacesInSquareBrackets: false

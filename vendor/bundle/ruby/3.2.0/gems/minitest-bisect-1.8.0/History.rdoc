@@ -1,0 +1,119 @@
+=== 1.8.0 / 2025-12-11
+
+* 1 minor enhancement:
+
+  * Bumped path_expander to 2.0.0.
+
+=== 1.7.0 / 2023-07-06
+
+* 1 major enhancement:
+
+  * Extend bisect_methods to do "inverse" run (eg false positives) via -n=/RE/ argument.
+
+* 4 minor enhancements:
+
+  * Added example_inverse.rb
+  * Collapsed examples from directories to individual files.
+  * Refactor: push command generation from #run down to #bisect_methods.
+  * build_files_cmd no longer calls reset (zero effect change).
+
+* 4 bug fixes:
+
+  * 100% documentation coverage.
+  * Fix server process ID to be a string to match rest of args.
+  * Fix shebang cmd on bin/minitest_bisect.
+  * Print known bad methods with found culprit methods in final run.
+
+=== 1.6.0 / 2022-05-23
+
+* 1 minor enhancement:
+
+  * Removed #bisect_files and mode accessor. Just deal with methods only for now.
+
+=== 1.5.1 / 2019-09-22
+
+* 1 bug fix:
+
+  * Fixed a bug where having only options would prevent default "test" directory arg.
+
+=== 1.5.0 / 2019-06-06
+
+* 2 minor enhancements:
+
+  * Print out the culprit methods once done.
+  * Default to using -Itest:lib like minitest-sprint.
+
+* 1 bug fix:
+
+  * Remove the server arguments from the final repro output.
+
+=== 1.4.1 / 2019-05-26
+
+* 2 bug fixes:
+
+  * Clarified in doco how to use -I<path> with minitest_bisect. (padi)
+  * Escape class name as well as method name in regexp. (matthewd)
+
+=== 1.4.0 / 2016-06-15
+
+* 3 minor enhancements:
+
+  * Added better timing output, so you can estimate much of a coffee break you get.
+  * Added path_expander support.
+  * Added verification step to ensure you're not trying to bisect a non-test-order-dependency bug.
+
+=== 1.3.1 / 2016-02-18
+
+* 2 bug fixes:
+
+  * Added graceful handling of 100% failures. (aaronbbrown)
+  * FINALLY fixed a partitioning bug I haven't been able to isolate. (tenderlove)
+
+=== 1.3.0 / 2015-05-28
+
+* 2 minor enhancements:
+
+  * Improved output when failure doesn't repro.
+  * MTB_VERBOSE will print stderr from system calls.
+
+=== 1.2.2 / 2015-04-27
+
+* 2 bug fixes:
+
+  * Fixed SHH variable to work with more shell variants. (jeremyevans)
+  * Fixed problems with running in jruby. (jeremyevans)
+
+=== 1.2.1 / 2014-12-12
+
+* 1 bug fix:
+
+  * Fixed innocuous warning.
+
+=== 1.2.0 / 2014-09-18
+
+* 2 minor enhancements:
+
+  * Extracted minitest-server.
+  * Renamed server/client methods to start with minitest_*
+
+=== 1.1.0 / 2014-09-08
+
+* 4 minor enhancements:
+
+  * Added MTB_DEBUG env var to add debugging output to bisect trials.
+  * Added MTB_VERBOSE env var to show test output.
+  * Remove `--server ###` from final repro to make it easer to copy/paste/debug.
+  * Removed `-s` option. Now only `--server` remains to be unambiguous.
+
+* 3 bug fixes:
+
+  * Accidentally left in -v while I was debugging something.
+  * Reject skips in culprit accounting.
+  * Switched to manual escaping of regexp. Shellwords was horribly overzealous.
+
+=== 1.0.0 / 2014-07-16
+
+* 1 major enhancement
+
+  * Birthday!
+

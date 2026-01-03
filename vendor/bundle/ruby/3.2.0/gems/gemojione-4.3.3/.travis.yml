@@ -1,0 +1,23 @@
+language: ruby
+sudo: false
+rvm:
+  - 2.0.0
+  - 2.1.0
+  - 2.2.5
+  - 2.3.1
+  - 2.4.0
+  - rbx-2
+  - ruby-head
+  - jruby-head
+
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+    - rvm: jruby-head
+    - rvm: rbx-2
+
+addons:
+  code_climate:
+    repo_token: 418bd243b301fd0d29e8762626cc63ee2b3d2c41124c2d880e0e00d59057f639
+after_success:
+  - bundle exec codeclimate-test-reporter

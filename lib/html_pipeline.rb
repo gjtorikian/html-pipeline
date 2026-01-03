@@ -274,7 +274,7 @@ class HTMLPipeline
     invalid_filters = filters.reject { |f| correctly_ancestored?(f, klass) }
 
     unless invalid_filters.empty?
-      verb = invalid_filters.count == 1 ? "does" : "do"
+      verb = invalid_filters.one? ? "does" : "do"
       raise InvalidFilterError, "All filters must inherit from `#{klass}`; #{invalid_filters.join(", ")} #{verb} not"
     end
   end

@@ -1,0 +1,27 @@
+/.bundle/
+/vendor/bundle/
+/steep/.bundle/
+/steep/vendor/bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/pkg/
+/spec/reports/
+/tmp/
+**/.ruby-version
+**/.rvmrc
+**/.rbfu-version
+**/.rbenv-version
+**/.versions.conf
+/vendor/sigs
+
+lib/**/*.bundle
+lib/**/*.so
+lib/**/*.dll
+doc/
+
+**/*.gem
+
+# For clangd's editor integration
+ext/rbs_extension/compile_commands.json
+ext/rbs_extension/.cache

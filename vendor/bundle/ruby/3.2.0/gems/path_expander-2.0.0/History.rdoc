@@ -1,0 +1,68 @@
+=== 2.0.0 / 2025-12-11
+
+* 3 major enhancements:
+
+  * Added #pre_process and #post_process and call them from #process.
+  * Modified #process to return self if block given, otherwise Enumerator.
+  * Modified #process to take a block for processing files directly.
+
+=== 1.1.3 / 2024-09-11
+
+* 1 bug fix:
+
+  * Call to_s before delete_prefix. Maybe don't pass Pathname objects
+    to things that process ARGV?
+
+=== 1.1.2 / 2024-07-11
+
+* 1 bug fix:
+
+  * Normalize './' off the front of all paths so options like '.' and '-test' work together better
+
+=== 1.1.1 / 2022-07-03
+
+* 1 bug fix:
+
+  * Process plain '-' as a file, not an option.
+
+=== 1.1.0 / 2019-09-22
+
+* 1 minor enhancement:
+
+  * Added a default path (default: ".") to scan if no files are initially found.
+
+=== 1.0.5 / 2019-09-14
+
+* 1 bug fix:
+
+  * Fixed a deprecation warning from File.exists?
+
+=== 1.0.4 / 2019-05-26
+
+* 1 bug fix:
+
+  * Sorted the output from expand_dirs_to_files. (deivid-rodriguez)
+
+=== 1.0.3 / 2018-03-16
+
+* 1 bug fix:
+
+  * Don't process files if path expands to root directory. Prevents -n /./ from hanging.
+
+=== 1.0.2 / 2017-05-09
+
+* 1 bug fix:
+
+  * Fixed expand_dirs_to_files returning non-files on glob expansion.
+
+=== 1.0.1 / 2016-11-30
+
+* 1 bug fix:
+
+  * Expanded paths in filter_files to fix globs w/ absolute paths. (mknapik)
+
+=== 1.0.0 / 2016-05-11
+
+* 1 major enhancement
+
+  * Birthday!

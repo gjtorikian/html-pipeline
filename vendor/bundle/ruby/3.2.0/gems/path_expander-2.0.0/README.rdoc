@@ -1,0 +1,74 @@
+= path_expander
+
+home :: https://github.com/seattlerb/path_expander
+rdoc :: http://docs.seattlerb.org/path_expander
+
+== DESCRIPTION:
+
+PathExpander helps pre-process command-line arguments expanding
+directories into their constituent files. It further helps by
+providing additional mechanisms to make specifying subsets easier
+with path subtraction and allowing for command-line arguments to be
+saved in a file.
+
+NOTE: this is NOT an options processor. It is a path processor
+(basically everything else besides options). It does provide a
+mechanism for pre-filtering cmdline options, but not with the intent
+of actually processing them in PathExpander. Use OptionParser to
+deal with options either before or after passing ARGV through
+PathExpander.
+
+== FEATURES/PROBLEMS:
+
+* Processes command-line arguments.
+* Expands directories into files using custom globs.
+* Allows for negation of files.
+* Allows for use of files as persisted args.
+* Provides a .ignore mechanism for lightweight persistent exclusion.
+
+== SYNOPSIS:
+
+    class MyPathExpander < PathExpander
+      MY_GLOB = "**/*.rb"
+
+      def initialize args = ARGV
+        super args, MY_GLOB
+      end
+    end
+
+    MyPathExpander.new(ARGV, my_glob).process do |f|
+      # do something with each file
+    end
+
+== REQUIREMENTS:
+
+* ruby
+
+== INSTALL:
+
+* gem install path_expander
+
+== LICENSE:
+
+(The MIT License)
+
+Copyright (c) Ryan Davis, seattle.rb
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

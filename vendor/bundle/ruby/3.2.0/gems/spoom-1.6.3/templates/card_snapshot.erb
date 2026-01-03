@@ -1,0 +1,22 @@
+<div class="card">
+  <% if title %>
+    <h5 class="card-header"><%= title %></h5>
+  <% end %>
+  <div class="card-body">
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col-12 col-sm-4 col-xl-3">
+          <%= pie_sigils.html %>
+        </div>
+        <div class="d-none d-xl-block col-xl-1"></div>
+        <div class="col-12 col-sm-4 col-xl-3">
+          <%= pie_calls.html %>
+        </div>
+        <div class="d-none d-xl-block col-xl-1"></div>
+        <div class="col-12 col-sm-4 col-xl-3">
+          <%= pie_sigs.html %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

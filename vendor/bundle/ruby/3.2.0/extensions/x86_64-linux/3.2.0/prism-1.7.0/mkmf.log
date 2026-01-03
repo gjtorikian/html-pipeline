@@ -1,0 +1,74 @@
+find_header: checking for prism.h in /home/runner/work/html-pipeline/html-pipeline/vendor/bundle/ruby/3.2.0/gems/prism-1.7.0/include... -------------------- yes
+
+LD_LIBRARY_PATH=.:/opt/hostedtoolcache/Ruby/3.2.1/x64/lib "gcc -o conftest -I/opt/hostedtoolcache/Ruby/3.2.1/x64/include/ruby-3.2.0/x86_64-linux -I/opt/hostedtoolcache/Ruby/3.2.1/x64/include/ruby-3.2.0/ruby/backward -I/opt/hostedtoolcache/Ruby/3.2.1/x64/include/ruby-3.2.0 -I. -DENABLE_PATH_CHECK=0   -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wundef  -fPIC conftest.c  -L. -L/opt/hostedtoolcache/Ruby/3.2.1/x64/lib -Wl,-rpath,/opt/hostedtoolcache/Ruby/3.2.1/x64/lib -L. -fstack-protector-strong -rdynamic -Wl,-export-dynamic -Wl,--no-as-needed     -Wl,-rpath,/opt/hostedtoolcache/Ruby/3.2.1/x64/lib -L/opt/hostedtoolcache/Ruby/3.2.1/x64/lib -lruby  -lm -lpthread  -lc"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main(int argc, char **argv)
+4: {
+5:   return !!argv[argc];
+6: }
+/* end */
+
+LD_LIBRARY_PATH=.:/opt/hostedtoolcache/Ruby/3.2.1/x64/lib "gcc -I/opt/hostedtoolcache/Ruby/3.2.1/x64/include/ruby-3.2.0/x86_64-linux -I/opt/hostedtoolcache/Ruby/3.2.1/x64/include/ruby-3.2.0/ruby/backward -I/opt/hostedtoolcache/Ruby/3.2.1/x64/include/ruby-3.2.0 -I. -DENABLE_PATH_CHECK=0   -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wundef  -fPIC   -c conftest.c"
+conftest.c:3:10: fatal error: prism.h: No such file or directory
+    3 | #include <prism.h>
+      |          ^~~~~~~~~
+compilation terminated.
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <prism.h>
+/* end */
+
+LD_LIBRARY_PATH=.:/opt/hostedtoolcache/Ruby/3.2.1/x64/lib "gcc -I/opt/hostedtoolcache/Ruby/3.2.1/x64/include/ruby-3.2.0/x86_64-linux -I/opt/hostedtoolcache/Ruby/3.2.1/x64/include/ruby-3.2.0/ruby/backward -I/opt/hostedtoolcache/Ruby/3.2.1/x64/include/ruby-3.2.0 -I. -DENABLE_PATH_CHECK=0   -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wundef  -fPIC  -I/home/runner/work/html-pipeline/html-pipeline/vendor/bundle/ruby/3.2.0/gems/prism-1.7.0/include -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <prism.h>
+/* end */
+
+--------------------
+
+find_header: checking for prism/extension.h in /home/runner/work/html-pipeline/html-pipeline/vendor/bundle/ruby/3.2.0/gems/prism-1.7.0/ext... -------------------- yes
+
+LD_LIBRARY_PATH=.:/opt/hostedtoolcache/Ruby/3.2.1/x64/lib "gcc -I/opt/hostedtoolcache/Ruby/3.2.1/x64/include/ruby-3.2.0/x86_64-linux -I/opt/hostedtoolcache/Ruby/3.2.1/x64/include/ruby-3.2.0/ruby/backward -I/opt/hostedtoolcache/Ruby/3.2.1/x64/include/ruby-3.2.0 -I. -I/home/runner/work/html-pipeline/html-pipeline/vendor/bundle/ruby/3.2.0/gems/prism-1.7.0/include -DENABLE_PATH_CHECK=0   -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wundef  -fPIC   -c conftest.c"
+conftest.c:3:10: fatal error: prism/extension.h: No such file or directory
+    3 | #include <prism/extension.h>
+      |          ^~~~~~~~~~~~~~~~~~~
+compilation terminated.
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <prism/extension.h>
+/* end */
+
+LD_LIBRARY_PATH=.:/opt/hostedtoolcache/Ruby/3.2.1/x64/lib "gcc -I/opt/hostedtoolcache/Ruby/3.2.1/x64/include/ruby-3.2.0/x86_64-linux -I/opt/hostedtoolcache/Ruby/3.2.1/x64/include/ruby-3.2.0/ruby/backward -I/opt/hostedtoolcache/Ruby/3.2.1/x64/include/ruby-3.2.0 -I. -I/home/runner/work/html-pipeline/html-pipeline/vendor/bundle/ruby/3.2.0/gems/prism-1.7.0/include -DENABLE_PATH_CHECK=0   -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wundef  -fPIC  -I/home/runner/work/html-pipeline/html-pipeline/vendor/bundle/ruby/3.2.0/gems/prism-1.7.0/ext -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <prism/extension.h>
+/* end */
+
+--------------------
+
+block in append_cflags: checking for whether -fvisibility=hidden is accepted as CFLAGS... -------------------- yes
+
+LD_LIBRARY_PATH=.:/opt/hostedtoolcache/Ruby/3.2.1/x64/lib "gcc -I/opt/hostedtoolcache/Ruby/3.2.1/x64/include/ruby-3.2.0/x86_64-linux -I/opt/hostedtoolcache/Ruby/3.2.1/x64/include/ruby-3.2.0/ruby/backward -I/opt/hostedtoolcache/Ruby/3.2.1/x64/include/ruby-3.2.0 -I. -I/home/runner/work/html-pipeline/html-pipeline/vendor/bundle/ruby/3.2.0/gems/prism-1.7.0/include -I/home/runner/work/html-pipeline/html-pipeline/vendor/bundle/ruby/3.2.0/gems/prism-1.7.0/ext -DENABLE_PATH_CHECK=0   -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wdeprecated-declarations -Wdiv-by-zero -Wduplicated-cond -Wimplicit-function-declaration -Wimplicit-int -Wmisleading-indentation -Wpointer-arith -Wwrite-strings -Wold-style-definition -Wimplicit-fallthrough=0 -Wmissing-noreturn -Wno-cast-function-type -Wno-constant-logical-operand -Wno-long-long -Wno-missing-field-initializers -Wno-overlength-strings -Wno-packed-bitfield-compat -Wno-parentheses-equality -Wno-self-assign -Wno-tautological-compare -Wno-unused-parameter -Wno-unused-value -Wsuggest-attribute=format -Wsuggest-attribute=noreturn -Wunused-variable -Wundef  -fPIC  -fvisibility=hidden -Werror -c conftest.c"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main(int argc, char **argv)
+4: {
+5:   return !!argv[argc];
+6: }
+/* end */
+
+--------------------
+

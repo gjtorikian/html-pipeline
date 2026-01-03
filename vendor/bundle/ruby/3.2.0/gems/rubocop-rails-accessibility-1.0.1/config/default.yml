@@ -1,0 +1,11 @@
+RailsAccessibility/ImageHasAlt:
+  Enabled: true
+  StyleGuide: https://github.com/github/rubocop-rails-accessibility/blob/master/guides/image-has-alt.md
+
+RailsAccessibility/NoPositiveTabindex:
+  Enabled: true
+  StyleGuide: https://github.com/github/rubocop-rails-accessibility/blob/master/guides/no-positive-tabindex.md
+
+RailsAccessibility/NoRedundantImageAlt:
+  Enabled: true
+  StyleGuide: https://github.com/github/rubocop-rails-accessibility/blob/master/guides/no-redundant-image-alt.md

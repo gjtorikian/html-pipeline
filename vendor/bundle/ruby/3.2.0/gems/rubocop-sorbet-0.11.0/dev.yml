@@ -1,0 +1,11 @@
+name: "rubocop-sorbet"
+
+type: "ruby"
+
+up:
+  - ruby
+  - "bundler"
+
+commands:
+  test:   "bin/rake test"
+  style:  "bin/rubocop"

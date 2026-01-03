@@ -1,0 +1,54 @@
+name: C Code Generation and Formatting Check
+
+on:
+  push:
+  pull_request: {}
+  merge_group: {}
+
+jobs:
+  format-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0.0-preview3"
+          bundler-cache: none
+      - name: Set working directory as safe
+        run: git config --global --add safe.directory $(pwd)
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libdb-dev curl autoconf automake m4 libtool
+      - name: Install clang-format from LLVM
+        run: |
+          wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+          sudo apt-add-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-20 main"
+          sudo apt-get update
+          sudo apt-get install -y clang-format-20
+          sudo ln -sf /usr/bin/clang-format-20 /usr/local/bin/clang-format
+          clang-format --version
+      - name: Count processors
+        run: nproc
+      - name: Install Re2c
+        run: |
+          cd /tmp
+          curl -L https://github.com/skvadrik/re2c/archive/refs/tags/4.3.tar.gz > re2c-4.3.tar.gz
+          tar xf re2c-4.3.tar.gz
+          cd re2c-4.3
+          autoreconf -i -W all
+          ./configure
+          make -j"$(nproc)" -l"$(nproc)"
+          sudo make install
+      - name: Update rubygems & bundler
+        run: |
+          ruby -v
+          gem update --system
+      - name: bin/setup
+        run: |
+          bin/setup
+      - name: Check C code generation and formatting
+        run: |
+          clang-format --version
+          bundle exec rake lexer templates compile confirm_lexer confirm_templates
+          bundle exec rake format:c_check

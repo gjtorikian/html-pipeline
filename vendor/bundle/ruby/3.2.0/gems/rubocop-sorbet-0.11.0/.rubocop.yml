@@ -1,0 +1,41 @@
+# This file strictly follows the rules defined in the Ruby style guide:
+#   http://shopify.github.io/ruby-style-guide/
+inherit_gem:
+  rubocop-shopify: rubocop.yml
+
+plugins:
+  - rubocop-internal_affairs
+
+AllCops:
+  Exclude:
+    - vendor/**/*
+  NewCops: disable
+  SuggestExtensions: false
+
+InternalAffairs:
+  Enabled: true
+
+Naming/FileName:
+  Exclude:
+  - lib/rubocop-sorbet.rb
+
+Layout/LineLength:
+  IgnoreCopDirectives: true
+
+InternalAffairs/UndefinedConfig:
+  Enabled: false # Bug in implementation fails to find our configs
+
+InternalAffairs/OnSendWithoutOnCSend:
+  Exclude:
+    # Cases where we don't expect a conditional send
+    - lib/rubocop/cop/sorbet/callback_conditionals_binding.rb
+    - lib/rubocop/cop/sorbet/forbid_include_const_literal.rb
+    - lib/rubocop/cop/sorbet/forbid_t_struct.rb
+    - lib/rubocop/cop/sorbet/forbid_t_untyped.rb
+    - lib/rubocop/cop/sorbet/implicit_conversion_method.rb
+    - lib/rubocop/cop/sorbet/rbi/forbid_extend_t_sig_helpers_in_shims.rb
+    - lib/rubocop/cop/sorbet/redundant_extend_t_sig.rb
+    - lib/rubocop/cop/sorbet/refinement.rb
+    - lib/rubocop/cop/sorbet/signatures/allow_incompatible_override.rb
+    - lib/rubocop/cop/sorbet/signatures/enforce_signatures.rb
+    - lib/rubocop/cop/sorbet/t_enum/forbid_comparable_t_enum.rb

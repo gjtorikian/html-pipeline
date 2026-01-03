@@ -1,0 +1,43 @@
+name: Ruby on Windows
+
+on:
+  push:
+    branches:
+      - master
+  pull_request: {}
+  merge_group: {}
+
+jobs:
+  compile:
+    runs-on: "windows-latest"
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ['3.4', ucrt, mswin]
+    steps:
+      - uses: actions/checkout@v4
+      - name: load ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+
+      # ucrt and mswin have the dev version Ruby.
+      # It introduce checksum mismatches for bundled gems. So remove them before `bundle install`
+      - name: Purge gem caches
+        run: |
+          ruby -e '
+            exit if "${{ matrix.ruby }}" != "ucrt" && "${{ matrix.ruby }}" != "mswin"
+
+            require "open-uri"
+            require "json"
+
+            res = URI.parse("https://stdgems.org/bundled_gems.json").read
+            bundled_gems = JSON.parse(res)["gems"].map{_1["gem"]}
+            system "gem uninstall --force #{bundled_gems.join(" ")}", exception: true
+          '
+      - name: bundle install
+        run: |
+          bundle config set without profilers libs
+          bundle install
+      - name: compile
+        run: bundle exec rake compile

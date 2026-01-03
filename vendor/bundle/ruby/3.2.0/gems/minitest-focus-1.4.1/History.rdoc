@@ -1,0 +1,68 @@
+=== 1.4.1 / 2025-12-31
+
+* 4 bug fixes:
+
+  * MT6: Load focus plugin if minitest/focus is required. (mattbrictson)
+  * Loosened the minitest dependency to include MT6.
+  * Dropped MT4.
+  * MT6: Minor option processing fixes.
+
+=== 1.4.0 / 2023-07-11
+
+* 1 minor enhancement:
+
+  * Added --no-focus flag to disable focus and allow --name args to override.
+
+=== 1.3.1 / 2021-05-26
+
+* 1 bug fix:
+
+  * Fixed missing require. (ryanseys)
+
+=== 1.3.0 / 2021-05-22
+
+* 1 major enhancement:
+
+  * Removed minitest4 support.
+
+* 2 minor enhancements:
+
+  * Added support for `focus def test_method`.
+  * Improved documentation for both test- and spec-style.
+
+=== 1.2.1 / 2020-06-14
+
+* 1 bug fix:
+
+  * Prevent a crash if the gem is installed but never required. (dazuma)
+
+=== 1.2.0 / 2020-05-15
+
+* 1 major enhancement:
+
+  * Converted to a minitest plugin. (jbourassa)
+
+=== 1.1.2 / 2015-07-25
+
+* 1 bug fix:
+
+  * Fixed focus handling when run under Rake's rake_test_loader.rb.
+
+=== 1.1.1 / 2015-03-12
+
+* 1 minor enhancement:
+
+  * Escape method names in filter regexp. (ddiachkov)
+
+=== 1.1.0 / 2013-11-07
+
+* 1 major enhancement:
+
+  * Minitest 5 compatibility.
+    * Still works on minitest 4.
+
+=== 1.0.0 / 2013-01-07
+
+* 1 major enhancement
+
+  * Birthday!
