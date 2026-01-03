@@ -1,3 +1,0 @@
-module Minitest::ErrorOnWarning
-  def warn: (untyped message, ?category: untyped?) -> untyped
-end

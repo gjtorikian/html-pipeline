@@ -1,8 +1,0 @@
-.autotest
-History.rdoc
-Manifest.txt
-README.rdoc
-Rakefile
-lib/minitest/server.rb
-lib/minitest/server_plugin.rb
-test/minitest/test_server.rb

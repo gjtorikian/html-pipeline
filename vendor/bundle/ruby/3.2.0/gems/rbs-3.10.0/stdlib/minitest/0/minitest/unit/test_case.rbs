@@ -1,3 +1,0 @@
-class Minitest::Unit::TestCase < ::Minitest::Test
-  def self.inherited: (untyped klass) -> untyped
-end

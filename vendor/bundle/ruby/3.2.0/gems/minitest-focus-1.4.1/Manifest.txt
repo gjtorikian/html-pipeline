@@ -1,8 +1,0 @@
-.autotest
-History.rdoc
-Manifest.txt
-README.rdoc
-Rakefile
-lib/minitest/focus.rb
-lib/minitest/focus_plugin.rb
-test/minitest/test_focus.rb

@@ -1,5 +1,0 @@
-#!/usr/bin/env ruby -w
-
-require "minitest/bisect"
-
-Minitest::Bisect.run ARGV

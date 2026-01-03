@@ -1,9 +1,0 @@
-.autotest
-History.rdoc
-Manifest.txt
-README.rdoc
-Rakefile
-lib/path_expander.rb
-test/bad_named_dir.rb/.ignore
-test/test_bad.rb
-test/test_path_expander.rb

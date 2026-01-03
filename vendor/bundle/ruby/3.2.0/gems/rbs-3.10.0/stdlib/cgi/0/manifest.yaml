@@ -1,4 +1,0 @@
-dependencies:
-  - name: tempfile
-  - name: stringio
-  - name: cgi-escape
