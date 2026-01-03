@@ -16,7 +16,8 @@ Gem::Specification.new do |gem|
   gem.files         = %x(git ls-files -z).split("\x0").reject { |f| f =~ %r{^(test|gemfiles|script)/} }
   gem.require_paths = ["lib"]
 
-  gem.required_ruby_version = "~> 3.1"
+  gem.required_ruby_version = ">= 3.2"
+
   # https://github.com/rubygems/rubygems/pull/5852#issuecomment-1231118509
   gem.required_rubygems_version = ">= 3.3.22"
 
