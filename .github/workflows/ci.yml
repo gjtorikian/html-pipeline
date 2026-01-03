@@ -4,19 +4,11 @@ on:
   pull_request:
 
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Set up Ruby
-        uses: yettoapp/actions/setup-languages@main
-        with:
-          ruby: true
-
-      - name: Run tests
-        run: bundle exec rake test
+    uses: gjtorikian/actions/.github/workflows/ruby_test_suite.yml@main
+    secrets:
+      gh_token: ${{ secrets.GITHUB_TOKEN }}

@@ -1,4 +1,4 @@
-name: Linting
+name: Lint
 
 on:
   pull_request:
@@ -6,18 +6,11 @@ on:
       - "**/*.rb"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
+  lint:
+    uses: gjtorikian/actions/.github/workflows/ruby_lint.yml@main
+    secrets:
+      gh_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Ruby
-        uses: yettoapp/actions/setup-languages@main
-        with:
-          ruby: true
-
-      - name: Rubocop
-        run: bundle exec rake rubocop
