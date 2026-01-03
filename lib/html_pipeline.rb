@@ -195,6 +195,8 @@ class HTMLPipeline
           result:,
         })
       end
+    else
+      result[:output] = html
     end
 
     result = result.merge(@node_filters.collect(&:result).reduce({}, :merge))
