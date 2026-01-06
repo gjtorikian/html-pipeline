@@ -29,8 +29,8 @@ group :test do
   gem "gemoji", "~> 4.1", require: false
   gem "gemojione", "~> 4.3", require: false
 
-  gem "minitest"
-
+  gem "minitest", "~> 6.0"
+  gem "minitest-mock", "~> 5.27"
   gem "minitest-bisect", "~> 1.6"
 
   gem "nokogiri", "~> 1.13"
