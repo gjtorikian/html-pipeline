@@ -1,3 +1,13 @@
+# [v3.2.4] - 06-01-2026
+## What's Changed
+* [skip test] Release v3.2.3 by @github-actions[bot] in https://github.com/gjtorikian/html-pipeline/pull/419
+* Bump actions/checkout from 4 to 5 in the github-actions group by @dependabot[bot] in https://github.com/gjtorikian/html-pipeline/pull/424
+* Bump actions/checkout from 5 to 6 in the github-actions group by @dependabot[bot] in https://github.com/gjtorikian/html-pipeline/pull/426
+* Support Ruby 4.0 by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/427
+* Allow for completely nil sanitization by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/428
+
+
+**Full Changelog**: https://github.com/gjtorikian/html-pipeline/compare/v3.2.3...v3.2.4
 # [v3.2.3] - 24-04-2025
 ## What's Changed
 * Allow for just text pipelines by @gjtorikian in https://github.com/gjtorikian/html-pipeline/pull/418
