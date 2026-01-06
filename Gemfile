@@ -25,7 +25,7 @@ group :development do
 end
 
 group :test do
-  gem "commonmarker", "~> 2.0.1", require: false
+  gem "commonmarker", "~> 2.6", require: false
   gem "gemoji", "~> 4.1", require: false
   gem "gemojione", "~> 4.3", require: false
 
