@@ -4,6 +4,7 @@ require "bundler/setup"
 require "html_pipeline"
 
 require "minitest/autorun"
+require "minitest/mock"
 require "minitest/pride"
 require "minitest/focus"
 

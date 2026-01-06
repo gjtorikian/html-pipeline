@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "test_helper"
+require "html_pipeline/convert_filter/markdown_filter"
 require "html_pipeline/node_filter/mention_filter"
 
 class HTMLPipeline
@@ -306,6 +307,18 @@ class HTMLPipeline
       expected = "Some <strong>plain</strong> text"
 
       assert_equal(result[:output].to_s, expected)
+    end
+
+    def test_convert_filter_only_pipeline_with_nil_sanitization
+      pipeline = HTMLPipeline.new(
+        convert_filter: HTMLPipeline::ConvertFilter::MarkdownFilter.new,
+        sanitization_config: nil,
+      )
+
+      result = pipeline.call("# Test")
+
+      refute_nil(result[:output])
+      assert_match(%r{<h1>.*Test</h1>}, result[:output].to_s)
     end
   end
 end

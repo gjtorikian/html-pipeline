@@ -73,10 +73,10 @@ class HTMLPipeline
           default_img_attrs(name).transform_keys(&:to_sym)
             .merge!(context[:img_attrs] || {}).transform_keys(&:to_sym)
             .each_with_object([]) do |(attr, value), arr|
-            next if value.nil?
+              next if value.nil?
 
-            value = value.respond_to?(:call) && value.call(name) || value
-            arr << %(#{attr}="#{value}")
+              value = value.respond_to?(:call) && value.call(name) || value
+              arr << %(#{attr}="#{value}")
           end.compact.join(" ")
 
         "<img #{html_attrs}>"
